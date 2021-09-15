@@ -1,13 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import TabNavigator from './app/components/navigation/TabNavigator';
+import { NavigationContainer } from '@react-navigation/native';
+
+import MainMenu from './app/components/navigation/MainMenuTabs';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Love The Oceans ❤️🌊</Text>
-      <TabNavigator />
-    </View>
+    <NavigationContainer>
+      <View style={styles.container}>
+        <MainMenu />
+      </View>
+    </NavigationContainer>
   );
 }
 

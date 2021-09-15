@@ -1,30 +1,23 @@
 import * as React from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
-
-import BeachClean from './BeachClean';
-import Fisheries from './Fisheries';
-import HumpbackWhales from './HumpbackWhales';
-import MantasAndCo from './MantasAndCo';
+import { Text, View, Button, TouchableOpacity, StyleSheet } from 'react-native';
 
 function Selector({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Lot's of work to do. Get started, shall we?</Text>
-
       <TouchableOpacity onPress={() => navigation.navigate('BeachClean')}>
-        <Text style={styles.button}>Beach clean</Text>
+        <Text style={styles.button}>🗑️ Beach clean</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('Fisheries')}>
-        <Text style={styles.button}>Fisheries data</Text>
+        <Text style={styles.button}>🎣 Fisheries data</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('HumpbackWhales')}>
-        <Text style={styles.button}>Observation of humpback whales</Text>
+        <Text style={styles.button}>🐋 Observation: humpback whales</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('MantasAndCo')}>
-        <Text style={styles.button}>Observation of manta rays, whale sharks, turles</Text>
+        <Text style={styles.button}>🐢 Observation: manta rays, whale sharks, or turles</Text>
       </TouchableOpacity>
     </View>
   );
@@ -37,15 +30,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 12,
     color: 'white',
-    padding: 12,
+    padding: 10,
+    marginTop: 6,
+    marginBottom: 6,
     textAlign: 'left',
+    width: '100%',
   },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    width: '100%',
   }
 });
 
