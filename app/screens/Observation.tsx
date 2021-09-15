@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
 
-function MantasAndCo() {
+function Observation() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Yay, manta rays! Whale sharks! Turtles! Lucky bastard!</Text>
+      <Text>Yay, what did you see? Humpback whales? Mantas? Whale sharks? Turtles? Lucky bastard!</Text>
     </View>
   );
 }
 
-export default MantasAndCo;
+export default Observation;
