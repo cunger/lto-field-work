@@ -4,25 +4,45 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Slider from '@react-native-community/slider';
 import InputSpinner from 'react-native-input-spinner';
-
+import Modal from 'react-native-modal';
+import Styles from '../styles/shared';
 import Catch from '../model/fisheries/Catch';
 import Location from '../model/fisheries/Location';
 import Species from '../model/fisheries/Species';
+import Signature from '../model/Signature';
+import Datastore from '../components/data/LocalDatastore';
 
-function Fisheries() {
+function Fisheries({ navigation }) {
   const [item, setItem] = useState(Catch());
+  const [signatureVisible, setSignatureVisible] = useState(false);
 
   const update = (fields) => {
     setItem({ ...item, ...fields });
   };
 
+  const reset = () => {
+    setItem(Catch());
+  };
+
+  const sign = () => {
+    setSignatureVisible(true);
+  };
+
   const save = () => {
-    console.log('Saving data');
+    console.log(`Saving data: ${item}`);
+    Datastore.save(item);
+    reset();
+    setSignatureVisible(false);
+  };
+
+  const discard = () => {
+    reset();
+    navigation.navigate('Start');
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Date</Text>
+    <View style={Styles.container}>
+      <Text style={Styles.formLabel}>Date</Text>
       <DateTimePicker
         value={item.date}
         onChange={(_, value) => { update({ date: value }); }}
@@ -31,7 +51,7 @@ function Fisheries() {
         display='default'
       />
 
-      <Text>Location</Text>
+      <Text style={Styles.formLabel}>Location</Text>
       <Picker
         selectedValue={item.location}
         onValueChange={(value, _) => { update({ location: value }); }}>
@@ -40,7 +60,7 @@ function Fisheries() {
         ))}
       </Picker>
 
-      <Text>Quantity</Text>
+      <Text style={Styles.formLabel}>Quantity</Text>
       <InputSpinner
       	max={20}
       	min={1}
@@ -51,7 +71,7 @@ function Fisheries() {
         rounded={false}
       />
 
-      <Text>Species</Text>
+      <Text style={Styles.formLabel}>Species</Text>
       <Picker
         selectedValue={item.species}
         onValueChange={(value, _) => { update({ species: value }); }}>
@@ -60,7 +80,7 @@ function Fisheries() {
         ))}
       </Picker>
 
-      <Text>Estimated size: {item.size} cm</Text>
+      <Text style={Styles.formLabel}>Estimated size: {item.size} cm</Text>
       <Slider
         style={{ width: '100%', height: 40 }}
         minimumValue={0}
@@ -70,17 +90,29 @@ function Fisheries() {
         onValueChange={(value) => { update({ size: value }); }}
       />
 
-      <Text>Picture</Text>
+      <Text style={Styles.formLabel}>Picture</Text>
       <Text>Coming soon!</Text>
-      // TODO Allow:
-      // * Upload from photo library
-      // * Take picture with camera app
 
       <Button
-        onPress={save}
+        onPress={sign}
         title='Save'
         color="#ccc"
       />
+      <Button
+        onPress={discard}
+        title='Discard'
+        color="#ccc"
+      />
+
+      <Modal
+        isVisible={signatureVisible}
+        animationOut={'slideOutUp'}
+        animationOutTiming={1000}>
+        <View>
+          <Text>Sign please!</Text>
+          <Button title='Sign' onPress={save} />
+        </View>
+      </Modal>
     </View>
   );
 }

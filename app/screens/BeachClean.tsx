@@ -1,20 +1,13 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View } from 'react-native';
+import Styles from '../styles/shared';
 
 function BeachClean() {
   return (
-    <View style={styles.view}>
+    <View style={Styles.container}>
       <Text>Yay, cleaning beaches!</Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-});
 
 export default BeachClean;
