@@ -9,12 +9,49 @@ const Datastore = {
       console.log(e);
     }
   },
-  clearSynced: async () => {
+  numberOfUnsynced: async () => {
+    let count = 0;
     try {
-      // TODO
-    } catch(e) {
+      const keys = await AsyncStorage.getAllKeys();
+      for (key in keys) {
+        let value = await AsyncStorage.getItem(key);
+        let item = JSON.parse(value);
+        if (!item.synced) count = count + 1;
+      }
+    } catch (e) {
       // TODO Monitoring!
-      console.log(e);
+    }
+
+    return count;
+  },
+  numberOfSynced: async () => {
+    let count = 0;
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      for (key in keys) {
+        let value = await AsyncStorage.getItem(key);
+        let item = JSON.parse(value);
+        if (item.synced) count = count + 1;
+      }
+    } catch (e) {
+      // TODO Monitoring!
+    }
+
+    return count;
+  },
+  clearSynced: async () => {
+    let items = {};
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      for (key in keys) {
+        let value = await AsyncStorage.getItem(key);
+        let item = JSON.parse(value);
+        if (item.synced) {
+          await AsyncStorage.removeItem(key);
+        }
+      }
+    } catch (e) {
+      // TODO Monitoring!
     }
   },
   clearAll: async () => {
@@ -22,7 +59,6 @@ const Datastore = {
       await AsyncStorage.clear();
     } catch(e) {
       // TODO Monitoring!
-      console.log(e);
     }
   }
 };

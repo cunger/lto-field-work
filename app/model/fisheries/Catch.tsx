@@ -6,6 +6,7 @@ function Catch() {
   return {
     id: uuid(),
     type: 'Catch',
+    synced: false,
     signature: undefined,
     date: new Date(),
     location: Location.Guinjata,
