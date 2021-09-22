@@ -14,12 +14,11 @@ const Datastore = {
     let report = Report();
     try {
       const keys = await AsyncStorage.getAllKeys();
-      for (key in keys) {
-        let value = await AsyncStorage.getItem(key);
-        let item = JSON.parse(value);
-        console.log(`Counting item: ${JSON.stringify(item)}`);
-        report.countItem(item.type, item.synced);
-      }
+      const values = await AsyncStorage.multiGet(keys);
+      values.forEach((value) => {
+        let item = JSON.parse(value[1]);
+        report.countItem(item);
+      });
     } catch (e) {
       // TODO Monitoring!
     }
