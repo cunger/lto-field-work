@@ -16,31 +16,28 @@ const Datastore = {
       const keys = await AsyncStorage.getAllKeys();
       const values = await AsyncStorage.multiGet(keys);
       values.forEach((value) => {
-        let item = JSON.parse(value[1]);
-        report.countItem(item);
+        report.countItem(JSON.parse(value[1]));
       });
     } catch (e) {
       // TODO Monitoring!
     }
 
-    console.log(`Report: ${JSON.stringify(report)}`);
-
     return report;
   },
   clearSynced: async () => {
-    let items = {};
+    let keysOfSyncedItems = [];
     try {
       const keys = await AsyncStorage.getAllKeys();
       for (key in keys) {
         let value = await AsyncStorage.getItem(key);
         let item = JSON.parse(value);
-        if (item.synced) {
-          await AsyncStorage.removeItem(key);
-        }
+        if (item.synced) keysOfSyncedItems.push(key);
       }
     } catch (e) {
       // TODO Monitoring!
     }
+
+    await AsyncStorage.multiRemove(keysOfSyncedItems);
   },
   clearAll: async () => {
     try {

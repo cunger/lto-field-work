@@ -13,8 +13,6 @@ function History() {
       async function loadData() {
         const report = await Datastore.summary();
         setReport(report);
-
-        console.log('Loaded data!');
       }
 
       loadData();
