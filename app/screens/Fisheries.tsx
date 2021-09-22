@@ -7,7 +7,7 @@ import InputSpinner from 'react-native-input-spinner';
 import Modal from 'react-native-modal';
 import Styles from '../styles/shared';
 import Catch from '../model/fisheries/Catch';
-import Location from '../model/fisheries/Location';
+import Location from '../model/Location';
 import Species from '../model/fisheries/Species';
 import Signature from '../model/Signature';
 import Datastore from '../components/data/LocalDatastore';
@@ -29,7 +29,7 @@ function Fisheries({ navigation }) {
   };
 
   const save = () => {
-    console.log(`Saving data: ${item}`);
+    console.log(`Saving data: ${JSON.stringify(item)}`);
     Datastore.save(item);
     reset();
     setSignatureVisible(false);

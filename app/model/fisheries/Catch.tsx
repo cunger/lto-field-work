@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import Location from './Location';
+import Location from '../Location';
 import Species from './Species';
 
 function Catch() {

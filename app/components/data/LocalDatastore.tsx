@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Report from './Report';
 
 const Datastore = {
   save: async (item) => {
@@ -9,35 +10,23 @@ const Datastore = {
       console.log(e);
     }
   },
-  numberOfUnsynced: async () => {
-    let count = 0;
+  summary: async () => {
+    let report = Report();
     try {
       const keys = await AsyncStorage.getAllKeys();
       for (key in keys) {
         let value = await AsyncStorage.getItem(key);
         let item = JSON.parse(value);
-        if (!item.synced) count = count + 1;
+        console.log(`Counting item: ${JSON.stringify(item)}`);
+        report.countItem(item.type, item.synced);
       }
     } catch (e) {
       // TODO Monitoring!
     }
 
-    return count;
-  },
-  numberOfSynced: async () => {
-    let count = 0;
-    try {
-      const keys = await AsyncStorage.getAllKeys();
-      for (key in keys) {
-        let value = await AsyncStorage.getItem(key);
-        let item = JSON.parse(value);
-        if (item.synced) count = count + 1;
-      }
-    } catch (e) {
-      // TODO Monitoring!
-    }
+    console.log(`Report: ${JSON.stringify(report)}`);
 
-    return count;
+    return report;
   },
   clearSynced: async () => {
     let items = {};
