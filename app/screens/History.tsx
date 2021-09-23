@@ -5,18 +5,17 @@ import Styles from '../styles/shared';
 import Datastore from '../components/data/LocalDatastore';
 import Report from '../components/data/Report';
 
-function History() {
+function History({ navigation }) {
   const [report, setReport] = useState(Report());
+
+  async function loadData() {
+    const report = await Datastore.summary();
+    setReport(report);
+  }
 
   useFocusEffect(
     React.useCallback(() => {
-      async function loadData() {
-        const report = await Datastore.summary();
-        setReport(report);
-      }
-
       loadData();
-
       return () => {};
     }, [])
   );
@@ -24,6 +23,16 @@ function History() {
   const sync = () => {
     console.log('Uploading data...');
     // TODO Send unsynced items to API and set them to synced if successful.
+  };
+
+  const clearSynced = async () => {
+    await Datastore.clearSynced();
+    await loadData();
+  };
+
+  const clearAll = async () => {
+    await Datastore.clearAll();
+    await loadData();
   };
 
   return (
@@ -39,8 +48,8 @@ function History() {
       <Text>{`🎣 ${report.Catch.synced} catch items`}</Text>
 
       <Text>Want to free local storage?</Text>
-      <Button title='🗑️ Clear synced' onPress={Datastore.clearSynced} />
-      <Button title='🔥 Clear all' onPress={Datastore.clearAll} />
+      <Button title='🗑️ Clear synced' onPress={clearSynced} />
+      <Button title='🔥 Clear all' onPress={clearAll} />
     </View>
   );
 }
