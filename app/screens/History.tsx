@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { Text, View, Button } from 'react-native';
-import Styles from '../styles/shared';
+import Heading from '../components/Heading';
+import { ActionButton, Theme } from '../components/ActionButton';
 import Datastore from '../components/data/LocalDatastore';
 import Report from '../components/data/Report';
+import styles from '../styles/containerStyles';
 
 function History({ navigation }) {
   const [report, setReport] = useState(Report());
@@ -20,9 +22,9 @@ function History({ navigation }) {
     }, [])
   );
 
-  const sync = () => {
-    console.log('Uploading data...');
-    // TODO Send unsynced items to API and set them to synced if successful.
+  const sync = async () => {
+    await Datastore.syncAll();
+    await loadData();
   };
 
   const clearSynced = async () => {
@@ -36,20 +38,20 @@ function History({ navigation }) {
   };
 
   return (
-    <View style={Styles.container}>
-      <Button title='Sync all' onPress={sync} />
+    <View style={styles.container}>
+      <ActionButton title='🔄 Sync all' onPress={sync} theme={Theme.Go} />
 
-      <Text>❌ Unsynced data</Text>
-      <Text>{`🗑️ ${report.Trash.unsynced} trash items`}</Text>
-      <Text>{`🎣 ${report.Catch.unsynced} catch items`}</Text>
+      <Heading title='❌ Unsynced data' />
+      <Text>{` 🗑️ ${report.Trash.unsynced} trash items`}</Text>
+      <Text>{` 🎣 ${report.Catch.unsynced} catch items`}</Text>
 
-      <Text>✅ Synced data</Text>
-      <Text>{`🗑️ ${report.Trash.synced} trash items`}</Text>
-      <Text>{`🎣 ${report.Catch.synced} catch items`}</Text>
+      <Heading title='✅ Synced data' />
+      <Text>{` 🗑️ ${report.Trash.synced} trash items`}</Text>
+      <Text>{` 🎣 ${report.Catch.synced} catch items`}</Text>
 
-      <Text>Want to free local storage?</Text>
-      <Button title='🗑️ Clear synced' onPress={clearSynced} />
-      <Button title='🔥 Clear all' onPress={clearAll} />
+      <Heading title='Want to free local storage?' />
+      <ActionButton title='🗑️ Clear synced' onPress={clearSynced} theme={Theme.Warning} />
+      <ActionButton title='🔥 Clear all' onPress={clearAll} theme={Theme.Danger} />
     </View>
   );
 }

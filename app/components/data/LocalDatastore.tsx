@@ -24,6 +24,26 @@ const Datastore = {
 
     return report;
   },
+  syncAll: async () => {
+    let syncedItems = [];
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      const values = await AsyncStorage.multiGet(keys);
+      values.forEach((value) => {
+        let item = JSON.parse(value[1]);
+        if (!item.synced) {
+          // TODO Send to API.
+          // TODO if successful:
+          item.synced = true;
+          syncedItems.push([item.id, JSON.stringify(item)]);
+        }
+      });
+
+      await AsyncStorage.multiSet(syncedItems);
+    } catch (e) {
+      // TODO Monitoring!
+    }
+  },
   clearSynced: async () => {
     let keysOfSyncedItems = [];
     try {

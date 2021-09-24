@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import styles from '../styles/containerStyles';
 
 function Start({ navigation }) {
   return (
@@ -13,26 +14,5 @@ function Start({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#6ec1e4',
-    borderColor: 'white',
-    borderWidth: 1,
-    borderRadius: 12,
-    color: 'white',
-    padding: 10,
-    marginTop: 6,
-    marginBottom: 6,
-    textAlign: 'left',
-    width: '100%',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-  }
-});
 
 export default Start;

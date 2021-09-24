@@ -5,12 +5,13 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Slider from '@react-native-community/slider';
 import InputSpinner from 'react-native-input-spinner';
 import Modal from 'react-native-modal';
-import Styles from '../styles/shared';
 import Catch from '../model/fisheries/Catch';
 import Location from '../model/Location';
 import Species from '../model/fisheries/Species';
 import Signature from '../model/Signature';
 import Datastore from '../components/data/LocalDatastore';
+import formStyles from '../styles/formStyles';
+import containerStyles from '../styles/containerStyles';
 
 function Fisheries({ navigation }) {
   const [item, setItem] = useState(Catch());
@@ -41,8 +42,8 @@ function Fisheries({ navigation }) {
   };
 
   return (
-    <View style={Styles.container}>
-      <Text style={Styles.formLabel}>Date</Text>
+    <View style={containerStyles.container}>
+      <Text style={formStyles.label}>Date</Text>
       <DateTimePicker
         value={item.date}
         onChange={(_, value) => { update({ date: value }); }}
@@ -51,7 +52,7 @@ function Fisheries({ navigation }) {
         display='default'
       />
 
-      <Text style={Styles.formLabel}>Location</Text>
+      <Text style={formStyles.label}>Location</Text>
       <Picker
         selectedValue={item.location}
         onValueChange={(value, _) => { update({ location: value }); }}>
@@ -60,7 +61,7 @@ function Fisheries({ navigation }) {
         ))}
       </Picker>
 
-      <Text style={Styles.formLabel}>Quantity</Text>
+      <Text style={formStyles.label}>Quantity</Text>
       <InputSpinner
       	max={20}
       	min={1}
@@ -71,7 +72,7 @@ function Fisheries({ navigation }) {
         rounded={false}
       />
 
-      <Text style={Styles.formLabel}>Species</Text>
+      <Text style={formStyles.label}>Species</Text>
       <Picker
         selectedValue={item.species}
         onValueChange={(value, _) => { update({ species: value }); }}>
@@ -80,7 +81,7 @@ function Fisheries({ navigation }) {
         ))}
       </Picker>
 
-      <Text style={Styles.formLabel}>Estimated size: {item.size} cm</Text>
+      <Text style={formStyles.label}>Estimated size: {item.size} cm</Text>
       <Slider
         style={{ width: '100%', height: 40 }}
         minimumValue={0}
@@ -90,7 +91,7 @@ function Fisheries({ navigation }) {
         onValueChange={(value) => { update({ size: value }); }}
       />
 
-      <Text style={Styles.formLabel}>Picture</Text>
+      <Text style={formStyles.label}>Picture</Text>
       <Text>Coming soon!</Text>
 
       <Button
