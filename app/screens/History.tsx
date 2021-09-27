@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { Text, View, Button } from 'react-native';
+import { ScrollView, Text, Button } from 'react-native';
 import Heading from '../components/Heading';
 import { ActionButton, Theme } from '../components/ActionButton';
 import Datastore from '../components/data/LocalDatastore';
 import Report from '../components/data/Report';
-import styles from '../styles/containerStyles';
+import containerStyles from '../styles/containerStyles';
 
 function History({ navigation }) {
   const [report, setReport] = useState(Report());
@@ -38,7 +38,7 @@ function History({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={containerStyles.content}>
       <ActionButton title='🔄 Sync all' onPress={sync} theme={Theme.Go} />
 
       <Heading title='❌ Unsynced data' />
@@ -52,7 +52,7 @@ function History({ navigation }) {
       <Heading title='Want to free local storage?' />
       <ActionButton title='🗑️ Clear synced' onPress={clearSynced} theme={Theme.Warning} />
       <ActionButton title='🔥 Clear all' onPress={clearAll} theme={Theme.Danger} />
-    </View>
+    </ScrollView>
   );
 }
 

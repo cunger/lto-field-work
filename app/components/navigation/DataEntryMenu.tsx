@@ -13,7 +13,7 @@ const Drawer = createDrawerNavigator();
 function DataEntryMenu() {
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name='Start' component={Start} />
+      <Drawer.Screen name='Select' component={Start} />
       <Drawer.Screen name='🗑️ Beach clean' component={BeachClean} />
       <Drawer.Screen name='🎣 Fisheries' component={Fisheries} />
       <Drawer.Screen name='Observation:' component={Observation} />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, Button } from 'react-native';
+import { ScrollView, View, Text, Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Slider from '@react-native-community/slider';
@@ -10,6 +10,7 @@ import Location from '../model/Location';
 import Species from '../model/fisheries/Species';
 import Signature from '../model/Signature';
 import Datastore from '../components/data/LocalDatastore';
+import { ActionButton, Theme } from '../components/ActionButton';
 import formStyles from '../styles/formStyles';
 import containerStyles from '../styles/containerStyles';
 
@@ -42,68 +43,68 @@ function Fisheries({ navigation }) {
   };
 
   return (
-    <View style={containerStyles.container}>
-      <Text style={formStyles.label}>Date</Text>
-      <DateTimePicker
-        value={item.date}
-        onChange={(_, value) => { update({ date: value }); }}
-        mode='date'
-        is24Hour={true}
-        display='default'
-      />
+    <ScrollView style={containerStyles.content}>
+      <View style={formStyles.field}>
+        <Text style={formStyles.label}>Date</Text>
+        <DateTimePicker
+          value={item.date}
+          onChange={(_, value) => { update({ date: value }); }}
+          mode='date'
+          is24Hour={true}
+          display='default'
+        />
 
-      <Text style={formStyles.label}>Location</Text>
-      <Picker
-        selectedValue={item.location}
-        onValueChange={(value, _) => { update({ location: value }); }}>
-        {Object.keys(Location).map(key => (
-          <Picker.Item key={key} label={Location[key]} value={key} />
-        ))}
-      </Picker>
+        <Text style={formStyles.label}>Location</Text>
+        <Picker
+          selectedValue={item.location}
+          onValueChange={(value, _) => { update({ location: value }); }}>
+          {Object.keys(Location).map(key => (
+            <Picker.Item key={key} label={Location[key]} value={key} />
+          ))}
+        </Picker>
+      </View>
 
-      <Text style={formStyles.label}>Quantity</Text>
-      <InputSpinner
-      	max={20}
-      	min={1}
-      	step={1}
-      	value={item.quantity}
-      	onChange={(value) => { update({ quantity: value }); }}
-        height={30}
-        rounded={false}
-      />
+      <View style={formStyles.field}>
+        <Text style={formStyles.label}>Quantity</Text>
+        <InputSpinner
+        	max={20}
+        	min={1}
+        	step={1}
+        	value={item.quantity}
+        	onChange={(value) => { update({ quantity: value }); }}
+          height={30}
+          rounded={false}
+        />
 
-      <Text style={formStyles.label}>Species</Text>
-      <Picker
-        selectedValue={item.species}
-        onValueChange={(value, _) => { update({ species: value }); }}>
-        {Object.keys(Species).map(key => (
-          <Picker.Item key={key} label={Species[key]} value={key} />
-        ))}
-      </Picker>
+        <Text style={formStyles.label}>Species</Text>
+        <Picker
+          selectedValue={item.species}
+          onValueChange={(value, _) => { update({ species: value }); }}>
+          {Object.keys(Species).map(key => (
+            <Picker.Item key={key} label={Species[key]} value={key} />
+          ))}
+        </Picker>
+      </View>
 
-      <Text style={formStyles.label}>Estimated size: {item.size} cm</Text>
-      <Slider
-        style={{ width: '100%', height: 40 }}
-        minimumValue={0}
-        maximumValue={100}
-        step={1}
-        value={item.size}
-        onValueChange={(value) => { update({ size: value }); }}
-      />
+      <View style={formStyles.field}>
+        <Text style={formStyles.label}>Estimated size: {item.size} cm</Text>
+        <Slider
+          style={{ padding: 20, height: 40 }}
+          minimumValue={0}
+          maximumValue={100}
+          step={1}
+          value={item.size}
+          onValueChange={(value) => { update({ size: value }); }}
+        />
+      </View>
 
-      <Text style={formStyles.label}>Picture</Text>
-      <Text>Coming soon!</Text>
+      <View style={formStyles.field}>
+        <Text style={formStyles.label}>Picture</Text>
+        <Text>Coming soon!</Text>
+      </View>
 
-      <Button
-        onPress={sign}
-        title='Save'
-        color="#ccc"
-      />
-      <Button
-        onPress={discard}
-        title='Discard'
-        color="#ccc"
-      />
+      <ActionButton title='Save' onPress={sign} theme={Theme.Go} />
+      <ActionButton title='Discard' onPress={discard} theme={Theme.Danger} />
 
       <Modal
         isVisible={signatureVisible}
@@ -114,7 +115,7 @@ function Fisheries({ navigation }) {
           <Button title='Sign' onPress={save} />
         </View>
       </Modal>
-    </View>
+    </ScrollView>
   );
 }
 
