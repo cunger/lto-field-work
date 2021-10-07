@@ -7,10 +7,10 @@ module.exports = {
         blue: {
           light: '#6ec1e4',
           DEFAULT: '#6ec1e4',
-          dark: '#166088',
+          dark: '#4389b1',
         },
         danger: {
-          DEFAULT: '#d9534f',
+          DEFAULT: '#ff5c33',
         },
         warning: {
           DEFAULT: '#f0ad4e',
