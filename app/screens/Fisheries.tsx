@@ -11,8 +11,6 @@ import Species from '../model/fisheries/Species';
 import Signature from '../model/Signature';
 import Datastore from '../components/data/LocalDatastore';
 import { ActionButton, Theme } from '../components/ActionButton';
-import formStyles from '../styles/formStyles';
-import containerStyles from '../styles/containerStyles';
 
 function Fisheries({ navigation }) {
   const [item, setItem] = useState(Catch());
@@ -43,9 +41,9 @@ function Fisheries({ navigation }) {
   };
 
   return (
-    <ScrollView style={containerStyles.content}>
-      <View style={formStyles.field}>
-        <Text style={formStyles.label}>Date</Text>
+    <ScrollView>
+      <View>
+        <Text>Date</Text>
         <DateTimePicker
           value={item.date}
           onChange={(_, value) => { update({ date: value }); }}
@@ -54,7 +52,7 @@ function Fisheries({ navigation }) {
           display='default'
         />
 
-        <Text style={formStyles.label}>Location</Text>
+        <Text>Location</Text>
         <Picker
           selectedValue={item.location}
           onValueChange={(value, _) => { update({ location: value }); }}>
@@ -64,8 +62,8 @@ function Fisheries({ navigation }) {
         </Picker>
       </View>
 
-      <View style={formStyles.field}>
-        <Text style={formStyles.label}>Quantity</Text>
+      <View>
+        <Text>Quantity</Text>
         <InputSpinner
         	max={20}
         	min={1}
@@ -76,7 +74,7 @@ function Fisheries({ navigation }) {
           rounded={false}
         />
 
-        <Text style={formStyles.label}>Species</Text>
+        <Text>Species</Text>
         <Picker
           selectedValue={item.species}
           onValueChange={(value, _) => { update({ species: value }); }}>
@@ -86,8 +84,8 @@ function Fisheries({ navigation }) {
         </Picker>
       </View>
 
-      <View style={formStyles.field}>
-        <Text style={formStyles.label}>Estimated size: {item.size} cm</Text>
+      <View>
+        <Text>Estimated size: {item.size} cm</Text>
         <Slider
           style={{ padding: 20, height: 40 }}
           minimumValue={0}
@@ -98,8 +96,8 @@ function Fisheries({ navigation }) {
         />
       </View>
 
-      <View style={formStyles.field}>
-        <Text style={formStyles.label}>Picture</Text>
+      <View>
+        <Text>Picture</Text>
         <Text>Coming soon!</Text>
       </View>
 

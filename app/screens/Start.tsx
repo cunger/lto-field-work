@@ -1,14 +1,14 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import styles from '../styles/containerStyles';
+import { Text } from 'react-native';
+import ContentContainer from '../components/ContentContainer';
 
 function Start({ navigation }) {
   return (
-    <View style={styles.container}>
+    <ContentContainer>
       <Text>
         Click the menu above to select which kind of data entry you want to start.
       </Text>
-    </View>
+    </ContentContainer>
   );
 }
 

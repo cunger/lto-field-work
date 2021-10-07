@@ -21,10 +21,10 @@ const MainMenu = () => {
       })}
     >
       <Tab.Screen
-        name='Home'
+        name='Dashboard'
         component={Home}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Dashboard',
           tabBarIcon: ({ color, size }) => (
             <Feather name='clipboard' size={size} color={color} />
           ),

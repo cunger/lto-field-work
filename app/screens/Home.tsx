@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { SafeAreaView, Text } from 'react-native';
-import styles from '../styles/containerStyles';
+import { Text } from 'react-native';
+import ContentContainer from '../components/ContentContainer';
 
 function Home() {
   return (
-    <SafeAreaView style={styles.container}>
+    <ContentContainer>
       <Text>Home sweet home!</Text>
-    </SafeAreaView>
+    </ContentContainer>
   );
 }
 

@@ -5,7 +5,7 @@ import Heading from '../components/Heading';
 import { ActionButton, Theme } from '../components/ActionButton';
 import Datastore from '../components/data/LocalDatastore';
 import Report from '../components/data/Report';
-import containerStyles from '../styles/containerStyles';
+import tailwind from 'tailwind-rn';
 
 function History({ navigation }) {
   const [report, setReport] = useState(Report());
@@ -38,7 +38,7 @@ function History({ navigation }) {
   };
 
   return (
-    <ScrollView style={containerStyles.content}>
+    <ScrollView>
       <ActionButton title='🔄 Sync all' onPress={sync} theme={Theme.Go} />
 
       <Heading title='❌ Unsynced data' />
