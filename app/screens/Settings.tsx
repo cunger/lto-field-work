@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
+import SafeContainer from 'components/SafeContainer';
 
 function Settings() {
   return (
-    <View>
+    <SafeContainer>
       <Text>Settings!</Text>
-    </View>
+    </SafeContainer>
   );
 }
 

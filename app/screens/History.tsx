@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { ScrollView, Text, Button } from 'react-native';
-import Heading from '../components/Heading';
-import { ActionButton, Theme } from '../components/ActionButton';
-import Datastore from '../components/data/LocalDatastore';
-import Report from '../components/data/Report';
-import tailwind from 'tailwind-rn';
+import ScrollContainer from 'components/ScrollContainer';
+import Heading from 'components/Heading';
+import ListItem from 'components/ListItem';
+import Datastore from 'components/data/LocalDatastore';
+import Report from 'components/data/Report';
+import { tailwind } from 'tailwind';
 
 function History({ navigation }) {
   const [report, setReport] = useState(Report());
@@ -38,21 +39,20 @@ function History({ navigation }) {
   };
 
   return (
-    <ScrollView>
-      <ActionButton title='🔄 Sync all' onPress={sync} theme={Theme.Go} />
+    <ScrollContainer>
+      <Heading title='Unsynced data' actionTitle='Sync' actionOnPress={sync} />
+      <ListItem><Text>{` 🗑️ ${report.Trash.unsynced} trash items`}</Text></ListItem>
+      <ListItem><Text>{` 🎣 ${report.Catch.unsynced} catch items`}</Text></ListItem>
 
-      <Heading title='❌ Unsynced data' />
-      <Text>{` 🗑️ ${report.Trash.unsynced} trash items`}</Text>
-      <Text>{` 🎣 ${report.Catch.unsynced} catch items`}</Text>
+      <Heading title='Synced data' actionTitle='Clear' actionOnPress={clearSynced} />
+      <ListItem><Text>{` 🗑️ ${report.Trash.synced} trash items`}</Text></ListItem>
+      <ListItem><Text>{` 🎣 ${report.Catch.synced} catch items`}</Text></ListItem>
 
-      <Heading title='✅ Synced data' />
-      <Text>{` 🗑️ ${report.Trash.synced} trash items`}</Text>
-      <Text>{` 🎣 ${report.Catch.synced} catch items`}</Text>
-
-      <Heading title='Want to free local storage?' />
-      <ActionButton title='🗑️ Clear synced' onPress={clearSynced} theme={Theme.Warning} />
-      <ActionButton title='🔥 Clear all' onPress={clearAll} theme={Theme.Danger} />
-    </ScrollView>
+      <Heading title='Local storage' actionTitle='🔥 Clear all' actionOnPress={clearAll}  />
+      <Text>
+        ... using XX kB of your storage.
+      </Text>
+    </ScrollContainer>
   );
 }
 

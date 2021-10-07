@@ -2,14 +2,14 @@ import React from 'react';
 import { SafeAreaView, View } from 'react-native';
 import tailwind from 'tailwind-rn';
 
-function ContentContainer({ children }) {
+function SafeContainer({ children }) {
   return (
-    <SafeAreaView style={tailwind('h-full')}>
-      <View style={tailwind('pt-12 items-center')}>
+    <SafeAreaView style={tailwind('h-full w-full')}>
+      <View style={tailwind('p-8 content-start')}>
         {children}
       </View>
     </SafeAreaView>
   );
 }
 
-export default ContentContainer;
+export default SafeContainer;

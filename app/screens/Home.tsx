@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Text } from 'react-native';
-import ContentContainer from '../components/ContentContainer';
+import SafeContainer from 'components/SafeContainer';
 
 function Home() {
   return (
-    <ContentContainer>
+    <SafeContainer>
       <Text>Home sweet home!</Text>
-    </ContentContainer>
+    </SafeContainer>
   );
 }
 

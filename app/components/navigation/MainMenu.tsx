@@ -18,6 +18,14 @@ const MainMenu = () => {
         tabBarLabelPosition: 'below-icon',
         tabBarActiveTintColor: '#6ec1e4',
         tabBarInactiveTintColor: 'gray',
+        tabBarStyle: {
+          paddingVertical: 10,
+          height: 66,
+        },
+        tabBarLabelStyle: {
+          fontSize: 14,
+          padding: 6,
+        }
       })}
     >
       <Tab.Screen
@@ -34,7 +42,7 @@ const MainMenu = () => {
         name='New'
         component={DataEntryMenu}
         options={{
-          tabBarLabel: 'New',
+          tabBarLabel: 'Data Entry',
           tabBarIcon: ({ color, size }) => (
             <Feather name='plus-circle' size={size} color={color} />
           ),
