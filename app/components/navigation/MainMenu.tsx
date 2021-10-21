@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
+import Datastore from 'components/data/LocalDatastore';
 import Home from '../../screens/Home';
 import DataEntryMenu from './DataEntryMenu';
 import History from '../../screens/History';
@@ -10,7 +11,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
 
-const MainMenu = () => {
+const MainMenu = async () => {
+  const numberOfUnsynced = await Datastore.numberOfUnsynced();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -57,7 +59,7 @@ const MainMenu = () => {
           tabBarIcon: ({ color, size }) => (
             <Feather name='upload' size={size} color={color} />
           ),
-          tabBarBadge: 2,
+          tabBarBadge: 0,
         }}
       />
       <Tab.Screen

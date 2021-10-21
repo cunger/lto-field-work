@@ -24,6 +24,21 @@ const Datastore = {
 
     return report;
   },
+  numberOfUnsynced: async () => {
+    let count = 0;
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      for (key of keys) {
+        let value = await AsyncStorage.getItem(key);
+        let item = JSON.parse(value);
+        if (!item.synced) count = count + 1;
+      }
+    } catch (e) {
+      // TODO Monitoring!
+    }
+
+    return count;
+  },
   syncAll: async () => {
     let syncedItems = [];
     try {
@@ -48,7 +63,7 @@ const Datastore = {
     let keysOfSyncedItems = [];
     try {
       const keys = await AsyncStorage.getAllKeys();
-      for (key in keys) {
+      for (key of keys) {
         let value = await AsyncStorage.getItem(key);
         let item = JSON.parse(value);
         if (item.synced) keysOfSyncedItems.push(key);
