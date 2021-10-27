@@ -4,17 +4,19 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Slider from '@react-native-community/slider';
 import InputSpinner from 'react-native-input-spinner';
-import Modal from 'react-native-modal';
 import Catch from 'model/fisheries/Catch';
-import Location from 'model/Location';
 import Species from 'model/fisheries/Species';
 import Signature from 'model/Signature';
-import Datastore from 'components/data/LocalDatastore';
 import ScrollContainer from 'components/ScrollContainer';
+import Datastore from 'components/data/LocalDatastore';
+import Coordinates from 'components/forms/Coordinates';
 import InputLabel from 'components/forms/InputLabel';
 import SubmitButtons from 'components/forms/SubmitButtons';
+import Signing from 'components/forms/Signing';
 
 function Fisheries({ navigation }) {
+  const [date, setDate] = useState(new Date());
+  const [location, setLocation] = useState(Location.Guinjata);
   const [item, setItem] = useState(Catch());
   const [signatureVisible, setSignatureVisible] = useState(false);
 
@@ -39,33 +41,18 @@ function Fisheries({ navigation }) {
 
   const discard = () => {
     reset();
-    navigation.navigate('Start');
+    navigation.navigate('DataEntry');
   };
 
   return (
     <ScrollContainer>
-      <View>
-        <InputLabel>Date</InputLabel>
-        <DateTimePicker
-          value={item.date}
-          onChange={(_, value) => { update({ date: value }); }}
-          mode='date'
-          is24Hour={true}
-          display='default'
-        />
-
-        <InputLabel>Location</InputLabel>
-        <Picker
-          selectedValue={item.location}
-          onValueChange={(value, _) => { update({ location: value }); }}>
-          {Object.keys(Location).map(key => (
-            <Picker.Item key={key} label={Location[key]} value={key} />
-          ))}
-        </Picker>
-      </View>
+      <Coordinates
+        setDateOnParent={setDate}
+        setLocationOnParent={setLocation}
+      />
 
       <View>
-        <InputLabel>Quantity</InputLabel>
+        <InputLabel text='Quantity' />
         <InputSpinner
         	max={20}
         	min={1}
@@ -76,7 +63,7 @@ function Fisheries({ navigation }) {
           rounded={false}
         />
 
-        <InputLabel>Species</InputLabel>
+        <InputLabel text='Species' />
         <Picker
           selectedValue={item.species}
           onValueChange={(value, _) => { update({ species: value }); }}>
@@ -87,7 +74,7 @@ function Fisheries({ navigation }) {
       </View>
 
       <View>
-        <InputLabel>Estimated size: {item.size} cm</InputLabel>
+        <InputLabel text="Estimated size: {item.size} cm" />
         <Slider
           style={{ padding: 20, height: 40 }}
           minimumValue={0}
@@ -99,21 +86,12 @@ function Fisheries({ navigation }) {
       </View>
 
       <View>
-        <InputLabel>Picture</InputLabel>
+        <InputLabel text='Picture' />
         <Text>Coming soon!</Text>
       </View>
 
       <SubmitButtons saveAction={sign} discardAction={discard} />
-
-      <Modal
-        isVisible={signatureVisible}
-        animationOut={'slideOutUp'}
-        animationOutTiming={1000}>
-        <View>
-          <Text>Sign please!</Text>
-          <Button title='Sign' onPress={save} />
-        </View>
-      </Modal>
+      <Signing visible={signatureVisible} action={save} />
     </ScrollContainer>
   );
 }

@@ -9,6 +9,11 @@ module.exports = {
           DEFAULT: '#6ec1e4',
           dark: '#4389b1',
         },
+        gray: {
+          light: '#c8d1e0',
+          DEFAULT: '#afbacc',
+          dark: '#707a8a',
+        },
         danger: {
           DEFAULT: '#ff5c33',
         },

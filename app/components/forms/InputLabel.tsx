@@ -4,7 +4,7 @@ import { tailwind } from 'tailwind';
 
 function InputLabel({ text }) {
   return (
-    <View style={tailwind('my-2 px-5 text-sm font-medium')}>
+    <View style={tailwind('my-2 text-sm font-medium')}>
       <Text>{text}</Text>
     </View>
   );

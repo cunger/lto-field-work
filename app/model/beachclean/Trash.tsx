@@ -3,16 +3,17 @@ import { v4 as uuid } from 'uuid';
 import Location from '../Location';
 import Category from './Category';
 
-function Trash() {
+function Trash(props) {
+  console.log(JSON.stringify(props));
   return {
     id: uuid(),
     type: 'Trash',
     synced: false,
     signature: undefined,
-    date: new Date(),
-    location: Location.Guinjata,
-    quantity: 1,
-    category: Category.Unknown,
+    date: props.date || new Date(),
+    location: props.location || Location.Guinjata,
+    quantity: props.quantity || 0,
+    category: props.category || Category.Unknown,
   };
 }
 
