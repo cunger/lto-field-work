@@ -28,8 +28,7 @@ function BeachClean({ navigation }) {
   };
 
   const reset = () => {
-    // setDate(new Date());
-    // setLocation();
+    setDate(new Date());
     setItems({});
   };
 
@@ -74,7 +73,6 @@ function BeachClean({ navigation }) {
           if (category == 'Unknown') return;
           return (
             <InputSpinner
-            	max={100}
             	min={0}
             	step={1}
             	value={items[category] || 0}

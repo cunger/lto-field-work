@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, Button } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Slider from '@react-native-community/slider';
 import InputSpinner from 'react-native-input-spinner';
 import Catch from 'model/fisheries/Catch';
 import Species from 'model/fisheries/Species';
+import Location from 'model/Location';
 import Signature from 'model/Signature';
 import ScrollContainer from 'components/ScrollContainer';
 import Datastore from 'components/data/LocalDatastore';
@@ -13,6 +13,7 @@ import Coordinates from 'components/forms/Coordinates';
 import InputLabel from 'components/forms/InputLabel';
 import SubmitButtons from 'components/forms/SubmitButtons';
 import Signing from 'components/forms/Signing';
+import { tailwind } from 'tailwind';
 
 function Fisheries({ navigation }) {
   const [date, setDate] = useState(new Date());
@@ -28,13 +29,11 @@ function Fisheries({ navigation }) {
     setItem(Catch());
   };
 
-  const sign = () => {
+  const openSigning = () => {
     setSignatureVisible(true);
   };
 
-  const save = () => {
-    console.log(`Saving data: ${JSON.stringify(item)}`);
-    Datastore.save(item);
+  const closeSigning = () => {
     reset();
     setSignatureVisible(false);
   };
@@ -52,9 +51,8 @@ function Fisheries({ navigation }) {
       />
 
       <View>
-        <InputLabel text='Quantity' />
+        <InputLabel text='Catch' />
         <InputSpinner
-        	max={20}
         	min={1}
         	step={1}
         	value={item.quantity}
@@ -62,19 +60,11 @@ function Fisheries({ navigation }) {
           height={30}
           rounded={false}
         />
-
-        <InputLabel text='Species' />
-        <Picker
-          selectedValue={item.species}
-          onValueChange={(value, _) => { update({ species: value }); }}>
-          {Object.keys(Species).map(key => (
-            <Picker.Item key={key} label={Species[key]} value={key} />
-          ))}
-        </Picker>
+        <Text>TODO: Species picker</Text>
       </View>
 
       <View>
-        <InputLabel text="Estimated size: {item.size} cm" />
+        <InputLabel text={`Estimated size: ${item.size} cm`} />
         <Slider
           style={{ padding: 20, height: 40 }}
           minimumValue={0}
@@ -90,8 +80,8 @@ function Fisheries({ navigation }) {
         <Text>Coming soon!</Text>
       </View>
 
-      <SubmitButtons saveAction={sign} discardAction={discard} />
-      <Signing visible={signatureVisible} action={save} />
+      <SubmitButtons saveAction={openSigning} discardAction={discard} />
+      <Signing visible={signatureVisible} item={item} closeAction={closeSigning} />
     </ScrollContainer>
   );
 }

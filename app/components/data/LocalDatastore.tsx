@@ -2,6 +2,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Report from './Report';
 
 const Datastore = {
+  setUserName: async (name) => {
+    await AsyncStorage.setItem('username', name);
+  },
+  setUserToken: async (token) => {
+    await AsyncStorage.setItem('usertoken', token);
+  },
+  getUserName: () => {
+    return AsyncStorage.getItem('username');
+  },
+  getUserToken: () => {
+    AsyncStorage.getItem('usertoken');
+  },
   save: async (item) => {
     try {
       await AsyncStorage.setItem(item.id, JSON.stringify(item));

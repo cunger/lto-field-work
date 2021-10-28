@@ -1,5 +1,8 @@
-function Signature() {
+function Signature(name, token) {
   return {
+    name: name,
+    token: token,
+    verified: false
   }
 }
 
