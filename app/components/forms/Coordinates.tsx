@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, Button, TouchableOpacity, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DatePicker from 'react-native-neat-date-picker';
 import SafeContainer from 'components/SafeContainer';
 import InputLabel from 'components/forms/InputLabel';
 import Location from 'model/Location';
@@ -31,22 +31,23 @@ function Coordinates({ setDateOnParent, setLocationOnParent }) {
         style={tailwind('px-4 py-2 mb-2 rounded-md bg-blue')}>
         <Text>{date.toDateString()}</Text>
       </TouchableOpacity>
-      {showDatePicker && (
-        <View style={{ backgroundColor: 'white' }}>
-          <TouchableOpacity
-            onPress={() => setShowDatePicker(false)}
-            style={tailwind('px-4 py-2 mr-4 justify-end rounded-md')}>
-            <Text>Done</Text>
-          </TouchableOpacity>
-          <DateTimePicker
-            value={date}
-            onChange={(_, value) => { saveDate(value); }}
-            mode='date'
-            is24Hour={true}
-            display={Platform.iOS ? 'default' : 'calendar'}
-          />
-        </View>
-      )}
+      <DatePicker
+        isVisible={showDatePicker}
+        mode={'single'}
+        onCancel={() => {
+          setShowDatePicker(false);
+        }}
+        onConfirm={value => {
+          saveDate(value);
+          setShowDatePicker(false);
+        }}
+        colorOptions={{
+          headerColor: '#6ec1e4',
+          weekDaysColor: '#6ec1e4',
+          selectedDateBackgroundColor: '#6ec1e4',
+          confirmButtonColor: '#6ec1e4'
+        }}
+      />
 
       <InputLabel text='Location' />
       <TouchableOpacity
@@ -59,12 +60,15 @@ function Coordinates({ setDateOnParent, setLocationOnParent }) {
           <TouchableOpacity
             onPress={() => setShowLocationPicker(false)}
             style={tailwind('px-4 py-2 mr-4 justify-end rounded-md')}>
-            <Text>Done</Text>
+            <Text>✖️ Close</Text>
           </TouchableOpacity>
           <Text>Option: use my current GPS coordinates</Text>
           <Picker
             selectedValue={location}
-            onValueChange={(value, _) => { saveLocation(value); }}>
+            onValueChange={(value, _) => {
+              saveLocation(value);
+              setShowLocationPicker(false);
+            }}>
             {Object.keys(Location).map(key => (
               <Picker.Item key={key} label={Location[key]} value={key} />
             ))}

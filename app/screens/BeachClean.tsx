@@ -56,7 +56,7 @@ function BeachClean({ navigation }) {
 
   const discard = () => {
     reset();
-    navigation.navigate('DataEntry');
+    navigation.navigate('Data Entry', { screen: 'Data entry' });
   };
 
   return (
