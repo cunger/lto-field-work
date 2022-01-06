@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import Home from '../../screens/Home';
 import DataEntryMenu from './DataEntryMenu';
-import History from '../../screens/History';
+import Sync from '../../screens/Sync';
 import Settings from '../../screens/Settings';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -51,7 +51,7 @@ const MainMenu = () => {
       />
       <Tab.Screen
         name='Sync data'
-        component={History}
+        component={Sync}
         options={{
           tabBarLabel: 'Sync',
           tabBarIcon: ({ color, size }) => (

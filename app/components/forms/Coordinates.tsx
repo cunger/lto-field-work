@@ -28,7 +28,7 @@ function Coordinates({ setDateOnParent, setLocationOnParent }) {
       <InputLabel text='Date' />
       <TouchableOpacity
         onPress={() => setShowDatePicker(true)}
-        style={tailwind('px-4 py-2 mb-2 rounded-md bg-blue')}>
+        style={tailwind('px-4 py-2 mb-2 rounded-md bg-white')}>
         <Text>{date.toDateString()}</Text>
       </TouchableOpacity>
       <DatePicker
@@ -52,17 +52,16 @@ function Coordinates({ setDateOnParent, setLocationOnParent }) {
       <InputLabel text='Location' />
       <TouchableOpacity
         onPress={() => setShowLocationPicker(true)}
-        style={tailwind('px-4 py-2 mb-2 rounded-md bg-blue')}>
+        style={tailwind('px-4 py-2 mb-2 rounded-md bg-white')}>
         <Text>{location}</Text>
       </TouchableOpacity>
       {showLocationPicker && (
-        <View style={{ backgroundColor: 'white' }}>
+        <View style={tailwind('rounded-md bg-white')}>
           <TouchableOpacity
             onPress={() => setShowLocationPicker(false)}
-            style={tailwind('px-4 py-2 mr-4 justify-end rounded-md')}>
+            style={tailwind('px-2 py-2')}>
             <Text>✖️ Close</Text>
           </TouchableOpacity>
-          <Text>Option: use my current GPS coordinates</Text>
           <Picker
             selectedValue={location}
             onValueChange={(value, _) => {

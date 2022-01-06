@@ -4,7 +4,6 @@ import Location from '../Location';
 import Category from './Category';
 
 function Trash(props) {
-  console.log(JSON.stringify(props));
   return {
     id: uuid(),
     type: 'Trash',

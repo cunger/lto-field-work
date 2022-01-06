@@ -6,7 +6,7 @@ function DataEntry() {
   return (
     <View>
       <Text style={tailwind('m-4')}>
-        ☝️ Please open the menu (in the top left) and pick what data you want to enter.
+        ☝️ Please open the menu and pick what data you want to enter.
       </Text>
     </View>
   );

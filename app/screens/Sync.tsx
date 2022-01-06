@@ -8,7 +8,7 @@ import Datastore from 'components/data/LocalDatastore';
 import Report from 'components/data/Report';
 import { tailwind } from 'tailwind';
 
-function History({ navigation }) {
+function Sync({ navigation }) {
   const [report, setReport] = useState(Report());
 
   async function loadData() {
@@ -49,11 +49,11 @@ function History({ navigation }) {
       <ListItem><Text>{` 🎣 ${report.Catch.synced} catch items`}</Text></ListItem>
 
       <Heading title='Local storage' actionTitle='🔥 Clear all' actionOnPress={clearAll}  />
-      <Text>
-        ... using XX kB of your storage.
+      <Text style={tailwind('m-2')}>
+        There's a total of {report.total} items in your storage.
       </Text>
     </ScrollContainer>
   );
 }
 
-export default History;
+export default Sync;

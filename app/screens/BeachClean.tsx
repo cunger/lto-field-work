@@ -32,26 +32,27 @@ function BeachClean({ navigation }) {
     setItems({});
   };
 
-  const sign = () => {
+  const openSigning = () => {
     setSignatureVisible(true);
   };
 
-  const save = () => {
-    console.log(`Saving data: ${JSON.stringify(items)}`);
+  const closeSigning = () => {
+    reset();
+    setSignatureVisible(false);
+  };
 
+  const trashItems = () => {
+    let trashItems = [];
     for (let [category, quantity] of Object.entries(items)) {
-      let item = Trash({
+      trashItems.push(Trash({
         date: date,
         location: location,
         category: category,
         quantity: quantity,
-      });
-
-      console.log(`...${JSON.stringify(item)}`);
-      Datastore.save(item);
+      }));
     }
-    reset();
-    setSignatureVisible(false);
+
+    return trashItems;
   };
 
   const discard = () => {
@@ -87,8 +88,8 @@ function BeachClean({ navigation }) {
         })}
       </View>
 
-      <SubmitButtons saveAction={sign} discardAction={discard} />
-      <Signing visible={signatureVisible} action={save} />
+      <SubmitButtons saveAction={openSigning} discardAction={discard} />
+      <Signing visible={signatureVisible} items={trashItems()} closeAction={closeSigning} />
     </ScrollContainer>
   );
 }

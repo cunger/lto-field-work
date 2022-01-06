@@ -6,7 +6,7 @@ import SubmitButtons from 'components/forms/SubmitButtons';
 import Datastore from 'components/data/LocalDatastore';
 import { tailwind } from 'tailwind';
 
-function Signing({ visible, item, closeAction }) {
+function Signing({ visible, items, closeAction }) {
   const [userName, setUserName] = useState('');
   const [userToken, setUserToken] = useState('');
 
@@ -17,8 +17,15 @@ function Signing({ visible, item, closeAction }) {
     })();
   }, []);
 
-  const sign = async () => {
-    await Datastore.save({ ...item, signature: Signature(userName, userToken) });
+  const sign = () => {
+    items.forEach(item => item.signature = Signature(userName, userToken));
+  };
+
+  const save = async () => {
+    for (let item of items) {
+      await Datastore.save(item);
+    }
+
     closeAction();
   };
 
@@ -38,9 +45,9 @@ function Signing({ visible, item, closeAction }) {
 
         <SubmitButtons
           saveText='Sign'
-          saveAction={sign}
+          saveAction={() => { sign(); save(); }}
           discardText='Skip'
-          discardAction={closeAction} />
+          discardAction={() => { save(); }} />
       </View>
     </Modal>
   );

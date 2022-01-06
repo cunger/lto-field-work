@@ -81,7 +81,7 @@ function Fisheries({ navigation }) {
       </View>
 
       <SubmitButtons saveAction={openSigning} discardAction={discard} />
-      <Signing visible={signatureVisible} item={item} closeAction={closeSigning} />
+      <Signing visible={signatureVisible} items={[item]} closeAction={closeSigning} />
     </ScrollContainer>
   );
 }

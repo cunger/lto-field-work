@@ -8,6 +8,10 @@ function SubmitButtons({ saveAction, discardAction, saveText, discardText }) {
   if (!saveAction) saveAction = () => {};
   if (!discardAction) discardAction = () => {};
 
+  const onPress = () => {
+    saveAction();
+  }
+
   return (
     <View style={tailwind('flex flex-row items-stretch my-6')}>
       <TouchableOpacity onPress={saveAction} style={tailwind('px-4 py-2 mr-4 rounded-md bg-blue')}>
