@@ -30,26 +30,28 @@ function Fisheries({ navigation }) {
 
   const takePhoto = async () => {
     try {
-      const photo = await launchCamera();
+      const photo = await launchCamera({ mediaType: 'photo' });
       if (photo) {
         console.log(photo);
         update({ picture: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri });
         // or base64?
       }
     } catch (e) {
+      // TODO Monitoring!
       console.log(e);
     }
   };
 
   const choosePhoto = async () => {
     try {
-      const photo = await launchImageLibrary();
+      const photo = await launchImageLibrary({ mediaType: 'photo' });
       if (photo) {
         console.log(photo);
         update({ picture: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri });
         // or base64?
       }
     } catch (e) {
+      // TODO Monitoring!
       console.log(e);
     }
   };

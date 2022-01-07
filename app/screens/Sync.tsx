@@ -15,7 +15,7 @@ function Sync({ navigation }) {
     const report = await Datastore.summary();
     setReport(report);
   }
-
+  
   useFocusEffect(
     React.useCallback(() => {
       loadData();

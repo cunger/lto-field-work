@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
+import Datastore from 'components/data/LocalDatastore';
 import Home from '../../screens/Home';
 import DataEntryMenu from './DataEntryMenu';
 import Sync from '../../screens/Sync';
@@ -11,6 +12,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Tab = createBottomTabNavigator();
 
 const MainMenu = () => {
+  const [unsynced, setUnsynced] = useState(0);
+
+  useEffect(() => {
+    (async () => {
+      setUnsynced(await Datastore.numberOfUnsynced());
+    })();
+  }, []);
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -57,7 +66,7 @@ const MainMenu = () => {
           tabBarIcon: ({ color, size }) => (
             <Feather name='upload' size={size} color={color} />
           ),
-          tabBarBadge: 0,
+          tabBarBadge: unsynced > 0 ? unsynced : null,
         }}
       />
       <Tab.Screen
