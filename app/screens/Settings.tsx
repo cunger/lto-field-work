@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { InputLabel, InputField } from 'components/forms/Input';
 import SafeContainer from 'components/SafeContainer';
-import InputLabel from 'components/forms/InputLabel';
 import Datastore from 'components/data/LocalDatastore';
 import Backend from 'components/data/API';
 import { tailwind } from 'tailwind';

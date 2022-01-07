@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { ScrollView, View, Text, Button } from 'react-native';
+import { ScrollView, View, Text, Button, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Slider from '@react-native-community/slider';
-import InputSpinner from 'react-native-input-spinner';
+import InputSpinner from 'react-native-input-spinner'; // https://github.com/marcocesarato/react-native-input-spinner
+import RNPickerSelect from 'react-native-picker-select'; // https://github.com/lawnstarter/react-native-picker-select
 import Catch from 'model/fisheries/Catch';
 import Species from 'model/fisheries/Species';
 import Location from 'model/Location';
@@ -10,10 +11,12 @@ import Signature from 'model/Signature';
 import ScrollContainer from 'components/ScrollContainer';
 import Datastore from 'components/data/LocalDatastore';
 import Coordinates from 'components/forms/Coordinates';
-import InputLabel from 'components/forms/InputLabel';
+import { InputLabel, InputField } from 'components/forms/Input';
 import SubmitButtons from 'components/forms/SubmitButtons';
 import Signing from 'components/forms/Signing';
+import { launchImageLibrary, launchCamera } from 'react-native-image-picker'; // https://github.com/react-native-image-picker/react-native-image-picker
 import { tailwind } from 'tailwind';
+import styles from '../styles/select';
 
 function Fisheries({ navigation }) {
   const [date, setDate] = useState(new Date());
@@ -23,6 +26,32 @@ function Fisheries({ navigation }) {
 
   const update = (fields) => {
     setItem({ ...item, ...fields });
+  };
+
+  const takePhoto = async () => {
+    try {
+      const photo = await launchCamera();
+      if (photo) {
+        console.log(photo);
+        update({ picture: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri });
+        // or base64?
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const choosePhoto = async () => {
+    try {
+      const photo = await launchImageLibrary();
+      if (photo) {
+        console.log(photo);
+        update({ picture: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri });
+        // or base64?
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const reset = () => {
@@ -52,15 +81,32 @@ function Fisheries({ navigation }) {
 
       <View>
         <InputLabel text='Catch' />
-        <InputSpinner
-        	min={1}
-        	step={1}
-        	value={item.quantity}
-        	onChange={(value) => { update({ quantity: value }); }}
-          height={30}
-          rounded={false}
-        />
-        <Text>TODO: Species picker</Text>
+        <View style={tailwind('flex flex-row items-stretch')}>
+          <InputSpinner
+            min={1}
+            step={1}
+            value={item.quantity}
+            onChange={(value) => { update({ quantity: value }); }}
+            height={26}
+            width={100}
+            rounded={false}
+            style={tailwind('mr-4')}
+          />
+          <RNPickerSelect
+            value={item.species}
+            placeholder={{ label: 'Which species?', value: undefined }}
+            onValueChange={(value, _) => update({ species: value })}
+            items={Object.keys(Species).map(key => {
+              return { label: Species[key], value: key };
+            })}
+            style={{
+              inputAndroid: styles.input,
+              inputAndroidContainer: styles.inputContainer,
+              inputIOS: styles.input,
+              inputIOSContainer: styles.inputContainer
+            }}
+          />
+        </View>
       </View>
 
       <View>
@@ -77,7 +123,14 @@ function Fisheries({ navigation }) {
 
       <View>
         <InputLabel text='Picture' />
-        <Text>Coming soon!</Text>
+        <InputField
+          text={'Take photo with camera'}
+          textColor={'#cccccc'}
+          action={takePhoto} />
+        <InputField
+          text={'Pick photo from gallery'}
+          textColor={'#cccccc'}
+          action={choosePhoto} />
       </View>
 
       <SubmitButtons saveAction={openSigning} discardAction={discard} />

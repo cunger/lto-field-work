@@ -1,7 +1,7 @@
 enum Species {
-  Unknown = 'Unknown',
   Puffer = 'Puffer',
   Shark = 'Shark',
+  Other = 'Other',
 };
 
 export default Species;
