@@ -22,7 +22,4 @@ function InputField({ text, textColor, action }) {
   );
 }
 
-module.exports = {
-  InputLabel,
-  InputField
-};
+export default { InputLabel, InputField };

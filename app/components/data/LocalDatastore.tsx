@@ -33,8 +33,8 @@ const Datastore = {
   summary: async () => {
     let report = Report();
     try {
-      const keys = await AsyncStorage.getAllKeys().filter(key => !key.startsWith('@'));
-      const values = await AsyncStorage.multiGet(keys);
+      const keys = await AsyncStorage.getAllKeys();
+      const values = await AsyncStorage.multiGet(keys.filter(key => !key.startsWith('@')));
       values.forEach((value) => {
         report.countItem(JSON.parse(value[1]));
       });
@@ -48,7 +48,7 @@ const Datastore = {
   numberOfUnsynced: async () => {
     let count = 0;
     try {
-      const keys = await AsyncStorage.getAllKeys().filter(key => !key.startsWith('@'));
+      const keys = await AsyncStorage.getAllKeys();
       for (key of keys) {
         if (key.startsWith('@')) continue;
         let value = await AsyncStorage.getItem(key);
@@ -64,8 +64,8 @@ const Datastore = {
   },
   syncAll: async () => {
     try {
-      const keys = await AsyncStorage.getAllKeys().filter(key => !key.startsWith('@'));
-      const values = await AsyncStorage.multiGet(keys);
+      const keys = await AsyncStorage.getAllKeys();
+      const values = await AsyncStorage.multiGet(keys.filter(key => !key.startsWith('@')));
       for (let value of values) {
         let item = JSON.parse(value[1]);
         if (!item.synced) {
@@ -81,13 +81,12 @@ const Datastore = {
   },
   clearSynced: async () => {
     try {
-      const keys = await AsyncStorage.getAllKeys().filter(key => !key.startsWith('@'));
+      const keys = await AsyncStorage.getAllKeys();
       for (let key of keys) {
+        if (key.startsWith('@')) continue;
         let value = await AsyncStorage.getItem(key);
         let item = JSON.parse(value);
-        if (item.synced) {
-          await AsyncStorage.removeItem(key);
-        }
+        if (item.synced) await AsyncStorage.removeItem(key);
       }
     } catch (e) {
       // TODO Monitoring!
@@ -96,8 +95,8 @@ const Datastore = {
   },
   clearAll: async () => {
     try {
-      const keys = (await AsyncStorage.getAllKeys()).filter(key => key.startsWith('@'));
-      await AsyncStorage.multiRemove(keys);
+      const keys = await AsyncStorage.getAllKeys();
+      await AsyncStorage.multiRemove(keys.filter(key => !key.startsWith('@')));
     } catch(e) {
       // TODO Monitoring!
       console.log(e);

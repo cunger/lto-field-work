@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, Button, TouchableOpacity, Platform } from 'react-native';
-import { InputLabel, InputField } from 'components/forms/Input';
+import InputLabel from 'components/forms/Input';
+import InputField from 'components/forms/Input';
 import RNPickerSelect from 'react-native-picker-select'; // https://github.com/lawnstarter/react-native-picker-select
 import DatePicker from 'react-native-neat-date-picker';
 import SafeContainer from 'components/SafeContainer';
