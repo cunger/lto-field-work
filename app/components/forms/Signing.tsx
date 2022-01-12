@@ -5,6 +5,7 @@ import Signature from 'model/Signature';
 import SubmitButtons from 'components/forms/SubmitButtons';
 import Datastore from 'components/data/LocalDatastore';
 import GlobalContext from '../context/GlobalContext';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 import { tailwind } from 'tailwind';
 
 function Signing({ visible, items, closeAction }) {
@@ -22,12 +23,18 @@ function Signing({ visible, items, closeAction }) {
     items.forEach(item => item.signature = Signature(userName, userToken));
   };
 
-  const save = async () => {
+  const save = async (signed) => {
     for (let item of items) {
       await Datastore.save(item);
     }
 
+    showMessage({
+      message: signed ? '🥳 Signed and saved.' : '💾 Saved (without signature).',
+      type: 'info',
+    });
+
     GlobalContext.load();
+
     closeAction();
   };
 
@@ -47,9 +54,9 @@ function Signing({ visible, items, closeAction }) {
 
         <SubmitButtons
           saveText='Sign'
-          saveAction={() => { sign(); save(); }}
+          saveAction={() => { sign(); save(true); }}
           discardText='Skip'
-          discardAction={() => { save(); }} />
+          discardAction={() => { save(false); }} />
       </View>
     </Modal>
   );
