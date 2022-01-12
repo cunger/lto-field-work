@@ -11,8 +11,7 @@ import Signature from 'model/Signature';
 import ScrollContainer from 'components/ScrollContainer';
 import Datastore from 'components/data/LocalDatastore';
 import Coordinates from 'components/forms/Coordinates';
-import InputLabel from 'components/forms/Input';
-import InputField from 'components/forms/Input';
+import { InputLabel, InputField } from 'components/forms/Input';
 import SubmitButtons from 'components/forms/SubmitButtons';
 import Signing from 'components/forms/Signing';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker'; // https://github.com/react-native-image-picker/react-native-image-picker
@@ -127,11 +126,11 @@ function Fisheries({ navigation }) {
       <View>
         <InputLabel text='Picture' />
         <InputField
-          text={'Take photo with camera'}
+          text='Take photo with camera'
           textColor={'#cccccc'}
           action={takePhoto} />
         <InputField
-          text={'Pick photo from gallery'}
+          text='Pick photo from gallery'
           textColor={'#cccccc'}
           action={choosePhoto} />
       </View>

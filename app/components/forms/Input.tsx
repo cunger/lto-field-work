@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { tailwind } from 'tailwind';
 
-function InputLabel({ text }) {
+export function InputLabel({ text }) {
   return (
     <View style={tailwind('my-2 text-sm font-medium')}>
       <Text>{text}</Text>
@@ -10,7 +10,7 @@ function InputLabel({ text }) {
   );
 }
 
-function InputField({ text, textColor, action }) {
+export function InputField({ text, textColor, action }) {
   if (!textColor) textColor = '#000000';
 
   return (
@@ -21,5 +21,3 @@ function InputField({ text, textColor, action }) {
     </TouchableOpacity>
   );
 }
-
-export default { InputLabel, InputField };

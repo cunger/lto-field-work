@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, Button, TouchableOpacity, Platform } from 'react-native';
-import InputLabel from 'components/forms/Input';
-import InputField from 'components/forms/Input';
+import { InputLabel, InputField } from 'components/forms/Input';
 import RNPickerSelect from 'react-native-picker-select'; // https://github.com/lawnstarter/react-native-picker-select
 import DatePicker from 'react-native-neat-date-picker';
 import SafeContainer from 'components/SafeContainer';
@@ -52,7 +51,7 @@ function Coordinates({ setDateOnParent, setLocationOnParent }) {
       <InputLabel text='Location' />
       <RNPickerSelect
         value={location}
-        placeholder={{}}
+        placeholder={{ label: 'Where?', value: undefined }}
         onValueChange={(value, _) => saveLocation(value)}
         items={Object.keys(Location).map(key => {
           return { label: Location[key], value: key };

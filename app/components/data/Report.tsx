@@ -9,17 +9,11 @@ function Report() {
       unsynced: 0,
     },
     total: 0,
-    totalUnsynced: 0,
     countItem: function (item) {
       try {
-        this.total += 1;
-        if (item.synced) {
-          this[item.type].synced += 1;
-        } else {
-          this[item.type].unsynced += 1;
-          this.totalUnsynced += 1;
-        }
-        // this[item.type][item.synced ? 'synced' : 'unsynced'] += 1;
+        const count = item.quantity || 1;
+        this.total += count;
+        this[item.type][item.synced ? 'synced' : 'unsynced'] += count;
       } catch (e) {
         // TODO Monitoring!
         console.log(e);

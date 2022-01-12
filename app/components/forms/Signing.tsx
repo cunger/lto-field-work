@@ -4,6 +4,7 @@ import Modal from 'react-native-modal';
 import Signature from 'model/Signature';
 import SubmitButtons from 'components/forms/SubmitButtons';
 import Datastore from 'components/data/LocalDatastore';
+import GlobalContext from '../context/GlobalContext';
 import { tailwind } from 'tailwind';
 
 function Signing({ visible, items, closeAction }) {
@@ -26,6 +27,7 @@ function Signing({ visible, items, closeAction }) {
       await Datastore.save(item);
     }
 
+    GlobalContext.load();
     closeAction();
   };
 

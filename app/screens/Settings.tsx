@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, TouchableOpacity } from 'react-native';
-import InputLabel from 'components/forms/Input';
-import InputField from 'components/forms/Input';
+import { InputLabel, InputField } from 'components/forms/Input';
 import SafeContainer from 'components/SafeContainer';
 import Datastore from 'components/data/LocalDatastore';
 import Backend from 'components/data/API';

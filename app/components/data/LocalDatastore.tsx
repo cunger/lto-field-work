@@ -53,7 +53,7 @@ const Datastore = {
         if (key.startsWith('@')) continue;
         let value = await AsyncStorage.getItem(key);
         let item = JSON.parse(value);
-        if (!item.synced) count += 1;
+        if (!item.synced) count += (item.quantity || 1);
       }
     } catch (e) {
       // TODO Monitoring!
