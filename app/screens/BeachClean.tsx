@@ -14,6 +14,7 @@ import Coordinates from 'components/forms/Coordinates';
 import { InputLabel, InputField } from 'components/forms/Input';
 import SubmitButtons from 'components/forms/SubmitButtons';
 import Signing from 'components/forms/Signing';
+import { showMessage } from 'react-native-flash-message';
 import { tailwind } from 'tailwind';
 
 function BeachClean({ navigation }) {
@@ -57,6 +58,13 @@ function BeachClean({ navigation }) {
 
   const discard = () => {
     reset();
+
+    showMessage({
+      message: 'Data was discarded.',
+      type: 'warning',
+      icon: 'info'
+    });
+
     navigation.navigate('Data Entry', { screen: 'Data entry' });
   };
 

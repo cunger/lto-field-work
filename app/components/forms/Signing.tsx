@@ -29,8 +29,10 @@ function Signing({ visible, items, closeAction }) {
     }
 
     showMessage({
-      message: signed ? '🥳 Signed and saved.' : '💾 Saved (without signature).',
-      type: 'info',
+      message: 'Saved.',
+      description: signed ? 'And signed. Yay!' : 'But without signature.',
+      type: 'success',
+      icon: 'success'
     });
 
     GlobalContext.load();
