@@ -6,12 +6,11 @@ import { tailwind } from 'tailwind';
 function ConfirmPrompt({ visible, actionPhrase, actionExplanation, actionButtonText, action, hide }) {
   return (
     <Modal
-      visible={visible}
+      isVisible={visible}
       animationOut={'slideOutUp'}
-      animationOutTiming={1000}
-      onRequestClose={hide}>
+      animationOutTiming={1000}>
       <View style={tailwind('bg-white p-4 rounded-md')}>
-        <Text style={tailwind('my-4 font-bold')}>
+        <Text style={tailwind('my-2')}>
           Do you really want to {actionPhrase}?
         </Text>
         <Text style={tailwind('my-2')}>
