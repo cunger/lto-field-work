@@ -14,6 +14,7 @@ import Coordinates from 'components/forms/Coordinates';
 import { InputLabel, InputField } from 'components/forms/Input';
 import SubmitButtons from 'components/forms/SubmitButtons';
 import Signing from 'components/forms/Signing';
+import ConfirmPrompt from 'components/ConfirmPrompt';
 import { showMessage } from 'react-native-flash-message';
 import { tailwind } from 'tailwind';
 
@@ -22,6 +23,7 @@ function BeachClean({ navigation }) {
   const [location, setLocation] = useState(Location.Guinjata);
   const [items, setItems] = useState({});
   const [signatureVisible, setSignatureVisible] = useState(false);
+  const [confirmVisible, setConfirmVisible] = useState(false);
 
   const updateItem = (quantity, category) => {
     items[category] = (items[category] || 0) + quantity;
@@ -98,6 +100,11 @@ function BeachClean({ navigation }) {
 
       <SubmitButtons saveAction={openSigning} discardAction={discard} />
       <Signing visible={signatureVisible} items={trashItems()} closeAction={closeSigning} />
+      <ConfirmPrompt visible={confirmVisible}
+        actionPhrase='discard this data entry'
+        actionButtonText='Discard'
+        action={discard}
+        hide={() => setConfirmVisible(false)} />
     </ScrollContainer>
   );
 }

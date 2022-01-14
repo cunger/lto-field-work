@@ -14,6 +14,7 @@ import Coordinates from 'components/forms/Coordinates';
 import { InputLabel, InputField } from 'components/forms/Input';
 import SubmitButtons from 'components/forms/SubmitButtons';
 import Signing from 'components/forms/Signing';
+import ConfirmPrompt from 'components/ConfirmPrompt';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker'; // https://github.com/react-native-image-picker/react-native-image-picker
 import { tailwind } from 'tailwind';
 import styles from '../styles/select';
@@ -23,6 +24,7 @@ function Fisheries({ navigation }) {
   const [location, setLocation] = useState(Location.Guinjata);
   const [item, setItem] = useState(Catch());
   const [signatureVisible, setSignatureVisible] = useState(false);
+  const [confirmVisible, setConfirmVisible] = useState(false);
 
   const update = (fields) => {
     setItem({ ...item, ...fields });
@@ -71,7 +73,7 @@ function Fisheries({ navigation }) {
 
   const discard = () => {
     reset();
-    navigation.navigate('DataEntry');
+    navigation.navigate('Data Entry', { screen: 'Data entry' });
   };
 
   return (
@@ -135,8 +137,13 @@ function Fisheries({ navigation }) {
           action={choosePhoto} />
       </View>
 
-      <SubmitButtons saveAction={openSigning} discardAction={discard} />
+      <SubmitButtons saveAction={openSigning} discardAction={() => setConfirmVisible(true)} />
       <Signing visible={signatureVisible} items={[item]} closeAction={closeSigning} />
+      <ConfirmPrompt visible={confirmVisible}
+        actionPhrase='discard this data entry'
+        actionButtonText='Discard'
+        action={discard}
+        hide={() => setConfirmVisible(false)} />
     </ScrollContainer>
   );
 }
