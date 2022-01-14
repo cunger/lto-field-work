@@ -51,7 +51,7 @@ function Signing({ visible, items, closeAction }) {
           In order for your data to be used in analytics, you need to sign it.
         </Text>
         <Text style={tailwind('my-2')}>
-          If you're testing or simply fooling around, just skip this step.
+          If you're testing or simply fooling around, just skip this step. (The data will still be saved.)
         </Text>
 
         <SubmitButtons
