@@ -26,7 +26,7 @@ function BeachClean({ navigation }) {
   const [confirmVisible, setConfirmVisible] = useState(false);
 
   const updateItem = (quantity, category) => {
-    items[category] = (items[category] || 0) + quantity;
+    items[category] = quantity;
     setItems(items);
   };
 
@@ -88,7 +88,7 @@ function BeachClean({ navigation }) {
             	step={1}
             	value={items[category] || 0}
             	onChange={(value) => { updateItem(value, category); }}
-              append={(<Text> {category} </Text>)}
+              prepend={(<Text style={tailwind('w-1/2')}> {category} </Text>)}
               height={30}
               rounded={false}
               key={category}
