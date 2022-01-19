@@ -11,6 +11,7 @@ function Catch() {
     signature: undefined,
     date: new Date(),
     location: Location.Guinjata,
+    method: undefined,
     quantity: 1,
     species: undefined,
     size: 0,

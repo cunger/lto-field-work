@@ -1,6 +1,8 @@
 enum Species {
-  Puffer = 'Puffer',
+  Fish = 'Fish',
   Shark = 'Shark',
+  Ray = 'Ray',
+  Crustacean = 'Crustacean',
   Other = 'Other',
 };
 

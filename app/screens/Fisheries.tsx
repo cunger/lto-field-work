@@ -6,6 +6,7 @@ import InputSpinner from 'react-native-input-spinner'; // https://github.com/mar
 import RNPickerSelect from 'react-native-picker-select'; // https://github.com/lawnstarter/react-native-picker-select
 import Catch from 'model/fisheries/Catch';
 import Species from 'model/fisheries/Species';
+import Method from 'model/fisheries/Method';
 import Location from 'model/Location';
 import Signature from 'model/Signature';
 import ScrollContainer from 'components/ScrollContainer';
@@ -82,6 +83,26 @@ function Fisheries({ navigation }) {
         setDateOnParent={setDate}
         setLocationOnParent={setLocation}
       />
+
+      <View>
+        <InputLabel text='Fishing method' />
+        <View style={tailwind('flex flex-row items-stretch')}>
+          <RNPickerSelect
+            value={item.method}
+            placeholder={{ label: 'Which method?', value: undefined }}
+            onValueChange={(value, _) => update({ method: value })}
+            items={Object.keys(Method).map(key => {
+              return { label: Method[key], value: key };
+            })}
+            style={{
+              inputAndroid: styles.input,
+              inputAndroidContainer: styles.inputContainer,
+              inputIOS: styles.input,
+              inputIOSContainer: styles.inputContainer
+            }}
+          />
+        </View>
+      </View>
 
       <View>
         <InputLabel text='Catch' />

@@ -12,6 +12,9 @@ const Datastore = {
   setUserVerified: async (verified) => {
     await AsyncStorage.setItem('@userverified', verified.toString());
   },
+  setUserEmail: async (email) => {
+    await AsyncStorage.setItem('@useremail', email);
+  },
   getUserName: () => {
     return AsyncStorage.getItem('@username');
   },
@@ -20,6 +23,9 @@ const Datastore = {
   },
   getUserVerified: () => {
     return AsyncStorage.getItem('@userverified');
+  },
+  getUserEmail: () => {
+    return AsyncStorage.getItem('@useremail');
   },
   save: async (item) => {
     try {

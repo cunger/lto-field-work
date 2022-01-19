@@ -9,6 +9,7 @@ import { tailwind } from 'tailwind';
 function Settings({ navigation }) {
   const [name, setName] = useState('');
   const [token, setToken] = useState('');
+  const [email, setEmail] = useState('');
   const [verified, setVerified] = useState(false);
 
   useEffect(() => {
@@ -16,6 +17,7 @@ function Settings({ navigation }) {
       setName(await Datastore.getUserName());
       setToken(await Datastore.getUserToken());
       setVerified((await Datastore.getUserVerified()) == 'true');
+      setEmail(await Datastore.getUserEmail());
     })();
   }, []);
 
@@ -27,9 +29,14 @@ function Settings({ navigation }) {
     Datastore.setUserToken(token);
   };
 
+  const saveEmail = () => {
+    Datastore.setUserEmail(email);
+  };
+
   const save = () => {
     saveName();
     saveToken();
+    saveEmail();
     if (name && token) {
       Backend.verify(name, token).then(status => {
         setVerified(status);
@@ -49,6 +56,17 @@ function Settings({ navigation }) {
           onEndEdition={saveName}
           style={tailwind('mb-2 p-2 bg-white border-gray rounded-md')}
         />
+      </View>
+
+      <View>
+        <InputLabel text='Email' />
+        <TextInput
+          value={email}
+          onChangeText={(value) => { setEmail(value); setVerified(false); }}
+          onEndEdition={saveEmail}
+          style={tailwind('mb-4 p-2 bg-white border-gray rounded-md')}
+        />
+        <Text>This helps us to get in touch with you.</Text>
       </View>
 
       <View>
