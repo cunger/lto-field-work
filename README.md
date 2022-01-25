@@ -12,3 +12,9 @@ $ npx create-tailwind-rn
 ```
 $ expo start
 ```
+
+## Ejecting
+
+```
+$ npm run eject
+```
