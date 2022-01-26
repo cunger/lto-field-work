@@ -1,10 +1,17 @@
 
 Work in progress. Info will be added.
 
-## Tailwind
+## Build pipeline
 
+Tailwind:
 ```
 $ npx create-tailwind-rn
+```
+
+Fastlane:
+```
+$ bundle install
+$ bundle exec fastlane
 ```
 
 ## Test
@@ -13,8 +20,14 @@ $ npx create-tailwind-rn
 $ expo start
 ```
 
-## Ejecting
+## Deploy
 
+Ejecting:
 ```
 $ npm run eject
+```
+
+Fastlane:
+```
+bundle exec fastlane [lane]
 ```

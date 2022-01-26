@@ -10,7 +10,7 @@ function Home() {
         👋 Hello, ocean hero!
       </Text>
       <Text style={tailwind('my-2')}>
-        We're happy to welcome you aboard the Love The Oceans team.
+        Welcome aboard the Love The Oceans team.
       </Text>
     </SafeContainer>
   );

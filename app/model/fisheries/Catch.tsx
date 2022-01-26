@@ -14,7 +14,7 @@ function Catch() {
     method: undefined,
     quantity: 1,
     species: undefined,
-    size: 0,
+    size: undefined,
     picture: undefined,
   };
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { ScrollView, View, Text, Button, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Slider from '@react-native-community/slider';
+// import Slider from '@react-native-community/slider';
 import InputSpinner from 'react-native-input-spinner'; // https://github.com/marcocesarato/react-native-input-spinner
 import RNPickerSelect from 'react-native-picker-select'; // https://github.com/lawnstarter/react-native-picker-select
 import Catch from 'model/fisheries/Catch';
@@ -135,14 +135,12 @@ function Fisheries({ navigation }) {
       </View>
 
       <View>
-        <InputLabel text={`Estimated size: ${item.size} cm`} />
-        <Slider
-          style={{ padding: 20, height: 40 }}
-          minimumValue={0}
-          maximumValue={100}
-          step={1}
+        <InputLabel text='Estimated size (cm)' />
+        <TextInput
           value={item.size}
-          onValueChange={(value) => { update({ size: value }); }}
+          onChangeText={(value) => update({ size: value })}
+          onEndEdition={(value) => update({ size: value })}
+          style={tailwind('mb-2 p-2 bg-white border-gray rounded-md')}
         />
       </View>
 
