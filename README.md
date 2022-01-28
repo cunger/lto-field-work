@@ -8,12 +8,6 @@ Tailwind:
 $ npx create-tailwind-rn
 ```
 
-Fastlane:
-```
-$ bundle install
-$ bundle exec fastlane
-```
-
 ## Test
 
 ```
@@ -27,7 +21,7 @@ Ejecting:
 $ npm run eject
 ```
 
-Fastlane:
+Deploying:
 ```
-bundle exec fastlane [lane]
+eas build
 ```

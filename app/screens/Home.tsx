@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text } from 'react-native';
-import SafeContainer from 'components/SafeContainer';
+import SafeContainer from '../components/SafeContainer';
 import { tailwind } from 'tailwind';
 
 function Home() {
