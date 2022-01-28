@@ -4,18 +4,18 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 // import Slider from '@react-native-community/slider';
 import InputSpinner from 'react-native-input-spinner'; // https://github.com/marcocesarato/react-native-input-spinner
 import RNPickerSelect from 'react-native-picker-select'; // https://github.com/lawnstarter/react-native-picker-select
-import Catch from 'model/fisheries/Catch';
-import Species from 'model/fisheries/Species';
-import Method from 'model/fisheries/Method';
-import Location from 'model/Location';
-import Signature from 'model/Signature';
-import ScrollContainer from 'components/ScrollContainer';
-import Datastore from 'components/data/LocalDatastore';
-import Coordinates from 'components/forms/Coordinates';
-import { InputLabel, InputField } from 'components/forms/Input';
-import SubmitButtons from 'components/forms/SubmitButtons';
-import Signing from 'components/forms/Signing';
-import ConfirmPrompt from 'components/ConfirmPrompt';
+import Catch from '../model/fisheries/Catch';
+import Species from '../model/fisheries/Species';
+import Method from '../model/fisheries/Method';
+import Location from '../model/Location';
+import Signature from '../model/Signature';
+import ScrollContainer from '../components/ScrollContainer';
+import Datastore from '../components/data/LocalDatastore';
+import Coordinates from '../components/forms/Coordinates';
+import { InputLabel, InputField } from '../components/forms/Input';
+import SubmitButtons from '../components/forms/SubmitButtons';
+import Signing from '../components/forms/Signing';
+import ConfirmPrompt from '../components/ConfirmPrompt';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker'; // https://github.com/react-native-image-picker/react-native-image-picker
 import { tailwind } from 'tailwind';
 import styles from '../styles/select';

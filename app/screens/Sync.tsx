@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { ScrollView, Text, Button } from 'react-native';
-import ScrollContainer from 'components/ScrollContainer';
-import Heading from 'components/Heading';
-import ListItem from 'components/ListItem';
-import ConfirmPrompt from 'components/ConfirmPrompt';
-import Datastore from 'components/data/LocalDatastore';
-import Report from 'components/data/Report';
+import ScrollContainer from '../components/ScrollContainer';
+import Heading from '../components/Heading';
+import ListItem from '../components/ListItem';
+import ConfirmPrompt from '../components/ConfirmPrompt';
+import Datastore from '../components/data/LocalDatastore';
+import Report from '../components/data/Report';
 import GlobalContext from '../components/context/GlobalContext';
 import { tailwind } from 'tailwind';
 
