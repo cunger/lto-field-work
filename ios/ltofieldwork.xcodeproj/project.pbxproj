@@ -317,13 +317,13 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "lto-field-work";
-				PRODUCT_NAME = lto-field-work;
+				PRODUCT_NAME = "ltofieldwork";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				SWIFT_OBJC_BRIDGING_HEADER = ltofieldwork/ltofieldwork-Bridging-Header.h;
-				CODE_SIGN_ENTITLEMENTS = ltofieldwork/lto-field-work.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "ltofieldwork/ltofieldwork.entitlements";
 			};
 			name = Debug;
 		};
@@ -343,12 +343,12 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "lto-field-work";
-				PRODUCT_NAME = lto-field-work;
+				PRODUCT_NAME = "ltofieldwork";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				SWIFT_OBJC_BRIDGING_HEADER = ltofieldwork/ltofieldwork-Bridging-Header.h;
-				CODE_SIGN_ENTITLEMENTS = ltofieldwork/lto-field-work.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "ltofieldwork/ltofieldwork.entitlements";
 			};
 			name = Release;
 		};
@@ -407,7 +407,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				CODE_SIGN_ENTITLEMENTS = ltofieldwork/lto-field-work.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "ltofieldwork/ltofieldwork.entitlements";
 			};
 			name = Debug;
 		};
@@ -459,7 +459,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
-				CODE_SIGN_ENTITLEMENTS = ltofieldwork/lto-field-work.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "ltofieldwork/ltofieldwork.entitlements";
 			};
 			name = Release;
 		};
