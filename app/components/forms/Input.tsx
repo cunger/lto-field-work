@@ -1,8 +1,10 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { tailwind } from 'tailwind';
+import { useTailwind } from 'tailwind-rn';
 
 export function InputLabel({ text }) {
+  const tailwind = useTailwind();
+
   return (
     <View style={tailwind('my-2 text-sm font-medium')}>
       <Text>{text}</Text>

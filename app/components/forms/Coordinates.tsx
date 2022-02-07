@@ -5,10 +5,11 @@ import RNPickerSelect from 'react-native-picker-select'; // https://github.com/l
 import DatePicker from 'react-native-neat-date-picker';
 import SafeContainer from 'components/SafeContainer';
 import Location from 'model/Location';
-import { tailwind } from 'tailwind';
+import { useTailwind } from 'tailwind-rn';
 import styles from '../../styles/select';
 
 function Coordinates({ setDateOnParent, setLocationOnParent }) {
+  const tailwind = useTailwind();
   const [date, setDate] = useState(new Date());
   const [location, setLocation] = useState(Location.Guinjata);
   const [showDatePicker, setShowDatePicker] = useState(false);

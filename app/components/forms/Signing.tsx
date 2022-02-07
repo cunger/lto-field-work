@@ -6,9 +6,10 @@ import SubmitButtons from 'components/forms/SubmitButtons';
 import Datastore from 'components/data/LocalDatastore';
 import GlobalContext from '../context/GlobalContext';
 import { showMessage, hideMessage } from 'react-native-flash-message';
-import { tailwind } from 'tailwind';
+import { useTailwind } from 'tailwind-rn';
 
 function Signing({ visible, items, closeAction }) {
+  const tailwind = useTailwind();
   const [userName, setUserName] = useState('');
   const [userToken, setUserToken] = useState('');
 

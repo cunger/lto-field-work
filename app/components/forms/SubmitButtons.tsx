@@ -1,8 +1,10 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { tailwind } from 'tailwind';
+import { useTailwind } from 'tailwind-rn';
 
 function SubmitButtons({ saveAction, discardAction, saveText, discardText }) {
+  const tailwind = useTailwind();
+
   if (!saveText) saveText = 'Save';
   if (!discardText) discardText = 'Discard';
   if (!saveAction) saveAction = () => {};

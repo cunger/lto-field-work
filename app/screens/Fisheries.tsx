@@ -17,10 +17,11 @@ import SubmitButtons from '../components/forms/SubmitButtons';
 import Signing from '../components/forms/Signing';
 import ConfirmPrompt from '../components/ConfirmPrompt';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker'; // https://github.com/react-native-image-picker/react-native-image-picker
-import { tailwind } from 'tailwind';
+import { useTailwind } from 'tailwind-rn';
 import styles from '../styles/select';
 
 function Fisheries({ navigation }) {
+  const tailwind = useTailwind();
   const [date, setDate] = useState(new Date());
   const [location, setLocation] = useState(Location.Guinjata);
   const [item, setItem] = useState(Catch());

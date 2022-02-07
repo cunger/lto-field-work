@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { Text } from 'react-native';
 import SafeContainer from '../components/SafeContainer';
-import { tailwind } from 'tailwind';
+import { useTailwind } from 'tailwind-rn';
 
 function Home() {
+  const tailwind = useTailwind();
+
   return (
     <SafeContainer>
       <Text style={tailwind('my-2')}>

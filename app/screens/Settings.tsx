@@ -4,9 +4,10 @@ import { InputLabel, InputField } from '../components/forms/Input';
 import SafeContainer from '../components/SafeContainer';
 import Datastore from '../components/data/LocalDatastore';
 import Backend from '../components/data/API';
-import { tailwind } from 'tailwind';
+import { useTailwind } from 'tailwind-rn';
 
 function Settings({ navigation }) {
+  const tailwind = useTailwind();
   const [name, setName] = useState('');
   const [token, setToken] = useState('');
   const [email, setEmail] = useState('');

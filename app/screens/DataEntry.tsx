@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
-import { tailwind } from 'tailwind';
+import { useTailwind } from 'tailwind-rn';
 
 function DataEntry() {
+  const tailwind = useTailwind();
+
   return (
     <View>
       <Text style={tailwind('m-4')}>

@@ -11,6 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
 const MainMenu = () => {
+  const tailwind = useTailwind();
   const [count, setCount] = useState(GlobalContext.unsyncedItems);
   GlobalContext.registerUpdate(setCount);
 

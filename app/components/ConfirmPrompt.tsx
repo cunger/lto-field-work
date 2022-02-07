@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import Modal from 'react-native-modal';
-import { tailwind } from 'tailwind';
+import { useTailwind } from 'tailwind-rn';
 
 function ConfirmPrompt({ visible, actionPhrase, actionExplanation, actionButtonText, action, hide }) {
+  const tailwind = useTailwind();
+
   return (
     <Modal
       isVisible={visible}

@@ -16,9 +16,10 @@ import SubmitButtons from '../components/forms/SubmitButtons';
 import Signing from '../components/forms/Signing';
 import ConfirmPrompt from '../components/ConfirmPrompt';
 import { showMessage } from 'react-native-flash-message';
-import { tailwind } from 'tailwind';
+import { useTailwind } from 'tailwind-rn';
 
 function BeachClean({ navigation }) {
+  const tailwind = useTailwind();
   const [date, setDate] = useState(new Date());
   const [location, setLocation] = useState(Location.Guinjata);
   const [items, setItems] = useState({});

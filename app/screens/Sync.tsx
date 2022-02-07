@@ -8,9 +8,10 @@ import ConfirmPrompt from '../components/ConfirmPrompt';
 import Datastore from '../components/data/LocalDatastore';
 import Report from '../components/data/Report';
 import GlobalContext from '../components/context/GlobalContext';
-import { tailwind } from 'tailwind';
+import { useTailwind } from 'tailwind-rn';
 
 function Sync({ navigation }) {
+  const tailwind = useTailwind();
   const [report, setReport] = useState(Report());
   const [confirmVisible, setConfirmVisible] = useState(false);
 
