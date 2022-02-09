@@ -1,23 +1,42 @@
 {
   "cli": {
-    "version": ">= 0.46.0"
+    "version": ">= 0.47.0"
   },
   "build": {
+    "base": {
+      "env": {},
+      "ios": {
+        "image": "latest"
+      }
+    },
     "development": {
+      "extends": "base",
+      "developmentClient": true,
       "distribution": "internal",
       "android": {
         "gradleCommand": ":app:assembleDebug"
       },
       "ios": {
+        "simulator": true,
         "buildConfiguration": "Debug"
       }
     },
-    "preview": {
+    "staging": {
+      "extends": "base",
       "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "extends": "base"
+    }
   },
   "submit": {
+    "staging": {
+      "ios": {
+        "appleId": "andrea.christina.unger@gmail.com",
+        "ascAppId": "1609237051",
+        "appleTeamId": "L7NZV7K597"
+      }
+    },
     "production": {}
   }
 }

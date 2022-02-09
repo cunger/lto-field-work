@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Text, Button, View } from 'react-native';
 import Modal from 'react-native-modal';
-import Signature from 'model/Signature';
-import SubmitButtons from 'components/forms/SubmitButtons';
-import Datastore from 'components/data/LocalDatastore';
+import Signature from '../../model/Signature';
+import SubmitButtons from './SubmitButtons';
+import Datastore from '../data/LocalDatastore';
 import GlobalContext from '../context/GlobalContext';
 import { showMessage, hideMessage } from 'react-native-flash-message';
 import { useTailwind } from 'tailwind-rn';

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, Button, TouchableOpacity, Platform } from 'react-native';
-import { InputLabel, InputField } from 'components/forms/Input';
+import { InputLabel, InputField } from './Input';
 import RNPickerSelect from 'react-native-picker-select'; // https://github.com/lawnstarter/react-native-picker-select
 import DatePicker from 'react-native-neat-date-picker';
-import SafeContainer from 'components/SafeContainer';
-import Location from 'model/Location';
+import SafeContainer from './SafeContainer';
+import Location from '../../model/Location';
 import { useTailwind } from 'tailwind-rn';
 import styles from '../../styles/select';
 
