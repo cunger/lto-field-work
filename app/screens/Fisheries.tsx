@@ -36,7 +36,6 @@ function Fisheries({ navigation }) {
     try {
       const photo = await launchCamera({ mediaType: 'photo' });
       if (photo) {
-        console.log(photo);
         update({ picture: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri });
         // or base64?
       }
@@ -50,7 +49,6 @@ function Fisheries({ navigation }) {
     try {
       const photo = await launchImageLibrary({ mediaType: 'photo' });
       if (photo) {
-        console.log(photo);
         update({ picture: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri });
         // or base64?
       }
@@ -147,6 +145,9 @@ function Fisheries({ navigation }) {
 
       <View>
         <InputLabel text='Picture' />
+        <Text style={tailwind('my-2')}>
+          {photo.uri || 'None selected yet.'}
+        </Text>
         <InputField
           text='Take photo with camera'
           textColor={'#cccccc'}
