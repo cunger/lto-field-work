@@ -36,8 +36,8 @@ function Fisheries({ navigation }) {
     try {
       const photo = await launchCamera({ mediaType: 'photo' });
       if (photo) {
-        update({ picture: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri });
-        // or base64?
+        update({ picture_filename: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri });
+        update({ picture_data: '' }); // base64?
       }
     } catch (e) {
       // TODO Monitoring!
@@ -49,8 +49,8 @@ function Fisheries({ navigation }) {
     try {
       const photo = await launchImageLibrary({ mediaType: 'photo' });
       if (photo) {
-        update({ picture: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri });
-        // or base64?
+        update({ picture_filename: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri });
+        update({ picture_data: '' }); // base64?
       }
     } catch (e) {
       // TODO Monitoring!
@@ -146,7 +146,7 @@ function Fisheries({ navigation }) {
       <View>
         <InputLabel text='Picture' />
         <Text style={tailwind('my-2')}>
-          {photo.uri || 'None selected yet.'}
+          { item.picture_filename || 'None selected yet.' }
         </Text>
         <InputField
           text='Take photo with camera'
