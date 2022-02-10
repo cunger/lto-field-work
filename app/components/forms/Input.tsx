@@ -13,6 +13,8 @@ export function InputLabel({ text }) {
 }
 
 export function InputField({ text, textColor, action }) {
+  const tailwind = useTailwind();
+  
   if (!textColor) textColor = '#000000';
 
   return (

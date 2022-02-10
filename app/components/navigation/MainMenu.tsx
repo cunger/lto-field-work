@@ -8,6 +8,7 @@ import Sync from '../../screens/Sync';
 import Settings from '../../screens/Settings';
 import GlobalContext from '../context/GlobalContext';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useTailwind } from 'tailwind-rn';
 
 const Tab = createBottomTabNavigator();
 const MainMenu = () => {

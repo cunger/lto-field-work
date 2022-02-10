@@ -5,7 +5,7 @@ Work in progress. Info will be added.
 
 Tailwind:
 ```
-$ npx create-tailwind-rn
+$ npm run build:tailwind
 ```
 
 ## Test
@@ -21,7 +21,8 @@ Ejecting:
 $ npm run eject
 ```
 
-Deploying:
+Building and deploying it to Test Flight:
 ```
-eas build
+$ eas build --profile staging
+$ ...
 ```
