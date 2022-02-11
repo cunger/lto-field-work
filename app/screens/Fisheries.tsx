@@ -32,12 +32,19 @@ function Fisheries({ navigation }) {
     setItem({ ...item, ...fields });
   };
 
+  const photoOptions = {
+    mediaType: 'photo',
+    includeBase64: true,
+    maxWidth: 800,
+    maxWidth: 800
+  };
+
   const takePhoto = async () => {
     try {
-      const photo = await launchCamera({ mediaType: 'photo' });
-      if (photo) {
-        update({ picture_filename: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri });
-        update({ picture_data: '' }); // base64?
+      const result = await launchCamera(photoOptions);
+      for (asset of result.assets) {
+        update({ picture_filename: asset.fileName });
+        update({ picture_data: asset.base64 });
       }
     } catch (e) {
       // TODO Monitoring!
@@ -47,10 +54,10 @@ function Fisheries({ navigation }) {
 
   const choosePhoto = async () => {
     try {
-      const photo = await launchImageLibrary({ mediaType: 'photo' });
-      if (photo) {
-        update({ picture_filename: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri });
-        update({ picture_data: '' }); // base64?
+      const result = await launchImageLibrary(photoOptions);
+      for (asset of result.assets) {
+        update({ picture_filename: asset.fileName });
+        update({ picture_data: asset.base64 });
       }
     } catch (e) {
       // TODO Monitoring!

@@ -30,13 +30,12 @@
     }
   },
   "submit": {
-    "staging": {
+    "production": {
       "ios": {
         "appleId": "andrea.christina.unger@gmail.com",
         "ascAppId": "1609237051",
         "appleTeamId": "L7NZV7K597"
       }
-    },
-    "production": {}
+    }
   }
 }

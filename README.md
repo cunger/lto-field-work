@@ -23,6 +23,7 @@ $ npm run eject
 
 Building and deploying it to Test Flight:
 ```
-$ eas build --profile staging
+$ eas build --profile production
+$ eas submit --profile production --platform ios
 $ ...
 ```
