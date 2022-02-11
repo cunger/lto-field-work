@@ -21,9 +21,8 @@ Ejecting:
 $ npm run eject
 ```
 
-Building and deploying it to Test Flight:
+Building and submitting the app:
 ```
-$ eas build --profile production
+$ eas build --profile production --platform ios
 $ eas submit --profile production --platform ios
-$ ...
 ```
