@@ -6,7 +6,8 @@
     "base": {
       "env": {},
       "ios": {
-        "image": "latest"
+        "image": "latest",
+        "autoIncrement": true
       }
     },
     "development": {

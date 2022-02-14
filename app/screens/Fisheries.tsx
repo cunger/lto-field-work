@@ -43,7 +43,7 @@ function Fisheries({ navigation }) {
     try {
       const result = await launchCamera(photoOptions);
       for (asset of result.assets) {
-        update({ picture_filename: asset.fileName });
+        update({ picture_filename: asset.fileName || asset.uri });
         update({ picture_data: asset.base64 });
       }
     } catch (e) {
@@ -56,7 +56,7 @@ function Fisheries({ navigation }) {
     try {
       const result = await launchImageLibrary(photoOptions);
       for (asset of result.assets) {
-        update({ picture_filename: asset.fileName });
+        update({ picture_filename: asset.fileName || asset.uri });
         update({ picture_data: asset.base64 });
       }
     } catch (e) {

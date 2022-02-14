@@ -60,14 +60,13 @@ function Settings({ navigation }) {
       </View>
 
       <View>
-        <InputLabel text='Email' />
+        <InputLabel text='Email (so we can get in touch)' />
         <TextInput
           value={email}
           onChangeText={(value) => { setEmail(value); setVerified(false); }}
           onEndEdition={saveEmail}
           style={tailwind('mb-4 p-2 bg-white border-gray rounded-md')}
         />
-        <Text>This helps us to get in touch with you.</Text>
       </View>
 
       <View>
@@ -78,12 +77,12 @@ function Settings({ navigation }) {
           onEndEdition={saveToken}
           style={tailwind('mb-4 p-2 bg-white border-gray rounded-md')}
         />
-        <Text>This information is used for signing data entries.</Text>
+        <Text>The token is used for signing data entries. You can get one from the Love The Oceans staff.</Text>
       </View>
 
       <View>
         <Text style={tailwind('my-2')}>
-          {token == '' ? '' : (verified ? 'It is verified. ✅' : 'It is not verified. 🤔')}
+          {token == '' ? '' : (verified ? 'Your token is verified. ✅' : 'Your token is not yet verified.')}
         </Text>
       </View>
 

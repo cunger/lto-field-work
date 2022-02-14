@@ -44,11 +44,11 @@ function Sync({ navigation }) {
 
   return (
     <ScrollContainer>
-      <Heading title='Unsynced data' actionTitle='Sync' actionOnPress={sync} />
+      <Heading title='Local data' actionTitle='Upload' actionOnPress={sync} />
       <ListItem><Text>{` 🗑️ ${report.Trash.unsynced} trash items`}</Text></ListItem>
       <ListItem><Text>{` 🎣 ${report.Catch.unsynced} catch items`}</Text></ListItem>
 
-      <Heading title='Synced data' actionTitle='Clear' actionOnPress={clearSynced} />
+      <Heading title='Uploaded data' actionTitle='Clear' actionOnPress={clearSynced} />
       <ListItem><Text>{` 🗑️ ${report.Trash.synced} trash items`}</Text></ListItem>
       <ListItem><Text>{` 🎣 ${report.Catch.synced} catch items`}</Text></ListItem>
 
@@ -58,7 +58,7 @@ function Sync({ navigation }) {
       </Text>
       <ConfirmPrompt visible={confirmVisible}
         actionPhrase='clear all stored data entries'
-        actionExplanation='This will also delete entries that were not yet synced.'
+        actionExplanation='This will also delete entries that were not yet uploaded.'
         actionButtonText='Delete all'
         action={clearAll}
         hide={() => setConfirmVisible(false)} />
