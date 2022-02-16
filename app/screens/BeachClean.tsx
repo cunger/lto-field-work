@@ -26,7 +26,7 @@ function BeachClean({ navigation }) {
   const [signatureVisible, setSignatureVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
 
-  const updateItem = (quantity, category) => {
+  const updateItem = (quantity: number, category: Category) => {
     items[category] = quantity;
     setItems(items);
   };

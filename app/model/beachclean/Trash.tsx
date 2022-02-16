@@ -1,13 +1,14 @@
 import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid';
 import Location from '../Location';
+import Signature from '../Signature';
 import Category from './Category';
 
 type Trash = {
   id: string,
   type: string,
   synced: boolean,
-  signature: string,
+  signature: Signature,
   date: date,
   location: Location,
   quantity: number,

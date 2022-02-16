@@ -2,8 +2,24 @@ import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid';
 import Location from '../Location';
 import Species from './Species';
+import Method from './Method';
 
-function Catch() {
+type Catch = {
+  id: string,
+  type: string,
+  synced: boolean,
+  signature: Signature,
+  date: date,
+  location: Location,
+  method: Method,
+  quantity: number,
+  species: Species,
+  size: number,
+  picture_filename: string,
+  picture_data: string,
+};
+
+function Catch(): Catch {
   return {
     id: uuid(),
     type: 'Catch',

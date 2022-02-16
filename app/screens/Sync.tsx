@@ -52,7 +52,10 @@ function Sync({ navigation }) {
       <ListItem><Text>{` 🗑️ ${report.Trash.synced} trash items`}</Text></ListItem>
       <ListItem><Text>{` 🎣 ${report.Catch.synced} catch items`}</Text></ListItem>
 
-      <Heading title='Local storage' actionTitle='🔥 Clear all' actionOnPress={() => setConfirmVisible(true)}  />
+      <Heading title='Local storage' actionTitle='🔥 Clear all' actionOnPress={() => {
+        if (report.total == 0) return;
+        setConfirmVisible(true);
+      }} />
       <Text style={tailwind('m-2')}>
         There's a total of {report.total} items in your storage.
       </Text>
