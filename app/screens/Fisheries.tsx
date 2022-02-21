@@ -211,66 +211,66 @@ function Fisheries({ navigation }) {
 
         <TextField
           label='Common name'
-          updateKey='common_name'
           value={item.common_name}
+          updateAction={(value) => update({ common_name: value })}
         />
         <TextField
           label='Total length (cm)'
-          updateKey='length'
           value={item.length}
+          updateAction={(value) => update({ length: value })}
         />
         <TextField
           label='Head length (cm)'
-          updateKey='head_length'
           value={item.head_length}
+          updateAction={(value) => update({ head_length: value })}
           hide={hideHeadLength}
         />
         <TextField
           label='Head width (cm)'
-          updateKey='head_width'
           value={item.head_width}
+          updateAction={(value) => update({ head_width: value })}
           hide={hideHeadWidth}
         />
         <TextField
           label='Fork length (cm)'
-          updateKey='fork_length'
           value={item.fork_length}
+          updateAction={(value) => update({ fork_length: value })}
           hide={hideForkLength}
         />
         <TextField
           label='Precaudal length (cm)'
-          updateKey='precaudal_length'
           value={item.precaudal_length}
+          updateAction={(value) => update({ precaudal_length: value })}
           hide={hidePrecaudalLength}
         />
         <TextField
           label='Carapace length (cm)'
-          updateKey='carapace_length'
           value={item.carapace_length}
+          updateAction={(value) => update({ carapace_length: value })}
           hide={hideCarapaceLength}
         />
         <TextField
           label="Carapace width (cm) if it's a crab"
-          updateKey='carapace_width'
           value={item.carapace_width}
+          updateAction={(value) => update({ carapace_width: value })}
           hide={hideCarapaceWidth}
         />
         <TextField
           label='Tail length (cm)'
-          updateKey='tail_length'
           value={item.tail_length}
+          updateAction={(value) => update({ tail_length: value })}
           hide={hideTailLength}
         />
         <TextField
           label='Wingspan (cm)'
-          updateKey='wingspan'
           value={item.wingspan}
+          updateAction={(value) => update({ wingspan: value })}
           hide={hideWingspan}
         />
         <TextField
           label='Weight (g)'
-          updateKey='weight'
           value={item.weight}
+          updateAction={(value) => update({ weight: value })}
         />
       </View>
 

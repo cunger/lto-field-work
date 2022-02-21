@@ -3,7 +3,7 @@ import { Text, TextInput, View } from 'react-native';
 import { InputLabel } from './Input';
 import { useTailwind } from 'tailwind-rn';
 
-function TextField({ label, updateKey, value, hide=false }) {
+function TextField({ label, value, updateAction, hide=false }) {
   if (hide) return null;
 
   const tailwind = useTailwind();
@@ -13,8 +13,8 @@ function TextField({ label, updateKey, value, hide=false }) {
       <InputLabel text={label} />
       <TextInput
         value={value}
-        onChangeText={(value) => update({ [updateKey]: value })}
-        onEndEdition={(value) => update({ [updateKey]: value })}
+        onChangeText={updateAction}
+        onEndEdition={updateAction}
         style={tailwind('mb-2 p-2 bg-white border-gray rounded-md')}
       />
     </View>
