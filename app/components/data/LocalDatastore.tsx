@@ -29,7 +29,6 @@ const Datastore = {
   },
   save: async (item) => {
     try {
-      console.log(JSON.stringify(item));
       await AsyncStorage.setItem(item.id, JSON.stringify(item));
     } catch (e) {
       // TODO Monitoring!
@@ -75,9 +74,11 @@ const Datastore = {
       for (let value of values) {
         let item = JSON.parse(value[1]);
         if (!item.synced) {
-          await Backend.persist(item);
-          item.synced = true;
-          await AsyncStorage.setItem(item.id, JSON.stringify(item));
+          let success = await Backend.persist(item);
+          if (success) {
+            item.synced = true;
+            await AsyncStorage.setItem(item.id, JSON.stringify(item));
+          }
         }
       }
     } catch (e) {

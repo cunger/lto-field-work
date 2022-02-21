@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, Button, TouchableOpacity, Platform } from 'react-native';
-import { InputLabel, InputField } from './Input';
+import { InputLabel, InputField, InputGroup } from './Input';
 import RNPickerSelect from 'react-native-picker-select'; // https://github.com/lawnstarter/react-native-picker-select
 import DatePicker from 'react-native-neat-date-picker';
 import SafeContainer from './SafeContainer';
@@ -27,6 +27,7 @@ function Coordinates({ setDateOnParent, setLocationOnParent }) {
 
   return (
     <View style={tailwind('mb-2')}>
+      <InputGroup text='Coordinates' />
       <InputLabel text='Date' />
       <InputField
         text={date.toDateString()}
@@ -67,30 +68,5 @@ function Coordinates({ setDateOnParent, setLocationOnParent }) {
     </View>
   );
 }
-
-// <TouchableOpacity
-//   onPress={() => setShowLocationPicker(true)}
-//   style={tailwind('px-4 py-2 mb-2 rounded-md bg-white')}>
-//   <Text>{location}</Text>
-// </TouchableOpacity>
-// {showLocationPicker && (
-//   <View style={tailwind('rounded-md bg-white')}>
-//     <TouchableOpacity
-//       onPress={() => setShowLocationPicker(false)}
-//       style={tailwind('px-2 py-2')}>
-//       <Text>✖️ Close</Text>
-//     </TouchableOpacity>
-//     <Picker
-//       selectedValue={location}
-//       onValueChange={(value, _) => {
-//         saveLocation(value);
-//         setShowLocationPicker(false);
-//       }}>
-//       {Object.keys(Location).map(key => (
-//         <Picker.Item key={key} label={Location[key]} value={key} />
-//       ))}
-//     </Picker>
-//   </View>
-// )}
 
 export default Coordinates;

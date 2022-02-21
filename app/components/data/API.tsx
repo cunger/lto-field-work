@@ -1,8 +1,8 @@
-async function verify(userName, userToken) {
+async function verify(userName: string, userToken: string): Promise<boolean> {
   return Promise.resolve(true);
 }
 
-async function persist(data) {
+async function persist(data): Promise<boolean> {
   return Promise.resolve(true);
 }
 

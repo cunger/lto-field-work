@@ -1,9 +1,9 @@
 enum Method {
-  Kayaking = 'Kayaking',
+  Net = 'Net',
   PoleLine = 'Pole and line',
-  GillNet = 'Gill net',
-  Longline = 'Longline',
-  Combination = 'Combination',
+  Spearfishing = 'Spearfishing',
+  Poison = 'Poison',
+  Foreign = 'Foreign sports fisherman',
   Other = 'Other',
 };
 

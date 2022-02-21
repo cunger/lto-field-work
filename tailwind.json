@@ -272,6 +272,11 @@
 			"fontWeight": "700"
 		}
 	},
+	"uppercase": {
+		"style": {
+			"textTransform": "uppercase"
+		}
+	},
 	"text-white": {
 		"style": {
 			"--tw-text-opacity": 1,
