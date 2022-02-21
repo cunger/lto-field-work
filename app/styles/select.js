@@ -5,7 +5,8 @@ const input = {
 
 const inputContainer = {
   backgroundColor: 'white',
-  borderRadius: 6
+  borderRadius: 6,
+  marginRight: 8
 };
 
 module.exports = {

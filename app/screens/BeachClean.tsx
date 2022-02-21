@@ -11,7 +11,7 @@ import Location from '../model/Location';
 import Datastore from '../components/data/LocalDatastore';
 import ScrollContainer from '../components/ScrollContainer';
 import Coordinates from '../components/forms/Coordinates';
-import { InputLabel, InputField } from '../components/forms/Input';
+import { InputLabel, InputField, InputGroup } from '../components/forms/Input';
 import SubmitButtons from '../components/forms/SubmitButtons';
 import Signing from '../components/forms/Signing';
 import ConfirmPrompt from '../components/ConfirmPrompt';
@@ -79,7 +79,7 @@ function BeachClean({ navigation }) {
       />
 
       <View>
-        <InputLabel text='Items' />
+        <InputGroup text='Items' />
         {Object.keys(Category).map(key => {
           const category = Category[key];
           if (category == 'Unknown') return;

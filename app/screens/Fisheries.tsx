@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import InputSpinner from 'react-native-input-spinner'; // https://github.com/marcocesarato/react-native-input-spinner
-import RNPickerSelect from 'react-native-picker-select'; // https://github.com/lawnstarter/react-native-picker-select
 import Catch from '../model/fisheries/Catch';
 import Species from '../model/fisheries/Species';
 import Sex from '../model/fisheries/Sex';
@@ -14,6 +12,8 @@ import ScrollContainer from '../components/ScrollContainer';
 import Datastore from '../components/data/LocalDatastore';
 import Coordinates from '../components/forms/Coordinates';
 import { InputLabel, InputField, InputGroup } from '../components/forms/Input';
+import TextField from '../components/forms/TextField';
+import SelectField from '../components/forms/SelectField';
 import SubmitButtons from '../components/forms/SubmitButtons';
 import Signing from '../components/forms/Signing';
 import ConfirmPrompt from '../components/ConfirmPrompt';
@@ -28,6 +28,26 @@ function Fisheries({ navigation }) {
   const [item, setItem] = useState(Catch());
   const [signatureVisible, setSignatureVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
+
+  // Species-specific fields get visible only once you select that species.
+  const [hideForkLength, setHideForkLength] = useState(true);
+  const [hideTailLength, setHideTailLength] = useState(true);
+  const [hideHeadLength, setHideHeadLength] = useState(true);
+  const [hideHeadWidth, setHideHeadWidth] = useState(true);
+  const [hidePrecaudalLength, setHidePrecaudalLength] = useState(true);
+  const [hideCarapaceLength, setHideCarapaceLength] = useState(true);
+  const [hideCarapaceWidth, setHideCarapaceWidth] = useState(true);
+  const [hideWingspan, setHideWingspan] = useState(true);
+  const hideAllSpeciesSpecificFields = () => {
+    setHideForkLength(true);
+    setHideTailLength(true);
+    setHideHeadLength(true);
+    setHideHeadWidth(true);
+    setHidePrecaudalLength(true);
+    setHideCarapaceWidth(true);
+    setHideCarapaceLength(true);
+    setHideWingspan(true);
+  };
 
   const update = (fields) => {
     setItem({ ...item, ...fields });
@@ -94,34 +114,17 @@ function Fisheries({ navigation }) {
       <View>
         <InputGroup text='Fishing method' />
         <View style={tailwind('flex flex-row items-stretch my-2')}>
-          <RNPickerSelect
+          <SelectField
+            label='Which method?'
             value={item.method}
-            placeholder={{ label: 'Which method?', value: undefined }}
-            onValueChange={(value, _) => update({ method: value })}
-            items={Object.keys(Method).map(key => {
-              return { label: Method[key], value: key };
-            })}
-            style={{
-              inputAndroid: styles.input,
-              inputAndroidContainer: styles.inputContainer,
-              inputIOS: styles.input,
-              inputIOSContainer: styles.inputContainer
-            }}
+            type={Method}
+            updateAction={(value) => update({ method: value })}
           />
-          <Text> </Text>
-          <RNPickerSelect
+          <SelectField
+            label='From where?'
             value={item.base}
-            placeholder={{ label: 'From where?', value: undefined }}
-            onValueChange={(value, _) => update({ base: value })}
-            items={Object.keys(Base).map(key => {
-              return { label: Base[key], value: key };
-            })}
-            style={{
-              inputAndroid: styles.input,
-              inputAndroidContainer: styles.inputContainer,
-              inputIOS: styles.input,
-              inputIOSContainer: styles.inputContainer
-            }}
+            type={Base}
+            updateAction={(value) => update({ base: value })}
           />
         </View>
       </View>
@@ -139,59 +142,111 @@ function Fisheries({ navigation }) {
             rounded={false}
             style={tailwind('mr-4')}
           />
-          <RNPickerSelect
+          <SelectField
+            label='Which sex?'
             value={item.sex}
-            placeholder={{ label: 'Which sex?', value: undefined }}
-            onValueChange={(value, _) => update({ sex: value })}
-            items={Object.keys(Sex).map(key => {
-              return { label: Sex[key], value: key };
-            })}
-            style={{
-              inputAndroid: styles.input,
-              inputAndroidContainer: styles.inputContainer,
-              inputIOS: styles.input,
-              inputIOSContainer: styles.inputContainer
-            }}
+            type={Sex}
+            updateAction={(value) => update({ sex: value })}
           />
-          <Text> </Text>
-          <RNPickerSelect
+          <SelectField
+            label='Which species?'
             value={item.species}
-            placeholder={{ label: 'Which species?', value: undefined }}
-            onValueChange={(value, _) => update({ species: value })}
-            items={Object.keys(Species).map(key => {
-              return { label: Species[key], value: key };
-            })}
-            style={{
-              inputAndroid: styles.input,
-              inputAndroidContainer: styles.inputContainer,
-              inputIOS: styles.input,
-              inputIOSContainer: styles.inputContainer
+            type={Species}
+            updateAction={(value) => {
+              update({ species: value });
+              hideAllSpeciesSpecificFields();
+              if (value == 'TeleostFish') {
+                setHideHeadLength(false);
+                setHideHeadWidth(false);
+              } else
+              if (value == 'GameFish') {
+                setHideHeadLength(false);
+                setHideHeadWidth(false);
+                setHideForkLength(false);
+                setHidePrecaudalLength(false);
+              } else
+              if (value == 'Shark') {
+                setHideForkLength(false);
+                setHidePrecaudalLength(false);
+              } else
+              if (value == 'Ray') {
+                setHidePrecaudalLength(false);
+                setHideWingspan(false);
+              } else
+              if (value == 'Cephalopod') {
+                setHideHeadLength(false);
+              } else
+              if (value == 'Crustacean') {
+                setHideCarapaceLength(false);
+                setHideCarapaceWidth(false);
+                setHideTailLength(false);
+              }
             }}
           />
         </View>
-      </View>
 
-      <View>
-        <InputLabel text='Common name' />
-        <TextInput
+        <TextField
+          label='Common name'
+          updateKey='common_name'
           value={item.common_name}
-          onChangeText={(value) => update({ common_name: value })}
-          onEndEdition={(value) => update({ common_name: value })}
-          style={tailwind('mb-2 p-2 bg-white border-gray rounded-md')}
         />
-        <InputLabel text='Total length (cm)' />
-        <TextInput
+        <TextField
+          label='Total length (cm)'
+          updateKey='length'
           value={item.length}
-          onChangeText={(value) => update({ length: value })}
-          onEndEdition={(value) => update({ length: value })}
-          style={tailwind('mb-2 p-2 bg-white border-gray rounded-md')}
         />
-        <InputLabel text='Weight (g)' />
-        <TextInput
+        <TextField
+          label='Head length (cm)'
+          updateKey='head_length'
+          value={item.head_length}
+          hide={hideHeadLength}
+        />
+        <TextField
+          label='Head width (cm)'
+          updateKey='head_width'
+          value={item.head_width}
+          hide={hideHeadWidth}
+        />
+        <TextField
+          label='Fork length (cm)'
+          updateKey='fork_length'
+          value={item.fork_length}
+          hide={hideForkLength}
+        />
+        <TextField
+          label='Precaudal length (cm)'
+          updateKey='precaudal_length'
+          value={item.precaudal_length}
+          hide={hidePrecaudalLength}
+        />
+        <TextField
+          label='Carapace length (cm)'
+          updateKey='carapace_length'
+          value={item.carapace_length}
+          hide={hideCarapaceLength}
+        />
+        <TextField
+          label="Carapace width (cm) if it's a crab"
+          updateKey='carapace_width'
+          value={item.carapace_width}
+          hide={hideCarapaceWidth}
+        />
+        <TextField
+          label='Tail length (cm)'
+          updateKey='tail_length'
+          value={item.tail_length}
+          hide={hideTailLength}
+        />
+        <TextField
+          label='Wingspan (cm)'
+          updateKey='wingspan'
+          value={item.wingspan}
+          hide={hideWingspan}
+        />
+        <TextField
+          label='Weight (g)'
+          updateKey='weight'
           value={item.weight}
-          onChangeText={(value) => update({ weight: value })}
-          onEndEdition={(value) => update({ weight: value })}
-          style={tailwind('mb-2 p-2 bg-white border-gray rounded-md')}
         />
       </View>
 

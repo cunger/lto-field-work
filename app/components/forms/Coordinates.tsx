@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, Button, TouchableOpacity, Platform } from 'react-native';
 import { InputLabel, InputField, InputGroup } from './Input';
-import RNPickerSelect from 'react-native-picker-select'; // https://github.com/lawnstarter/react-native-picker-select
 import DatePicker from 'react-native-neat-date-picker';
+import SelectField from './SelectField';
 import SafeContainer from './SafeContainer';
 import Location from '../../model/Location';
 import { useTailwind } from 'tailwind-rn';
@@ -11,7 +11,7 @@ import styles from '../../styles/select';
 function Coordinates({ setDateOnParent, setLocationOnParent }) {
   const tailwind = useTailwind();
   const [date, setDate] = useState(new Date());
-  const [location, setLocation] = useState(Location.Guinjata);
+  const [location, setLocation] = useState(undefined);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showLocationPicker, setShowLocationPicker] = useState(false);
 
@@ -20,10 +20,29 @@ function Coordinates({ setDateOnParent, setLocationOnParent }) {
     setDateOnParent(date);
   };
 
+  const saveHours = (hours) => {
+    date.setHours(hours);
+    saveDate(date);
+  };
+
+  const saveMinutes = (minutes) => {
+    date.setMinutes(minutes);
+    saveDate(date);
+  };
+
   const saveLocation = (location) => {
     setLocation(location);
     setLocationOnParent(location);
   };
+
+  const itemRange = (start, end) => {
+    let items = [];
+    for (let i = start; i <= end; i++) {
+      items.push({ label: i < 10 ? `0${i}` : `${i}`, value: i });
+    }
+
+    return items;
+  }
 
   return (
     <View style={tailwind('mb-2')}>
@@ -31,7 +50,8 @@ function Coordinates({ setDateOnParent, setLocationOnParent }) {
       <InputLabel text='Date' />
       <InputField
         text={date.toDateString()}
-        action={() => setShowDatePicker(true)} />
+        action={() => setShowDatePicker(true)}
+      />
       <DatePicker
         isVisible={showDatePicker}
         mode={'single'}
@@ -49,21 +69,28 @@ function Coordinates({ setDateOnParent, setLocationOnParent }) {
           confirmButtonColor: '#6ec1e4'
         }}
       />
+      <View style={tailwind('flex flex-row items-stretch my-2')}>
+        <InputLabel text='Time: ' />
+        <SelectField
+          label='Hours'
+          value={date.getHours()}
+          items={itemRange(0,23)}
+          updateAction={(value) => saveHours(value)}
+        />
+        <SelectField
+          label='Minutes'
+          value={date.getMinutes()}
+          items={itemRange(0,59)}
+          updateAction={(value) => saveMinutes(value)}
+        />
+      </View>
 
       <InputLabel text='Location' />
-      <RNPickerSelect
+      <SelectField
+        label='Which bay?'
         value={location}
-        placeholder={{ label: 'Where?', value: undefined }}
-        onValueChange={(value, _) => saveLocation(value)}
-        items={Object.keys(Location).map(key => {
-          return { label: Location[key], value: key };
-        })}
-        style={{
-          inputAndroid: styles.input,
-          inputAndroidContainer: styles.inputContainer,
-          inputIOS: styles.input,
-          inputIOSContainer: styles.inputContainer
-        }}
+        type={Location}
+        updateAction={(value) => saveLocation(value)}
       />
     </View>
   );
