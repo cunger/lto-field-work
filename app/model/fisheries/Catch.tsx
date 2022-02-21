@@ -1,6 +1,7 @@
 import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid';
 import Location from '../Location';
+import Reason from './Reason';
 import Species from './Species';
 import Sex from './Sex';
 import Method from './Method';
@@ -13,6 +14,7 @@ type Catch = {
   signature: Signature,
   date: date,
   location: Location,
+  reason: Reason,
   method: Method,
   base: Base,
   quantity: number,
@@ -39,6 +41,7 @@ function Catch(): Catch {
     type: 'Catch',
     synced: false,
     date: new Date(),
+    quantity: 1,
   };
 }
 

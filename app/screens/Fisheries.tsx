@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
 import InputSpinner from 'react-native-input-spinner'; // https://github.com/marcocesarato/react-native-input-spinner
+import BouncyCheckbox from 'react-native-bouncy-checkbox'; // https://github.com/WrathChaos/react-native-bouncy-checkbox
 import Catch from '../model/fisheries/Catch';
 import Species from '../model/fisheries/Species';
 import Sex from '../model/fisheries/Sex';
 import Method from '../model/fisheries/Method';
 import Base from '../model/fisheries/Base';
+import Reason from '../model/fisheries/Reason';
 import Location from '../model/Location';
 import Signature from '../model/Signature';
 import ScrollContainer from '../components/ScrollContainer';
@@ -131,9 +133,31 @@ function Fisheries({ navigation }) {
 
       <View>
         <InputGroup text='Catch' />
+
+        <View style={tailwind('flex flex-row items-stretch mb-4 py-4 border-b border-gray-200')}>
+          <BouncyCheckbox
+            size={25}
+            fillColor='#6ec1e4'
+            unfillColor='white'
+            text='No catch, due to   '
+            textStyle={{ textDecorationLine: 'none' }}
+            iconStyle={{ borderColor: '#6ec1e4' }}
+            onPress={(value) => {
+              if (value) update({ quantity: 0 });
+              else update({ quantity: 1, reason: null });
+            }}
+          />
+          <SelectField
+            label='Reason'
+            value={item.reason}
+            type={Reason}
+            updateAction={(value) => update({ reason: value })}
+          />
+        </View>
+
         <View style={tailwind('flex flex-row items-stretch my-2')}>
           <InputSpinner
-            min={1}
+            min={0}
             step={1}
             value={item.quantity}
             onChange={(value) => { update({ quantity: value }); }}
