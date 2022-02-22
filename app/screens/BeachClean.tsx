@@ -21,7 +21,7 @@ import { useTailwind } from 'tailwind-rn';
 function BeachClean({ navigation }) {
   const tailwind = useTailwind();
   const [date, setDate] = useState(new Date());
-  const [location, setLocation] = useState(Location.Guinjata);
+  const [location, setLocation] = useState(undefined);
   const [items, setItems] = useState({});
   const [signatureVisible, setSignatureVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
@@ -33,6 +33,7 @@ function BeachClean({ navigation }) {
 
   const reset = () => {
     setDate(new Date());
+    setLocation(undefined);
     setItems({});
   };
 
@@ -43,6 +44,8 @@ function BeachClean({ navigation }) {
   const closeSigning = () => {
     reset();
     setSignatureVisible(false);
+    // You probably finished the beach clean, so go back to menu.
+    navigation.navigate('Data Entry', { screen: 'Data entry' });
   };
 
   const trashItems = () => {

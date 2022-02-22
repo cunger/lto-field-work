@@ -20,13 +20,14 @@ import SubmitButtons from '../components/forms/SubmitButtons';
 import Signing from '../components/forms/Signing';
 import ConfirmPrompt from '../components/ConfirmPrompt';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker'; // https://github.com/react-native-image-picker/react-native-image-picker
+import { showMessage, hideMessage } from 'react-native-flash-message';
 import { useTailwind } from 'tailwind-rn';
 import styles from '../styles/select';
 
 function Fisheries({ navigation }) {
   const tailwind = useTailwind();
   const [date, setDate] = useState(new Date());
-  const [location, setLocation] = useState(Location.Guinjata);
+  const [location, setLocation] = useState(undefined);
   const [item, setItem] = useState(Catch());
   const [signatureVisible, setSignatureVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
@@ -55,40 +56,10 @@ function Fisheries({ navigation }) {
     setItem({ ...item, ...fields });
   };
 
-  const photoOptions = {
-    mediaType: 'photo',
-    includeBase64: true,
-    maxWidth: 800,
-    maxWidth: 800
-  };
-
-  const takePhoto = async () => {
-    try {
-      const result = await launchCamera(photoOptions);
-      for (asset of result.assets) {
-        update({ picture_filename: asset.fileName || asset.uri });
-        update({ picture_data: asset.base64 });
-      }
-    } catch (e) {
-      // TODO Monitoring!
-      console.log(e);
-    }
-  };
-
-  const choosePhoto = async () => {
-    try {
-      const result = await launchImageLibrary(photoOptions);
-      for (asset of result.assets) {
-        update({ picture_filename: asset.fileName || asset.uri });
-        update({ picture_data: asset.base64 });
-      }
-    } catch (e) {
-      // TODO Monitoring!
-      console.log(e);
-    }
-  };
 
   const reset = () => {
+    // You probably want to log several catches,
+    // so we're not resetting the coordinates.
     setItem(Catch());
   };
 
@@ -99,11 +70,45 @@ function Fisheries({ navigation }) {
   const closeSigning = () => {
     reset();
     setSignatureVisible(false);
+    // You probably want to log several catches,
+    // so we stay here. 
   };
 
   const discard = () => {
     reset();
     navigation.navigate('Data Entry', { screen: 'Data entry' });
+  };
+
+  const photoOptions = {
+    mediaType: 'photo',
+    includeBase64: true,
+    maxWidth: 800,
+    maxWidth: 800
+  };
+
+  const pickPhoto = async (action, source) => {
+    try {
+      const result = await action(photoOptions);
+      handleImageData(result);
+    } catch (error) {
+      showMessage({
+        message: `Failed to access ${source}.`,
+        description: `${error}`,
+        type: 'danger',
+        icon: 'warning'
+      });
+    }
+  };
+
+  const handleImageData = (data) => {
+    let i = 0;
+    for (asset of data.assets) {
+      i++;
+      update({
+        picture_filename: `${item.date.toDateString()}-${item.location}-${item.common_name || item.species || 'catch'}-${i}` ,
+        picture_data: asset.base64
+      });
+    }
   };
 
   return (
@@ -282,11 +287,11 @@ function Fisheries({ navigation }) {
         <InputField
           text='Take photo with camera'
           textColor={'#cccccc'}
-          action={takePhoto} />
+          action={() => pickPhoto(launchCamera, 'camera')} />
         <InputField
           text='Pick photo from gallery'
           textColor={'#cccccc'}
-          action={choosePhoto} />
+          action={() => pickPhoto(launchImageLibrary, 'image gallery')} />
       </View>
 
       <SubmitButtons saveAction={openSigning} discardAction={() => setConfirmVisible(true)} />
