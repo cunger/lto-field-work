@@ -23,15 +23,15 @@ function Settings({ navigation }) {
   }, []);
 
   const saveName = () => {
-    Datastore.setUserName(name);
+    Datastore.setUserName(name.trim());
   };
 
   const saveToken = () => {
-    Datastore.setUserToken(token);
+    Datastore.setUserToken(token.trim());
   };
 
   const saveEmail = () => {
-    Datastore.setUserEmail(email);
+    Datastore.setUserEmail(email.trim());
   };
 
   const save = () => {

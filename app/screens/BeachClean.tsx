@@ -38,8 +38,6 @@ function BeachClean({ navigation }) {
   };
 
   const openSigning = () => {
-    item.date = date;
-    item.location = location;
     setSignatureVisible(true);
   };
 

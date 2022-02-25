@@ -6,12 +6,11 @@ async function verify(userName: string, userToken: string): Promise<boolean> {
 }
 
 async function persist(data): Promise<boolean> {
-  console.log(data);
-  console.log(JSON.stringify(asSheetRow(data)));
-
   // If data is not signed, don't upload it,
   // but pretend it was uploaded (for testing and demo purposes).
-  if (!data.signature.verified) return Promise.resolve(true);
+  if (!data.signature || !data.signature.verified) {
+    return Promise.resolve(true);
+  }
 
   // First check for internet connection.
   NetInfo.fetch().then(state => {
@@ -38,7 +37,7 @@ async function persist(data): Promise<boolean> {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(asSheetRow(data))
     })
-    .then(_ => { return true; })
+    .then(response => { console.log(`${response}`); return true; })
     .catch(error => { console.log(`${error}`); return false; });
   });
 }
