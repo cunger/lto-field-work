@@ -16,7 +16,7 @@ export default function App() {
     <TailwindProvider utilities={utilities}>
       <NavigationContainer>
         <MainMenu />
-        <FlashMessage position="top" />
+        <FlashMessage position='top' />
       </NavigationContainer>
     </TailwindProvider>
   );

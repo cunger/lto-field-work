@@ -3,7 +3,8 @@ enum Base {
   BoatWithoutEngine = 'Boat without engine',
   Kayak = 'Kayak',
   Shore = 'Shore',
-  None = 'None',
+  JetSki = 'Jet ski',
+  Unknown = 'Unknown',
 };
 
 export default Base;
