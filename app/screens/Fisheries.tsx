@@ -31,6 +31,7 @@ function Fisheries({ navigation }) {
   const [item, setItem] = useState(Catch());
   const [signatureVisible, setSignatureVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
+  const [hideReason, setHideReason] = useState(true);
 
   // Species-specific fields get visible only once you select that species.
   const [hideForkLength, setHideForkLength] = useState(true);
@@ -71,7 +72,7 @@ function Fisheries({ navigation }) {
     reset();
     setSignatureVisible(false);
     // You probably want to log several catches,
-    // so we stay here. 
+    // so we stay here.
   };
 
   const discard = () => {
@@ -139,24 +140,29 @@ function Fisheries({ navigation }) {
       <View>
         <InputGroup text='Catch' />
 
-        <View style={tailwind('flex flex-row items-stretch mb-4 py-4 border-b border-gray-200')}>
+        <View style={tailwind('mb-2 py-2 border-b border-gray-200')}>
           <BouncyCheckbox
             size={25}
             fillColor='#6ec1e4'
             unfillColor='white'
-            text='No catch, due to   '
+            text='No catch.'
             textStyle={{ textDecorationLine: 'none' }}
             iconStyle={{ borderColor: '#6ec1e4' }}
             onPress={(value) => {
-              if (value) update({ quantity: 0 });
-              else update({ quantity: 1, reason: null });
+              if (value) {
+                update({ quantity: 0 });
+                setHideReason(false);
+              } else {
+                update({ quantity: 1, reason: null });
+                setHideReason(true);
+              }
             }}
           />
-          <SelectField
-            label='Reason'
+          <TextField
+            label='Reason:'
             value={item.reason}
-            type={Reason}
             updateAction={(value) => update({ reason: value })}
+            hide={hideReason}
           />
         </View>
 
@@ -292,6 +298,11 @@ function Fisheries({ navigation }) {
           text='Pick photo from gallery'
           textColor={'#cccccc'}
           action={() => pickPhoto(launchImageLibrary, 'image gallery')} />
+        <TextField
+          label='Or note which picture(s) on whose camera:'
+          value={item.picture_note}
+          updateAction={(value) => update({ picture_note: value })}
+        />
       </View>
 
       <SubmitButtons saveAction={openSigning} discardAction={() => setConfirmVisible(true)} />
