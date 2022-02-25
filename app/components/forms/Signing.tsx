@@ -47,12 +47,14 @@ function Signing({ visible, items, closeAction }) {
       animationOut={'slideOutUp'}
       animationOutTiming={1000}>
       <View style={tailwind('bg-white p-4 rounded-md')}>
-        <Text style={tailwind('my-4 font-bold')}>✏️ Signing as: {userName}</Text>
+        <Text style={tailwind('my-4 font-bold')}>✍️ Do you want to sign?</Text>
         <Text style={tailwind('my-2')}>
-          In order for your data to be used in analytics, you need to sign it.
+          Signing means you confirm that you collected the data as entered. We can then use the data for our studies.
         </Text>
+        <Text style={tailwind('my-2')}>You would sign as: {userName}</Text>
+        <Text style={tailwind('my-2')}>(Go to Settings to change that.)</Text>
         <Text style={tailwind('my-2')}>
-          If you're testing or simply fooling around, just skip this step. (The data will still be saved.)
+          If you're testing or simply fooling around, please skip this step. The data will still be saved; we just won't use it as real data.
         </Text>
 
         <SubmitButtons
