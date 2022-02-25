@@ -1,8 +1,8 @@
 enum Base {
+  Shore = 'Shore',
+  Kayak = 'Kayak',
   BoatWithEngine = 'Boat with engine',
   BoatWithoutEngine = 'Boat without engine',
-  Kayak = 'Kayak',
-  Shore = 'Shore',
   JetSki = 'Jet ski',
   Unknown = 'Unknown',
 };

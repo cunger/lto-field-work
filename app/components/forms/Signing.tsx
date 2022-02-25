@@ -11,17 +11,19 @@ import { useTailwind } from 'tailwind-rn';
 function Signing({ visible, items, closeAction }) {
   const tailwind = useTailwind();
   const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [userToken, setUserToken] = useState('');
 
   useEffect(() => {
     (async () => {
       setUserName(await Datastore.getUserName());
+      setUserEmail(await Datastore.getUserEmail());
       setUserToken(await Datastore.getUserToken());
     })();
   }, []);
 
   const sign = () => {
-    items.forEach(item => item.signature = Signature(userName, userToken));
+    items.forEach(item => item.signature = Signature(userName, userEmail, userToken));
   };
 
   const save = async (signed) => {
@@ -31,7 +33,7 @@ function Signing({ visible, items, closeAction }) {
 
     showMessage({
       message: 'Saved.',
-      description: signed ? 'And signed. Yay!' : 'But without signature.',
+      description: signed ? 'And signed. Thanks!' : 'But not signed.',
       type: 'success',
       icon: 'success'
     });

@@ -32,4 +32,4 @@ $ eas submit --profile production --platform ios
 Webhooks:
 
 * Beach cleans: `https://hooks.zapier.com/hooks/catch/11890168/brivnb2/silent/`
-* Fisheries: ...
+* Fisheries: `https://hooks.zapier.com/hooks/catch/11890168/brivnb2/silent/`

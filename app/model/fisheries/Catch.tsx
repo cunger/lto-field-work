@@ -35,12 +35,13 @@ type Catch = {
   picture_data: string,
 };
 
-function Catch(): Catch {
+function Catch(date, location): Catch {
   return {
     id: uuid(),
     type: 'Catch',
     synced: false,
-    date: new Date(),
+    date: date,
+    location: location,
     quantity: 1,
   };
 }

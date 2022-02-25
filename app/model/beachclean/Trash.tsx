@@ -22,7 +22,7 @@ function Trash(props: { date: date, location: Location, quantity: 0, category: C
     synced: false,
     signature: undefined,
     date: props.date || new Date(),
-    location: props.location || Location.Guinjata,
+    location: props.location,
     quantity: props.quantity || 0,
     category: props.category || Category.Unknown,
   };

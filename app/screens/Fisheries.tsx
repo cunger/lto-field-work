@@ -20,7 +20,7 @@ import SubmitButtons from '../components/forms/SubmitButtons';
 import Signing from '../components/forms/Signing';
 import ConfirmPrompt from '../components/ConfirmPrompt';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker'; // https://github.com/react-native-image-picker/react-native-image-picker
-import { showMessage, hideMessage } from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
 import { useTailwind } from 'tailwind-rn';
 import styles from '../styles/select';
 
@@ -28,7 +28,7 @@ function Fisheries({ navigation }) {
   const tailwind = useTailwind();
   const [date, setDate] = useState(new Date());
   const [location, setLocation] = useState(undefined);
-  const [item, setItem] = useState(Catch());
+  const [item, setItem] = useState(Catch(date, location));
   const [signatureVisible, setSignatureVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [hideReason, setHideReason] = useState(true);
@@ -61,10 +61,12 @@ function Fisheries({ navigation }) {
   const reset = () => {
     // You probably want to log several catches,
     // so we're not resetting the coordinates.
-    setItem(Catch());
+    setItem(Catch(date, location));
   };
 
   const openSigning = () => {
+    item.date = date;
+    item.location = location;
     setSignatureVisible(true);
   };
 
