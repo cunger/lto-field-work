@@ -28,32 +28,20 @@ async function persist(data): Promise<boolean> {
     // If there is a connection, upload data.
     let url;
     switch (data.type) {
-      case 'Trash': url = 'https://hooks.zapier.com/hooks/catch/11890168/bi4k39c/silent/'; break;
-      case 'Catch': url = 'https://hooks.zapier.com/hooks/catch/11890168/brivnb2/silent/'; break;
+      case 'Catch': url = 'https://hooks.zapier.com/hooks/catch/11890168/bi4k39c/silent/'; break;
+      case 'Trash': url = 'https://hooks.zapier.com/hooks/catch/11890168/brivnb2/silent/'; break;
     }
 
-    fetch(url, {
+    return fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(asSheetRow(data))
-    })
-    .then(response => { console.log(`${response}`); return true; })
-    .catch(error => { console.log(`${error}`); return false; });
+    });
   });
 }
 
 function asSheetRow(data) {
-  if (data.type == 'Catch') {
-    return {
-      name: data.signature.name || '',
-      email: data.signature.email || '',
-      token: data.signature.token || '',
-      date: data.date,
-      location: data.location || '',
-      quantity: data.quantity,
-      category: data.category
-    };
-  }
+  data.signature = data.signature || {};
 
   if (data.type == 'Trash') {
     return {
@@ -61,7 +49,19 @@ function asSheetRow(data) {
       email: data.signature.email || '',
       token: data.signature.token || '',
       date: data.date,
-      location: data.location || '',
+      location: data.location,
+      quantity: data.quantity,
+      category: data.category
+    };
+  }
+
+  if (data.type == 'Catch') {
+    return {
+      name: data.signature.name || '',
+      email: data.signature.email || '',
+      token: data.signature.token || '',
+      date: data.date,
+      location: data.location,
       reason: data.reason,
       method: data.method,
       base: data.base,
@@ -79,7 +79,7 @@ function asSheetRow(data) {
       carapace_width: data.carapace_width,
       carapace_length: data.carapace_length,
       wingspan: data.wingspan,
-      pictures: 'tbd'
+      pictures: ''
     };
   }
 };

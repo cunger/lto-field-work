@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { showMessage } from 'react-native-flash-message';
 import Report from './Report';
 import Backend from './API';
 
@@ -30,9 +31,13 @@ const Datastore = {
   save: async (item) => {
     try {
       await AsyncStorage.setItem(item.id, JSON.stringify(item));
-    } catch (e) {
-      // TODO Monitoring!
-      console.log(e);
+    } catch (error) {
+      showMessage({
+        message: 'Could not save data.',
+        description: `${error}`,
+        type: 'warning',
+        icon: 'error'
+      });
     }
   },
   summary: async () => {
@@ -43,9 +48,7 @@ const Datastore = {
       values.forEach((value) => {
         report.countItem(JSON.parse(value[1]));
       });
-    } catch (e) {
-      // TODO Monitoring!
-      console.log(e);
+    } catch (error) {
     }
 
     return report;
@@ -60,9 +63,7 @@ const Datastore = {
         let item = JSON.parse(value);
         if (!item.synced) count += (item.quantity || 1);
       }
-    } catch (e) {
-      // TODO Monitoring!
-      console.log(e);
+    } catch (error) {
     }
 
     return count;
@@ -74,16 +75,20 @@ const Datastore = {
       for (let value of values) {
         let item = JSON.parse(value[1]);
         if (!item.synced) {
-          let success = await Backend.persist(item);
-          if (success) {
+          Backend.persist(item)
+          .then(_response => {
             item.synced = true;
-            await AsyncStorage.setItem(item.id, JSON.stringify(item));
-          }
+            AsyncStorage.setItem(item.id, JSON.stringify(item));
+          });
         }
       }
-    } catch (e) {
-      // TODO Monitoring!
-      console.log(e);
+    } catch (error) {
+      showMessage({
+        message: 'Could not upload data.',
+        description: `${error}`,
+        type: 'warning',
+        icon: 'error'
+      });
     }
   },
   clearSynced: async () => {
@@ -95,9 +100,13 @@ const Datastore = {
         let item = JSON.parse(value);
         if (item.synced) await AsyncStorage.removeItem(key);
       }
-    } catch (e) {
-      // TODO Monitoring!
-      console.log(e);
+    } catch (error) {
+      showMessage({
+        message: 'There was an error when clearing uploaded data.',
+        description: `${error}`,
+        type: 'warning',
+        icon: 'error'
+      });
     }
   },
   clearAll: async () => {
@@ -105,8 +114,12 @@ const Datastore = {
       const keys = await AsyncStorage.getAllKeys();
       await AsyncStorage.multiRemove(keys.filter(key => !key.startsWith('@')));
     } catch(e) {
-      // TODO Monitoring!
-      console.log(e);
+      showMessage({
+        message: 'There was an error when deleting data.',
+        description: `${error}`,
+        type: 'warning',
+        icon: 'error'
+      });
     }
   }
 };

@@ -1,9 +1,9 @@
 enum Method {
   Net = 'Net',
-  PoleLine = 'Pole and line',
+  PoleAndLine = 'Pole and line',
   Spearfishing = 'Spearfishing',
   Poison = 'Poison',
-  Foreign = 'Foreign sports fisherman',
+  ForeignSportsFisherman = 'Foreign sports fisherman',
   Other = 'Other',
 };
 

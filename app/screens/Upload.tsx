@@ -10,7 +10,7 @@ import Report from '../components/data/Report';
 import GlobalContext from '../components/context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
 
-function Sync({ navigation }) {
+function Upload({ navigation }) {
   const tailwind = useTailwind();
   const [report, setReport] = useState(Report());
   const [confirmVisible, setConfirmVisible] = useState(false);
@@ -27,12 +27,12 @@ function Sync({ navigation }) {
     }, [])
   );
 
-  const sync = async () => {
+  const upload = async () => {
     await Datastore.syncAll();
     await loadData();
   };
 
-  const clearSynced = async () => {
+  const clearUploaded = async () => {
     await Datastore.clearSynced();
     await loadData();
   };
@@ -44,11 +44,11 @@ function Sync({ navigation }) {
 
   return (
     <ScrollContainer>
-      <Heading title='Local data' actionTitle='Upload' actionOnPress={sync} />
+      <Heading title='Local data' actionTitle='Upload' actionOnPress={upload} />
       <ListItem><Text>{` 🗑️ ${report.Trash.unsynced} trash items`}</Text></ListItem>
       <ListItem><Text>{` 🎣 ${report.Catch.unsynced} catch items`}</Text></ListItem>
 
-      <Heading title='Uploaded data' actionTitle='Clear' actionOnPress={clearSynced} />
+      <Heading title='Uploaded data' actionTitle='Clear' actionOnPress={clearUploaded} />
       <ListItem><Text>{` 🗑️ ${report.Trash.synced} trash items`}</Text></ListItem>
       <ListItem><Text>{` 🎣 ${report.Catch.synced} catch items`}</Text></ListItem>
 
@@ -69,4 +69,4 @@ function Sync({ navigation }) {
   );
 }
 
-export default Sync;
+export default Upload;

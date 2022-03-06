@@ -4,7 +4,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Home from '../../screens/Home';
 import DataEntryMenu from './DataEntryMenu';
 import Datastore from '../data/LocalDatastore';
-import Sync from '../../screens/Sync';
+import Upload from '../../screens/Upload';
 import Settings from '../../screens/Settings';
 import GlobalContext from '../context/GlobalContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -58,7 +58,7 @@ const MainMenu = () => {
         />
         <Tab.Screen
           name='Upload data'
-          component={Sync}
+          component={Upload}
           options={{
             tabBarLabel: 'Upload',
             tabBarIcon: ({ color, size }) => (

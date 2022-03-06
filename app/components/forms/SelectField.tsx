@@ -9,7 +9,7 @@ function SelectField({ label, value, type, items, updateAction }) {
 
   if (!items && type) {
     items = Object.keys(type).map(key => {
-      return { label: type[key], value: key };
+      return { label: type[key], value: type[key] };
     });
   }
 
