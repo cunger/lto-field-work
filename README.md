@@ -26,10 +26,3 @@ Building and submitting the app:
 $ eas build --profile production --platform ios
 $ eas submit --profile production --platform ios
 ```
-
-# Zapier
-
-Webhooks:
-
-* Beach cleans: `https://hooks.zapier.com/hooks/catch/11890168/brivnb2/silent/`
-* Fisheries: `https://hooks.zapier.com/hooks/catch/11890168/brivnb2/silent/`

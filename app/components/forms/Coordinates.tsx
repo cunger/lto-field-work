@@ -11,6 +11,8 @@ import styles from '../../styles/select';
 function Coordinates({ setDateOnParent, setLocationOnParent }) {
   const tailwind = useTailwind();
   const [date, setDate] = useState(new Date());
+  const [hours, setHours] = useState(date.getHours());
+  const [minutes, setMinutes] = useState(date.getMinutes());
   const [location, setLocation] = useState(undefined);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showLocationPicker, setShowLocationPicker] = useState(false);
@@ -21,11 +23,13 @@ function Coordinates({ setDateOnParent, setLocationOnParent }) {
   };
 
   const saveHours = (hours) => {
+    setHours(hours);
     date.setHours(hours);
     saveDate(date);
   };
 
   const saveMinutes = (minutes) => {
+    setMinutes();
     date.setMinutes(minutes);
     saveDate(date);
   };
@@ -73,13 +77,13 @@ function Coordinates({ setDateOnParent, setLocationOnParent }) {
         <InputLabel text='Time: ' />
         <SelectField
           label='Hours'
-          value={date.getHours()}
+          value={hours}
           items={itemRange(0,23)}
           updateAction={(value) => saveHours(value)}
         />
         <SelectField
           label='Minutes'
-          value={date.getMinutes()}
+          value={minutes}
           items={itemRange(0,59)}
           updateAction={(value) => saveMinutes(value)}
         />
