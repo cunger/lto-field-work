@@ -9,6 +9,7 @@ async function persist(data): Promise<boolean> {
   // If data is not signed, don't upload it,
   // but pretend it was uploaded (for testing and demo purposes).
   if (!data.signature || !data.signature.token) {
+    console.log('Skipping data, because signature token is missing.');
     return Promise.resolve(true);
   }
 
@@ -48,7 +49,7 @@ function asSheetRow(data) {
       name: data.signature.name || '',
       email: data.signature.email || '',
       token: data.signature.token || '',
-      date: data.date.toLocaleString('en-GB'),
+      date: data.date,
       location: data.location,
       quantity: data.quantity,
       category: data.category
@@ -60,7 +61,7 @@ function asSheetRow(data) {
       name: data.signature.name || '',
       email: data.signature.email || '',
       token: data.signature.token || '',
-      date: data.date.toLocaleString('en-GB'),
+      date: data.date,
       location: data.location,
       reason: data.reason,
       method: data.method,
