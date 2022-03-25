@@ -29,12 +29,12 @@
   margin-bottom: 0.5rem
 }
 
-.mb-4 {
-  margin-bottom: 1rem
-}
-
 .mr-4 {
   margin-right: 1rem
+}
+
+.mb-4 {
+  margin-bottom: 1rem
 }
 
 .mt-4 {
@@ -143,19 +143,14 @@
   padding: 2rem
 }
 
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem
 }
 
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem
-}
-
-.py-2 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem
 }
 
 .px-5 {
@@ -202,6 +197,11 @@
 .text-gray-700 {
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity))
+}
+
+.text-blue {
+  --tw-text-opacity: 1;
+  color: rgb(110 193 228 / var(--tw-text-opacity))
 }
 
 .filter {

@@ -13,13 +13,13 @@ import Signature from '../model/Signature';
 import ScrollContainer from '../components/ScrollContainer';
 import Datastore from '../components/data/LocalDatastore';
 import Coordinates from '../components/forms/Coordinates';
+import Photos from '../components/forms/Photos';
 import { InputLabel, InputField, InputGroup } from '../components/forms/Input';
 import TextField from '../components/forms/TextField';
 import SelectField from '../components/forms/SelectField';
 import SubmitButtons from '../components/forms/SubmitButtons';
 import Signing from '../components/forms/Signing';
 import ConfirmPrompt from '../components/ConfirmPrompt';
-import { launchImageLibrary, launchCamera } from 'react-native-image-picker'; // https://github.com/react-native-image-picker/react-native-image-picker
 import { showMessage } from 'react-native-flash-message';
 import { useTailwind } from 'tailwind-rn';
 import styles from '../styles/select';
@@ -57,7 +57,6 @@ function Fisheries({ navigation }) {
     setItem({ ...item, ...fields });
   };
 
-
   const reset = () => {
     // You probably want to log several catches,
     // so we're not resetting the coordinates.
@@ -82,37 +81,17 @@ function Fisheries({ navigation }) {
     navigation.navigate('Data Entry', { screen: 'Data entry' });
   };
 
-  const photoOptions = {
-    mediaType: 'photo',
-    includeBase64: true,
-    maxWidth: 800,
-    maxWidth: 800
-  };
-
-  const pickPhoto = async (action, source) => {
-    try {
-      const result = await action(photoOptions);
-      handleImageData(result);
-    } catch (error) {
-      showMessage({
-        message: `Failed to access ${source}.`,
-        description: `${error}`,
-        type: 'danger',
-        icon: 'warning'
-      });
+  const photoFlashMessage = () => {
+    if (item.species == Species.Shark || item.species == Species.Ray) {
+      return 'Please make sure to include a picture that can be used for sexing.';
+    } else {
+      return '';
     }
-  };
+  }
 
-  const handleImageData = (data) => {
-    let i = 0;
-    for (asset of data.assets) {
-      i++;
-      update({
-        picture_filename: `${item.date.toDateString()}-${item.location}-${item.common_name || item.species || 'catch'}-${i}` ,
-        picture_data: asset.base64
-      });
-    }
-  };
+  const photoFilenamePrefix = () => {
+    return `${item.date.getFullYear()}-${item.date.getMonth()}-${item.date.getDate()}-${item.species || ''}`;
+  }
 
   return (
     <ScrollContainer>
@@ -195,6 +174,7 @@ function Fisheries({ navigation }) {
               if (value == 'TeleostFish') {
                 setHideHeadLength(false);
                 setHideHeadWidth(false);
+                setHidePrecaudalLength(false);
               } else
               if (value == 'GameFish') {
                 setHideHeadLength(false);
@@ -287,25 +267,12 @@ function Fisheries({ navigation }) {
         />
       </View>
 
-      <View>
-        <InputGroup text='Picture' />
-        <Text style={tailwind('my-2')}>
-          { item.picture_filename || 'None selected yet.' }
-        </Text>
-        <InputField
-          text='Take photo with camera'
-          textColor={'#cccccc'}
-          action={() => pickPhoto(launchCamera, 'camera')} />
-        <InputField
-          text='Pick photo from gallery'
-          textColor={'#cccccc'}
-          action={() => pickPhoto(launchImageLibrary, 'image gallery')} />
-        <TextField
-          label='Or note which picture(s) on whose camera:'
-          value={item.picture_note}
-          updateAction={(value) => update({ picture_note: value })}
-        />
-      </View>
+      <Photos
+        flashMessage={photoFlashMessage}
+        filenamePrefix={photoFilenamePrefix}
+        addPhotoToParent={(photo) => update({ photos: item.photos.concat([photo]) })}
+        addPhotoNoteToParent={(note) => update({ photosNote: note })}
+      />
 
       <SubmitButtons saveAction={openSigning} discardAction={() => setConfirmVisible(true)} />
       <Signing visible={signatureVisible} items={[item]} closeAction={closeSigning} />
