@@ -23,7 +23,7 @@ function BeachClean({ navigation }) {
   const [date, setDate] = useState(new Date());
   const [location, setLocation] = useState(undefined);
   const [items, setItems] = useState({});
-  const [signatureVisible, setSignatureVisible] = useState(false);
+  const [signingVisible, setSigningVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
 
   const updateItem = (quantity: number, category: Category) => {
@@ -32,18 +32,18 @@ function BeachClean({ navigation }) {
   };
 
   const reset = () => {
-    setDate(new Date());
-    setLocation(undefined);
+    // setDate(new Date());
+    // setLocation(undefined);
     setItems({});
   };
 
   const openSigning = () => {
-    setSignatureVisible(true);
+    setSigningVisible(true);
   };
 
   const closeSigning = () => {
     reset();
-    setSignatureVisible(false);
+    setSigningVisible(false);
     // You probably finished the beach clean, so go back to menu.
     navigation.navigate('Data Entry', { screen: 'Data entry' });
   };
@@ -103,7 +103,7 @@ function BeachClean({ navigation }) {
       </View>
 
       <SubmitButtons saveAction={openSigning} discardAction={() => setConfirmVisible(true)} />
-      <Signing visible={signatureVisible} items={trashItems()} closeAction={closeSigning} />
+      <Signing visible={signingVisible} items={trashItems()} closeAction={closeSigning} />
       <ConfirmPrompt visible={confirmVisible}
         actionPhrase='discard this data entry'
         actionButtonText='Discard'

@@ -42,15 +42,35 @@ function Upload({ navigation }) {
     await loadData();
   };
 
+  const print = (count, noun) => {
+    if (noun == 'undefined') noun = 'other';
+
+    const plural = (noun) => {
+      if (noun.endsWith('cm')) return noun;
+      if (noun.endsWith('gear')) return noun;
+      return `${noun}s`;
+    };
+
+    return (count == 1)
+      ? `${count} ${noun}`
+      : `${count} ${plural(noun)}`;
+  };
+
   return (
     <ScrollContainer>
       <Heading title='Local data' actionTitle='Upload' actionOnPress={upload} />
-      <ListItem><Text>{` 🗑️ ${report.Trash.unsynced} trash items`}</Text></ListItem>
-      <ListItem><Text>{` 🎣 ${report.Catch.unsynced} catch items`}</Text></ListItem>
+      <ListItem><Text>{` 🗑️ ${report.local.Trash} trash items`}</Text></ListItem>
+      <ListItem><Text>{` 🎣 ${report.local.Catch} catch items`}</Text></ListItem>
 
       <Heading title='Uploaded data' actionTitle='Clear' actionOnPress={clearUploaded} />
-      <ListItem><Text>{` 🗑️ ${report.Trash.synced} trash items`}</Text></ListItem>
-      <ListItem><Text>{` 🎣 ${report.Catch.synced} catch items`}</Text></ListItem>
+      <Text style={tailwind('m-2')}>🎣 Catch:</Text>
+      {Object.entries(report.uploaded.Catch).map((entry, index) => (
+        <ListItem key={index}><Text>{` ️ ${print(entry[1], entry[0])}`}</Text></ListItem>
+      ))}
+      <Text style={tailwind('m-2')}>🗑️ Trash:</Text>
+      {Object.entries(report.uploaded.Trash).map((entry, index) => (
+        <ListItem key={index}><Text>{` ️ ${print(entry[1], entry[0])}`}</Text></ListItem>
+      ))}
 
       <Heading title='Local storage' actionTitle='🔥 Clear all' actionOnPress={() => {
         if (report.total == 0) return;

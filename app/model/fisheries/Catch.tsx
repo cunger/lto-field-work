@@ -43,6 +43,11 @@ function Catch(date, location): Catch {
     date: date,
     location: location,
     quantity: 1,
+    species: null,
+    sex: null,
+    // method: null, // comment in if you want to reset this after saving a catch
+    // base: null,   // dito 
+    common_name: '',
     photos: []
   };
 }

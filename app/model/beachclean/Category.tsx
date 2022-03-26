@@ -5,7 +5,7 @@ enum Category {
   PlasticBottleCap = 'Plastic bottle cap',
   Rope = 'Rope',
   PlasticBag = 'Plastic bag',
-  FoodWrappers = 'Food wrappers',
+  FoodWrapper = 'Food wrapper',
   PlasticFoam = 'Plastic foam',
   PlasticBottle = 'Plastic bottle',
   FishingGear = 'Fishing gear',

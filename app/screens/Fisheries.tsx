@@ -61,6 +61,7 @@ function Fisheries({ navigation }) {
     // You probably want to log several catches,
     // so we're not resetting the coordinates.
     setItem(Catch(date, location));
+    hideAllSpeciesSpecificFields();
   };
 
   const openSigning = () => {
