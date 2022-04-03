@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { showMessage } from 'react-native-flash-message';
 import Report from './Report';
-import Backend from './API';
+import Uploader from './Uploader';
 
 const Datastore = {
   setUserName: async (name) => {
@@ -72,15 +72,25 @@ const Datastore = {
     try {
       const keys = await AsyncStorage.getAllKeys();
       const values = await AsyncStorage.multiGet(keys.filter(key => !key.startsWith('@')));
-      for (let value of values) {
-        let item = JSON.parse(value[1]);
-        if (!item.synced) {
-          Backend.persist(item)
-          .then(_response => {
-            item.synced = true;
-            AsyncStorage.setItem(item.id, JSON.stringify(item));
-          });
+      const items = values
+        .map((value) => JSON.parse(value[1]))
+        .filter((item) => !item.synced);
+
+      // result = { uploaded: [ <id>, <id>, ... ], error: '' }
+      const result = await Uploader.persist(items);
+      items.forEach((item) => {
+        if (result.uploaded.includes(item.id)) {
+          AsyncStorage.setItem(item.id, JSON.stringify(item));
         }
+      });
+
+      if (result.error) {
+        showMessage({
+          message: 'There was a problem when uploading your data.',
+          description: `${result.error}`,
+          type: 'warning',
+          icon: 'error'
+        });
       }
     } catch (error) {
       showMessage({

@@ -1,3 +1,6 @@
+.env
+app/components/data/*.json
+
 node_modules/
 .expo/
 npm-debug.*

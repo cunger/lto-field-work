@@ -3,7 +3,7 @@ import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { InputLabel, InputField } from '../components/forms/Input';
 import SafeContainer from '../components/SafeContainer';
 import Datastore from '../components/data/LocalDatastore';
-import Backend from '../components/data/API';
+import TockenHandler from '../components/data/TokenHandler';
 import { useTailwind } from 'tailwind-rn';
 
 function Settings({ navigation }) {
@@ -39,7 +39,7 @@ function Settings({ navigation }) {
     saveToken();
     saveEmail();
     if (name && token) {
-      Backend.verify(name, token).then(status => {
+      TokenHandler.verify(name, token).then(status => {
         setVerified(status);
         Datastore.setUserVerified(status);
       });
