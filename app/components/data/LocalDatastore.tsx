@@ -79,7 +79,7 @@ const Datastore = {
       // uploaded: [ <id>, <id>, ... ]
       const uploaded = await Uploader.persist(items);
       items.forEach((item) => {
-        if (uploaded.includes(item.id)) {
+        if (uploaded.includes(item.id) || !item.signature || !item.signature.token) {
           item.synced = true;
           AsyncStorage.setItem(item.id, JSON.stringify(item));
         }

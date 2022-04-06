@@ -3,7 +3,6 @@ import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { InputLabel, InputField } from '../components/forms/Input';
 import SafeContainer from '../components/SafeContainer';
 import Datastore from '../components/data/LocalDatastore';
-import TockenHandler from '../components/data/TokenHandler';
 import { useTailwind } from 'tailwind-rn';
 
 function Settings({ navigation }) {
@@ -11,40 +10,39 @@ function Settings({ navigation }) {
   const [name, setName] = useState('');
   const [token, setToken] = useState('');
   const [email, setEmail] = useState('');
-  const [verified, setVerified] = useState(false);
 
   useEffect(() => {
     (async () => {
       setName(await Datastore.getUserName());
       setToken(await Datastore.getUserToken());
-      setVerified((await Datastore.getUserVerified()) == 'true');
       setEmail(await Datastore.getUserEmail());
+      // setVerified((await Datastore.getUserVerified()) == 'true');
     })();
   }, []);
 
   const saveName = () => {
-    Datastore.setUserName(name.trim());
+    Datastore.setUserName((name || '').trim());
   };
 
   const saveToken = () => {
-    Datastore.setUserToken(token.trim());
+    Datastore.setUserToken((token || '').trim());
   };
 
   const saveEmail = () => {
-    Datastore.setUserEmail(email.trim());
+    Datastore.setUserEmail((email || '').trim());
   };
 
   const save = () => {
     saveName();
     saveToken();
     saveEmail();
-    if (name && token) {
-      TokenHandler.verify(name, token).then(status => {
-        setVerified(status);
-        Datastore.setUserVerified(status);
-      });
-    }
-    // navigation.navigate('Home');
+    // if (name && token) {
+    //   TokenHandler.verify(name, token).then(status => {
+    //     setVerified(status);
+    //     Datastore.setUserVerified(status);
+    //   });
+    // }
+    navigation.navigate('Dashboard');
   };
 
   return (
@@ -53,7 +51,7 @@ function Settings({ navigation }) {
         <InputLabel text='User name' />
         <TextInput
           value={name}
-          onChangeText={(value) => { setName(value); setVerified(false); }}
+          onChangeText={(value) => { setName(value); }}
           onEndEdition={saveName}
           style={tailwind('mb-2 p-2 bg-white border-gray rounded-md')}
         />
@@ -63,7 +61,7 @@ function Settings({ navigation }) {
         <InputLabel text='Email (so we can get in touch)' />
         <TextInput
           value={email}
-          onChangeText={(value) => { setEmail(value); setVerified(false); }}
+          onChangeText={(value) => { setEmail(value); }}
           onEndEdition={saveEmail}
           style={tailwind('mb-4 p-2 bg-white border-gray rounded-md')}
         />
@@ -73,17 +71,11 @@ function Settings({ navigation }) {
         <InputLabel text='Token' />
         <TextInput
           value={token}
-          onChangeText={(value) => { setToken(value); setVerified(false); }}
+          onChangeText={(value) => { setToken(value); }}
           onEndEdition={saveToken}
           style={tailwind('mb-4 p-2 bg-white border-gray rounded-md')}
         />
         <Text>The token is used for signing data entries. You can get one from the Love The Oceans staff.</Text>
-      </View>
-
-      <View>
-        <Text style={tailwind('my-2')}>
-          {token == '' ? '' : (verified ? 'Your token is verified. ✅' : 'Your token is not yet verified.')}
-        </Text>
       </View>
 
       <View style={tailwind('flex flex-row items-stretch my-6')}>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
-import Home from '../../screens/Home';
+import Dashboard from '../../screens/Dashboard';
 import DataEntryMenu from './DataEntryMenu';
 import Datastore from '../data/LocalDatastore';
 import Upload from '../../screens/Upload';
@@ -37,7 +37,7 @@ const MainMenu = () => {
       >
         <Tab.Screen
           name='Dashboard'
-          component={Home}
+          component={Dashboard}
           options={{
             tabBarLabel: 'Dashboard',
             tabBarIcon: ({ color, size }) => (

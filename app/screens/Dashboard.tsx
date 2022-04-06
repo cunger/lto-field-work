@@ -3,7 +3,7 @@ import { Text } from 'react-native';
 import SafeContainer from '../components/SafeContainer';
 import { useTailwind } from 'tailwind-rn';
 
-function Home() {
+function Dashboard() {
   const tailwind = useTailwind();
 
   return (
@@ -18,4 +18,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Dashboard;
