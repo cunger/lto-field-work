@@ -2,21 +2,14 @@
   "extends": "./babel.config.js",
   "plugins": [
     ["module:react-native-dotenv", {
-      "envName": "APP_ENV",
       "moduleName": "react-native-dotenv",
       "path": ".env",
-      "safe": true,
       "blocklist": null,
       "allowlist": [
-        "GOOGLE_SERVICE_ACCOUNT_EMAIL",
-        "GOOGLE_PRIVATE_KEY",
-        "GOOGLE_SPREADSHEET_ID",
-        "GOOGLE_FISHERIES_SHEET_ID",
-        "GOOGLE_BEACHCLEAN_SHEET_ID"
+        "LTO_BACK_OFFICE_API_URL",
+        "LTO_BACK_OFFICE_API_KEY"
       ],
-      "safe": false,
-      "allowUndefined": false,
-      "verbose": false
+      "allowUndefined": false
     }]
   ]
 }

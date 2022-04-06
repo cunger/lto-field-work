@@ -76,22 +76,14 @@ const Datastore = {
         .map((value) => JSON.parse(value[1]))
         .filter((item) => !item.synced);
 
-      // result = { uploaded: [ <id>, <id>, ... ], error: '' }
-      const result = await Uploader.persist(items);
+      // uploaded: [ <id>, <id>, ... ]
+      const uploaded = await Uploader.persist(items);
       items.forEach((item) => {
-        if (result.uploaded.includes(item.id)) {
+        if (uploaded.includes(item.id)) {
+          item.synced = true;
           AsyncStorage.setItem(item.id, JSON.stringify(item));
         }
       });
-
-      if (result.error) {
-        showMessage({
-          message: 'There was a problem when uploading your data.',
-          description: `${result.error}`,
-          type: 'warning',
-          icon: 'error'
-        });
-      }
     } catch (error) {
       showMessage({
         message: 'Could not upload data.',
