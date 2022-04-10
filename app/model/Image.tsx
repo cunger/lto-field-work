@@ -1,14 +1,14 @@
 type Image = {
   filename: string,
-  base64data: string,
-  description: string
+  type: string,
+  uri: string,
 };
 
-function Image(filename, base64data, description): Image {
+function Image(filename: string, type: string, uri: string): Image {
   return {
     filename: filename,
-    base64data: base64data || '',
-    description: description || ''
+    type: type,
+    uri: uri,
   }
 }
 

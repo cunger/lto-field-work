@@ -32,9 +32,8 @@ function Photos({ flashMessage, filenamePrefix, addPhotoToParent, addPhotoNoteTo
 
   const photoOptions = {
     mediaType: 'photo',
-    includeBase64: true,
     maxWidth: 800,
-    maxWidth: 800
+    maxHeight: 600
   };
 
   const pickPhoto = async (action, source) => {
@@ -52,10 +51,8 @@ function Photos({ flashMessage, filenamePrefix, addPhotoToParent, addPhotoNoteTo
   };
 
   const handleImageData = (data) => {
-    let i = 0;
     for (asset of data.assets) {
-      i++;
-      const image = Image(`${filenamePrefix()}-${i}`, asset.base64);
+      const image = Image(`${filenamePrefix()}`, asset.type, asset.uri);
       setPhotos([...photos, image]);
       addPhotoToParent(image);
     }
