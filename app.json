@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "lto-field-work",
-      "buildNumber": "9"
+      "buildNumber": "19"
     },
     "android": {
       "adaptiveIcon": {

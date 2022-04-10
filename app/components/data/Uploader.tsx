@@ -1,10 +1,6 @@
 import NetInfo from '@react-native-community/netinfo'; // https://github.com/react-native-netinfo/react-native-netinfo
 import { showMessage } from 'react-native-flash-message';
 import axios from 'axios';
-import {
-  LTO_BACK_OFFICE_API_URL,
-  LTO_BACK_OFFICE_API_KEY
-} from 'react-native-dotenv';
 
 async function persist(items): void {
   // First check for internet connection.
@@ -22,11 +18,11 @@ async function persist(items): void {
 
   // If there is a connection, upload data.
   // (If it's not signed, just pretend it was uploaded for testing and demo purposes.)
-  const response = await axios.post(`${LTO_BACK_OFFICE_API_URL}/data`,
+  const response = await axios.post(`https://lto-back-office.netlify.app/.netlify/functions/api/data`,
     { items: items.filter((item) => item.signature && item.signature.token) },
     { headers: {
       'Content-Type': 'application/json',
-      'X-Auth-Token': LTO_BACK_OFFICE_API_KEY
+      'X-Ship-Name': 'BeanWithBaconMegaRocket'
     }}
   );
 
@@ -34,7 +30,7 @@ async function persist(items): void {
 
   if (responseBody.errors.length > 0) {
     showMessage({
-      message: 'Backend errors....',
+      message: 'Backend error...',
       description: responseBody.errors.join(' | '),
       type: 'warning',
       icon: 'error'

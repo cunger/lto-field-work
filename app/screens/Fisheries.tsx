@@ -271,7 +271,7 @@ function Fisheries({ navigation }) {
       <Photos
         flashMessage={photoFlashMessage}
         filenamePrefix={photoFilenamePrefix}
-        addPhotoToParent={(photo) => update({ photos: item.photos.concat([photo]) })}
+        addPhotoToParent={(photo) => update({ photos: [...item.photos, photo] })}
         addPhotoNoteToParent={(note) => update({ photosNote: note })}
       />
 
