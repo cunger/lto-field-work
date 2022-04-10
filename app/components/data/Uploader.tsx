@@ -30,7 +30,7 @@ async function persist(items): void {
       links.push(link);
     }
 
-    image.photos = links;
+    item.photos = links;
   }
 
   const response = await axios.post(`${BASE_ULR}/data`,
@@ -71,7 +71,7 @@ async function persistPhoto(image: Image) {
   const response = await axios.post(`${BASE_URL}/photo`,
     data,
     { headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
       'X-Ship-Name': 'BeanWithBaconMegaRocket'
     }}
   );
