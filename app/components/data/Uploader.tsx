@@ -25,7 +25,7 @@ async function persist(items): void {
   // First upload images (if there are any).
   for (let item of items) {
     let links = [];
-    for (let photo of image.photos) {
+    for (let photo of item.photos) {
       const link = await persistPhoto(photo);
       links.push(link);
     }
