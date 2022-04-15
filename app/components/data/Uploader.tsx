@@ -60,12 +60,8 @@ async function persistPhoto(image: Image) {
   const data = new FormData();
   data.append('file', {
     name: image.filename,
-    type: image.type,
+    type: image.mime,
     uri: Platform.OS === 'ios' ? image.uri.replace('file://', '') : image.uri,
-  });
-
-  Object.keys(body).forEach((key) => {
-    data.append(key, body[key]);
   });
 
   const response = await axios.post(`${BASE_URL}/photo`,

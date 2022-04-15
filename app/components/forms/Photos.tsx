@@ -8,7 +8,7 @@ import { useTailwind } from 'tailwind-rn';
 
 function Photos({ flashMessage, filenamePrefix, addPhotoToParent, addPhotoNoteToParent }) {
   const tailwind = useTailwind();
-  const [photos, setPhotos] = useState([]);
+  const [photoNames, setPhotoNames] = useState([]);
   const [photosNote, setPhotosNote] = useState('');
 
   const photoList = () => {
@@ -17,8 +17,8 @@ function Photos({ flashMessage, filenamePrefix, addPhotoToParent, addPhotoNoteTo
         <Text style={tailwind('my-2')}>None selected yet.</Text>
       );
     } else {
-      return photos.map(photo => (
-        <Text style={tailwind('my-2')}> 📷 { photo.filename }</Text> // TODO allow for deletion
+      return photoNames.map(name => (
+        <Text style={tailwind('my-2')}> 📷 { name }</Text> // TODO allow for deletion
       ));
     }
   };
@@ -52,9 +52,8 @@ function Photos({ flashMessage, filenamePrefix, addPhotoToParent, addPhotoNoteTo
 
   const handleImageData = (data) => {
     for (asset of data.assets) {
-      const image = Image(`${filenamePrefix()}`, asset.type, asset.uri);
-      setPhotos([...photos, image]);
-      addPhotoToParent(image);
+      setPhotoNames([...photoNames, filenamePrefix()]);
+      addPhotoToParent(asset);
     }
   };
 
