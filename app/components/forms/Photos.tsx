@@ -12,7 +12,7 @@ function Photos({ flashMessage, filenamePrefix, addPhotoToParent, addPhotoNoteTo
   const [photosNote, setPhotosNote] = useState('');
 
   const photoList = () => {
-    if (photos.length == 0) {
+    if (photoNames.length == 0) {
       return (
         <Text style={tailwind('my-2')}>None selected yet.</Text>
       );
