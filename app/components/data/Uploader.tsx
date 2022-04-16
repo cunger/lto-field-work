@@ -33,7 +33,7 @@ async function persist(items): void {
     item.photos = links;
   }
 
-  const response = await axios.post(`${BASE_ULR}/data`,
+  const response = await axios.post(`${BASE_URL}/data`,
     { items: items.filter((item) => item.signature && item.signature.token) },
     { headers: {
       'Content-Type': 'application/json',
