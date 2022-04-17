@@ -29,6 +29,7 @@ function Fisheries({ navigation }) {
   const [date, setDate] = useState(new Date());
   const [location, setLocation] = useState(undefined);
   const [item, setItem] = useState(Catch(date, location));
+  const [photoNames, setPhotoNames] = useState([]);
   const [signatureVisible, setSignatureVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [hideReason, setHideReason] = useState(true);
@@ -61,6 +62,7 @@ function Fisheries({ navigation }) {
     // You probably want to log several catches,
     // so we're not resetting the coordinates.
     setItem(Catch(date, location));
+    setPhotoNames([]);
     hideAllSpeciesSpecificFields();
   };
 
@@ -90,7 +92,7 @@ function Fisheries({ navigation }) {
     }
   }
 
-  const photoFilenamePrefix = () => {
+  const photoFileName = () => {
     const dateString = `${item.date.getFullYear()}-${item.date.getMonth() + 1}-${item.date.getDate()}`;
     return `${dateString}-${item.species || item.common_name || ''}-${Date.now()}`;
   }
@@ -271,9 +273,12 @@ function Fisheries({ navigation }) {
 
       <Photos
         flashMessage={photoFlashMessage}
-        filenamePrefix={photoFilenamePrefix}
-        addPhotoToParent={(photo) => update({ photos: [...item.photos, photo] })}
-        addPhotoNoteToParent={(note) => update({ photosNote: note })}
+        filenamePrefix={photoFileName}
+        addPhoto={(photo) => update({ photos: [...item.photos, photo] })}
+        photoNames={photoNames}
+        addPhotoName={(name) => setPhotoNames([...photoNames, name])}
+        photosNote={item.photosNote}
+        setPhotosNote={(note) => update({ photosNote: note })}
       />
 
       <SubmitButtons saveAction={openSigning} discardAction={() => setConfirmVisible(true)} />

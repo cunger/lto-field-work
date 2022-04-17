@@ -6,10 +6,8 @@ import Image from '../../model/Image';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker'; // https://github.com/react-native-image-picker/react-native-image-picker
 import { useTailwind } from 'tailwind-rn';
 
-function Photos({ flashMessage, filenamePrefix, addPhotoToParent, addPhotoNoteToParent }) {
+function Photos({ flashMessage, filenamePrefix, photoNames, photosNote, addPhoto, addPhotoName, setPhotosNote }) {
   const tailwind = useTailwind();
-  const [photoNames, setPhotoNames] = useState([]);
-  const [photosNote, setPhotosNote] = useState('');
 
   const photoList = () => {
     if (photoNames.length == 0) {
@@ -52,8 +50,8 @@ function Photos({ flashMessage, filenamePrefix, addPhotoToParent, addPhotoNoteTo
 
   const handleImageData = (data) => {
     for (asset of data.assets) {
-      setPhotoNames([...photoNames, filenamePrefix()]);
-      addPhotoToParent(asset);
+      addPhoto(asset);
+      addPhotoName(filenamePrefix());
     }
   };
 

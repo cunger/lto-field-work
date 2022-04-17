@@ -31,7 +31,7 @@ type Catch = {
   carapace_width: number,
   carapace_length: number,
   wingspan: number,
-  photos: Image[],
+  photos: any,
   photosNote: string
 };
 
@@ -46,9 +46,10 @@ function Catch(date, location): Catch {
     species: null,
     sex: null,
     // method: null, // comment in if you want to reset this after saving a catch
-    // base: null,   // dito 
+    // base: null,   // dito
     common_name: '',
-    photos: []
+    photos: [],
+    photosNote: ''
   };
 }
 
