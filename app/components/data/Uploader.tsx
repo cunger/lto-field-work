@@ -1,6 +1,7 @@
-import NetInfo from '@react-native-community/netinfo'; // https://github.com/react-native-netinfo/react-native-netinfo
 import { Platform } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
+import * as FileSystem from 'expo-file-system';
+import NetInfo from '@react-native-community/netinfo'; // https://github.com/react-native-netinfo/react-native-netinfo
 import axios from 'axios';
 
 const BASE_URL = 'https://lto-back-office.netlify.app/.netlify/functions/api';
@@ -24,12 +25,7 @@ async function persist(items): void {
 
   // First upload images (if there are any).
   for (let item of items) {
-    let links = [];
-    for (let photo of item.photos) {
-      const link = await persistPhoto(photo);
-      links.push(link);
-    }
-
+    const links = await persistPhotos(item.photos);
     item.photos = links;
   }
 
@@ -56,35 +52,48 @@ async function persist(items): void {
   return responseBody.uploaded || [];
 }
 
-async function persistPhoto(image: Image) {
-  const data = new FormData();
-  data.append('file', {
-    name: image.filename,
-    type: image.mime,
-    uri: Platform.OS === 'ios' ? image.uri.replace('file://', '') : image.uri,
-  });
+async function persistPhotos(images: Image[]) {
+  let links = [];
+  for (image of images) {
+    if (!image.location) continue;
+    try {
+      let base64 = await FileSystem.readAsStringAsync(image.location, {
+        encoding: FileSystem.EncodingType.Base64
+      });
 
-  const response = await axios.post(`${BASE_URL}/photo`,
-    data,
-    { headers: {
-      'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-      'X-Ship-Name': 'BeanWithBaconMegaRocket'
-    }}
-  );
-  // Response body: { link: '', errors: [] }
+      const response = await axios.post(`${BASE_URL}/photo`,
+        base64,
+        { headers: {
+          'Content-Type': 'multipart/form-data',
+          'X-Ship-Name': 'BeanWithBaconMegaRocket'
+        }}
+      );
 
-  const responseBody = response.data;
+      // Response body: { link: '', errors: [] }
+      const responseBody = response.data;
 
-  if (responseBody.errors.length > 0) {
-    showMessage({
-      message: 'Backend error...',
-      description: responseBody.errors.join(' | '),
-      type: 'warning',
-      icon: 'error'
-    });
+      links.push(responseBody.link);
+
+      if (responseBody.errors.length > 0) {
+        showMessage({
+          message: 'Backend error...',
+          description: responseBody.errors.join(' | '),
+          type: 'warning',
+          icon: 'error'
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      showMessage({
+        message: 'Backend error...',
+        description: error.message,
+        type: 'warning',
+        icon: 'error'
+      });
+    }
   }
 
-  return responseBody.link || `<${image.filename}>`;
+  return links;
 }
 
 module.exports = { persist };

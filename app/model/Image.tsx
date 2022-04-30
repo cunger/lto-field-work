@@ -1,14 +1,16 @@
 type Image = {
   filename: string,
-  type: string,
-  uri: string,
+  location: string,
+  uploaded: boolean,
+  link: string
 };
 
-function Image(filename: string, type: string, uri: string): Image {
+function Image(filename: string, location: string): Image {
   return {
     filename: filename,
-    type: type,
-    uri: uri,
+    location: location,
+    uploaded: false,
+    link: undefined
   }
 }
 

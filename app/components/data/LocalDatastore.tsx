@@ -1,5 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { showMessage } from 'react-native-flash-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as FileSystem from 'expo-file-system';
+// import RNFetchBlob from 'rn-fetch-blob';
 import Report from './Report';
 import Uploader from './Uploader';
 
@@ -38,6 +40,23 @@ const Datastore = {
         type: 'warning',
         icon: 'error'
       });
+    }
+  },
+  savePhoto: async (photo, filename) => {
+    try {
+      const location = `${FileSystem.documentDirectory}${filename}`;
+      await FileSystem.writeAsStringAsync(location, 'data:image/jpeg;base64,' + photo.base64);
+
+      console.log(location);
+      photo.location = location;
+    } catch(error) {
+      showMessage({
+        message: 'Could not save photo.',
+        description: error.message,
+        type: 'warning',
+        icon: 'error'
+      });
+      console.log(error);
     }
   },
   summary: async () => {
@@ -110,6 +129,12 @@ const Datastore = {
         icon: 'error'
       });
     }
+
+    // TODO remove images
+    // remove file by specifying a path
+    // RNFetchBlob.fs.unlink('some-file-path').then(() => {
+    //   // ...
+    // });
   },
   clearAll: async () => {
     try {

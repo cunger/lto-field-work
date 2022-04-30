@@ -10,6 +10,7 @@ import Base from '../model/fisheries/Base';
 import Reason from '../model/fisheries/Reason';
 import Location from '../model/Location';
 import Signature from '../model/Signature';
+import Image from '../model/Image';
 import ScrollContainer from '../components/ScrollContainer';
 import Datastore from '../components/data/LocalDatastore';
 import Coordinates from '../components/forms/Coordinates';
@@ -94,7 +95,7 @@ function Fisheries({ navigation }) {
 
   const photoFileName = () => {
     const dateString = `${item.date.getFullYear()}-${item.date.getMonth() + 1}-${item.date.getDate()}`;
-    return `${dateString}-${item.species || item.common_name || ''}-${Date.now()}`;
+    return `${dateString}-${item.species || item.common_name || ''}-${Date.now()}.jpg`;
   }
 
   return (
@@ -274,9 +275,13 @@ function Fisheries({ navigation }) {
       <Photos
         flashMessage={photoFlashMessage}
         filenamePrefix={photoFileName}
-        addPhoto={(photo) => update({ photos: [...item.photos, photo] })}
+        addPhoto={async (photo) => {
+          const name = photoFileName();
+          const location = await Datastore.savePhoto(photo, name);
+          update({ photos: [...item.photos, new Image(name, location)] });
+          setPhotoNames([...photoNames, name])
+        }}
         photoNames={photoNames}
-        addPhotoName={(name) => setPhotoNames([...photoNames, name])}
         photosNote={item.photosNote}
         setPhotosNote={(note) => update({ photosNote: note })}
       />

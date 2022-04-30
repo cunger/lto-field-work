@@ -31,7 +31,7 @@ type Catch = {
   carapace_width: number,
   carapace_length: number,
   wingspan: number,
-  photos: any,
+  photos: Image[],
   photosNote: string
 };
 

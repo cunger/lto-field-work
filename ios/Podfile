@@ -26,6 +26,10 @@ target 'ltofieldwork' do
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
+  pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob'
+
   post_install do |installer|
     react_native_post_install(installer)
 
