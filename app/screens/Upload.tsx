@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { ScrollView, Text, Button } from 'react-native';
+import { Button, ScrollView, Text } from 'react-native';
 import ScrollContainer from '../components/ScrollContainer';
 import Heading from '../components/Heading';
 import ListItem from '../components/ListItem';

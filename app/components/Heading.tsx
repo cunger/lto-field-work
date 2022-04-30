@@ -1,11 +1,16 @@
-import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 
 function Heading({ title, actionTitle, actionOnPress }) {
   const tailwind = useTailwind();
+  const [actionIsInProgress, setActionIsInProgress] = useState(false);
 
-  if (!actionOnPress) actionOnPress = () => {};
+  if (!actionOnPress) actionOnPress = () => Promise.resolve();
+  const actionOnPressWithActivityIndication = () => {
+    setActionIsInProgress(true);
+    actionOnPress().finally(() => setActionIsInProgress(false));
+  };
 
   if (actionTitle) {
     return (
@@ -13,7 +18,8 @@ function Heading({ title, actionTitle, actionOnPress }) {
         <Text style={tailwind('text-lg font-medium text-gray-900')}>
           {title}
         </Text>
-        <TouchableOpacity onPress={actionOnPress} style={tailwind('px-4 py-2 border border-gray-300 rounded-md bg-white')}>
+        <ActivityIndicator animating={actionIsInProgress} size='small' color='#6ec1e4' />
+        <TouchableOpacity onPress={actionOnPressWithActivityIndication} style={tailwind('px-4 py-2 border border-gray-300 rounded-md bg-white')}>
           <Text style={tailwind('text-sm text-gray-700 font-medium')}>
             {actionTitle}
           </Text>

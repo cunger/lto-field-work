@@ -95,7 +95,7 @@ function Fisheries({ navigation }) {
 
   const photoFileName = () => {
     const dateString = `${item.date.getFullYear()}-${item.date.getMonth() + 1}-${item.date.getDate()}`;
-    return `${dateString}-${item.species || item.common_name || ''}-${Date.now()}.jpg`;
+    return `${dateString}-${item.species || item.common_name || 'Fish'}-${Date.now()}.jpg`;
   }
 
   return (

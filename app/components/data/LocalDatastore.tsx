@@ -46,8 +46,6 @@ const Datastore = {
     try {
       const location = `${FileSystem.documentDirectory}${filename}`;
       await FileSystem.writeAsStringAsync(location, 'data:image/jpeg;base64,' + photo.base64);
-
-      console.log(location);
       photo.location = location;
     } catch(error) {
       showMessage({

@@ -83,7 +83,6 @@ async function persistPhotos(images: Image[]) {
         });
       }
     } catch (error) {
-      console.log(error);
       showMessage({
         message: 'Backend error...',
         description: error.message,
