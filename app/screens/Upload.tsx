@@ -73,8 +73,8 @@ function Upload({ navigation }) {
       ))}
 
       <Heading title='Local storage' actionTitle='🔥 Clear all' actionOnPress={() => {
-        if (report.total == 0) return;
-        setConfirmVisible(true);
+        if (report.total != 0) setConfirmVisible(true);
+        return Promise.resolve();
       }} />
       <Text style={tailwind('m-2')}>
         There's a total of {report.total} items in your storage.
