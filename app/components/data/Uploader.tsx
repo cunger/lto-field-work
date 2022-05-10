@@ -25,8 +25,10 @@ async function persist(items): void {
 
   // First upload images (if there are any).
   for (let item of items) {
-    const links = await persistPhotos(item.photos);
-    item.photos = links;
+    if (item.photos) {
+      const links = await persistPhotos(item.photos);
+      item.photos = links;
+    }
   }
 
   const response = await axios.post(`${BASE_URL}/data`,
@@ -63,10 +65,15 @@ async function persistPhotos(images: Image[]) {
 
       const response = await axios.post(`${BASE_URL}/photo`,
         base64,
-        { headers: {
-          'Content-Type': 'multipart/form-data',
-          'X-Ship-Name': 'BeanWithBaconMegaRocket'
-        }}
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'X-Ship-Name': 'BeanWithBaconMegaRocket'
+          },
+          params: {
+            filename: image.filename
+          }
+        }
       );
 
       // Response body: { link: '', errors: [] }

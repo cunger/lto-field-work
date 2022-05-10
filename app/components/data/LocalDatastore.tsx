@@ -43,17 +43,20 @@ const Datastore = {
     }
   },
   savePhoto: async (photo, filename) => {
+    let location;
     try {
-      const location = `${FileSystem.documentDirectory}${filename}`;
-      await FileSystem.writeAsStringAsync(location, 'data:image/jpeg;base64,' + photo.base64);
+      location = `${FileSystem.documentDirectory}${filename}`;
+      location = location.replaceAll(' ', '-');
+      await FileSystem.writeAsStringAsync(location, photo.base64);
       photo.location = location;
     } catch(error) {
       showMessage({
-        message: 'Could not save photo.',
+        message: `Could not save photo: ${location}`,
         description: error.message,
         type: 'warning',
         icon: 'error'
       });
+      console.log(location);
       console.log(error);
     }
   },

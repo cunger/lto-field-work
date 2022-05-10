@@ -34,6 +34,7 @@ function Photos({ flashMessage, filenamePrefix, photoNames, photosNote, addPhoto
       const result = await action({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
+        base64: true,
         quality: 1,
       });
 
