@@ -269,12 +269,13 @@ function Fisheries({ navigation }) {
 
       <Photos
         flashMessage={photoFlashMessage}
-        filenamePrefix={photoFileName}
         addPhoto={async (photo) => {
           const name = photoFileName();
           const location = await Datastore.savePhoto(photo, name);
-          update({ photos: [...item.photos, new Image(name, location)] });
-          setPhotoNames([...photoNames, name])
+          if (location) {
+            update({ photos: [...item.photos, new Image(name, location)] });
+            setPhotoNames([...photoNames, name]);
+          }
         }}
         photoNames={photoNames}
         photosNote={item.photosNote}

@@ -2,9 +2,9 @@ import { showMessage } from 'react-native-flash-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as FileSystem from 'expo-file-system';
 // import RNFetchBlob from 'rn-fetch-blob';
-import Report from './Report';
-import Uploader from './Uploader';
 import Item from '../../model/Item';
+import Report from './Report';
+import persist from './Uploader';
 
 const Datastore = {
   // User information
@@ -54,11 +54,13 @@ const Datastore = {
     try {
       location = `${FileSystem.documentDirectory}${filename}`;
       location = location.replaceAll(' ', '-');
+
       await FileSystem.writeAsStringAsync(location, photo.base64);
-      photo.location = location;
+      
+      return location;
     } catch(error) {
       showMessage({
-        message: `Could not save photo: ${location}`,
+        message: 'Could not save photo.',
         description: error.message,
         type: 'warning',
         icon: 'danger'
@@ -104,7 +106,7 @@ const Datastore = {
         .filter((item) => !item.synced);
 
       // uploaded: [ <id>, <id>, ... ]
-      const uploaded = await Uploader.persist(items);
+      const uploaded = await persist(items);
       items.forEach((item) => {
         if (uploaded.includes(item.id) || !item.signature || !item.signature.token) {
           item.synced = true;

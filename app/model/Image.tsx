@@ -1,17 +1,12 @@
-type Image = {
-  filename: string,
-  location: string,
-  uploaded: boolean,
-  link?: string
-};
+export default class Image {
+  filename: string;
+  location: string;
+  uploaded: boolean;
+  link?: string;
 
-function Image(filename: string, location: string): Image {
-  return {
-    filename: filename,
-    location: location,
-    uploaded: false,
-    link: undefined
+  constructor(filename: string, location: string) {
+    this.filename = filename;
+    this.location = location;
+    this.uploaded = false;
   }
-}
-
-export default Image;
+};

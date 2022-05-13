@@ -7,7 +7,7 @@ import Image from '../../model/Image';
 
 const BASE_URL = 'https://lto-back-office.netlify.app/.netlify/functions/api';
 
-async function persist(items: Item[]) {
+export default async function persist(items: Item[]) {
   // First check for internet connection.
   const state = await NetInfo.fetch();
   if (!state.isConnected) {
@@ -15,7 +15,7 @@ async function persist(items: Item[]) {
       message: 'No internet connection.',
       description: 'Please try again when connected.',
       type: 'warning',
-      icon: 'danger'
+      icon: 'warning'
     });
 
     return [];
@@ -46,6 +46,14 @@ async function persist(items: Item[]) {
     );
     // Response body: { uploaded: [], errors: [] }
 
+    // Debug
+    showMessage({
+      message: `${items.length} items uploaded`,
+      description: response.data.uploaded,
+      type: 'info',
+      icon: 'info'
+    });
+
     uploaded = response.data.uploaded || [];
     errors = response.data.errors || [];
   } catch (error) {
@@ -65,10 +73,12 @@ async function persist(items: Item[]) {
 }
 
 async function persistPhotos(images: Image[]) {
-  let links = [];
+  let links: string[] = [];
+  let errors: string[] = [];
 
   for (let image of images) {
     if (!image.location) continue;
+
     try {
       let base64 = await FileSystem.readAsStringAsync(image.location, {
         encoding: FileSystem.EncodingType.Base64
@@ -88,22 +98,26 @@ async function persistPhotos(images: Image[]) {
       );
 
       // Response body: { link: '', errors: [] }
-      const responseBody = response.data;
 
-      links.push(responseBody.link);
+      // Debug
+      showMessage({
+        message: `Image uploaded: ${image.filename}`,
+        description: response.data.link,
+        type: 'info',
+        icon: 'info'
+      });
 
-      if (responseBody.errors.length > 0) {
-        showMessage({
-          message: 'Backend error...',
-          description: responseBody.errors.join(' | '),
-          type: 'warning',
-          icon: 'danger'
-        });
-      }
+      links.push(response.data.link);
+      errors = [...errors, ...response.data.errors];
     } catch (error) {
+      console.log(error);
+      errors.push(error.message);
+    }
+
+    if (errors.length > 0) {
       showMessage({
         message: 'Backend error...',
-        description: error.message,
+        description: errors.join(' | '),
         type: 'warning',
         icon: 'danger'
       });
@@ -112,5 +126,3 @@ async function persistPhotos(images: Image[]) {
 
   return links;
 }
-
-module.exports = { persist };
