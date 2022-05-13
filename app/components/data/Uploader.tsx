@@ -46,14 +46,6 @@ export default async function persist(items: Item[]) {
     );
     // Response body: { uploaded: [], errors: [] }
 
-    // Debug
-    showMessage({
-      message: `${items.length} items uploaded`,
-      description: response.data.uploaded,
-      type: 'info',
-      icon: 'info'
-    });
-
     uploaded = response.data.uploaded || [];
     errors = response.data.errors || [];
   } catch (error) {
@@ -80,12 +72,14 @@ async function persistPhotos(images: Image[]) {
     if (!image.location) continue;
 
     try {
-      let base64 = await FileSystem.readAsStringAsync(image.location, {
+      const base64 = await FileSystem.readAsStringAsync(image.location, {
         encoding: FileSystem.EncodingType.Base64
       });
+      const formdata = new FormData();
+      formdata.append('file', toBlob(base64));
 
       const response = await axios.post(`${BASE_URL}/photo`,
-        base64,
+        formdata,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -98,19 +92,12 @@ async function persistPhotos(images: Image[]) {
       );
 
       // Response body: { link: '', errors: [] }
-
-      // Debug
-      showMessage({
-        message: `Image uploaded: ${image.filename}`,
-        description: response.data.link,
-        type: 'info',
-        icon: 'info'
-      });
+      console.log(response.data); // debug
 
       links.push(response.data.link);
       errors = [...errors, ...response.data.errors];
     } catch (error) {
-      console.log(error);
+      console.log(error); // debug
       errors.push(error.message);
     }
 
@@ -125,4 +112,11 @@ async function persistPhotos(images: Image[]) {
   }
 
   return links;
+}
+
+function toBlob(base64: string) {
+  const buffer = Buffer.from(base64, 'base64');
+  const mime = base64.split(',')[0].split(':')[1].split(';')[0];
+
+  return new Blob([buffer], { type: mime });
 }
