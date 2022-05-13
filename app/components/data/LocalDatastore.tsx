@@ -4,18 +4,20 @@ import * as FileSystem from 'expo-file-system';
 // import RNFetchBlob from 'rn-fetch-blob';
 import Report from './Report';
 import Uploader from './Uploader';
+import Item from '../../model/Item';
 
 const Datastore = {
-  setUserName: async (name) => {
+  // User information
+  setUserName: async (name: string) => {
     await AsyncStorage.setItem('@username', name);
   },
-  setUserToken: async (token) => {
+  setUserToken: async (token: string) => {
     await AsyncStorage.setItem('@usertoken', token);
   },
-  setUserVerified: async (verified) => {
+  setUserVerified: async (verified: boolean) => {
     await AsyncStorage.setItem('@userverified', verified.toString());
   },
-  setUserEmail: async (email) => {
+  setUserEmail: async (email: string) => {
     await AsyncStorage.setItem('@useremail', email);
   },
   getUserName: () => {
@@ -30,7 +32,12 @@ const Datastore = {
   getUserEmail: () => {
     return AsyncStorage.getItem('@useremail');
   },
-  save: async (item) => {
+  // Analytics
+  saveInAnalytics(item: Item) {
+    // TODO
+  },
+  // Storing photos and collected data
+  save: async (item: Item) => {
     try {
       await AsyncStorage.setItem(item.id, JSON.stringify(item));
     } catch (error) {
@@ -38,11 +45,11 @@ const Datastore = {
         message: 'Could not save data.',
         description: `${error}`,
         type: 'warning',
-        icon: 'error'
+        icon: 'danger'
       });
     }
   },
-  savePhoto: async (photo, filename) => {
+  savePhoto: async (photo, filename: string) => {
     let location;
     try {
       location = `${FileSystem.documentDirectory}${filename}`;
@@ -54,7 +61,7 @@ const Datastore = {
         message: `Could not save photo: ${location}`,
         description: error.message,
         type: 'warning',
-        icon: 'error'
+        icon: 'danger'
       });
       console.log(location);
       console.log(error);
@@ -109,7 +116,7 @@ const Datastore = {
         message: 'Could not upload data.',
         description: `${error}`,
         type: 'warning',
-        icon: 'error'
+        icon: 'warning'
       });
     }
   },
@@ -127,15 +134,9 @@ const Datastore = {
         message: 'There was an error when clearing uploaded data.',
         description: `${error}`,
         type: 'warning',
-        icon: 'error'
+        icon: 'danger'
       });
     }
-
-    // TODO remove images
-    // remove file by specifying a path
-    // RNFetchBlob.fs.unlink('some-file-path').then(() => {
-    //   // ...
-    // });
   },
   clearAll: async () => {
     try {
@@ -146,7 +147,7 @@ const Datastore = {
         message: 'There was an error when deleting data.',
         description: `${error}`,
         type: 'warning',
-        icon: 'error'
+        icon: 'danger'
       });
     }
   }

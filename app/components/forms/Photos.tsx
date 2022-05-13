@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
-import { ScrollView, View, Text, Button, TouchableOpacity, Platform } from 'react-native';
-import { InputLabel, InputField, InputGroup } from './Input';
+import React from 'react';
+import { View, Text } from 'react-native';
+import { InputField, InputGroup } from './Input';
 import TextField from './TextField';
-import Image from '../../model/Image';
 import * as ImagePicker from 'expo-image-picker';
 import { useTailwind } from 'tailwind-rn';
 import { showMessage } from 'react-native-flash-message';
 
-function Photos({ flashMessage, filenamePrefix, photoNames, photosNote, addPhoto, setPhotosNote }) {
+function Photos({ flashMessage, photoNames, photosNote, addPhoto, setPhotosNote }) {
   const tailwind = useTailwind();
 
   const photoList = () => {

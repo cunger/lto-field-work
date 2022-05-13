@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
-import { ScrollView, View, Text, Button } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import Slider from '@react-native-community/slider';
+import { View, Text } from 'react-native';
 import InputSpinner from 'react-native-input-spinner';
 import Trash from '../model/beachclean/Trash';
 import Category from '../model/beachclean/Category';
-import Signature from '../model/Signature';
-import Location from '../model/Location';
-import Datastore from '../components/data/LocalDatastore';
 import ScrollContainer from '../components/ScrollContainer';
 import Coordinates from '../components/forms/Coordinates';
-import { InputLabel, InputField, InputGroup } from '../components/forms/Input';
+import { InputGroup } from '../components/forms/Input';
 import SubmitButtons from '../components/forms/SubmitButtons';
 import Signing from '../components/forms/Signing';
 import ConfirmPrompt from '../components/ConfirmPrompt';
@@ -51,12 +45,7 @@ function BeachClean({ navigation }) {
   const trashItems = () => {
     let trashItems = [];
     for (let [category, quantity] of Object.entries(items)) {
-      trashItems.push(Trash({
-        date: date,
-        location: location,
-        category: category,
-        quantity: quantity,
-      }));
+      trashItems.push(new Trash(date, location, category, quantity));
     }
 
     return trashItems;

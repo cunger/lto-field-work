@@ -1,6 +1,5 @@
 import React from 'react';
 import RNPickerSelect from 'react-native-picker-select'; // https://github.com/lawnstarter/react-native-picker-select
-import { InputLabel } from './Input';
 import { useTailwind } from 'tailwind-rn';
 import styles from '../../styles/select';
 

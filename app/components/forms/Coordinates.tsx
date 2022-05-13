@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { ScrollView, View, Text, Button, TouchableOpacity, Platform } from 'react-native';
+import { View } from 'react-native';
 import { InputLabel, InputField, InputGroup } from './Input';
 import DatePicker from 'react-native-neat-date-picker';
 import SelectField from './SelectField';
-import SafeContainer from './SafeContainer';
 import Location from '../../model/Location';
 import { useTailwind } from 'tailwind-rn';
-import styles from '../../styles/select';
 
 function Coordinates({ setDateOnParent, setLocationOnParent }) {
   const tailwind = useTailwind();
@@ -15,31 +13,30 @@ function Coordinates({ setDateOnParent, setLocationOnParent }) {
   const [minutes, setMinutes] = useState(date.getMinutes());
   const [location, setLocation] = useState(undefined);
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [showLocationPicker, setShowLocationPicker] = useState(false);
 
-  const saveDate = (date) => {
+  const saveDate = (date: Date) => {
     setDate(date);
     setDateOnParent(date);
   };
 
-  const saveHours = (hours) => {
+  const saveHours = (hours: number) => {
     setHours(hours);
     date.setHours(hours);
     saveDate(date);
   };
 
-  const saveMinutes = (minutes) => {
-    setMinutes();
+  const saveMinutes = (minutes: number) => {
+    setMinutes(minutes);
     date.setMinutes(minutes);
     saveDate(date);
   };
 
-  const saveLocation = (location) => {
+  const saveLocation = (location: Location) => {
     setLocation(location);
     setLocationOnParent(location);
   };
 
-  const itemRange = (start, end) => {
+  const itemRange = (start: number, end: number) => {
     let items = [];
     for (let i = start; i <= end; i++) {
       items.push({ label: i < 10 ? `0${i}` : `${i}`, value: i });

@@ -2,7 +2,7 @@ type Image = {
   filename: string,
   location: string,
   uploaded: boolean,
-  link: string
+  link?: string
 };
 
 function Image(filename: string, location: string): Image {

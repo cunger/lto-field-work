@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import Dashboard from '../../screens/Dashboard';
 import DataEntryMenu from './DataEntryMenu';
-import Datastore from '../data/LocalDatastore';
 import Upload from '../../screens/Upload';
 import Settings from '../../screens/Settings';
 import GlobalContext from '../context/GlobalContext';
@@ -64,7 +62,7 @@ const MainMenu = () => {
             tabBarIcon: ({ color, size }) => (
               <Feather name='upload' size={size} color={color} />
             ),
-            tabBarBadge: count > 0 ? count : null,
+            tabBarBadge: count > 0 ? count : undefined,
           }}
         />
         <Tab.Screen

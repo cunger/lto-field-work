@@ -3,7 +3,6 @@ import React from 'react';
 import DataEntry from '../../screens/DataEntry';
 import BeachClean from '../../screens/BeachClean';
 import Fisheries from '../../screens/Fisheries';
-import Observation from '../../screens/Observation';
 import HumpbackWhale from '../../screens/HumpbackWhale';
 import MantaAndCo from '../../screens/MantaAndCo';
 

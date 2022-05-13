@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import InputSpinner from 'react-native-input-spinner'; // https://github.com/marcocesarato/react-native-input-spinner
 import BouncyCheckbox from 'react-native-bouncy-checkbox'; // https://github.com/WrathChaos/react-native-bouncy-checkbox
 import Catch from '../model/fisheries/Catch';
@@ -7,29 +7,24 @@ import Species from '../model/fisheries/Species';
 import Sex from '../model/fisheries/Sex';
 import Method from '../model/fisheries/Method';
 import Base from '../model/fisheries/Base';
-import Reason from '../model/fisheries/Reason';
-import Location from '../model/Location';
-import Signature from '../model/Signature';
 import Image from '../model/Image';
 import ScrollContainer from '../components/ScrollContainer';
 import Datastore from '../components/data/LocalDatastore';
 import Coordinates from '../components/forms/Coordinates';
 import Photos from '../components/forms/Photos';
-import { InputLabel, InputField, InputGroup } from '../components/forms/Input';
+import { InputGroup } from '../components/forms/Input';
 import TextField from '../components/forms/TextField';
 import SelectField from '../components/forms/SelectField';
 import SubmitButtons from '../components/forms/SubmitButtons';
 import Signing from '../components/forms/Signing';
 import ConfirmPrompt from '../components/ConfirmPrompt';
-import { showMessage } from 'react-native-flash-message';
 import { useTailwind } from 'tailwind-rn';
-import styles from '../styles/select';
 
 function Fisheries({ navigation }) {
   const tailwind = useTailwind();
   const [date, setDate] = useState(new Date());
-  const [location, setLocation] = useState(undefined);
-  const [item, setItem] = useState(Catch(date, location));
+  const [location, setLocation] = useState(null);
+  const [item, setItem] = useState(new Catch(date, location));
   const [photoNames, setPhotoNames] = useState([]);
   const [signatureVisible, setSignatureVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
@@ -62,7 +57,7 @@ function Fisheries({ navigation }) {
   const reset = () => {
     // You probably want to log several catches,
     // so we're not resetting the coordinates.
-    setItem(Catch(date, location));
+    setItem(new Catch(date, location));
     setPhotoNames([]);
     hideAllSpeciesSpecificFields();
   };
