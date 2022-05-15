@@ -72,21 +72,18 @@ async function persistPhotos(images: Image[]) {
     try {
       const formdata = new FormData();
       formdata.append('file', { 
-        uri: Platform.OS === 'android' ? image.location : image.location.replace('file://', ''),
+        path: image.location,
         name: image.filename,
         type: image.mimetype 
       } as any);
 
       const response = await axios.post(`${BASE_URL}/photo`,
         formdata,
-        {
+        { 
           headers: {
-            // FIXME: If you specify the content type, you have to add boundary information.
-            // 'Content-Type': 'multipart/form-data',
+            // Note: Axios sets the content type header, because it also needs to specify boundary information. 
+            // 'Content-Type': 'multipart/form-data; boundary=...',
             'X-Ship-Name': 'BeanWithBaconMegaRocket'
-          },
-          params: {
-            filename: image.filename
           }
         }
       );
