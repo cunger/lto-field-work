@@ -27,7 +27,7 @@ export default async function persist(items: Item[]) {
   // Upload images (if there are any).
   for (let item of items) {
     if (item.photos) {
-      const links = await persistPhotos(item.photos);
+      await persistPhotos(item.photos);
     }
   }
 

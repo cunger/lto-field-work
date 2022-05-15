@@ -88,9 +88,9 @@ function Fisheries({ navigation }) {
     }
   }
 
-  const photoFileName = () => {
+  const photoFileName = (filetype: string) => {
     const dateString = `${item.date.getFullYear()}-${item.date.getMonth() + 1}-${item.date.getDate()}`;
-    return `${dateString}-${item.species || item.common_name || 'Fish'}-${Date.now()}.jpg`;
+    return `${dateString}-${item.species || item.common_name || 'Fish'}-${Date.now()}.${filetype}`;
   }
 
   return (
@@ -270,10 +270,13 @@ function Fisheries({ navigation }) {
       <Photos
         flashMessage={photoFlashMessage}
         addPhoto={async (photo) => {
-          const name = photoFileName();
+          const uriparts = photo.uri.split('.');
+          const filetype = uriparts[uriparts.length - 1];
+          const mimetype = `image/${filetype}`;
+          const name = photoFileName(filetype);
           const location = await Datastore.savePhoto(photo, name);
           if (location) {
-            update({ photos: [...item.photos, new Image(name, location, 'image/jpeg')] });
+            update({ photos: [...item.photos, new Image(name, location, mimetype)] });
             setPhotoNames([...photoNames, name]);
           }
         }}
