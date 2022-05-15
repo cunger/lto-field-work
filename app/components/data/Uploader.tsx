@@ -1,9 +1,9 @@
 import { showMessage } from 'react-native-flash-message';
-import * as FileSystem from 'expo-file-system';
 import NetInfo from '@react-native-community/netinfo'; // https://github.com/react-native-netinfo/react-native-netinfo
 import axios from 'axios';
 import Item from '../../model/Item';
 import Image from '../../model/Image';
+import { Platform } from 'react-native';
 
 const BASE_URL = 'https://lto-back-office.netlify.app/.netlify/functions/api';
 
@@ -28,7 +28,6 @@ export default async function persist(items: Item[]) {
   for (let item of items) {
     if (item.photos) {
       const links = await persistPhotos(item.photos);
-      item.photos = links;
     }
   }
 
@@ -65,24 +64,25 @@ export default async function persist(items: Item[]) {
 }
 
 async function persistPhotos(images: Image[]) {
-  let links: string[] = [];
   let errors: string[] = [];
 
   for (let image of images) {
     if (!image.location) continue;
 
     try {
-      const base64 = await FileSystem.readAsStringAsync(image.location, {
-        encoding: FileSystem.EncodingType.Base64
-      });
       const formdata = new FormData();
-      formdata.append('file', toBlob(base64));
+      formdata.append('file', { 
+        uri: Platform.OS === 'android' ? image.location : image.location.replace('file://', ''),
+        name: image.filename,
+        type: image.mimetype 
+      } as any);
 
       const response = await axios.post(`${BASE_URL}/photo`,
         formdata,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            // FIXME: If you specify the content type, you have to add boundary information.
+            // 'Content-Type': 'multipart/form-data',
             'X-Ship-Name': 'BeanWithBaconMegaRocket'
           },
           params: {
@@ -90,14 +90,12 @@ async function persistPhotos(images: Image[]) {
           }
         }
       );
-
       // Response body: { link: '', errors: [] }
-      console.log(response.data); // debug
 
-      links.push(response.data.link);
+      image.link = response.data.link;
+      
       errors = [...errors, ...response.data.errors];
     } catch (error) {
-      console.log(error); // debug
       errors.push(error.message);
     }
 
@@ -110,13 +108,4 @@ async function persistPhotos(images: Image[]) {
       });
     }
   }
-
-  return links;
-}
-
-function toBlob(base64: string) {
-  const buffer = Buffer.from(base64, 'base64');
-  const mime = base64.split(',')[0].split(':')[1].split(';')[0];
-
-  return new Blob([buffer], { type: mime });
 }

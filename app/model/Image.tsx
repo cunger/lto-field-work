@@ -1,12 +1,12 @@
 export default class Image {
   filename: string;
   location: string;
-  uploaded: boolean;
+  mimetype: string;
   link?: string;
 
-  constructor(filename: string, location: string) {
+  constructor(filename: string, location: string, mimetype: string) {
     this.filename = filename;
     this.location = location;
-    this.uploaded = false;
+    this.mimetype = mimetype;
   }
 };

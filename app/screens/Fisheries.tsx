@@ -273,7 +273,7 @@ function Fisheries({ navigation }) {
           const name = photoFileName();
           const location = await Datastore.savePhoto(photo, name);
           if (location) {
-            update({ photos: [...item.photos, new Image(name, location)] });
+            update({ photos: [...item.photos, new Image(name, location, 'image/jpeg')] });
             setPhotoNames([...photoNames, name]);
           }
         }}
