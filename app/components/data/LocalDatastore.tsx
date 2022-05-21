@@ -55,8 +55,10 @@ const Datastore = {
       location = `${FileSystem.documentDirectory}${filename}`;
       location = location.replaceAll(' ', '-');
 
-      await FileSystem.writeAsStringAsync(location, photo.base64);
-      
+      await FileSystem.writeAsStringAsync(location, photo.base64, {
+        encoding: FileSystem.EncodingType.Base64
+      });
+
       return location;
     } catch(error) {
       showMessage({

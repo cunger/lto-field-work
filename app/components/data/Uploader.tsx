@@ -1,9 +1,11 @@
 import { showMessage } from 'react-native-flash-message';
+import { Platform } from 'react-native';
 import NetInfo from '@react-native-community/netinfo'; // https://github.com/react-native-netinfo/react-native-netinfo
+import * as FileSystem from 'expo-file-system';
 import axios from 'axios';
 import Item from '../../model/Item';
 import Image from '../../model/Image';
-import { Platform } from 'react-native';
+import toBlob from './Base64';
 
 const BASE_URL = 'https://lto-back-office.netlify.app/.netlify/functions/api';
 
@@ -32,7 +34,7 @@ export default async function persist(items: Item[]) {
   }
 
   // Upload data.
-  let uploaded = []; 
+  let uploaded = [];
   let errors = [];
 
   try {
@@ -70,29 +72,31 @@ async function persistPhotos(images: Image[]) {
     if (!image.location) continue;
 
     try {
+      // const base64 = await FileSystem.readAsStringAsync(image.location, {
+      //   encoding: FileSystem.EncodingType.Base64
+      // });
+      const localuri = Platform.OS === 'android' ? image.location : image.location.replace('file://', '');
       const formdata = new FormData();
-      formdata.append('file', { 
-        path: image.location,
+      formdata.append('file', {
+        path: localuri, //image.location,
         name: image.filename,
-        type: image.mimetype 
+        type: image.mimetype
       } as any);
 
-      const response = await axios.post(`${BASE_URL}/photo`,
-        formdata,
-        { 
-          headers: {
-            // Note: Axios sets the content type header, because it also needs to specify boundary information. 
-            // 'Content-Type': 'multipart/form-data; boundary=...',
-            'X-Ship-Name': 'BeanWithBaconMegaRocket'
-          }
+      const response = await axios.post(`${BASE_URL}/photo`, formdata, {
+        headers: {
+          // Note: Axios sets the content type header, because it also needs to specify boundary information.
+          // 'Content-Type': 'multipart/form-data; boundary=...',
+          'X-Ship-Name': 'BeanWithBaconMegaRocket'
         }
-      );
+      });
       // Response body: { link: '', errors: [] }
 
       image.link = response.data.link;
-      
+
       errors = [...errors, ...response.data.errors];
     } catch (error) {
+      console.log(error);
       errors.push(error.message);
     }
 

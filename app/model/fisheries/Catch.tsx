@@ -8,7 +8,8 @@ import Base from './Base';
 
 export default class Catch extends Item {
   reason?: String;
-  method?: Method | string;
+  method?: Method;
+  other_method?: string;
   base?: Base;
   quantity: number;
   common_name: string;
@@ -29,10 +30,11 @@ export default class Catch extends Item {
     super('Catch', date, location);
     this.quantity = 1;
     this.common_name = '';
-    // Set all those properties to null which you want to reset after saving a catch 
-    this.species = null; 
+    // Set all those properties to null which you want to reset after saving a catch
+    this.species = null;
     this.sex = null;
     // this.method = null;
+    // this.other_method = '';
     // this.base = null;
   }
 };

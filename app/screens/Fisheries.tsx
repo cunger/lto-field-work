@@ -29,6 +29,7 @@ function Fisheries({ navigation }) {
   const [signatureVisible, setSignatureVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [hideReason, setHideReason] = useState(true);
+  const [hideOtherMethod, setHideOtherMethod] = useState(true);
 
   // Species-specific fields get visible only once you select that species.
   const [hideForkLength, setHideForkLength] = useState(true);
@@ -107,7 +108,10 @@ function Fisheries({ navigation }) {
             label='Which method?'
             value={item.method}
             type={Method}
-            updateAction={(value) => update({ method: value })}
+            updateAction={(value) => {
+              setHideOtherMethod(value !== Method.Other);
+              update({ method: value });
+            }}
           />
           <SelectField
             label='From where?'
@@ -116,6 +120,12 @@ function Fisheries({ navigation }) {
             updateAction={(value) => update({ base: value })}
           />
         </View>
+        <TextField
+          label='Please describe method:'
+          value={item.other_method}
+          updateAction={(value) => update({ other_method: value })}
+          hide={hideOtherMethod}
+        />
       </View>
 
       <View>
