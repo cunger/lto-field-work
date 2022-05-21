@@ -56,9 +56,9 @@ function Fisheries({ navigation }) {
   };
 
   const reset = () => {
-    // You probably want to log several catches,
-    // so we're not resetting the coordinates.
-    setItem(new Catch(date, location));
+    // You probably want to log several catches, so we're not resetting
+    // the coordinates, base, and method.
+    setItem(new Catch(date, location, item.base, item.method, item.other_method));
     setPhotoNames([]);
     hideAllSpeciesSpecificFields();
   };

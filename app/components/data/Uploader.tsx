@@ -1,5 +1,4 @@
 import { showMessage } from 'react-native-flash-message';
-import { Platform } from 'react-native';
 import NetInfo from '@react-native-community/netinfo'; // https://github.com/react-native-netinfo/react-native-netinfo
 import * as FileSystem from 'expo-file-system';
 import axios from 'axios';
@@ -75,10 +74,10 @@ async function persistPhotos(images: Image[]) {
       // const base64 = await FileSystem.readAsStringAsync(image.location, {
       //   encoding: FileSystem.EncodingType.Base64
       // });
-      const localuri = Platform.OS === 'android' ? image.location : image.location.replace('file://', '');
       const formdata = new FormData();
+      // formdata.append('file', toBlob(base64, image.mimetype), image.filename);
       formdata.append('file', {
-        path: localuri, //image.location,
+        path: image.location,
         name: image.filename,
         type: image.mimetype
       } as any);

@@ -26,15 +26,17 @@ export default class Catch extends Item {
   carapace_length?: number;
   wingspan?: number;
 
-  constructor(date: Date, location: Location | null) {
+  constructor(date: Date, location: Location | null, base: Base | null, method: Method | null, other_method: string | null) {
     super('Catch', date, location);
     this.quantity = 1;
     this.common_name = '';
-    // Set all those properties to null which you want to reset after saving a catch
+    // We don't want to reset these fields, as they usually don't change.
+    this.base = base;
+    this.method = method;
+    this.other_method = other_method;
+    // Set those properties to null which you want to reset after saving a catch.
     this.species = null;
     this.sex = null;
-    // this.method = null;
-    // this.other_method = '';
-    // this.base = null;
+
   }
 };
