@@ -1,9 +1,9 @@
 import { showMessage } from 'react-native-flash-message';
 import NetInfo from '@react-native-community/netinfo'; // https://github.com/react-native-netinfo/react-native-netinfo
-import * as FileSystem from 'expo-file-system';
 import axios from 'axios';
 import Item from '../../model/Item';
 import Image from '../../model/Image';
+import * as FileSystem from 'expo-file-system';
 import toBlob from './Base64';
 
 const BASE_URL = 'https://lto-back-office.netlify.app/.netlify/functions/api';
@@ -56,7 +56,7 @@ export default async function persist(items: Item[]) {
     showMessage({
       message: 'Error when uploading data...',
       description: errors.join(' | '),
-      type: 'warning',
+      type: 'danger',
       icon: 'danger'
     });
   }
@@ -103,7 +103,7 @@ async function persistPhotos(images: Image[]) {
       showMessage({
         message: 'Backend error...',
         description: errors.join(' | '),
-        type: 'warning',
+        type: 'danger',
         icon: 'danger'
       });
     }

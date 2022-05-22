@@ -1,4 +1,3 @@
-import React, { useContext, createContext, useState, useEffect } from 'react';
 import Datastore from '../data/LocalDatastore';
 
 const GlobalContext = {
@@ -7,8 +6,11 @@ const GlobalContext = {
     Datastore.numberOfUnsynced().then((count) => { this.setUnsyncedItems(count); });
   },
   listeners: [],
-  registerUpdate: function (listener) {
+  subscribe: function (listener) {
     this.listeners.push(listener);
+  },
+  unsubscribeAll: function () {
+    this.listeners = [];
   },
   setUnsyncedItems: function (value) {
     this.unsyncedItems = value;

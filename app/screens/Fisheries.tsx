@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import InputSpinner from 'react-native-input-spinner'; // https://github.com/marcocesarato/react-native-input-spinner
 import BouncyCheckbox from 'react-native-bouncy-checkbox'; // https://github.com/WrathChaos/react-native-bouncy-checkbox
 import Catch from '../model/fisheries/Catch';
@@ -22,13 +22,15 @@ import { useTailwind } from 'tailwind-rn';
 
 function Fisheries({ navigation }) {
   const tailwind = useTailwind();
+
   const [date, setDate] = useState(new Date());
   const [location, setLocation] = useState(null);
   const [item, setItem] = useState(new Catch(date, location));
+  const [isNoCatch, setIsNoCatch] = useState(false);
+  const [isSchoolOfFish, setIsSchoolOfFish] = useState(false);
   const [photoNames, setPhotoNames] = useState([]);
   const [signatureVisible, setSignatureVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
-  const [hideReason, setHideReason] = useState(true);
   const [hideOtherMethod, setHideOtherMethod] = useState(true);
 
   // Species-specific fields get visible only once you select that species.
@@ -73,7 +75,7 @@ function Fisheries({ navigation }) {
     reset();
     setSignatureVisible(false);
     // You probably want to log several catches,
-    // so we stay here.
+    // so we don't navigate to another screen.
   };
 
   const discard = () => {
@@ -142,10 +144,12 @@ function Fisheries({ navigation }) {
             onPress={(value) => {
               if (value) {
                 update({ quantity: 0 });
-                setHideReason(false);
+                setIsNoCatch(true);
+                setIsSchoolOfFish(false);
               } else {
                 update({ quantity: 1, reason: null });
-                setHideReason(true);
+                setIsNoCatch(false);
+                setIsSchoolOfFish(false);
               }
             }}
           />
@@ -153,7 +157,7 @@ function Fisheries({ navigation }) {
             label='Reason:'
             value={item.reason}
             updateAction={(value) => update({ reason: value })}
-            hide={hideReason}
+            hide={!isNoCatch}
           />
         </View>
 
@@ -162,10 +166,14 @@ function Fisheries({ navigation }) {
             min={0}
             step={1}
             value={item.quantity}
-            onChange={(value) => { update({ quantity: value }); }}
+            onChange={(value) => {
+              update({ quantity: value });
+              setIsSchoolOfFish(value > 1);
+            }}
             height={26}
             width={80}
             rounded={false}
+            disabled={isNoCatch}
             style={tailwind('mr-4')}
           />
           <SelectField
@@ -217,6 +225,14 @@ function Fisheries({ navigation }) {
           value={item.common_name}
           updateAction={(value) => update({ common_name: value })}
         />
+
+        {
+          isSchoolOfFish &&
+          <Text style={tailwind('my-2 text-blue')}>
+            Please specify the following properties for the biggest of the caught fish.
+          </Text>
+        }
+
         <TextField
           label='Total length (cm)'
           value={item.length}

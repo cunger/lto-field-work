@@ -26,7 +26,7 @@ export default class Catch extends Item {
   carapace_length?: number;
   wingspan?: number;
 
-  constructor(date: Date, location: Location | null, base: Base | null, method: Method | null, other_method: string | null) {
+  constructor(date: Date, location: Location | null, base?: Base, method?: Method, other_method?: string) {
     super('Catch', date, location);
     this.quantity = 1;
     this.common_name = '';

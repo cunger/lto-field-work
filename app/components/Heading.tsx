@@ -4,6 +4,7 @@ import { useTailwind } from 'tailwind-rn';
 
 function Heading({ title, actionTitle, actionOnPress }) {
   const tailwind = useTailwind();
+
   const [actionIsInProgress, setActionIsInProgress] = useState(false);
 
   if (!actionOnPress) actionOnPress = () => Promise.resolve();
@@ -28,7 +29,7 @@ function Heading({ title, actionTitle, actionOnPress }) {
     );
   } else {
     return (
-      <View style={tailwind('p-5 border-b border-gray-200 bg-white')}>
+      <View style={tailwind('p-2 my-2 border-b border-gray-200')}>
         <Text style={tailwind('text-lg font-medium text-gray-900')}>
           {title}
         </Text>

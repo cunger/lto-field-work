@@ -1,11 +1,8 @@
 import React from 'react';
 import RNPickerSelect from 'react-native-picker-select'; // https://github.com/lawnstarter/react-native-picker-select
-import { useTailwind } from 'tailwind-rn';
 import styles from '../../styles/select';
 
 function SelectField({ label, value, type, items, updateAction }) {
-  const tailwind = useTailwind();
-
   if (!items && type) {
     items = Object.keys(type).map(key => {
       return { label: type[key], value: type[key] };

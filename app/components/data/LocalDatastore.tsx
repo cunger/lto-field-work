@@ -1,45 +1,101 @@
 import { showMessage } from 'react-native-flash-message';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // https://react-native-async-storage.github.io/async-storage/docs/api/
 import * as FileSystem from 'expo-file-system';
-// import RNFetchBlob from 'rn-fetch-blob';
 import Item from '../../model/Item';
-import Report from './Report';
 import persist from './Uploader';
 
-const Datastore = {
-  // User information
-  setUserName: async (name: string) => {
+export default class Datastore {
+
+  // ---- User information ----
+
+  static async setUserName(name: string) {
     await AsyncStorage.setItem('@username', name);
-  },
-  setUserToken: async (token: string) => {
+  }
+
+  static async setUserToken(token: string) {
     await AsyncStorage.setItem('@usertoken', token);
-  },
-  setUserVerified: async (verified: boolean) => {
+  }
+
+  static async setUserVerified(verified: boolean) {
     await AsyncStorage.setItem('@userverified', verified.toString());
-  },
-  setUserEmail: async (email: string) => {
+  }
+
+  static async setUserEmail(email: string) {
     await AsyncStorage.setItem('@useremail', email);
-  },
-  getUserName: () => {
+  }
+
+  static async getUserName() {
     return AsyncStorage.getItem('@username');
-  },
-  getUserToken: () => {
+  }
+
+  static async getUserToken() {
     return AsyncStorage.getItem('@usertoken');
-  },
-  getUserVerified: () => {
+  }
+
+  static async getUserVerified() {
     return AsyncStorage.getItem('@userverified');
-  },
-  getUserEmail: () => {
+  }
+
+  static async getUserEmail() {
     return AsyncStorage.getItem('@useremail');
-  },
-  // Analytics
-  saveInAnalytics(item: Item) {
-    // TODO
-  },
-  // Storing photos and collected data
-  save: async (item: Item) => {
+  }
+
+  // ---- Analytics ----
+
+  static async numberOfUnsynced() {
+    const items = await this.items();
+    return items.length;
+  }
+
+  static async saveInStatistics(item: Item) {
+    await AsyncStorage.setItem('@lastactivedate', item.date.toLocaleDateString());
+    await AsyncStorage.setItem('@lastactivelocation', `${item.location}`);
+
+    const statisticsString = await AsyncStorage.getItem('@statistics');
+    const statistics = statisticsString ? JSON.parse(statisticsString) : {};
+    
+    if (item.type == 'Catch') {
+      const species = `${item.species || 'Fish'}`;
+      statistics.Catch = statistics.Catch || {};
+      statistics.Catch[species] = (statistics.Catch[species] || 0) + item.quantity;
+    }
+
+    if (item.type == 'Trash') {
+      const category = `${item.category.startsWith('Plastic') ? 'Plastic piece' : item.category}`;
+      statistics.Trash = statistics.Trash || {};
+      statistics.Trash[category] = (statistics.Trash[category] || 0) + item.quantity;
+    }
+
+    await AsyncStorage.setItem('@statistics', JSON.stringify(statistics));
+  }
+
+  static async lastActiveDate() {
+    return AsyncStorage.getItem('@lastactivedate');
+  }
+
+  static async lastActiveLocation() {
+    return AsyncStorage.getItem('@lastactivelocation');
+  }
+
+  static async statistics() {
+    const statisticsString = await AsyncStorage.getItem('@statistics');
+    return statisticsString ? JSON.parse(statisticsString) : {};
+  }
+
+  // ---- Colleced data and photos ----
+
+  static async items() {
+    const keys = await AsyncStorage.getAllKeys();
+    const values = await AsyncStorage.multiGet(keys.filter(key => !key.startsWith('@')));
+    const items = values.map((value) => JSON.parse(value[1]));
+
+    return items;
+  }
+
+  static async save(item: Item) {
     try {
       await AsyncStorage.setItem(item.id, JSON.stringify(item));
+      await this.saveInStatistics(item);
     } catch (error) {
       showMessage({
         message: 'Could not save data.',
@@ -48,8 +104,9 @@ const Datastore = {
         icon: 'danger'
       });
     }
-  },
-  savePhoto: async (photo, filename: string) => {
+  }
+
+  static async savePhoto(photo, filename: string) {
     let location;
     try {
       location = `${FileSystem.documentDirectory}${filename}`;
@@ -70,51 +127,22 @@ const Datastore = {
       console.log(location);
       console.log(error);
     }
-  },
-  summary: async () => {
-    let report = Report();
+  }
+
+  static async syncAll() {
     try {
       const keys = await AsyncStorage.getAllKeys();
       const values = await AsyncStorage.multiGet(keys.filter(key => !key.startsWith('@')));
-      values.forEach((value) => {
-        report.countItem(JSON.parse(value[1]));
-      });
-    } catch (error) {
-    }
-
-    return report;
-  },
-  numberOfUnsynced: async () => {
-    let count = 0;
-    try {
-      const keys = await AsyncStorage.getAllKeys();
-      for (key of keys) {
-        if (key.startsWith('@')) continue;
-        let value = await AsyncStorage.getItem(key);
-        let item = JSON.parse(value);
-        if (!item.synced) count += (item.quantity || 1);
-      }
-    } catch (error) {
-    }
-
-    return count;
-  },
-  syncAll: async () => {
-    try {
-      const keys = await AsyncStorage.getAllKeys();
-      const values = await AsyncStorage.multiGet(keys.filter(key => !key.startsWith('@')));
-      const items = values
-        .map((value) => JSON.parse(value[1]))
-        .filter((item) => !item.synced);
+      const items = values.map((value) => JSON.parse(value[1]));
+      
+      const signed = items.filter(item => item.signature && item.signature.token);
+      const skipped = items.filter(item => !item.signature || !item.signature.token);
 
       // uploaded: [ <id>, <id>, ... ]
-      const uploaded = await persist(items);
-      items.forEach((item) => {
-        if (uploaded.includes(item.id) || !item.signature || !item.signature.token) {
-          item.synced = true;
-          AsyncStorage.setItem(item.id, JSON.stringify(item));
-        }
-      });
+      const uploaded = await persist(signed);
+      
+      uploaded.forEach(id => AsyncStorage.removeItem(id));
+      skipped.forEach(id => AsyncStorage.removeItem(id));
     } catch (error) {
       showMessage({
         message: 'Could not upload data.',
@@ -123,29 +151,13 @@ const Datastore = {
         icon: 'warning'
       });
     }
-  },
-  clearSynced: async () => {
+  }
+  
+  static async clearAll() {
     try {
       const keys = await AsyncStorage.getAllKeys();
-      for (let key of keys) {
-        if (key.startsWith('@')) continue;
-        let value = await AsyncStorage.getItem(key);
-        let item = JSON.parse(value);
-        if (item.synced) await AsyncStorage.removeItem(key);
-      }
-    } catch (error) {
-      showMessage({
-        message: 'There was an error when clearing uploaded data.',
-        description: `${error}`,
-        type: 'warning',
-        icon: 'danger'
-      });
-    }
-  },
-  clearAll: async () => {
-    try {
-      const keys = await AsyncStorage.getAllKeys();
-      await AsyncStorage.multiRemove(keys.filter(key => !key.startsWith('@')));
+      // await AsyncStorage.multiRemove(keys.filter(key => !key.startsWith('@')));
+      await AsyncStorage.multiRemove(keys);
     } catch(e) {
       showMessage({
         message: 'There was an error when deleting data.',
@@ -156,5 +168,3 @@ const Datastore = {
     }
   }
 };
-
-export default Datastore;

@@ -12,8 +12,9 @@ import { useTailwind } from 'tailwind-rn';
 const Tab = createBottomTabNavigator();
 const MainMenu = () => {
   const tailwind = useTailwind();
+
   const [count, setCount] = useState(GlobalContext.unsyncedItems);
-  GlobalContext.registerUpdate(setCount);
+  GlobalContext.subscribe(setCount);
 
   return (
     <SafeAreaView style={tailwind('flex-1')}>

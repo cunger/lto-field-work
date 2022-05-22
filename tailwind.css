@@ -2,12 +2,21 @@
   visibility: visible
 }
 
-.m-4 {
-  margin: 1rem
+.static {
+  position: static
 }
 
 .m-2 {
   margin: 0.5rem
+}
+
+.m-4 {
+  margin: 1rem
+}
+
+.my-10 {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem
 }
 
 .my-2 {
@@ -18,6 +27,11 @@
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem
+}
+
+.mx-4 {
+  margin-left: 1rem;
+  margin-right: 1rem
 }
 
 .my-4 {
@@ -135,10 +149,6 @@
   padding: 1rem
 }
 
-.p-5 {
-  padding: 1.25rem
-}
-
 .p-8 {
   padding: 2rem
 }
@@ -184,14 +194,14 @@
   font-weight: 700
 }
 
+.text-blue {
+  --tw-text-opacity: 1;
+  color: rgb(110 193 228 / var(--tw-text-opacity))
+}
+
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity))
-}
-
-.text-gray-900 {
-  --tw-text-opacity: 1;
-  color: rgb(17 24 39 / var(--tw-text-opacity))
 }
 
 .text-gray-700 {
@@ -199,9 +209,9 @@
   color: rgb(55 65 81 / var(--tw-text-opacity))
 }
 
-.text-blue {
+.text-gray-900 {
   --tw-text-opacity: 1;
-  color: rgb(110 193 228 / var(--tw-text-opacity))
+  color: rgb(17 24 39 / var(--tw-text-opacity))
 }
 
 .filter {

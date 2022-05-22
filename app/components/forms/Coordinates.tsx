@@ -8,6 +8,7 @@ import { useTailwind } from 'tailwind-rn';
 
 function Coordinates({ setDateOnParent, setLocationOnParent }) {
   const tailwind = useTailwind();
+  
   const [date, setDate] = useState(new Date());
   const [hours, setHours] = useState(date.getHours());
   const [minutes, setMinutes] = useState(date.getMinutes());

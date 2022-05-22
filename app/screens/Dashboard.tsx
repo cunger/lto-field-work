@@ -1,20 +1,114 @@
-import * as React from 'react';
-import { Text } from 'react-native';
-import SafeContainer from '../components/SafeContainer';
+import React, { useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { Text, View } from 'react-native';
+import ScrollContainer from '../components/ScrollContainer';
+import Heading from '../components/Heading';
+import Datastore from '../components/data/LocalDatastore';
+import GlobalContext from '../components/context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
+import ListItem from '../components/ListItem';
 
 function Dashboard() {
   const tailwind = useTailwind();
 
+  const [lastActiveDate, setLastActiveDate] = useState(null);
+  const [lastActiveLocation, setLastActiveLocation] = useState(null);
+  const [statistics, setStatistics] = useState({});
+
+  async function loadData() {
+    GlobalContext.load();
+    Datastore.lastActiveDate().then(date => setLastActiveDate(date));
+    Datastore.lastActiveLocation().then(location => setLastActiveLocation(location));
+    Datastore.statistics().then(statistics => setStatistics(statistics));
+  }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      loadData();
+      return () => {};
+    }, [])
+  );
+
+  const print = (count: number, noun: string) => {
+    if (noun == 'undefined') noun = 'other';
+
+    const plural = (noun: string) => {
+      if (noun.endsWith('cm')) return noun;
+      if (noun.endsWith('fish')) return noun;
+      if (noun.endsWith('gear')) return noun;
+      return `${noun}s`;
+    };
+
+    return (count == 1)
+      ? `${count} ${noun}`
+      : `${count} ${plural(noun)}`;
+  };
+
   return (
-    <SafeContainer>
-      <Text style={tailwind('my-2')}>
-        👋 Hello, ocean hero!
-      </Text>
-      <Text style={tailwind('my-2')}>
-        Welcome aboard the Love The Oceans team.
-      </Text>
-    </SafeContainer>
+    <ScrollContainer>
+      { 
+        lastActiveDate && lastActiveLocation &&
+        <View>
+          <Text style={tailwind('my-2')}>
+            👋 Welcome back, ocean hero!
+          </Text>
+
+          {
+            GlobalContext.unsyncedItems > 0 && 
+            <Text style={tailwind('m-2 text-blue')}>
+              Don't forget! You have {GlobalContext.unsyncedItems} data items that have not yet been uploaded.
+            </Text>
+          }
+
+          <Heading title='Last activity' actionTitle='' actionOnPress={() => {}} />
+          <Text style={tailwind('m-2')}>
+            🗓️ {lastActiveDate}
+          </Text>
+          <Text style={tailwind('m-2')}>
+            📍 {lastActiveLocation}
+          </Text>
+
+          <Heading title='Collected data' actionTitle='' actionOnPress={() => {}} />
+          <Text style={tailwind('m-2')}>🎣 Catch:</Text>
+          {Object.entries(statistics.Catch || {}).map((entry, index) => (
+            <ListItem key={index}><Text>{` ️ ${print(entry[1], entry[0])}`}</Text></ListItem>
+          ))}
+          <Text style={tailwind('m-2')}>🗑️ Trash:</Text>
+          {Object.entries(statistics.Trash || {}).map((entry, index) => (
+            <ListItem key={index}><Text>{` ️ ${print(entry[1], entry[0])}`}</Text></ListItem>
+          ))}
+        </View>
+      }
+      { 
+        !(lastActiveDate && lastActiveLocation) &&
+        <View>
+          <Text style={tailwind('my-10')}>
+            👋 Welcome, ocean hero!
+          </Text>
+          <Text style={tailwind('m-2')}>
+            Great to have you onboard.
+          </Text>
+          <Text style={tailwind('m-2')}>
+            Here are your first steps to get started:
+          </Text>
+          <Text style={tailwind('m-2')}>
+            1. Go to <Text style={tailwind('text-blue')}>Settings</Text> and set up your user information. 
+            (This is important so we know who collected the data we receive.)
+          </Text>
+          <Text style={tailwind('m-2')}>
+            2. Click on <Text style={tailwind('text-blue')}>Data Entry</Text> and start collecting data. 
+            (You don't need an internet connection. The data is stored locally on your phone.)
+          </Text>
+          <Text style={tailwind('m-2')}>
+            3. When you have an internet connection, come back and go to <Text style={tailwind('text-blue')}>Upload</Text>. 
+            Then click on the Upload button to send your collected data to us.
+          </Text>
+          <Text style={tailwind('m-2')}>
+            🎉 Thanks!
+          </Text>
+        </View>
+      }
+    </ScrollContainer>
   );
 }
 
