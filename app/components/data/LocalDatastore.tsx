@@ -2,7 +2,7 @@ import { showMessage } from 'react-native-flash-message';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // https://react-native-async-storage.github.io/async-storage/docs/api/
 import * as FileSystem from 'expo-file-system';
 import Item from '../../model/Item';
-import persist from './Uploader';
+import upload from './Uploader';
 
 export default class Datastore {
 
@@ -87,9 +87,7 @@ export default class Datastore {
   static async items() {
     const keys = await AsyncStorage.getAllKeys();
     const values = await AsyncStorage.multiGet(keys.filter(key => !key.startsWith('@')));
-    const items = values.map((value) => JSON.parse(value[1]));
-
-    return items;
+    return values.map((value) => JSON.parse(value[1]));
   }
 
   static async save(item: Item) {
@@ -109,8 +107,8 @@ export default class Datastore {
   static async savePhoto(photo, filename: string) {
     let location;
     try {
+      filename = filename.replaceAll(' ', '-');
       location = `${FileSystem.documentDirectory}${filename}`;
-      location = location.replaceAll(' ', '-');
 
       await FileSystem.writeAsStringAsync(location, photo.base64, {
         encoding: FileSystem.EncodingType.Base64
@@ -130,19 +128,18 @@ export default class Datastore {
   }
 
   static async syncAll() {
+    console.log('sync all');
     try {
       const keys = await AsyncStorage.getAllKeys();
       const values = await AsyncStorage.multiGet(keys.filter(key => !key.startsWith('@')));
       const items = values.map((value) => JSON.parse(value[1]));
       
-      const signed = items.filter(item => item.signature && item.signature.token);
       const skipped = items.filter(item => !item.signature || !item.signature.token);
-
-      // uploaded: [ <id>, <id>, ... ]
-      const uploaded = await persist(signed);
-      
-      uploaded.forEach(id => AsyncStorage.removeItem(id));
       skipped.forEach(id => AsyncStorage.removeItem(id));
+      
+      const signed = items.filter(item => item.signature && item.signature.token);
+      const uploaded = await upload(signed); // [ <id>, <id>, ... ]
+      uploaded.forEach(id => AsyncStorage.removeItem(id));
     } catch (error) {
       showMessage({
         message: 'Could not upload data.',
@@ -155,10 +152,18 @@ export default class Datastore {
   
   static async clearAll() {
     try {
+      // Delete all entries in database.
       const keys = await AsyncStorage.getAllKeys();
-      // await AsyncStorage.multiRemove(keys.filter(key => !key.startsWith('@')));
-      await AsyncStorage.multiRemove(keys);
-    } catch(e) {
+      await AsyncStorage.multiRemove(keys); // keys.filter(key => !key.startsWith('@'))
+      
+      // Delete all images on local filesystem.
+      const localFiles = await FileSystem.readDirectoryAsync(`${FileSystem.documentDirectory}`);
+      localFiles.forEach(filename => {
+        console.log(filename);
+        FileSystem.deleteAsync(`${FileSystem.documentDirectory}${filename}`);
+      });
+    } catch(error) {
+      console.log(error);
       showMessage({
         message: 'There was an error when deleting data.',
         description: `${error}`,

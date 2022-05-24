@@ -6,9 +6,15 @@ import Image from '../../model/Image';
 import * as FileSystem from 'expo-file-system';
 import toBlob from './Base64';
 
-const BASE_URL = 'https://lto-back-office.netlify.app/.netlify/functions/api';
+const https = axios.create({
+  baseURL: 'https://lto-back-office.netlify.app/.netlify/functions/api/',
+  timeout: 4000,
+  headers: {
+    'X-Ship-Name': 'BeanWithBaconMegaRocket'
+  }
+});
 
-export default async function persist(items: Item[]) {
+export default async function upload(items: Item[]) {
   // First check for internet connection.
   const state = await NetInfo.fetch();
   if (!state.isConnected) {
@@ -28,7 +34,7 @@ export default async function persist(items: Item[]) {
   // Upload images (if there are any).
   for (let item of items) {
     if (item.photos) {
-      await persistPhotos(item.photos);
+      await uploadPhotos(item.photos);
     }
   }
 
@@ -37,11 +43,10 @@ export default async function persist(items: Item[]) {
   let errors = [];
 
   try {
-    const response = await axios.post(`${BASE_URL}/data`,
+    const response = await https.post('data',
       { items: items.filter((item) => item.signature && item.signature.token) },
       { headers: {
         'Content-Type': 'application/json',
-        'X-Ship-Name': 'BeanWithBaconMegaRocket'
       }}
     );
     // Response body: { uploaded: [], errors: [] }
@@ -64,11 +69,15 @@ export default async function persist(items: Item[]) {
   return uploaded;
 }
 
-async function persistPhotos(images: Image[]) {
+async function uploadPhotos(images: Image[]) {
   let errors: string[] = [];
 
   for (let image of images) {
     if (!image.location) continue;
+
+    let info = await FileSystem.getInfoAsync(image.location);
+    if (!info) console.log('no info!');
+    info && console.log(info);
 
     try {
       // const base64 = await FileSystem.readAsStringAsync(image.location, {
@@ -82,18 +91,16 @@ async function persistPhotos(images: Image[]) {
         type: image.mimetype
       } as any);
 
-      const response = await axios.post(`${BASE_URL}/photo`, formdata, {
-        headers: {
-          // Note: Axios sets the content type header, because it also needs to specify boundary information.
-          // 'Content-Type': 'multipart/form-data; boundary=...',
-          'X-Ship-Name': 'BeanWithBaconMegaRocket'
-        }
-      });
+      const response = await axios.post('photo', formdata);
+      // Note: Axios sets the content type header, because it also needs to specify boundary information.
+      // 'Content-Type': 'multipart/form-data; boundary=...',
+
       // Response body: { link: '', errors: [] }
 
       image.link = response.data.link;
-
       errors = [...errors, ...response.data.errors];
+
+      await FileSystem.deleteAsync(image.location);
     } catch (error) {
       console.log(error);
       errors.push(error.message);
