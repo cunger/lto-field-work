@@ -89,7 +89,7 @@ async function uploadPhotos(images: Image[]) {
         path: image.location,
         name: image.filename,
         type: image.mimetype
-      } as any);
+      });
 
       const response = await axios.post('photo', formdata);
       // Note: Axios sets the content type header, because it also needs to specify boundary information.

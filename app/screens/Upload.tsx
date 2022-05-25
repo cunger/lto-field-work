@@ -8,16 +8,17 @@ import ConfirmPrompt from '../components/ConfirmPrompt';
 import Datastore from '../components/data/LocalDatastore';
 import GlobalContext from '../components/context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
+import Item from '../model/Item';
 
 function Upload() {
   const tailwind = useTailwind();
   
-  const [unsyncedItems, setUnsyncedItems] = useState([]);
+  const [unsyncedItems, setUnsyncedItems] = useState<Item[]>([]);
   const [confirmVisible, setConfirmVisible] = useState(false);
 
   async function loadData() {
     GlobalContext.load();
-    Datastore.items().then(items => setUnsyncedItems(items));
+    setUnsyncedItems(await Datastore.items());
   }
 
   useFocusEffect(
@@ -71,7 +72,7 @@ function Upload() {
         actionPhrase='clear the storage'
         actionExplanation='This will also delete data that was not yet uploaded, as well as your user information and history.'
         actionButtonText='Delete all'
-        action={Datastore.clearAll}
+        action={clearAll}
         hide={() => setConfirmVisible(false)} />
     </ScrollContainer>
   );

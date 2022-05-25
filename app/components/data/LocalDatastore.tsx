@@ -84,7 +84,7 @@ export default class Datastore {
 
   // ---- Colleced data and photos ----
 
-  static async items() {
+  static async items(): Promise<Item[]> {
     const keys = await AsyncStorage.getAllKeys();
     const values = await AsyncStorage.multiGet(keys.filter(key => !key.startsWith('@')));
     return values.map((value) => JSON.parse(value[1]));
@@ -128,15 +128,18 @@ export default class Datastore {
   }
 
   static async syncAll() {
-    console.log('sync all');
     try {
       const keys = await AsyncStorage.getAllKeys();
       const values = await AsyncStorage.multiGet(keys.filter(key => !key.startsWith('@')));
       const items = values.map((value) => JSON.parse(value[1]));
       
+      // Unsigned items are simply removed. 
+      // (For testing purposes we pretend that we uploaded them.)
       const skipped = items.filter(item => !item.signature || !item.signature.token);
       skipped.forEach(id => AsyncStorage.removeItem(id));
       
+      // Signed items are uploaded, and removed if the upload was successful.
+      // (They're part of the analytics, so no reason to keep all details.) 
       const signed = items.filter(item => item.signature && item.signature.token);
       const uploaded = await upload(signed); // [ <id>, <id>, ... ]
       uploaded.forEach(id => AsyncStorage.removeItem(id));
@@ -156,10 +159,9 @@ export default class Datastore {
       const keys = await AsyncStorage.getAllKeys();
       await AsyncStorage.multiRemove(keys); // keys.filter(key => !key.startsWith('@'))
       
-      // Delete all images on local filesystem.
+      // Delete all photos stored in local filesystem.
       const localFiles = await FileSystem.readDirectoryAsync(`${FileSystem.documentDirectory}`);
       localFiles.forEach(filename => {
-        console.log(filename);
         FileSystem.deleteAsync(`${FileSystem.documentDirectory}${filename}`);
       });
     } catch(error) {
