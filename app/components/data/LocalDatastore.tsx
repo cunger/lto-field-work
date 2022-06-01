@@ -122,28 +122,39 @@ export default class Datastore {
         type: 'warning',
         icon: 'danger'
       });
-      console.log(location);
-      console.log(error);
     }
   }
 
   static async syncAll() {
     try {
-      const keys = await AsyncStorage.getAllKeys();
-      const values = await AsyncStorage.multiGet(keys.filter(key => !key.startsWith('@')));
-      const items = values.map((value) => JSON.parse(value[1]));
+      const signed: Item[] = [];
+      const keys: string[] = await AsyncStorage.getAllKeys();
+
+      for (let key of keys) {
+        if (key.startsWith('@')) continue;
+
+        const value = await AsyncStorage.getItem(key);
+        const item = JSON.parse(value);
+
+        // Unsigned items are simply removed. 
+        // (For testing purposes we pretend that we uploaded them.)
+        if (!item.signature || !item.signature.token) {
+          await AsyncStorage.removeItem(item.id);
+        }
       
-      // Unsigned items are simply removed. 
-      // (For testing purposes we pretend that we uploaded them.)
-      const skipped = items.filter(item => !item.signature || !item.signature.token);
-      skipped.forEach(id => AsyncStorage.removeItem(id));
-      
-      // Signed items are uploaded, and removed if the upload was successful.
-      // (They're part of the analytics, so no reason to keep all details.) 
-      const signed = items.filter(item => item.signature && item.signature.token);
+        // Signed items are uploaded, and removed if the upload was successful.
+        // (They're part of the analytics, so no reason to keep all details.) 
+        if (item.signature && item.signature.token) {
+          signed.push(item);
+        }
+      }
+
       const uploaded = await upload(signed); // [ <id>, <id>, ... ]
-      uploaded.forEach(id => AsyncStorage.removeItem(id));
+      for (let id of uploaded) {
+        await AsyncStorage.removeItem(id);
+      }
     } catch (error) {
+      console.log(error);
       showMessage({
         message: 'Could not upload data.',
         description: `${error}`,
@@ -155,9 +166,9 @@ export default class Datastore {
   
   static async clearAll() {
     try {
-      // Delete all entries in database.
+      // Delete all entries in database (except for user info).
       const keys = await AsyncStorage.getAllKeys();
-      await AsyncStorage.multiRemove(keys); // keys.filter(key => !key.startsWith('@'))
+      await AsyncStorage.multiRemove(keys.filter(key => !key.startsWith('@user')));
       
       // Delete all photos stored in local filesystem.
       const localFiles = await FileSystem.readDirectoryAsync(`${FileSystem.documentDirectory}`);

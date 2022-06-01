@@ -1,14 +1,21 @@
 
 // base64 = "data:image/jpg;base64,..."
-export default function toBlob(base64: string, mimetype: string) {
-  const byteCharacters = atob(base64);
-  const byteNumbers = new Array(byteCharacters.length);
-  for (let i = 0; i < byteCharacters.length; i++) {
-    byteNumbers[i] = byteCharacters.charCodeAt(i);
+export default async function toBlob(base64: string, mimetype: string) {
+  try {
+    const res = await fetch(`data:${mimetype};base64,${base64}`);
+    return res.blob();
+  } catch (error) {
+    console.log(error);
   }
-  const byteArray = new Uint8Array(byteNumbers);
-
-  return new Blob([byteArray], { type: mimetype });
+  //
+  // const byteCharacters = atob(base64);
+  // const byteNumbers = new Array(byteCharacters.length);
+  // for (let i = 0; i < byteCharacters.length; i++) {
+  //   byteNumbers[i] = byteCharacters.charCodeAt(i);
+  // }
+  // const byteArray = new Uint8Array(byteNumbers);
+  //
+  // return new Blob([byteArray], { type: mimetype });
 }
 
 // https://snack.expo.dev/BktW0xdje

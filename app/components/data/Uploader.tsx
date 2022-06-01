@@ -1,18 +1,10 @@
 import { showMessage } from 'react-native-flash-message';
 import NetInfo from '@react-native-community/netinfo'; // https://github.com/react-native-netinfo/react-native-netinfo
-import axios from 'axios';
 import Item from '../../model/Item';
 import Image from '../../model/Image';
 import * as FileSystem from 'expo-file-system';
-import toBlob from './Base64';
 
-const https = axios.create({
-  baseURL: 'https://lto-back-office.netlify.app/.netlify/functions/api/',
-  timeout: 4000,
-  headers: {
-    'X-Ship-Name': 'BeanWithBaconMegaRocket'
-  }
-});
+const BASE_URL = 'https://lto-back-office.netlify.app/.netlify/functions/api';
 
 export default async function upload(items: Item[]) {
   // First check for internet connection.
@@ -29,7 +21,9 @@ export default async function upload(items: Item[]) {
   }
 
   // If there is a connection, upload data.
+  
   // (If it's not signed, just pretend it was uploaded for testing and demo purposes.)
+  items = items.filter(item => item.signature && item.signature.token);
 
   // Upload images (if there are any).
   for (let item of items) {
@@ -39,20 +33,27 @@ export default async function upload(items: Item[]) {
   }
 
   // Upload data.
+  
+  // (But only if its photos have been uploaded successfully.)
+  items = items.filter(item => item.photos.every(photo => photo.link));
+
   let uploaded = [];
   let errors = [];
 
   try {
-    const response = await https.post('data',
-      { items: items.filter((item) => item.signature && item.signature.token) },
-      { headers: {
+    const response = await fetch(`${BASE_URL}/data`, {
+      method: 'POST',
+      headers: {
         'Content-Type': 'application/json',
-      }}
-    );
-    // Response body: { uploaded: [], errors: [] }
+        'X-Ship-Name': 'BeanWithBaconMegaRocket'
+      },
+      body: JSON.stringify({ items: items })
+    });
+    
+    const responseData = await response.json(); // { uploaded: [], errors: [] }
 
-    uploaded = response.data.uploaded || [];
-    errors = response.data.errors || [];
+    uploaded = responseData.uploaded || [];
+    errors = responseData.errors || [];
   } catch (error) {
     errors.push(error.message);
   }
@@ -75,30 +76,28 @@ async function uploadPhotos(images: Image[]) {
   for (let image of images) {
     if (!image.location) continue;
 
-    let info = await FileSystem.getInfoAsync(image.location);
-    if (!info) console.log('no info!');
-    info && console.log(info);
-
     try {
-      // const base64 = await FileSystem.readAsStringAsync(image.location, {
-      //   encoding: FileSystem.EncodingType.Base64
-      // });
       const formdata = new FormData();
-      // formdata.append('file', toBlob(base64, image.mimetype), image.filename);
       formdata.append('file', {
-        path: image.location,
+        uri: image.location,
         name: image.filename,
         type: image.mimetype
       });
 
-      const response = await axios.post('photo', formdata);
-      // Note: Axios sets the content type header, because it also needs to specify boundary information.
-      // 'Content-Type': 'multipart/form-data; boundary=...',
+      const response = await fetch(`${BASE_URL}/photo`, {
+        method: 'POST',
+        headers: {
+          // 'Content-Type': 'multipart/form-data; boundary=...',
+          // Let fetch set the content type header, because it knows the boundary string.
+          'X-Ship-Name': 'BeanWithBaconMegaRocket'
+        },
+        body: formdata
+      });
 
-      // Response body: { link: '', errors: [] }
+      const responseData = await response.json(); // { link: '', errors: [] }
 
-      image.link = response.data.link;
-      errors = [...errors, ...response.data.errors];
+      image.link = responseData.link;
+      errors = [...errors, ...responseData.errors];
 
       await FileSystem.deleteAsync(image.location);
     } catch (error) {

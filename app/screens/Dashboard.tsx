@@ -56,7 +56,8 @@ function Dashboard() {
           {
             GlobalContext.unsyncedItems > 0 && 
             <Text style={tailwind('m-2 text-blue')}>
-              Don't forget! You have {GlobalContext.unsyncedItems} data items that have not yet been uploaded.
+              Don't forget! You have {GlobalContext.unsyncedItems} data item{GlobalContext.unsyncedItems > 1 ? 's ' : ' '}
+              that ha{GlobalContext.unsyncedItems > 1 ? 've' : 's'} not yet been uploaded.
             </Text>
           }
 
