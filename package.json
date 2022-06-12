@@ -36,6 +36,7 @@
     "react-native-get-random-values": "^1.7.2",
     "react-native-image-picker": "^4.7.3",
     "react-native-input-spinner": "^1.7.12",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-modal": "12.1.0",
     "react-native-neat-date-picker": "^1.1.4",
     "react-native-picker-select": "^8.0.4",

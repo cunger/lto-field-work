@@ -26,45 +26,52 @@ export default async function upload(items: Item[]) {
   items = items.filter(item => item.signature && item.signature.token);
 
   // Upload images (if there are any).
-  for (let item of items) {
-    if (item.photos) {
-      await uploadPhotos(item.photos);
-    }
-  }
+  // TODO Include again once it works.
+  // for (let item of items) {
+  //   if (item.photos) {
+  //     await uploadPhotos(item.photos);
+  //   }
+  // }
 
   // Upload data.
   
   // (But only if its photos have been uploaded successfully.)
-  items = items.filter(item => item.photos.every(photo => photo.link));
+  // items = items.filter(item => item.photos.every(photo => photo.link));
 
   let uploaded = [];
   let errors = [];
 
-  try {
-    const response = await fetch(`${BASE_URL}/data`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Ship-Name': 'BeanWithBaconMegaRocket'
-      },
-      body: JSON.stringify({ items: items })
-    });
-    
-    const responseData = await response.json(); // { uploaded: [], errors: [] }
+  if (items.length > 1) {
+    try {
+      console.log('uploading items:');
+      console.log(items);
+      const response = await fetch(`${BASE_URL}/data`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-Ship-Name': 'BeanWithBaconMegaRocket'
+        },
+        body: JSON.stringify({ items: items })
+      });
+      console.log(response.status);
+      const responseData = await response.json(); // { uploaded: [], errors: [] }
 
-    uploaded = responseData.uploaded || [];
-    errors = responseData.errors || [];
-  } catch (error) {
-    errors.push(error.message);
-  }
+      uploaded = responseData.uploaded || [];
+      errors = responseData.errors || [];
+    } catch (error) {
+      console.log(`${error}`);
+      errors.push(error.message);
+    }
 
-  if (errors.length > 0) {
-    showMessage({
-      message: 'Error when uploading data...',
-      description: errors.join(' | '),
-      type: 'danger',
-      icon: 'danger'
-    });
+    if (errors.length > 0) {
+      showMessage({
+        message: 'Error when uploading data...',
+        description: errors.join(' | '),
+        type: 'danger',
+        icon: 'danger'
+      });
+    }
   }
 
   return uploaded;
@@ -84,22 +91,29 @@ async function uploadPhotos(images: Image[]) {
         type: image.mimetype
       });
 
+      console.log(formdata);
+
       const response = await fetch(`${BASE_URL}/photo`, {
         method: 'POST',
         headers: {
-          // 'Content-Type': 'multipart/form-data; boundary=...',
           // Let fetch set the content type header, because it knows the boundary string.
+          // 'Content-Type': 'multipart/form-data',
+          'Accept': 'application/json',
           'X-Ship-Name': 'BeanWithBaconMegaRocket'
         },
         body: formdata
       });
 
-      const responseData = await response.json(); // { link: '', errors: [] }
+      if (response.status === 200) {
+        const responseData = await response.json(); // { link: '', errors: [] }
 
-      image.link = responseData.link;
-      errors = [...errors, ...responseData.errors];
+        image.link = responseData.link;
+        errors = [...errors, ...responseData.errors];
 
-      await FileSystem.deleteAsync(image.location);
+        await FileSystem.deleteAsync(image.location);
+      } else {
+        errors = [...errors, `Response status: ${response.status}`];
+      }
     } catch (error) {
       console.log(error);
       errors.push(error.message);

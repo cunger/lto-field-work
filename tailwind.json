@@ -25,16 +25,16 @@
 			"marginLeft": 16
 		}
 	},
-	"my-10": {
-		"style": {
-			"marginTop": 40,
-			"marginBottom": 40
-		}
-	},
 	"my-2": {
 		"style": {
 			"marginTop": 8,
 			"marginBottom": 8
+		}
+	},
+	"my-10": {
+		"style": {
+			"marginTop": 40,
+			"marginBottom": 40
 		}
 	},
 	"my-6": {
@@ -297,6 +297,12 @@
 		"style": {
 			"--tw-text-opacity": 1,
 			"color": "rgb(17 24 39 / var(--tw-text-opacity))"
+		}
+	},
+	"text-gray": {
+		"style": {
+			"--tw-text-opacity": 1,
+			"color": "rgb(175 186 204 / var(--tw-text-opacity))"
 		}
 	},
 	"filter": {

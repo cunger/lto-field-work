@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import { InputLabel } from './Input';
 import { useTailwind } from 'tailwind-rn';
 
-function TextField({ label, value, updateAction, hide=false }) {
+function TextField({ label, value, updateAction, numberOfLines=1, hide=false }) {
   if (hide) return null;
 
   const tailwind = useTailwind();
@@ -12,6 +12,8 @@ function TextField({ label, value, updateAction, hide=false }) {
     <View>
       <InputLabel text={label} />
       <TextInput
+        multiline={true}
+        numberOfLines={numberOfLines}
         value={value}
         onChangeText={updateAction}
         onEndEdition={updateAction}

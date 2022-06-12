@@ -63,14 +63,11 @@ function Upload() {
         return Promise.resolve();
       }} />
       <Text style={tailwind('m-2')}>
-        Here will appear information about the storage this app uses.
-      </Text>
-      <Text style={tailwind('m-2')}>
-        Clearing the app storage is meant for testing. You will really lose all (!) data.
+        Only clear the app storage if you have nothing to upload. You will really lose all (!) data.
       </Text>
       <ConfirmPrompt visible={confirmVisible}
         actionPhrase='clear the storage'
-        actionExplanation='This will also delete data that was not yet uploaded, as well as your user information and history.'
+        actionExplanation='This will delete data that was not yet uploaded as well as your whole history.'
         actionButtonText='Delete all'
         action={clearAll}
         hide={() => setConfirmVisible(false)} />

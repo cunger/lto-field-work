@@ -298,7 +298,7 @@ function Fisheries({ navigation }) {
         addPhoto={async (photo) => {
           const uriparts = photo.uri.split('.');
           const filetype = uriparts[uriparts.length - 1];
-          const name = photoFileName(filetype);
+          const name = photoFileName(filetype).replaceAll(' ', '-');
           const location = await Datastore.savePhoto(photo, name);
           if (location) {
             update({ photos: [...item.photos, new Image(name, location)] });

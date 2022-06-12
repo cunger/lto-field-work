@@ -105,10 +105,8 @@ export default class Datastore {
   }
 
   static async savePhoto(photo, filename: string) {
-    let location;
     try {
-      filename = filename.replaceAll(' ', '-');
-      location = `${FileSystem.documentDirectory}${filename}`;
+      const location = `${FileSystem.documentDirectory}${filename}`;
 
       await FileSystem.writeAsStringAsync(location, photo.base64, {
         encoding: FileSystem.EncodingType.Base64

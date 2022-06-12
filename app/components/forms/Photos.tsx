@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { InputField, InputGroup } from './Input';
+import { InputGroup } from './Input';
 import TextField from './TextField';
 import * as ImagePicker from 'expo-image-picker';
 import { useTailwind } from 'tailwind-rn';
@@ -48,21 +48,26 @@ function Photos({ flashMessage, photoNames, photosNote, addPhoto, setPhotosNote 
     }
   };
 
+  // <InputGroup text='Pictures' />
+  //   {flash()}
+  //   {photoList()}
+  // <InputField
+  //   text='Take photo with camera'
+  //   textColor={'#cccccc'}
+  //   action={() => pickPhoto(ImagePicker.launchCameraAsync, 'camera')} />
+  // <InputField
+  //   text='Pick photo from gallery'
+  //   textColor={'#cccccc'}
+  //   action={() => pickPhoto(ImagePicker.launchImageLibraryAsync, 'gallery')} />
+
   return (
     <View>
       <InputGroup text='Pictures' />
-      {flash()}
-      {photoList()}
-      <InputField
-        text='Take photo with camera'
-        textColor={'#cccccc'}
-        action={() => pickPhoto(ImagePicker.launchCameraAsync, 'camera')} />
-      <InputField
-        text='Pick photo from gallery'
-        textColor={'#cccccc'}
-        action={() => pickPhoto(ImagePicker.launchImageLibraryAsync, 'gallery')} />
+      <Text style={tailwind('text-gray')}>Photo upload coming soon.</Text>
+      { flash() }
       <TextField
-        label='Or describe which picture(s) on whose camera:'
+        label='Describe which picture(s) on whose camera:'
+        numberOfLines={4}
         value={photosNote}
         updateAction={setPhotosNote}
       />

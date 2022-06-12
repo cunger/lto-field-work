@@ -14,14 +14,14 @@
   margin: 1rem
 }
 
-.my-10 {
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem
-}
-
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem
+}
+
+.my-10 {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem
 }
 
 .my-6 {
@@ -212,6 +212,11 @@
 .text-gray-900 {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity))
+}
+
+.text-gray {
+  --tw-text-opacity: 1;
+  color: rgb(175 186 204 / var(--tw-text-opacity))
 }
 
 .filter {

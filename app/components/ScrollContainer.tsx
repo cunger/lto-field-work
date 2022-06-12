@@ -1,16 +1,17 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // https://github.com/APSL/react-native-keyboard-aware-scroll-view
 import { useTailwind } from 'tailwind-rn';
 
 function ScrollContainer({ children }) {
   const tailwind = useTailwind();
 
   return (
-    <ScrollView style={tailwind('h-full w-full')}>
+    <KeyboardAwareScrollView style={tailwind('h-full w-full')}>
       <View style={tailwind('p-8 content-start')}>
         {children}
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }
 
