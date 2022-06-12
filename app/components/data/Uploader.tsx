@@ -43,8 +43,6 @@ export default async function upload(items: Item[]) {
 
   if (items.length > 1) {
     try {
-      console.log('uploading items:');
-      console.log(items);
       const response = await fetch(`${BASE_URL}/data`, {
         method: 'POST',
         headers: {
@@ -54,7 +52,6 @@ export default async function upload(items: Item[]) {
         },
         body: JSON.stringify({ items: items })
       });
-      console.log(response.status);
       const responseData = await response.json(); // { uploaded: [], errors: [] }
 
       uploaded = responseData.uploaded || [];

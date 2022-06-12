@@ -63,7 +63,6 @@ function Photos({ flashMessage, photoNames, photosNote, addPhoto, setPhotosNote 
   return (
     <View>
       <InputGroup text='Pictures' />
-      <Text style={tailwind('text-gray')}>Photo upload coming soon.</Text>
       { flash() }
       <TextField
         label='Describe which picture(s) on whose camera:'
