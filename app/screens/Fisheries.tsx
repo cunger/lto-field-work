@@ -229,15 +229,37 @@ function Fisheries({ navigation }) {
         {
           isSchoolOfFish &&
           <Text style={tailwind('my-2 text-blue')}>
-            Please specify the following properties for the biggest of the caught fish.
+            Please specify the total length both for the smallest and the biggest of the caught fish.
           </Text>
         }
 
-        <TextField
-          label='Total length (cm)'
-          value={item.length}
-          updateAction={(value) => update({ length: value })}
-        />
+        { isSchoolOfFish &&
+          <TextField
+            label='Maximum total length (cm)'
+            value={item.max_length}
+            updateAction={(value) => update({ max_length: value })}
+          />
+        }
+        { isSchoolOfFish &&
+          <TextField
+            label='Minimum total length (cm)'
+            value={item.min_length}
+            updateAction={(value) => update({ min_length: value })}
+          />
+        }
+        { !isSchoolOfFish &&
+          <TextField
+            label='Total length (cm)'
+            value={item.length}
+            updateAction={(value) => update({ length: value })}
+          />
+        }
+        {
+          isSchoolOfFish &&
+          <Text style={tailwind('my-2 text-blue')}>
+            For the rest, simply give a rough average.
+          </Text>
+        }
         <TextField
           label='Head length (cm)'
           value={item.head_length}
@@ -314,7 +336,7 @@ function Fisheries({ navigation }) {
         <InputGroup text='Additional notes' />
         <TextField
           numberOfLines={4}
-          label={undefined}
+          label='If there is something else that is important, let us know:'
           value={item.additionalNotes}
           updateAction={(value) => update({ additionalNotes: value })}
         />

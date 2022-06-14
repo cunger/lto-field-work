@@ -28,7 +28,7 @@ function Signing({ visible, items, closeAction }) {
 
     showMessage({
       message: 'Saved.',
-      description: withSignature ? 'And signed. Thanks!' : 'But not signed.',
+      description: withSignature ? 'Data entry is ready to upload.' : 'Data entry was not signed and will only be used for testing.',
       type: 'success',
       icon: 'success'
     });

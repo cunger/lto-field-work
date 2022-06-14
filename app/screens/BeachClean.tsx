@@ -97,7 +97,7 @@ function BeachClean({ navigation }) {
         <InputGroup text='Additional notes' />
         <TextField
           numberOfLines={4}
-          label={undefined}
+          label='If there is something else that is important, let us know:'
           value={additionalNotes}
           updateAction={setAdditionalNotes}
         />

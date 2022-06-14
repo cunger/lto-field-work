@@ -16,6 +16,8 @@ export default class Catch extends Item {
   species: Species | null;
   sex: Sex | null;
   length?: number;
+  max_length?: number;
+  min_length?: number;
   weight?: number;
   fork_length?: number;
   tail_length?: number;
