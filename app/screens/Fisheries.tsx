@@ -310,6 +310,16 @@ function Fisheries({ navigation }) {
         setPhotosNote={(note) => update({ photosNote: note })}
       />
 
+      <View>
+        <InputGroup text='Additional notes' />
+        <TextField
+          numberOfLines={4}
+          label={undefined}
+          value={item.additionalNotes}
+          updateAction={(value) => update({ additionalNotes: value })}
+        />
+      </View>
+
       <SubmitButtons saveAction={openSigning} discardAction={() => setConfirmVisible(true)} />
       <Signing visible={signatureVisible} items={[item]} closeAction={closeSigning} />
       <ConfirmPrompt visible={confirmVisible}

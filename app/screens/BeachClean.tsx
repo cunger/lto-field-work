@@ -5,6 +5,7 @@ import Trash from '../model/beachclean/Trash';
 import Category from '../model/beachclean/Category';
 import ScrollContainer from '../components/ScrollContainer';
 import Coordinates from '../components/forms/Coordinates';
+import TextField from '../components/forms/TextField';
 import { InputGroup } from '../components/forms/Input';
 import SubmitButtons from '../components/forms/SubmitButtons';
 import Signing from '../components/forms/Signing';
@@ -17,6 +18,7 @@ function BeachClean({ navigation }) {
   const [date, setDate] = useState(new Date());
   const [location, setLocation] = useState(undefined);
   const [items, setItems] = useState({});
+  const [additionalNotes, setAdditionalNotes] = useState('');
   const [signingVisible, setSigningVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
 
@@ -45,7 +47,7 @@ function BeachClean({ navigation }) {
   const trashItems = () => {
     let trashItems = [];
     for (let [category, quantity] of Object.entries(items)) {
-      trashItems.push(new Trash(date, location, category, quantity));
+      trashItems.push(new Trash(date, location, category, quantity, additionalNotes));
     }
 
     return trashItems;
@@ -91,7 +93,18 @@ function BeachClean({ navigation }) {
         })}
       </View>
 
-      <SubmitButtons saveAction={openSigning} discardAction={() => setConfirmVisible(true)} />
+      <View>
+        <InputGroup text='Additional notes' />
+        <TextField
+          numberOfLines={4}
+          label={undefined}
+          value={additionalNotes}
+          updateAction={setAdditionalNotes}
+        />
+      </View>
+
+      <SubmitButtons 
+        saveAction={openSigning} discardAction={() => setConfirmVisible(true)} />
       <Signing visible={signingVisible} items={trashItems()} closeAction={closeSigning} />
       <ConfirmPrompt visible={confirmVisible}
         actionPhrase='discard this data entry'

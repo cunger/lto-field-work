@@ -12,8 +12,9 @@ export default class Item {
   location: Location | null;
   photos: Image[];
   photosNote: string;
+  additionalNotes: string;
 
-  constructor(type: string, date: Date, location: Location | null) {
+  constructor(type: string, date: Date, location: Location | null, additionalNotes?: string) {
     this.id = uuid();
     this.type = type;
     this.date = date;
@@ -21,5 +22,6 @@ export default class Item {
     this.synced = false;
     this.photos = [];
     this.photosNote = '';
+    this.additionalNotes = additionalNotes || '';
   }
 };

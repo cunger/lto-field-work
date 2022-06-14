@@ -59,6 +59,10 @@
   display: flex
 }
 
+.h-40 {
+  height: 10rem
+}
+
 .h-full {
   height: 100%
 }
@@ -212,11 +216,6 @@
 .text-gray-900 {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity))
-}
-
-.text-gray {
-  --tw-text-opacity: 1;
-  color: rgb(175 186 204 / var(--tw-text-opacity))
 }
 
 .filter {

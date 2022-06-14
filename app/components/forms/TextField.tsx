@@ -10,7 +10,7 @@ function TextField({ label, value, updateAction, numberOfLines=1, hide=false }) 
 
   return (
     <View>
-      <InputLabel text={label} />
+      { label && <InputLabel text={label} /> }
       <TextInput
         multiline={true}
         numberOfLines={numberOfLines}
