@@ -80,6 +80,7 @@ function Fisheries({ navigation }) {
     setItem(new Catch(date, location, item.base, item.method, item.other_method));
     setPhotoNames([]);
     hideAllSpeciesSpecificFields();
+    setIsSchoolOfFish(false);
   };
 
   const openSigning = () => {

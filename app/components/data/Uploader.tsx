@@ -41,7 +41,7 @@ export default async function upload(items: Item[]) {
   let uploaded = [];
   let errors = [];
 
-  if (items.length > 1) {
+  if (items.length > 0) {
     try {
       const response = await fetch(`${BASE_URL}/data`, {
         method: 'POST',
