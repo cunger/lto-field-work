@@ -55,12 +55,16 @@
   margin-top: 1rem
 }
 
-.flex {
-  display: flex
+.mr-1 {
+  margin-right: 0.25rem
 }
 
-.h-40 {
-  height: 10rem
+.ml-1 {
+  margin-left: 0.25rem
+}
+
+.flex {
+  display: flex
 }
 
 .h-full {

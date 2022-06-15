@@ -6,6 +6,18 @@ import Sex from './Sex';
 import Method from './Method';
 import Base from './Base';
 
+class Dimensions {
+  total: string;
+  min: string;
+  max: string;
+
+  constructor() {
+    this.total = '';
+    this.min = '';
+    this.max = '';
+  }
+}
+
 export default class Catch extends Item {
   reason?: String;
   method?: Method;
@@ -15,18 +27,16 @@ export default class Catch extends Item {
   common_name: string;
   species: Species | null;
   sex: Sex | null;
-  length?: number;
-  max_length?: number;
-  min_length?: number;
-  weight?: number;
-  fork_length?: number;
-  tail_length?: number;
-  head_length?: number;
-  head_width?: number;
-  precaudal_length?: number;
-  carapace_width?: number;
-  carapace_length?: number;
-  wingspan?: number;
+  length: Dimensions;
+  weight: Dimensions;
+  fork_length: Dimensions;
+  tail_length: Dimensions;
+  head_length: Dimensions;
+  head_width: Dimensions;
+  precaudal_length: Dimensions;
+  carapace_width: Dimensions;
+  carapace_length: Dimensions;
+  wingspan: Dimensions;
 
   constructor(date: Date, location: Location | null, base?: Base, method?: Method, other_method?: string) {
     super('Catch', date, location);
@@ -39,6 +49,16 @@ export default class Catch extends Item {
     // Set those properties to null which you want to reset after saving a catch.
     this.species = null;
     this.sex = null;
-
+    // Dimensions
+    this.length = new Dimensions();
+    this.weight = new Dimensions();
+    this.fork_length = new Dimensions();
+    this.tail_length = new Dimensions();
+    this.head_length = new Dimensions();
+    this.head_width = new Dimensions();
+    this.precaudal_length = new Dimensions();
+    this.carapace_width = new Dimensions();
+    this.carapace_length = new Dimensions();
+    this.wingspan = new Dimensions();
   }
 };

@@ -75,14 +75,19 @@
 			"marginTop": 16
 		}
 	},
+	"mr-1": {
+		"style": {
+			"marginRight": 4
+		}
+	},
+	"ml-1": {
+		"style": {
+			"marginLeft": 4
+		}
+	},
 	"flex": {
 		"style": {
 			"display": "flex"
-		}
-	},
-	"h-40": {
-		"style": {
-			"height": 160
 		}
 	},
 	"h-full": {

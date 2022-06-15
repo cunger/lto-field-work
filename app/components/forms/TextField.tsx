@@ -3,7 +3,7 @@ import { TextInput, View } from 'react-native';
 import { InputLabel } from './Input';
 import { useTailwind } from 'tailwind-rn';
 
-function TextField({ label, value, updateAction, numberOfLines=1, hide=false }) {
+function TextField({ label, value, updateAction, numberOfLines=1, keyboardType='default', hide=false }) {
   if (hide) return null;
 
   const tailwind = useTailwind();
@@ -17,6 +17,7 @@ function TextField({ label, value, updateAction, numberOfLines=1, hide=false }) 
         value={value}
         onChangeText={updateAction}
         onEndEdition={updateAction}
+        keyboardType={keyboardType}
         style={tailwind('mb-2 p-2 bg-white border-gray rounded-md')}
       />
     </View>

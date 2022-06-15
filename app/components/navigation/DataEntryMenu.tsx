@@ -16,8 +16,6 @@ function DataEntryMenu() {
       <Drawer.Screen name='🗑️ Beach clean' component={BeachClean} />
       <Drawer.Screen name='🎣 Fisheries' component={Fisheries} />
       <Drawer.Screen name='🐋 Humpback whale' component={HumpbackWhale} />
-      <Drawer.Screen name='🦈 Whale shark' component={MantaAndCo} />
-      <Drawer.Screen name='🛸 Manta ray' component={MantaAndCo} />
       <Drawer.Screen name='🐢 Turtle' component={MantaAndCo} />
     </Drawer.Navigator>
   );
