@@ -7,7 +7,9 @@ function ScrollContainer({ children }) {
   const tailwind = useTailwind();
 
   return (
-    <KeyboardAwareScrollView style={tailwind('h-full w-full')}>
+    <KeyboardAwareScrollView style={tailwind('h-full w-full')}
+      enableResetScrollToCoords={false}
+    >
       <View style={tailwind('p-8 content-start')}>
         {children}
       </View>

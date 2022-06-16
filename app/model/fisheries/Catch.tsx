@@ -28,15 +28,14 @@ export default class Catch extends Item {
   species: Species | null;
   sex: Sex | null;
   length: Dimensions;
-  weight: Dimensions;
   fork_length: Dimensions;
   tail_length: Dimensions;
   head_length: Dimensions;
   head_width: Dimensions;
   precaudal_length: Dimensions;
-  carapace_width: Dimensions;
   carapace_length: Dimensions;
-  wingspan: Dimensions;
+  carapace_width: Dimensions;
+  disk_width: Dimensions;
 
   constructor(date: Date, location: Location | null, base?: Base, method?: Method, other_method?: string) {
     super('Catch', date, location);
@@ -51,7 +50,6 @@ export default class Catch extends Item {
     this.sex = null;
     // Dimensions
     this.length = new Dimensions();
-    this.weight = new Dimensions();
     this.fork_length = new Dimensions();
     this.tail_length = new Dimensions();
     this.head_length = new Dimensions();
@@ -59,6 +57,6 @@ export default class Catch extends Item {
     this.precaudal_length = new Dimensions();
     this.carapace_width = new Dimensions();
     this.carapace_length = new Dimensions();
-    this.wingspan = new Dimensions();
+    this.disk_width = new Dimensions();
   }
 };

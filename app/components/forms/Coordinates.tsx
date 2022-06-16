@@ -15,21 +15,28 @@ function Coordinates({ setDateOnParent, setLocationOnParent }) {
   const [location, setLocation] = useState(undefined);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const saveDate = (date: Date) => {
-    setDate(date);
-    setDateOnParent(date);
+  const saveDate = (value: object) => {
+    let newDate = new Date(value.dateString);
+    newDate.setHours(hours);
+    newDate;setMinutes(minutes);
+    setDate(newDate);
+    setDateOnParent(newDate);
   };
 
   const saveHours = (hours: number) => {
     setHours(hours);
     date.setHours(hours);
-    saveDate(date);
+    date.setMinutes(minutes);
+    setDate(date);
+    setDateOnParent(date);
   };
 
   const saveMinutes = (minutes: number) => {
     setMinutes(minutes);
+    date.setHours(hours);
     date.setMinutes(minutes);
-    saveDate(date);
+    setDate(date);
+    setDateOnParent(date);
   };
 
   const saveLocation = (location: Location) => {

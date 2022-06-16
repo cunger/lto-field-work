@@ -31,6 +31,7 @@ function BeachClean({ navigation }) {
     // setDate(new Date());
     // setLocation(undefined);
     setItems({});
+    setAdditionalNotes('');
   };
 
   const openSigning = () => {

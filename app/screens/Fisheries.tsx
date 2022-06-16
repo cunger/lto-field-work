@@ -29,13 +29,13 @@ function Fisheries({ navigation }) {
   const [item, setItem] = useState(new Catch(date, location));
   const [isNoCatch, setIsNoCatch] = useState(false);
   const [isSchoolOfFish, setIsSchoolOfFish] = useState(false);
+  const [isMinMaxSpecies, setIsMinMaxSpecies] = useState(false);
   const [photoNames, setPhotoNames] = useState([]);
   const [signatureVisible, setSignatureVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [hideOtherMethod, setHideOtherMethod] = useState(true);
 
   // Species-specific fields get visible only once you select that species.
-  const [hideWeight, setHideWeight] = useState(true);
   const [hideForkLength, setHideForkLength] = useState(true);
   const [hideTailLength, setHideTailLength] = useState(true);
   const [hideHeadLength, setHideHeadLength] = useState(true);
@@ -43,9 +43,8 @@ function Fisheries({ navigation }) {
   const [hidePrecaudalLength, setHidePrecaudalLength] = useState(true);
   const [hideCarapaceLength, setHideCarapaceLength] = useState(true);
   const [hideCarapaceWidth, setHideCarapaceWidth] = useState(true);
-  const [hideWingspan, setHideWingspan] = useState(true);
+  const [hideWingspan, setHideDiskWidth] = useState(true);
   const hideAllSpeciesSpecificFields = () => {
-    setHideWeight(true);
     setHideForkLength(true);
     setHideTailLength(true);
     setHideHeadLength(true);
@@ -53,7 +52,7 @@ function Fisheries({ navigation }) {
     setHidePrecaudalLength(true);
     setHideCarapaceWidth(true);
     setHideCarapaceLength(true);
-    setHideWingspan(true);
+    setHideDiskWidth(true);
   };
 
   const update = (fields) => {
@@ -81,6 +80,7 @@ function Fisheries({ navigation }) {
     setPhotoNames([]);
     hideAllSpeciesSpecificFields();
     setIsSchoolOfFish(false);
+    setIsMinMaxSpecies(false);
   };
 
   const openSigning = () => {
@@ -128,7 +128,7 @@ function Fisheries({ navigation }) {
             label='Which method?'
             value={item.method}
             type={Method}
-            updateAction={(value) => {
+            updateAction={(value: string) => {
               setHideOtherMethod(value !== Method.Other);
               update({ method: value });
             }}
@@ -137,13 +137,13 @@ function Fisheries({ navigation }) {
             label='From where?'
             value={item.base}
             type={Base}
-            updateAction={(value) => update({ base: value })}
+            updateAction={(value: string) => update({ base: value })}
           />
         </View>
         <TextField
           label='Please describe method:'
           value={item.other_method}
-          updateAction={(value) => update({ other_method: value })}
+          updateAction={(value: string) => update({ other_method: value })}
           hide={hideOtherMethod}
         />
       </View>
@@ -198,24 +198,22 @@ function Fisheries({ navigation }) {
             label='Which sex?'
             value={item.sex}
             type={Sex}
-            updateAction={(value) => update({ sex: value })}
+            updateAction={(value: string) => update({ sex: value })}
           />
           <SelectField
             label='Which species?'
             value={item.species}
             type={Species}
-            updateAction={(value) => {
+            updateAction={(value: string) => {
               update({ species: value });
               hideAllSpeciesSpecificFields();
+              setIsMinMaxSpecies(false);
               if (value == Species.TeleostFish) {
                 setHideHeadLength(false);
                 setHideHeadWidth(false);
-                setHidePrecaudalLength(false);
+                setIsMinMaxSpecies(true);
               } else
               if (value == Species.GameFish) {
-                setHideWeight(false);
-                setHideHeadLength(false);
-                setHideHeadWidth(false);
                 setHideForkLength(false);
                 setHidePrecaudalLength(false);
               } else
@@ -225,15 +223,15 @@ function Fisheries({ navigation }) {
               } else
               if (value == Species.Ray) {
                 setHidePrecaudalLength(false);
-                setHideWingspan(false);
+                setHideDiskWidth(false);
               } else
-              if (value == Species.Cephalopod) {
-                setHideHeadLength(false);
-              } else
-              if (value == Species.Crustacean) {
+              if (value == Species.Crayfish) {
                 setHideCarapaceLength(false);
-                setHideCarapaceWidth(false);
                 setHideTailLength(false);
+                setIsMinMaxSpecies(true);
+              } else
+              if (value == Species.Crab) {
+                setHideCarapaceWidth(false);
               }
             }}
           />
@@ -242,11 +240,11 @@ function Fisheries({ navigation }) {
         <TextField
           label='Common name'
           value={item.common_name}
-          updateAction={(value) => update({ common_name: value })}
+          updateAction={(value: string) => update({ common_name: value })}
         />
 
         {
-          isSchoolOfFish &&
+          isSchoolOfFish && isMinMaxSpecies &&
           <View>
             <Text style={tailwind('my-2 text-blue')}>
               Please specify all properties both for the smallest and the biggest of the caught fish.
@@ -299,7 +297,7 @@ function Fisheries({ navigation }) {
               hide={hideCarapaceLength}
             />
             <MinMaxTextField
-              label="Carapace width (cm) if it's a crab"
+              label="Carapace width (cm)"
               minValue={item.carapace_width.min}
               maxValue={item.carapace_width.max}
               minUpdateAction={(value: string) => updateDimension('carapace_width', 'min', value)}
@@ -311,29 +309,29 @@ function Fisheries({ navigation }) {
               minValue={item.tail_length.min}
               maxValue={item.tail_length.max}
               minUpdateAction={(value: string) => updateDimension('tail_length', 'min', value)}
-              maxUpdateAction={(value: string) => updateDimension('_taillength', 'max', value)}
+              maxUpdateAction={(value: string) => updateDimension('tail_length', 'max', value)}
               hide={hideTailLength}
             />
             <MinMaxTextField
-              label='Wingspan (cm)'
-              minValue={item.wingspan.min}
-              maxValue={item.wingspan.max}
-              minUpdateAction={(value: string) => updateDimension('wingspan', 'min', value)}
-              maxUpdateAction={(value: string) => updateDimension('wingspan', 'max', value)}
+              label='Disk width (cm)'
+              minValue={item.disk_width.min}
+              maxValue={item.disk_width.max}
+              minUpdateAction={(value: string) => updateDimension('disk_width', 'min', value)}
+              maxUpdateAction={(value: string) => updateDimension('disk_width', 'max', value)}
               hide={hideWingspan}
-            />
-            <MinMaxTextField
-              label='Weight (g)'
-              minValue={item.weight.min}
-              maxValue={item.weight.max}
-              minUpdateAction={(value: string) => updateDimension('weight', 'min', value)}
-              maxUpdateAction={(value: string) => updateDimension('weight', 'max', value)}
-              hide={hideWeight}
             />
           </View>
         }
+        {
+          isSchoolOfFish && !isMinMaxSpecies &&
+          <View>
+            <Text style={tailwind('my-2 text-blue')}>
+              If they have different sizes, please log them separately.
+            </Text>
+          </View>
+        }
         { 
-          !isSchoolOfFish &&
+          (!isSchoolOfFish || !isMinMaxSpecies) &&
           <View>
             <TextField
               label='Total length (cm)'
@@ -391,18 +389,11 @@ function Fisheries({ navigation }) {
               hide={hideTailLength}
             />
             <TextField
-              label='Wingspan (cm)'
-              value={item.wingspan.total}
-              updateAction={(value: string) => updateDimension('wingspan', 'total', value)}
+              label='Disk width (cm)'
+              value={item.disk_width.total}
+              updateAction={(value: string) => updateDimension('disk_width', 'total', value)}
               keyboardType='numeric'
               hide={hideWingspan}
-            />
-            <TextField
-              label='Weight (g)'
-              value={item.weight.total}
-              updateAction={(value: string) => updateDimension('weight', 'total', value)}
-              keyboardType='numeric'
-              hide={hideWeight}
             />
           </View>
         }

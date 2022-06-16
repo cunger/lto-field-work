@@ -3,8 +3,9 @@ enum Species {
   GameFish = 'Game fish',
   Shark = 'Shark',
   Ray = 'Ray',
+  Crayfish = 'Crayfish',
+  Crab = 'Crab',
   Cephalopod = 'Cephalopod',
-  Crustacean = 'Crustacean',
   Other = 'Other',
 };
 
