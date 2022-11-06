@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import InputSpinner from 'react-native-input-spinner'; // https://github.com/marcocesarato/react-native-input-spinner
 import BouncyCheckbox from 'react-native-bouncy-checkbox'; // https://github.com/WrathChaos/react-native-bouncy-checkbox
 import Catch from '../model/fisheries/Catch';
@@ -77,6 +77,15 @@ function Fisheries({ navigation }) {
     // You probably want to log several catches, so we're not resetting
     // the coordinates, base, and method.
     setItem(new Catch(date, location, item.base, item.method, item.other_method));
+    setPhotoNames([]);
+    hideAllSpeciesSpecificFields();
+    setIsSchoolOfFish(false);
+    setIsMinMaxSpecies(false);
+  };
+
+  const resetAllFields = () => {
+    // This is a hard reset of all fields.
+    setItem(new Catch(new Date(), null));
     setPhotoNames([]);
     hideAllSpeciesSpecificFields();
     setIsSchoolOfFish(false);
@@ -426,7 +435,7 @@ function Fisheries({ navigation }) {
         />
       </View>
 
-      <SubmitButtons saveAction={openSigning} discardAction={() => setConfirmVisible(true)} />
+      <SubmitButtons saveAction={openSigning} discardAction={() => setConfirmVisible(true)} resetAction={() => resetAllFields()} />
       <Signing visible={signatureVisible} items={[item]} closeAction={closeSigning} />
       <ConfirmPrompt visible={confirmVisible}
         actionPhrase='discard this data entry'

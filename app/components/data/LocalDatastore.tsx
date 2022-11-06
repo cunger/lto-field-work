@@ -44,7 +44,7 @@ export default class Datastore {
 
   static async numberOfUnsynced() {
     const items = await this.items();
-    return items.length;
+    return items.filter(item => Item.signed(item) && !item.synced).length;
   }
 
   static async saveInStatistics(item: Item) {
@@ -125,7 +125,7 @@ export default class Datastore {
 
   static async syncAll() {
     try {
-      const signed: Item[] = [];
+      const items: Item[] = [];
       const keys: string[] = await AsyncStorage.getAllKeys();
 
       for (let key of keys) {
@@ -134,22 +134,15 @@ export default class Datastore {
         const value = await AsyncStorage.getItem(key);
         const item = JSON.parse(value);
 
-        // Unsigned items are simply removed. 
-        // (For testing purposes we pretend that we uploaded them.)
-        if (!item.signature || !item.signature.token) {
-          await AsyncStorage.removeItem(item.id);
-        }
-      
-        // Signed items are uploaded, and removed if the upload was successful.
-        // (They're part of the analytics, so no reason to keep all details.) 
-        if (item.signature && item.signature.token) {
-          signed.push(item);
-        }
+        // Signed items are uploaded.
+        // Unsigned items are ignored. 
+        if (item.isSigned()) items.push(item);
       }
 
-      const uploaded = await upload(signed); // [ <id>, <id>, ... ]
-      for (let id of uploaded) {
-        await AsyncStorage.removeItem(id);
+      const uploaded = await upload(items);
+      for (let item of uploaded) {
+        item.synced = true;
+        await this.save(item);
       }
     } catch (error) {
       console.log(error);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { InputGroup } from './Input';
+import { InputField, InputGroup } from './Input';
 import TextField from './TextField';
 import * as ImagePicker from 'expo-image-picker';
 import { useTailwind } from 'tailwind-rn';
@@ -32,12 +32,12 @@ function Photos({ flashMessage, photoNames, photosNote, addPhoto, setPhotosNote 
     try {
       const result = await action({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
+        allowsEditing: false,
         base64: true,
         quality: 1,
       });
 
-      addPhoto(result);
+      await addPhoto(result);
     } catch (error) {
       showMessage({
         message: `Failed to access ${source}.`,
@@ -48,24 +48,21 @@ function Photos({ flashMessage, photoNames, photosNote, addPhoto, setPhotosNote 
     }
   };
 
-  // <InputGroup text='Pictures' />
-  //   {flash()}
-  //   {photoList()}
-  // <InputField
-  //   text='Take photo with camera'
-  //   textColor={'#cccccc'}
-  //   action={() => pickPhoto(ImagePicker.launchCameraAsync, 'camera')} />
-  // <InputField
-  //   text='Pick photo from gallery'
-  //   textColor={'#cccccc'}
-  //   action={() => pickPhoto(ImagePicker.launchImageLibraryAsync, 'gallery')} />
-
   return (
     <View>
       <InputGroup text='Pictures' />
-      { flash() }
+        {flash()}
+        {photoList()}
+      <InputField
+        text='Take photo with camera'
+        textColor={'#cccccc'}
+        action={() => pickPhoto(ImagePicker.launchCameraAsync, 'camera')} />
+      <InputField
+        text='Pick photo from gallery'
+        textColor={'#cccccc'}
+        action={() => pickPhoto(ImagePicker.launchImageLibraryAsync, 'gallery')} />
       <TextField
-        label='Describe which picture(s) on whose camera:'
+        label='Or describe which picture(s) on whose camera:'
         numberOfLines={4}
         value={photosNote}
         updateAction={setPhotosNote}

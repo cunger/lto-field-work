@@ -3,6 +3,7 @@ import NetInfo from '@react-native-community/netinfo'; // https://github.com/rea
 import Item from '../../model/Item';
 import Image from '../../model/Image';
 import * as FileSystem from 'expo-file-system';
+import axios from 'axios';
 
 const BASE_URL = 'https://lto-back-office.netlify.app/.netlify/functions/api';
 
@@ -23,20 +24,19 @@ export default async function upload(items: Item[]) {
   // If there is a connection, upload data.
   
   // (If it's not signed, just pretend it was uploaded for testing and demo purposes.)
-  items = items.filter(item => item.signature && item.signature.token);
+  items = items.filter(item => Item.signed(item));
 
   // Upload images (if there are any).
-  // TODO Include again once it works.
-  // for (let item of items) {
-  //   if (item.photos) {
-  //     await uploadPhotos(item.photos);
-  //   }
-  // }
+  for (let item of items) {
+    if (item.photos) {
+      await uploadPhotos(item.photos);
+    }
+  }
 
   // Upload data.
   
   // (But only if its photos have been uploaded successfully.)
-  // items = items.filter(item => item.photos.every(photo => photo.link));
+  items = items.filter(item => item.photos.every(photo => photo.link));
 
   let uploaded = [];
   let errors = [];
@@ -52,6 +52,7 @@ export default async function upload(items: Item[]) {
         },
         body: JSON.stringify({ items: items })
       });
+
       const responseData = await response.json(); // { uploaded: [], errors: [] }
 
       uploaded = responseData.uploaded || [];
@@ -71,7 +72,7 @@ export default async function upload(items: Item[]) {
     }
   }
 
-  return uploaded;
+  return items.filter(item => uploaded.indexOf(item.id) >= 0);
 }
 
 async function uploadPhotos(images: Image[]) {
@@ -82,13 +83,13 @@ async function uploadPhotos(images: Image[]) {
 
     try {
       const formdata = new FormData();
+      // const file = await toFile(image.location, image.filename, image.mimetype);
+      // formdata.append('file', file);
       formdata.append('file', {
         uri: image.location,
         name: image.filename,
         type: image.mimetype
       });
-
-      console.log(formdata);
 
       const response = await fetch(`${BASE_URL}/photo`, {
         method: 'POST',
@@ -109,6 +110,7 @@ async function uploadPhotos(images: Image[]) {
 
         await FileSystem.deleteAsync(image.location);
       } else {
+        console.log('Response status: ' + response.status);
         errors = [...errors, `Response status: ${response.status}`];
       }
     } catch (error) {
@@ -125,4 +127,10 @@ async function uploadPhotos(images: Image[]) {
       });
     }
   }
+}
+
+async function toFile(uri: string, filename: string, mimeType: string) {
+  const file = await fetch(uri);
+  const blob = await file.blob();
+  return new File([blob], filename, { type: mimeType });
 }
