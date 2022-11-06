@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import ScrollContainer from '../components/ScrollContainer';
 import Heading from '../components/Heading';
 import ListItem from '../components/ListItem';
@@ -10,15 +10,18 @@ import GlobalContext from '../components/context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
 import Item from '../model/Item';
 
-function Upload() {
+function Upload({ navigation }) {
   const tailwind = useTailwind();
   
   const [unsyncedItems, setUnsyncedItems] = useState<Item[]>([]);
+  const [unsignedItems, setUnsignedItems] = useState<Item[]>([]);
   const [confirmVisible, setConfirmVisible] = useState(false);
 
   async function loadData() {
     GlobalContext.load();
-    setUnsyncedItems(await Datastore.items());
+    const items = await Datastore.items();
+    setUnsyncedItems(items.filter(item => Item.signed(item) && !item.synced));
+    setUnsignedItems(items.filter(item => !Item.signed(item)));
   }
 
   useFocusEffect(
@@ -38,6 +41,33 @@ function Upload() {
     await loadData();
   };
 
+  // TODO extra inspect screens?
+  const openItem = (item: Item) => {
+    // if (item.type == 'Catch') { 
+    //   navigation.navigate('Data Entry', { 
+    //     screen: 'Fisheries', 
+    //     params: {
+    //       item,
+    //       date: item.date,
+    //       location: item.location,
+    //       // TODO photos
+    //     }
+    //   });
+    // }
+    // if (item.type == 'Trash') { 
+    //   navigation.navigate('Data Entry', { 
+    //     screen: 'BeachClean', 
+    //     params: {
+    //       items: [item],
+    //       date: item.date,
+    //       location: item.location,
+    //       additionalNotes: item.additionalNotes
+    //     } 
+    //   });
+    // }
+  };
+
+  // TODO Bundle beachclean items per date, location and note?
   return (
     <ScrollContainer>
       <Heading title='Local data' actionTitle='Upload' actionOnPress={upload} />
@@ -53,8 +83,31 @@ function Upload() {
         <View>
           <Text style={tailwind('mx-4 my-2')}>The following data has not yet been uploaded:</Text>
           
-          <ListItem><Text>{` 🗑️ ${unsyncedItems.filter(item => item.type == 'Trash').length} trash items`}</Text></ListItem>
-          <ListItem><Text>{` 🎣 ${unsyncedItems.filter(item => item.type == 'Catch').length} catch items`}</Text></ListItem>
+          {unsyncedItems.map((item, index) => (
+            <ListItem key={index}>
+              <View style={tailwind('flex flex-row items-center')}>
+                <TouchableOpacity onPress={() => openItem(item)} style={tailwind('w-10 px-2 py-2 border border-gray-300 rounded-md bg-white')}>
+                  <Text>{Item.logoFor(item)}</Text>
+                </TouchableOpacity>
+                <Text> {Item.prettyPrint(item)}</Text>
+                <Text style={tailwind('text-gray-900')}> {Item.printDetails(item)}</Text>
+              </View>
+            </ListItem>          
+          ))}
+
+          <Text style={tailwind('mx-4 my-2')}>The following entries are unsigned (and will not be uploaded):</Text>
+
+          {unsignedItems.map((item, index) => (
+            <ListItem key={index}>
+              <View style={tailwind('flex flex-row items-center')}>
+                <TouchableOpacity onPress={() => openItem(item)} style={tailwind('w-10 px-2 py-2 border border-gray-300 rounded-md bg-white')}>
+                  <Text>{Item.logoFor(item)}</Text>
+                </TouchableOpacity>
+                <Text> {Item.prettyPrint(item)}</Text>
+                <Text style={tailwind('text-gray-900')}> {Item.printDetails(item)}</Text>
+              </View>
+            </ListItem>          
+          ))}
         </View>
       }
 
