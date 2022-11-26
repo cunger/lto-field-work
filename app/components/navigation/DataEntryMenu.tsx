@@ -12,11 +12,11 @@ const Drawer = createDrawerNavigator();
 function DataEntryMenu() {
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name='Data entry' component={DataEntry} />
-      <Drawer.Screen name='🗑️ Beach clean' component={BeachClean} />
-      <Drawer.Screen name='🎣 Fisheries' component={Fisheries} />
-      <Drawer.Screen name='🐋 Humpback whale' component={HumpbackWhale} />
-      <Drawer.Screen name='🐢 Turtle' component={MantaAndCo} />
+      <Drawer.Screen name='DataEntry' component={DataEntry} options={{ title: 'Data entry' }} />
+      <Drawer.Screen name='BeachClean' component={BeachClean} options={{ title: '🗑️ Beach clean' }} />
+      <Drawer.Screen name='Fisheries' component={Fisheries} options={{ title: '🎣 Fisheries' }} />
+      <Drawer.Screen name='HumpbackWhale' component={HumpbackWhale} options={{ title: '🐋 Humpback whale' }} />
+      <Drawer.Screen name='Turtle' component={MantaAndCo} options={{ title: '🐢 Turtle' }} />
     </Drawer.Navigator>
   );
 }

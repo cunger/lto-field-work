@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import InputSpinner from 'react-native-input-spinner'; // https://github.com/marcocesarato/react-native-input-spinner
 import BouncyCheckbox from 'react-native-bouncy-checkbox'; // https://github.com/WrathChaos/react-native-bouncy-checkbox
 import Catch from '../model/fisheries/Catch';
@@ -21,12 +21,12 @@ import Signing from '../components/forms/Signing';
 import ConfirmPrompt from '../components/ConfirmPrompt';
 import { useTailwind } from 'tailwind-rn';
 
-function Fisheries({ navigation }) {
+function Fisheries({ navigation, route }) {
   const tailwind = useTailwind();
 
-  const [date, setDate] = useState(new Date());
-  const [location, setLocation] = useState(null);
-  const [item, setItem] = useState(new Catch(date, location));
+  const [date, setDate] = useState(route?.params?.date || new Date());
+  const [location, setLocation] = useState(route?.params?.location || null);
+  const [item, setItem] = useState(route?.params?.item || new Catch(date, location));
   const [isNoCatch, setIsNoCatch] = useState(false);
   const [isSchoolOfFish, setIsSchoolOfFish] = useState(false);
   const [isMinMaxSpecies, setIsMinMaxSpecies] = useState(false);
@@ -107,7 +107,7 @@ function Fisheries({ navigation }) {
 
   const discard = () => {
     reset();
-    navigation.navigate('Data Entry', { screen: 'Data entry' });
+    navigation.navigate('DataEntry', { screen: 'DataEntry' });
   };
 
   const photoFlashMessage = () => {

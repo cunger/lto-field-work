@@ -308,16 +308,22 @@
 			"color": "rgb(255 255 255 / var(--tw-text-opacity))"
 		}
 	},
-	"text-gray-900": {
+	"text-gray-500": {
 		"style": {
 			"--tw-text-opacity": 1,
-			"color": "rgb(17 24 39 / var(--tw-text-opacity))"
+			"color": "rgb(107 114 128 / var(--tw-text-opacity))"
 		}
 	},
 	"text-gray-700": {
 		"style": {
 			"--tw-text-opacity": 1,
 			"color": "rgb(55 65 81 / var(--tw-text-opacity))"
+		}
+	},
+	"text-gray-900": {
+		"style": {
+			"--tw-text-opacity": 1,
+			"color": "rgb(17 24 39 / var(--tw-text-opacity))"
 		}
 	},
 	"text-black": {

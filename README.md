@@ -11,7 +11,7 @@ $ npm run build:tailwind
 ## Test
 
 ```
-$ expo start
+$ npx expo start
 ```
 
 ## Deploy
