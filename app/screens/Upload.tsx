@@ -13,15 +13,15 @@ import Item from '../model/Item';
 function Upload({ navigation }) {
   const tailwind = useTailwind();
   
-  const [unsyncedItems, setUnsyncedItems] = useState<Item[]>([]);
-  const [unsignedItems, setUnsignedItems] = useState<Item[]>([]);
+  const [signedUnsyncedItems, setSignedUnsyncedItems] = useState<Item[]>([]);
+  const [unsignedUnsyncedItems, setUnsignedUnsyncedItems] = useState<Item[]>([]);
   const [confirmVisible, setConfirmVisible] = useState(false);
 
   async function loadData() {
     GlobalContext.load();
     const items = await Datastore.items();
-    setUnsyncedItems(items.filter(item => Item.signed(item) && !item.synced));
-    setUnsignedItems(items.filter(item => !Item.signed(item)));
+    setSignedUnsyncedItems(items.filter(item => Item.signed(item) && !item.synced));
+    setUnsignedUnsyncedItems(items.filter(item => !Item.signed(item) && !item.synced));
   }
 
   useFocusEffect(
@@ -41,77 +41,87 @@ function Upload({ navigation }) {
     await loadData();
   };
 
-  // TODO extra inspect screens?
+  // TODO Bundle beachclean items per date, location and note?
   const openItem = (item: Item) => {
-    // if (item.type == 'Catch') { 
-    //   navigation.navigate('Data Entry', { 
-    //     screen: 'Fisheries', 
-    //     params: {
-    //       item,
-    //       date: item.date,
-    //       location: item.location,
-    //       // TODO photos
-    //     }
-    //   });
-    // }
-    // if (item.type == 'Trash') { 
-    //   navigation.navigate('Data Entry', { 
-    //     screen: 'BeachClean', 
-    //     params: {
-    //       items: [item],
-    //       date: item.date,
-    //       location: item.location,
-    //       additionalNotes: item.additionalNotes
-    //     } 
-    //   });
-    // }
+    console.log(item);
+    if (item.type == 'Catch') { 
+      navigation.navigate('DataEntry', { 
+        screen: 'Fisheries', 
+        params: {
+          item,
+          date: new Date(item.date),
+          location: item.location,
+          // TODO photos
+        }
+      });
+    }
+    if (item.type == 'Trash') { 
+      navigation.navigate('DataEntry', { 
+        screen: 'BeachClean', 
+        params: {
+          items: { [item.category]: item.quantity },
+          date: new Date(item.date),
+          location: item.location,
+          additionalNotes: item.additionalNotes
+        } 
+      });
+    }
   };
 
-  // TODO Bundle beachclean items per date, location and note?
   return (
     <ScrollContainer>
       <Heading title='Local data' actionTitle='Upload' actionOnPress={upload} />
-
       {
-        unsyncedItems.length === 0 &&
+        signedUnsyncedItems.length === 0 &&
         <Text style={tailwind('m-2')}>
           All data has been uploaded. Way to go!
         </Text>
       }
       {
-        unsyncedItems.length > 0 && 
+        signedUnsyncedItems.length > 0 &&
         <View>
           <Text style={tailwind('mx-4 my-2')}>The following data has not yet been uploaded:</Text>
           
-          {unsyncedItems.map((item, index) => (
+          {signedUnsyncedItems.map((item, index) => (
             <ListItem key={index}>
               <View style={tailwind('flex flex-row items-center')}>
                 <TouchableOpacity onPress={() => openItem(item)} style={tailwind('w-10 px-2 py-2 border border-gray-300 rounded-md bg-white')}>
                   <Text>{Item.logoFor(item)}</Text>
                 </TouchableOpacity>
                 <Text> {Item.prettyPrint(item)}</Text>
-                <Text style={tailwind('text-gray-900')}> {Item.printDetails(item)}</Text>
+                <Text style={tailwind('text-gray-500')}> {Item.printDetails(item)}</Text>
               </View>
             </ListItem>          
           ))}
+        </View>
+      }
+      <Heading title='Unsigned data' />
+      {
+        unsignedUnsyncedItems.length === 0 &&
+        <Text style={tailwind('m-2')}>
+          All data has been signed. Awesome!
+        </Text>
+      }
+      {
+        unsignedUnsyncedItems.length > 0 &&
+        <View>
+          <Text style={tailwind('mx-4 my-2')}>The following entries are unsigned (and will not be uploaded unless you sign them):</Text>
 
-          <Text style={tailwind('mx-4 my-2')}>The following entries are unsigned (and will not be uploaded):</Text>
-
-          {unsignedItems.map((item, index) => (
+          {unsignedUnsyncedItems.map((item, index) => (
             <ListItem key={index}>
               <View style={tailwind('flex flex-row items-center')}>
                 <TouchableOpacity onPress={() => openItem(item)} style={tailwind('w-10 px-2 py-2 border border-gray-300 rounded-md bg-white')}>
                   <Text>{Item.logoFor(item)}</Text>
                 </TouchableOpacity>
                 <Text> {Item.prettyPrint(item)}</Text>
-                <Text style={tailwind('text-gray-900')}> {Item.printDetails(item)}</Text>
+                <Text style={tailwind('text-gray-500')}> {Item.printDetails(item)}</Text>
               </View>
             </ListItem>          
           ))}
         </View>
       }
 
-      <Heading title='Storage' actionTitle='🔥 Clear' actionOnPress={() => {
+      <Heading title='App storage' actionTitle='🔥 Clear' actionOnPress={() => {
         setConfirmVisible(true);
         return Promise.resolve();
       }} />

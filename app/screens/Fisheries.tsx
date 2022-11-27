@@ -21,12 +21,12 @@ import Signing from '../components/forms/Signing';
 import ConfirmPrompt from '../components/ConfirmPrompt';
 import { useTailwind } from 'tailwind-rn';
 
-function Fisheries({ navigation }) {
+function Fisheries({ navigation, route }) {
   const tailwind = useTailwind();
 
-  const [date, setDate] = useState(new Date());
-  const [location, setLocation] = useState(null);
-  const [item, setItem] = useState(new Catch(date, location));
+  const [date, setDate] = useState(route?.params?.date || new Date());
+  const [location, setLocation] = useState(route?.params?.location || null);
+  const [item, setItem] = useState(route?.params?.item || new Catch(date, location));
   const [isNoCatch, setIsNoCatch] = useState(false);
   const [isSchoolOfFish, setIsSchoolOfFish] = useState(false);
   const [isMinMaxSpecies, setIsMinMaxSpecies] = useState(false);
@@ -54,6 +54,9 @@ function Fisheries({ navigation }) {
     setHideCarapaceLength(true);
     setHideDiskWidth(true);
   };
+
+  console.log(date);
+  console.log(location);
 
   const update = (fields) => {
     setItem({ ...item, ...fields });
@@ -107,7 +110,7 @@ function Fisheries({ navigation }) {
 
   const discard = () => {
     reset();
-    navigation.navigate('Data Entry', { screen: 'Data entry' });
+    navigation.navigate('DataEntry', { screen: 'DataEntry' });
   };
 
   const photoFlashMessage = () => {
@@ -126,6 +129,8 @@ function Fisheries({ navigation }) {
   return (
     <ScrollContainer>
       <Coordinates
+        inputDate={date}
+        inputLocation={location}
         setDateOnParent={setDate}
         setLocationOnParent={setLocation}
       />

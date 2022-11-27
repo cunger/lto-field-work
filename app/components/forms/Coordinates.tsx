@@ -6,13 +6,13 @@ import SelectField from './SelectField';
 import Location from '../../model/Location';
 import { useTailwind } from 'tailwind-rn';
 
-function Coordinates({ setDateOnParent, setLocationOnParent }) {
+function Coordinates({ inputDate, inputLocation, setDateOnParent, setLocationOnParent }) {
   const tailwind = useTailwind();
   
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(inputDate);
   const [hours, setHours] = useState(date.getHours());
   const [minutes, setMinutes] = useState(date.getMinutes());
-  const [location, setLocation] = useState(undefined);
+  const [location, setLocation] = useState(inputLocation);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const saveDate = (value: object) => {

@@ -7,6 +7,7 @@ import Datastore from '../components/data/LocalDatastore';
 import GlobalContext from '../components/context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
 import ListItem from '../components/ListItem';
+import { print } from '../components/utils/PrettyPrinter';
 
 function Dashboard() {
   const tailwind = useTailwind();
@@ -28,21 +29,6 @@ function Dashboard() {
       return () => {};
     }, [])
   );
-
-  const print = (count: number, noun: string) => {
-    if (noun == 'undefined') noun = 'other';
-
-    const plural = (noun: string) => {
-      if (noun.endsWith('cm')) return noun;
-      if (noun.endsWith('fish')) return noun;
-      if (noun.endsWith('gear')) return noun;
-      return `${noun}s`;
-    };
-
-    return (count == 1)
-      ? `${count} ${noun}`
-      : `${count} ${plural(noun)}`;
-  };
 
   return (
     <ScrollContainer>
@@ -69,8 +55,8 @@ function Dashboard() {
             📍 {lastActiveLocation}
           </Text>
 
-          <Heading title='Collected data' actionTitle='' actionOnPress={() => {}} />
-          <Text style={tailwind('m-2')}>🎣 Catch:</Text>
+          <Heading title='Summary of collected data' actionTitle='' actionOnPress={() => {}} />
+          <Text style={tailwind('m-2')}>🎣 Catches:</Text>
           {Object.entries(statistics.Catch || {}).map((entry, index) => (
             <ListItem key={index}><Text>{` ️ ${print(entry[1], entry[0])}`}</Text></ListItem>
           ))}

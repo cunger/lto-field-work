@@ -13,12 +13,12 @@ import ConfirmPrompt from '../components/ConfirmPrompt';
 import { showMessage } from 'react-native-flash-message';
 import { useTailwind } from 'tailwind-rn';
 
-function BeachClean({ navigation }) {
+function BeachClean({ navigation, route }) {
   const tailwind = useTailwind();
-  const [date, setDate] = useState(new Date());
-  const [location, setLocation] = useState(undefined);
-  const [items, setItems] = useState({});
-  const [additionalNotes, setAdditionalNotes] = useState('');
+  const [date, setDate] = useState(route?.params?.date || new Date());
+  const [location, setLocation] = useState(route?.params?.location);
+  const [items, setItems] = useState(route?.params?.items || {});
+  const [additionalNotes, setAdditionalNotes] = useState(route?.params?.additionalNotes || '');
   const [signingVisible, setSigningVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
 
@@ -69,6 +69,8 @@ function BeachClean({ navigation }) {
   return (
     <ScrollContainer>
       <Coordinates
+        inputDate={date}
+        inputLocation={location}
         setDateOnParent={setDate}
         setLocationOnParent={setLocation}
       />

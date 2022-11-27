@@ -45,7 +45,7 @@ const MainMenu = () => {
           }}
         />
         <Tab.Screen
-          name='Data Entry'
+          name='DataEntry'
           component={DataEntryMenu}
           options={{
             tabBarLabel: 'Data Entry',
@@ -56,7 +56,7 @@ const MainMenu = () => {
           }}
         />
         <Tab.Screen
-          name='Upload data'
+          name='Upload'
           component={Upload}
           options={{
             tabBarLabel: 'Upload',
