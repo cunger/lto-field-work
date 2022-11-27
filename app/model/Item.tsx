@@ -3,6 +3,7 @@ import Signature from './Signature';
 import Location from './Location';
 import Image from './Image';
 import { print } from '../components/utils/PrettyPrinter';
+
 export default class Item {
   id: string;
   type: string;

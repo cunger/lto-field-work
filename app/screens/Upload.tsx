@@ -41,8 +41,8 @@ function Upload({ navigation }) {
     await loadData();
   };
 
+  // TODO Bundle beachclean items per date, location and note?
   const openItem = (item: Item) => {
-    console.log(item);
     if (item.type == 'Catch') { 
       navigation.navigate('DataEntry', { 
         screen: 'Fisheries', 
@@ -67,7 +67,6 @@ function Upload({ navigation }) {
     }
   };
 
-  // TODO Bundle beachclean items per date, time, location and note?
   return (
     <ScrollContainer>
       <Heading title='Local data' actionTitle='Upload' actionOnPress={upload} />

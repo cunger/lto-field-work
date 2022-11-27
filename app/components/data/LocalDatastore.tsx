@@ -108,7 +108,7 @@ export default class Datastore {
     try {
       const location = `${FileSystem.documentDirectory}${filename}`;
 
-      await FileSystem.writeAsStringAsync(location, photo.base64, {
+      await FileSystem.writeAsStringAsync(location, photo.assets[0].base64, {
         encoding: FileSystem.EncodingType.Base64
       });
 
@@ -136,7 +136,7 @@ export default class Datastore {
 
         // Signed items are uploaded.
         // Unsigned items are ignored. 
-        if (item.isSigned()) items.push(item);
+        if (Item.signed(item)) items.push(item);
       }
 
       const uploaded = await upload(items);
