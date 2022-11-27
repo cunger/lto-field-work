@@ -55,9 +55,6 @@ function Fisheries({ navigation, route }) {
     setHideDiskWidth(true);
   };
 
-  console.log(date);
-  console.log(location);
-
   const update = (fields) => {
     setItem({ ...item, ...fields });
   };
@@ -416,7 +413,7 @@ function Fisheries({ navigation, route }) {
       <Photos
         flashMessage={photoFlashMessage}
         addPhoto={async (photo) => {
-          const uriparts = photo.uri.split('.');
+          const uriparts = photo.assets[0].uri.split('.');
           const filetype = uriparts[uriparts.length - 1];
           const name = photoFileName(filetype).replaceAll(' ', '-');
           const location = await Datastore.savePhoto(photo, name);

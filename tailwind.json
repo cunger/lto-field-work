@@ -320,10 +320,10 @@
 			"color": "rgb(55 65 81 / var(--tw-text-opacity))"
 		}
 	},
-	"text-black": {
+	"text-gray-900": {
 		"style": {
 			"--tw-text-opacity": 1,
-			"color": "rgb(0 0 0 / var(--tw-text-opacity))"
+			"color": "rgb(17 24 39 / var(--tw-text-opacity))"
 		}
 	},
 	"text-black": {

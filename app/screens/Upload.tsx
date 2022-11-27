@@ -43,7 +43,6 @@ function Upload({ navigation }) {
 
   // TODO Bundle beachclean items per date, location and note?
   const openItem = (item: Item) => {
-    console.log(item);
     if (item.type == 'Catch') { 
       navigation.navigate('DataEntry', { 
         screen: 'Fisheries', 
