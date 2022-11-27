@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "start": "expo start --dev-client",
+    "start": "npx expo start --dev-client",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "web": "expo start --web",
-    "eject": "expo eject",
+    "web": "npx expo start --web",
+    "eject": "npx expo prebuild",
     "build:tailwind": "tailwindcss --input input.css --output tailwind.css --no-autoprefixer && tailwind-rn",
     "test": "jest --verbose --coverage",
     "coverage": "jest --verbose --coverage && open ./coverage/lcov-report/index.html"
