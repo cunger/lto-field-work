@@ -69,6 +69,8 @@ function BeachClean({ navigation, route }) {
   return (
     <ScrollContainer>
       <Coordinates
+        inputDate={date}
+        inputLocation={location}
         setDateOnParent={setDate}
         setLocationOnParent={setLocation}
       />

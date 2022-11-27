@@ -55,6 +55,9 @@ function Fisheries({ navigation, route }) {
     setHideDiskWidth(true);
   };
 
+  console.log(date);
+  console.log(location);
+
   const update = (fields) => {
     setItem({ ...item, ...fields });
   };
@@ -126,6 +129,8 @@ function Fisheries({ navigation, route }) {
   return (
     <ScrollContainer>
       <Coordinates
+        inputDate={date}
+        inputLocation={location}
         setDateOnParent={setDate}
         setLocationOnParent={setLocation}
       />

@@ -42,12 +42,13 @@ function Upload({ navigation }) {
   };
 
   const openItem = (item: Item) => {
+    console.log(item);
     if (item.type == 'Catch') { 
       navigation.navigate('DataEntry', { 
         screen: 'Fisheries', 
         params: {
           item,
-          date: item.date,
+          date: new Date(item.date),
           location: item.location,
           // TODO photos
         }
@@ -58,7 +59,7 @@ function Upload({ navigation }) {
         screen: 'BeachClean', 
         params: {
           items: { [item.category]: item.quantity },
-          date: item.date,
+          date: new Date(item.date),
           location: item.location,
           additionalNotes: item.additionalNotes
         } 
