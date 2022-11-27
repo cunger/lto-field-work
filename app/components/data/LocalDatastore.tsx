@@ -154,6 +154,22 @@ export default class Datastore {
       });
     }
   }
+
+  static async remove(items: Item[]) {
+    for (const item of items) {
+      try {
+        await AsyncStorage.removeItem(item.id);
+      } catch(error) {
+        console.log(error);
+        showMessage({
+          message: 'There was an error when deleting data.',
+          description: `${error}`,
+          type: 'warning',
+          icon: 'danger'
+        });
+      }
+    }
+  }
   
   static async clearAll() {
     try {

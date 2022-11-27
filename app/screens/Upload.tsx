@@ -15,7 +15,8 @@ function Upload({ navigation }) {
   
   const [signedUnsyncedItems, setSignedUnsyncedItems] = useState<Item[]>([]);
   const [unsignedUnsyncedItems, setUnsignedUnsyncedItems] = useState<Item[]>([]);
-  const [confirmVisible, setConfirmVisible] = useState(false);
+  const [confirmDeleteAllVisible, setConfirmDeleteAllVisible] = useState(false);
+  const [confirmDeleteUnsignedVisible, setConfirmDeleteUnsignedVisible] = useState(false);
 
   async function loadData() {
     GlobalContext.load();
@@ -33,6 +34,11 @@ function Upload({ navigation }) {
 
   const upload = async () => {
     await Datastore.syncAll();
+    await loadData();
+  };
+
+  const deleteUnsigned = async () => {
+    await Datastore.remove(unsignedUnsyncedItems);
     await loadData();
   };
 
@@ -94,11 +100,14 @@ function Upload({ navigation }) {
           ))}
         </View>
       }
-      <Heading title='Unsigned data' />
+      <Heading title='Unsigned data' actionTitle='🔥 Delete' actionOnPress={() => {
+        setConfirmDeleteUnsignedVisible(true);
+        return Promise.resolve();
+      }} />
       {
         unsignedUnsyncedItems.length === 0 &&
         <Text style={tailwind('m-2')}>
-          All data has been signed. Awesome!
+          You have no unsigned data. Looks good!
         </Text>
       }
       {
@@ -117,22 +126,28 @@ function Upload({ navigation }) {
               </View>
             </ListItem>          
           ))}
+          <ConfirmPrompt visible={confirmDeleteUnsignedVisible}
+            actionPhrase='delete all unsigned data'
+            actionExplanation='This will delete all data you collected but did not sign.'
+            actionButtonText='Delete all'
+            action={deleteUnsigned}
+            hide={() => setConfirmDeleteUnsignedVisible(false)} />
         </View>
       }
 
       <Heading title='App storage' actionTitle='🔥 Clear' actionOnPress={() => {
-        setConfirmVisible(true);
+        setConfirmDeleteAllVisible(true);
         return Promise.resolve();
       }} />
       <Text style={tailwind('m-2')}>
         Only clear the app storage if you have nothing to upload. You will really lose all (!) data.
       </Text>
-      <ConfirmPrompt visible={confirmVisible}
+      <ConfirmPrompt visible={confirmDeleteAllVisible}
         actionPhrase='clear the storage'
         actionExplanation='This will delete data that was not yet uploaded as well as your whole history.'
         actionButtonText='Delete all'
         action={clearAll}
-        hide={() => setConfirmVisible(false)} />
+        hide={() => setConfirmDeleteAllVisible(false)} />
     </ScrollContainer>
   );
 }
