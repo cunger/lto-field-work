@@ -48,7 +48,16 @@ function BeachClean({ navigation, route }) {
   const trashItems = () => {
     let trashItems = [];
     for (let [category, quantity] of Object.entries(items)) {
-      trashItems.push(new Trash(date, location, category, quantity, additionalNotes));
+      if (route?.params?.item && route?.params?.item.category === category) {
+        const item = route?.params?.item;
+        item.date = date;
+        item.location = location;
+        item.quantity = quantity;
+        item.additionalNotes = additionalNotes;
+        trashItems.push(item);
+      } else {
+        trashItems.push(new Trash(date, location, category, quantity, additionalNotes));
+      }
     }
 
     return trashItems;

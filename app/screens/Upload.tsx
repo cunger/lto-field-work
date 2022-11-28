@@ -65,6 +65,7 @@ function Upload({ navigation }) {
       navigation.navigate('DataEntry', { 
         screen: 'BeachClean', 
         params: {
+          item,
           items: { [item.category]: item.quantity },
           date: new Date(item.date),
           location: item.location,
