@@ -3,6 +3,7 @@ import Signature from './Signature';
 import Location from './Location';
 import Image from './Image';
 import { print } from '../components/utils/PrettyPrinter';
+import Category from '../model/beachclean/Category';
 
 export default class Item {
   id: string;
@@ -33,7 +34,7 @@ export default class Item {
   public static prettyPrint(item: Item): string {
     switch (item.type) {
       case 'Catch': return print(item.quantity, item.common_name || item.species || 'fish');
-      case 'Trash': return print(item.quantity, item.category);
+      case 'Trash': return print(item.quantity, Category[item.category]);
       default: return 'something';
     }
   }

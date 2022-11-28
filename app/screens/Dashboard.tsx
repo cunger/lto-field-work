@@ -8,6 +8,7 @@ import GlobalContext from '../components/context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
 import ListItem from '../components/ListItem';
 import { print } from '../components/utils/PrettyPrinter';
+import Category from '../model/beachclean/Category';
 
 function Dashboard() {
   const tailwind = useTailwind();
@@ -62,7 +63,7 @@ function Dashboard() {
           ))}
           <Text style={tailwind('m-2')}>🗑️ Trash:</Text>
           {Object.entries(statistics.Trash || {}).map((entry, index) => (
-            <ListItem key={index}><Text>{` ️ ${print(entry[1], entry[0])}`}</Text></ListItem>
+            <ListItem key={index}><Text>{` ️ ${print(entry[1], Category[entry[0]])}`}</Text></ListItem>
           ))}
         </View>
       }
