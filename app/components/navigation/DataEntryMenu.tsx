@@ -12,7 +12,7 @@ const Drawer = createDrawerNavigator();
 function DataEntryMenu() {
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name='DataEntry' component={DataEntry} options={{ title: 'Data entry' }} />
+      <Drawer.Screen name='Select' component={DataEntry} options={{ title: 'Data entry' }} />
       <Drawer.Screen name='BeachClean' component={BeachClean} options={{ title: '🗑️ Beach clean' }} />
       <Drawer.Screen name='Fisheries' component={Fisheries} options={{ title: '🎣 Fisheries' }} />
       <Drawer.Screen name='HumpbackWhale' component={HumpbackWhale} options={{ title: '🐋 Humpback whale' }} />

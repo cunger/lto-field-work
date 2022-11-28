@@ -42,7 +42,7 @@ function BeachClean({ navigation, route }) {
     reset();
     setSigningVisible(false);
     // You probably finished the beach clean, so go back to menu.
-    navigation.navigate('Data Entry', { screen: 'Data entry' });
+    navigation.navigate('DataEntry', { screen: 'Select' });
   };
 
   const trashItems = () => {
@@ -63,7 +63,7 @@ function BeachClean({ navigation, route }) {
       icon: 'info'
     });
 
-    navigation.navigate('Data Entry', { screen: 'Data entry' });
+    navigation.navigate('DataEntry', { screen: 'Select' });
   };
 
   return (
@@ -77,16 +77,14 @@ function BeachClean({ navigation, route }) {
 
       <View>
         <InputGroup text='Items' />
-        {Object.keys(Category).map(key => {
-          const category = Category[key];
-          if (category == 'Unknown') return;
+        {Object.keys(Category).map(category => {
           return (
             <InputSpinner
             	min={0}
             	step={1}
             	value={items[category] || 0}
             	onChange={(value) => { updateItem(value, category); }}
-              prepend={(<Text style={tailwind('w-1/2')}> {category} </Text>)}
+              prepend={(<Text style={tailwind('w-1/2')}> {Category[category]} </Text>)}
               height={30}
               rounded={false}
               key={category}

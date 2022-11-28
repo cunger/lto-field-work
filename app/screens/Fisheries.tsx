@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import InputSpinner from 'react-native-input-spinner'; // https://github.com/marcocesarato/react-native-input-spinner
 import BouncyCheckbox from 'react-native-bouncy-checkbox'; // https://github.com/WrathChaos/react-native-bouncy-checkbox
 import Catch from '../model/fisheries/Catch';
@@ -107,7 +107,7 @@ function Fisheries({ navigation, route }) {
 
   const discard = () => {
     reset();
-    navigation.navigate('DataEntry', { screen: 'DataEntry' });
+    navigation.navigate('DataEntry', { screen: 'Select' });
   };
 
   const photoFlashMessage = () => {

@@ -9,6 +9,7 @@ import Datastore from '../components/data/LocalDatastore';
 import GlobalContext from '../components/context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
 import Item from '../model/Item';
+import Category from '../model/beachclean/Category';
 
 function Upload({ navigation }) {
   const tailwind = useTailwind();
