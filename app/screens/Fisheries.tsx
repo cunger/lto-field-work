@@ -20,13 +20,14 @@ import SubmitButtons from '../components/forms/SubmitButtons';
 import Signing from '../components/forms/Signing';
 import ConfirmPrompt from '../components/ConfirmPrompt';
 import { useTailwind } from 'tailwind-rn';
+import { useFocusEffect } from '@react-navigation/core';
 
 function Fisheries({ navigation, route }) {
   const tailwind = useTailwind();
 
-  const [date, setDate] = useState(route?.params?.date || new Date());
-  const [location, setLocation] = useState(route?.params?.location || null);
-  const [item, setItem] = useState(route?.params?.item || new Catch(date, location));
+  const [date, setDate] = useState(new Date());
+  const [location, setLocation] = useState(null);
+  const [item, setItem] = useState(new Catch(date, location));
   const [isNoCatch, setIsNoCatch] = useState(false);
   const [isSchoolOfFish, setIsSchoolOfFish] = useState(false);
   const [isMinMaxSpecies, setIsMinMaxSpecies] = useState(false);
@@ -55,6 +56,28 @@ function Fisheries({ navigation, route }) {
     setHideDiskWidth(true);
   };
 
+  useFocusEffect(
+    React.useCallback(() => {
+      if (route?.params?.date) {
+        setDate(new Date(route.params.date));
+      }
+      if (route?.params?.location) {
+        setLocation(route.params.location);
+      }
+      if (route?.params?.item) {
+        const item = route.params.item;
+        setItem({ ...item });
+        setIsNoCatch(item?.quantity === 0);
+        setIsSchoolOfFish(item?.quantity > 1);
+        setIsMinMaxSpecies(item?.species === Species.TeleostFish || item?.species === Species.Crayfish);
+        setHideOtherMethod(!item.other_method);
+        // TODO hide species-specific fields
+      }
+
+      return () => {};
+    }, [])
+  );
+  
   const update = (fields) => {
     setItem({ ...item, ...fields });
   };

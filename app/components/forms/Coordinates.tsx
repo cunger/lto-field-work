@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { InputLabel, InputField, InputGroup } from './Input';
-import DatePicker from 'react-native-neat-date-picker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker'; // https://www.npmjs.com/package/react-native-modal-datetime-picker
 import SelectField from './SelectField';
 import Location from '../../model/Location';
 import { useTailwind } from 'tailwind-rn';
@@ -13,14 +13,15 @@ function Coordinates({ inputDate, inputLocation, setDateOnParent, setLocationOnP
   const [hours, setHours] = useState(date.getHours());
   const [minutes, setMinutes] = useState(date.getMinutes());
   const [location, setLocation] = useState(inputLocation);
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
 
   const saveDate = (value: object) => {
-    let newDate = new Date(value.dateString);
+    let newDate = value;
     newDate.setHours(hours);
-    newDate;setMinutes(minutes);
+    newDate.setMinutes(minutes);
     setDate(newDate);
     setDateOnParent(newDate);
+    setDatePickerVisible(false);
   };
 
   const saveHours = (hours: number) => {
@@ -54,54 +55,48 @@ function Coordinates({ inputDate, inputLocation, setDateOnParent, setLocationOnP
   }
 
   return (
-    <View style={tailwind('mb-2')}>
-      <InputGroup text='Coordinates' />
-      <InputLabel text='Date' />
-      <InputField
-        text={date.toDateString()}
-        action={() => setShowDatePicker(true)}
-      />
-      <DatePicker
-        isVisible={showDatePicker}
-        mode={'single'}
-        onCancel={() => {
-          setShowDatePicker(false);
-        }}
-        onConfirm={value => {
-          saveDate(value);
-          setShowDatePicker(false);
-        }}
-        colorOptions={{
-          headerColor: '#6ec1e4',
-          weekDaysColor: '#6ec1e4',
-          selectedDateBackgroundColor: '#6ec1e4',
-          confirmButtonColor: '#6ec1e4'
-        }}
-      />
-      <View style={tailwind('flex flex-row items-stretch my-2')}>
-        <InputLabel text='Time: ' />
-        <SelectField
-          label='Hours'
-          value={hours}
-          items={itemRange(0,23)}
-          updateAction={(value) => saveHours(value)}
+    <SafeAreaView>
+      <View style={tailwind('mb-2')}>
+        <InputGroup text='Coordinates' />
+        <InputLabel text='Date' />
+        <InputField 
+          text={date.toDateString()}
+          action={() => setDatePickerVisible(true)} 
         />
+        <DateTimePickerModal
+          date={date}
+          isVisible={datePickerVisible}
+          mode='date'
+          display='inline'
+          onConfirm={saveDate}
+          onCancel={() => setDatePickerVisible(false)}
+          maximumDate={new Date()}
+        />
+        <View style={tailwind('flex flex-row items-stretch my-2')}>
+          <InputLabel text='Time: ' />
+          <SelectField
+            label='Hours'
+            value={hours}
+            items={itemRange(0,23)}
+            updateAction={(value) => saveHours(value)}
+          />
+          <SelectField
+            label='Minutes'
+            value={minutes}
+            items={itemRange(0,59)}
+            updateAction={(value) => saveMinutes(value)}
+          />
+        </View>
+
+        <InputLabel text='Location' />
         <SelectField
-          label='Minutes'
-          value={minutes}
-          items={itemRange(0,59)}
-          updateAction={(value) => saveMinutes(value)}
+          label='Which bay?'
+          value={location}
+          type={Location}
+          updateAction={(value) => saveLocation(value)}
         />
       </View>
-
-      <InputLabel text='Location' />
-      <SelectField
-        label='Which bay?'
-        value={location}
-        type={Location}
-        updateAction={(value) => saveLocation(value)}
-      />
-    </View>
+    </SafeAreaView>
   );
 }
 

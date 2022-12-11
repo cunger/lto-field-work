@@ -52,7 +52,7 @@ const MainMenu = () => {
             tabBarIcon: ({ color, size }) => (
               <Feather name='plus-circle' size={size} color={color} />
             ),
-            headerShown: false,
+            headerShown: false
           }}
         />
         <Tab.Screen

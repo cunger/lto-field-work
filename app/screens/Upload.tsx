@@ -48,28 +48,27 @@ function Upload({ navigation }) {
     await loadData();
   };
 
-  // TODO Bundle beachclean items per date, location and note?
   const openItem = (item: Item) => {
     if (item.type == 'Catch') { 
       navigation.navigate('DataEntry', { 
         screen: 'Fisheries', 
         params: {
           item,
-          date: new Date(item.date),
+          date: item.date,
           location: item.location,
           // TODO photos
         }
       });
     }
-    if (item.type == 'Trash') { 
+    if (item.type == 'Trash') {
       navigation.navigate('DataEntry', { 
         screen: 'BeachClean', 
         params: {
           item,
           items: { [item.category]: item.quantity },
-          date: new Date(item.date),
+          date: item.date,
           location: item.location,
-          additionalNotes: item.additionalNotes
+          additionalNotes: item.additionalNotes,
         } 
       });
     }

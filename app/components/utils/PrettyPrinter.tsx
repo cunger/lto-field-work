@@ -1,5 +1,8 @@
 export const print = (count: number, noun: string) => {
-  if (noun == 'undefined') noun = 'other';
+  if (!noun || noun == 'undefined') {
+    noun = 'other';
+  }
+  
   noun = noun.toLowerCase();
 
   const plural = (noun: string) => {

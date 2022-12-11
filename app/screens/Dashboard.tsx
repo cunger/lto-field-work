@@ -62,6 +62,9 @@ function Dashboard() {
             <ListItem key={index}><Text>{` ️ ${print(entry[1], entry[0])}`}</Text></ListItem>
           ))}
           <Text style={tailwind('m-2')}>🗑️ Trash:</Text>
+          {!statistics.Trash && (
+            <Text>-</Text>
+          )}
           {Object.entries(statistics.Trash || {}).map((entry, index) => (
             <ListItem key={index}><Text>{` ️ ${print(entry[1], Category[entry[0]])}`}</Text></ListItem>
           ))}
