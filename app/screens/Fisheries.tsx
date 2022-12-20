@@ -149,6 +149,7 @@ function Fisheries({ navigation, route }) {
   return (
     <ScrollContainer>
       <Coordinates
+        key={`${date}-${location}`}
         inputDate={date}
         inputLocation={location}
         setDateOnParent={setDate}

@@ -19,7 +19,6 @@ function BeachClean({ navigation, route }) {
   const [date, setDate] = useState(new Date());
   const [location, setLocation] = useState(null);
   const [items, setItems] = useState({});
-  const [lines, setLines] = useState([]);
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [signingVisible, setSigningVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
@@ -34,27 +33,28 @@ function BeachClean({ navigation, route }) {
       }
       if (route?.params?.items) {
         setItems({ ...route.params.items });
+        console.log(items);
       } 
       if (route?.params?.additionalNotes) {
         setAdditionalNotes(route?.params?.additionalNotes);
       }
-
-      setLines([ ...Object.keys(Category).map(category => {
-        return { category: category, quantity: items[category] || 0 };
-      })]);
 
       return () => {};
     }, [])
   );
 
   const updateItem = (quantity: number, category: Category) => {
-    items[category] = quantity;
+    if (quantity == 0) {
+      delete items[category];
+    } else {
+      items[category] = quantity;
+    }
     setItems({ ...items });
   };
 
   const reset = () => {
     // setDate(new Date());
-    // setLocation(undefined);
+    // setLocation(null);
     setItems({});
     setAdditionalNotes('');
   };
@@ -102,6 +102,7 @@ function BeachClean({ navigation, route }) {
   return (
     <ScrollContainer>
       <Coordinates
+        key={`${date}-${location}`}
         inputDate={date}
         inputLocation={location}
         setDateOnParent={setDate}
@@ -110,17 +111,18 @@ function BeachClean({ navigation, route }) {
 
       <View>
         <InputGroup text='Items' />
-        {lines.map(line => {
+        {Object.keys(Category).map(category => {
+          const quantity = items[category] || 0;
           return (
             <InputSpinner
             	min={0}
             	step={1}
-            	value={line.quantity}
-            	onChange={(value) => { updateItem(value, line.category); }}
-              prepend={(<Text style={tailwind('w-1/2')}> {Category[line.category]} </Text>)}
+            	value={quantity}
+            	onChange={(value) => { updateItem(value, category); }}
+              prepend={(<Text style={tailwind('w-1/2')}> {Category[category]} </Text>)}
               height={30}
               rounded={false}
-              key={line.category}
+              key={`${quantity}-${category}`}
               style={tailwind('mb-2 bg-white')}
             />
           );
