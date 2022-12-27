@@ -18,13 +18,13 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "46",
+      "buildNumber": "48",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "The app accesses your photos to share them with Love the Oceans.",
         "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
         "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
       },
-      "bundleIdentifier": "LTO.FieldWork"
+      "bundleIdentifier": "lto-field-work"
     },
     "android": {
       "adaptiveIcon": {
