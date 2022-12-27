@@ -9,7 +9,6 @@ import Datastore from '../components/data/LocalDatastore';
 import GlobalContext from '../components/context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
 import Item from '../model/Item';
-import Category from '../model/beachclean/Category';
 
 function Upload({ navigation }) {
   const tailwind = useTailwind();
@@ -21,9 +20,18 @@ function Upload({ navigation }) {
 
   async function loadData() {
     GlobalContext.load();
+
+    const byDate = (i1: Item, i2: Item) => new Date(i2.date).getTime() - new Date(i1.date).getTime();
     const items = await Datastore.items();
-    setSignedUnsyncedItems(items.filter(item => Item.signed(item) && !item.synced));
-    setUnsignedUnsyncedItems(items.filter(item => !Item.signed(item) && !item.synced));
+
+    setSignedUnsyncedItems(items
+      .filter(item => Item.signed(item) && !item.synced)
+      .sort(byDate)
+    );
+    setUnsignedUnsyncedItems(items
+      .filter(item => !Item.signed(item) && !item.synced)
+      .sort(byDate)
+    );
   }
 
   useFocusEffect(
@@ -52,24 +60,13 @@ function Upload({ navigation }) {
     if (item.type == 'Catch') { 
       navigation.navigate('DataEntry', { 
         screen: 'Fisheries', 
-        params: {
-          item,
-          date: item.date,
-          location: item.location,
-          // TODO photos
-        }
+        params: { itemId: item.id }
       });
     }
     if (item.type == 'Trash') {
       navigation.navigate('DataEntry', { 
         screen: 'BeachClean', 
-        params: {
-          item,
-          items: { [item.category]: item.quantity },
-          date: item.date,
-          location: item.location,
-          additionalNotes: item.additionalNotes,
-        } 
+        params: { itemId: item.id } 
       });
     }
   };
@@ -86,7 +83,7 @@ function Upload({ navigation }) {
       {
         signedUnsyncedItems.length > 0 &&
         <View>
-          <Text style={tailwind('mx-4 my-2')}>The following data has not yet been uploaded:</Text>
+          <Text style={tailwind('mx-4 my-2')}>The following data has not yet been uploaded. (Click on the logo to open it.)</Text>
           
           {signedUnsyncedItems.map((item, index) => (
             <ListItem key={index}>
@@ -114,7 +111,7 @@ function Upload({ navigation }) {
       {
         unsignedUnsyncedItems.length > 0 &&
         <View>
-          <Text style={tailwind('mx-4 my-2')}>The following entries are unsigned (and will not be uploaded unless you sign them):</Text>
+          <Text style={tailwind('mx-4 my-2')}>The following entries are unsigned and will not be uploaded unless you sign them. (Click on the logo to open it.)</Text>
 
           {unsignedUnsyncedItems.map((item, index) => (
             <ListItem key={index}>

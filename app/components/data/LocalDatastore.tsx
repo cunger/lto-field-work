@@ -54,7 +54,7 @@ export default class Datastore {
     const statisticsString = await AsyncStorage.getItem('@statistics');
     const statistics = statisticsString ? JSON.parse(statisticsString) : {};
     
-    if (item.type == 'Catch') {
+    if (item.type == 'Catch' && item.quantity > 0) {
       const species = `${item.species || 'Fish'}`;
       statistics.Catch = statistics.Catch || {};
       statistics.Catch[species] = (statistics.Catch[species] || 0) + item.quantity;
@@ -83,6 +83,11 @@ export default class Datastore {
   }
 
   // ---- Colleced data and photos ----
+
+  static async item(id: string): Promise<Item> {
+    const value = await AsyncStorage.getItem(id);
+    return value ? JSON.parse(value) : null;
+  }
 
   static async items(): Promise<Item[]> {
     const keys = await AsyncStorage.getAllKeys();

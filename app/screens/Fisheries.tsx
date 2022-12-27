@@ -58,25 +58,26 @@ function Fisheries({ navigation, route }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (route?.params?.date) {
-        setDate(new Date(route.params.date));
+      if (route?.params?.itemId) {
+        load(route.params.itemId);
       }
-      if (route?.params?.location) {
-        setLocation(route.params.location);
-      }
-      if (route?.params?.item) {
-        const item = route.params.item;
-        setItem({ ...item });
-        setIsNoCatch(item?.quantity === 0);
-        setIsSchoolOfFish(item?.quantity > 1);
-        setIsMinMaxSpecies(item?.species === Species.TeleostFish || item?.species === Species.Crayfish);
-        setHideOtherMethod(!item.other_method);
-        // TODO hide species-specific fields
-      }
-
       return () => {};
-    }, [])
+    }, [route])
   );
+
+  const load = (itemId: string) => {
+    Datastore.item(itemId).then(item => { 
+      if (!item) return;
+
+      setDate(new Date(item.date));
+      setLocation(item.location);
+      setItem({ ...item });
+      setIsNoCatch(item.quantity === 0);
+      setIsSchoolOfFish(item.quantity > 1);
+      setHideOtherMethod(!item.other_method);
+      setSpeciesSpecificFields(item.species);
+    });
+  };
   
   const update = (fields) => {
     setItem({ ...item, ...fields });
@@ -146,6 +147,36 @@ function Fisheries({ navigation, route }) {
     return `${dateString}-${item.species || item.common_name || 'Fish'}-${Date.now()}.${filetype}`;
   }
 
+  const setSpeciesSpecificFields = (species: Species) => {
+    hideAllSpeciesSpecificFields();
+    setIsMinMaxSpecies(false);
+    if (species == Species.TeleostFish) {
+      setHideHeadLength(false);
+      setHideHeadWidth(false);
+      setIsMinMaxSpecies(true);
+    } else
+    if (species == Species.GameFish) {
+      setHideForkLength(false);
+      setHidePrecaudalLength(false);
+    } else
+    if (species == Species.Shark) {
+      setHideForkLength(false);
+      setHidePrecaudalLength(false);
+    } else
+    if (species == Species.Ray) {
+      setHidePrecaudalLength(false);
+      setHideDiskWidth(false);
+    } else
+    if (species == Species.Crayfish) {
+      setHideCarapaceLength(false);
+      setHideTailLength(false);
+      setIsMinMaxSpecies(true);
+    } else
+    if (species == Species.Crab) {
+      setHideCarapaceWidth(false);
+    }
+  };
+
   return (
     <ScrollContainer>
       <Coordinates
@@ -194,6 +225,7 @@ function Fisheries({ navigation, route }) {
             text='No catch.'
             textStyle={{ textDecorationLine: 'none' }}
             iconStyle={{ borderColor: '#6ec1e4' }}
+            isChecked={isNoCatch}
             onPress={(value) => {
               if (value) {
                 update({ quantity: 0 });
@@ -241,33 +273,7 @@ function Fisheries({ navigation, route }) {
             type={Species}
             updateAction={(value: string) => {
               update({ species: value });
-              hideAllSpeciesSpecificFields();
-              setIsMinMaxSpecies(false);
-              if (value == Species.TeleostFish) {
-                setHideHeadLength(false);
-                setHideHeadWidth(false);
-                setIsMinMaxSpecies(true);
-              } else
-              if (value == Species.GameFish) {
-                setHideForkLength(false);
-                setHidePrecaudalLength(false);
-              } else
-              if (value == Species.Shark) {
-                setHideForkLength(false);
-                setHidePrecaudalLength(false);
-              } else
-              if (value == Species.Ray) {
-                setHidePrecaudalLength(false);
-                setHideDiskWidth(false);
-              } else
-              if (value == Species.Crayfish) {
-                setHideCarapaceLength(false);
-                setHideTailLength(false);
-                setIsMinMaxSpecies(true);
-              } else
-              if (value == Species.Crab) {
-                setHideCarapaceWidth(false);
-              }
+              setSpeciesSpecificFields(value);
             }}
           />
         </View>

@@ -58,9 +58,12 @@ function Dashboard() {
 
           <Heading title='Summary of collected data' actionTitle='' actionOnPress={() => {}} />
           <Text style={tailwind('m-2')}>🎣 Catches:</Text>
-          {Object.entries(statistics.Catch || {}).map((entry, index) => (
-            <ListItem key={index}><Text>{` ️ ${print(entry[1], entry[0])}`}</Text></ListItem>
-          ))}
+          {Object.entries(statistics.Catch || {})
+            .filter((entry, index) => entry[1] > 0)
+            .map((entry, index) => (
+              <ListItem key={index}><Text>{` ️ ${print(entry[1], entry[0])}`}</Text></ListItem>
+            ))
+          }
           <Text style={tailwind('m-2')}>🗑️ Trash:</Text>
           {!statistics.Trash && (
             <Text>-</Text>

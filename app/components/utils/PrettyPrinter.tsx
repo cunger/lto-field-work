@@ -1,4 +1,8 @@
-export const print = (count: number, noun: string) => {
+export const print = (count: number, noun: string, zeroAlternative?: string) => {
+  if (count == 0 && zeroAlternative) {
+    return zeroAlternative;
+  }
+
   if (!noun || noun == 'undefined') {
     noun = 'other';
   }

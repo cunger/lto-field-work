@@ -50,7 +50,8 @@
     "react-native-web": "~0.18.7",
     "tailwind-rn": "^4.1.0",
     "twrnc": "^3.0.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "expo-build-properties": "~0.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

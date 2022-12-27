@@ -13,9 +13,11 @@ import ConfirmPrompt from '../components/ConfirmPrompt';
 import { showMessage } from 'react-native-flash-message';
 import { useTailwind } from 'tailwind-rn';
 import { useFocusEffect } from '@react-navigation/core';
+import Datastore from '../components/data/LocalDatastore';
 
 function BeachClean({ navigation, route }) {
   const tailwind = useTailwind();
+
   const [date, setDate] = useState(new Date());
   const [location, setLocation] = useState(null);
   const [items, setItems] = useState({});
@@ -23,25 +25,46 @@ function BeachClean({ navigation, route }) {
   const [signingVisible, setSigningVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
 
+  const [loadedItem, setLoadedItem] = useState(null);
+  const [lines, setLines] = useState([]);
+
   useFocusEffect(
     React.useCallback(() => {
-      if (route?.params?.date) {
-        setDate(new Date(route.params.date));
+      if (route?.params?.itemId) {
+        load(route.params.itemId);
       }
-      if (route?.params?.location) {
-        setLocation(route.params.location);
-      }
-      if (route?.params?.items) {
-        setItems({ ...route.params.items });
-        console.log(items);
-      } 
-      if (route?.params?.additionalNotes) {
-        setAdditionalNotes(route?.params?.additionalNotes);
-      }
-
       return () => {};
-    }, [])
+    }, [route])
   );
+
+  const load = (itemId: string) => {
+    Datastore.item(itemId).then(item => {
+      if (!item) return;
+
+      const newItems = { [item.category]: item.quantity };
+
+      reset();
+      setLoadedItem(item);
+      setDate(new Date(item.date));
+      setLocation(item.location);
+      setAdditionalNotes(item.additionalNotes || '');
+      setItems(newItems);
+      setLines(buildAllLinesFrom(newItems));
+    });
+  } 
+
+  const buildAllLinesFrom = (items) => {
+    const allLines = [];
+    Object.keys(Category).forEach(category => {
+      const quantity = items[category] || 0;
+      allLines.push({ 
+        category,
+        quantity,
+        key: `${quantity}-${category}`
+      });
+    });
+    return allLines;
+  };
 
   const updateItem = (quantity: number, category: Category) => {
     if (quantity == 0) {
@@ -53,10 +76,16 @@ function BeachClean({ navigation, route }) {
   };
 
   const reset = () => {
-    // setDate(new Date());
-    // setLocation(null);
+    setDate(new Date());
+    setLocation(null);
+    resetItems();
+  };
+
+  const resetItems = () => {
     setItems({});
     setAdditionalNotes('');
+    setLoadedItem(null);
+    setLines(buildAllLinesFrom({}));
   };
 
   const openSigning = () => {
@@ -64,7 +93,7 @@ function BeachClean({ navigation, route }) {
   };
 
   const closeSigning = () => {
-    reset();
+    resetItems();
     setSigningVisible(false);
     // You probably finished the beach clean, so go back to menu.
     navigation.navigate('DataEntry', { screen: 'Select' });
@@ -73,8 +102,8 @@ function BeachClean({ navigation, route }) {
   const trashItems = () => {
     let trashItems = [];
     for (let [category, quantity] of Object.entries(items)) {
-      if (route?.params?.item && route.params.item.category === category) {
-        const item = route.params.item;
+    if (loadedItem && loadedItem.category === category) {
+        const item = loadedItem;
         item.date = date;
         item.location = location;
         item.quantity = quantity;
@@ -87,6 +116,7 @@ function BeachClean({ navigation, route }) {
 
     return trashItems;
   };
+
 
   const discard = () => {
     reset();
@@ -111,18 +141,17 @@ function BeachClean({ navigation, route }) {
 
       <View>
         <InputGroup text='Items' />
-        {Object.keys(Category).map(category => {
-          const quantity = items[category] || 0;
+        {lines.map(line => {
           return (
             <InputSpinner
             	min={0}
             	step={1}
-            	value={quantity}
-            	onChange={(value) => { updateItem(value, category); }}
-              prepend={(<Text style={tailwind('w-1/2')}> {Category[category]} </Text>)}
+            	value={line.quantity}
+            	onChange={(value) => { updateItem(value, line.category); }}
+              prepend={(<Text style={tailwind('w-1/2')}> {Category[line.category]} </Text>)}
               height={30}
               rounded={false}
-              key={`${quantity}-${category}`}
+              key={line.key}
               style={tailwind('mb-2 bg-white')}
             />
           );
