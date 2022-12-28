@@ -20,9 +20,9 @@ class Dimensions {
 
 export default class Catch extends Item {
   reason?: String;
-  method?: Method;
+  method: Method | null;
   other_method?: string;
-  base?: Base;
+  base: Base | null;
   quantity: number;
   common_name: string;
   species: Species | null;
@@ -42,8 +42,8 @@ export default class Catch extends Item {
     this.quantity = 1;
     this.common_name = '';
     // We don't want to reset these fields, as they usually don't change.
-    this.base = base;
-    this.method = method;
+    this.base = base || null;
+    this.method = method || null;
     this.other_method = other_method;
     // Set those properties to null which you want to reset after saving a catch.
     this.species = null;

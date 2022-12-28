@@ -76,6 +76,7 @@ function Fisheries({ navigation, route }) {
       setIsSchoolOfFish(item.quantity > 1);
       setHideOtherMethod(!item.other_method);
       setSpeciesSpecificFields(item.species);
+      setPhotoNames(item.photos.map(photo => photo.filename));
     });
   };
   
@@ -109,7 +110,10 @@ function Fisheries({ navigation, route }) {
 
   const resetAllFields = () => {
     // This is a hard reset of all fields.
-    setItem(new Catch(new Date(), null));
+    const now = new Date();
+    setDate(now);
+    setLocation(null);
+    setItem(new Catch(now, null));
     setPhotoNames([]);
     hideAllSpeciesSpecificFields();
     setIsSchoolOfFish(false);
