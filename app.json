@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "48",
+      "buildNumber": "49",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "The app accesses your photos to share them with Love the Oceans.",
         "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",

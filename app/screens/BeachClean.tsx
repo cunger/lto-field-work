@@ -32,6 +32,8 @@ function BeachClean({ navigation, route }) {
     React.useCallback(() => {
       if (route?.params?.itemId) {
         load(route.params.itemId);
+      } else {
+        setLines(buildAllLinesFrom(items));
       }
       return () => {};
     }, [route])

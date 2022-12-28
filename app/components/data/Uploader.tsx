@@ -3,7 +3,6 @@ import NetInfo from '@react-native-community/netinfo'; // https://github.com/rea
 import Item from '../../model/Item';
 import Image from '../../model/Image';
 import * as FileSystem from 'expo-file-system';
-import axios from 'axios';
 
 const BASE_URL = 'https://lto-back-office.netlify.app/.netlify/functions/api';
 
@@ -15,7 +14,8 @@ export default async function upload(items: Item[]) {
       message: 'No internet connection.',
       description: 'Please try again when connected.',
       type: 'warning',
-      icon: 'warning'
+      icon: 'warning',
+      duration: 3000
     });
 
     return [];
@@ -67,7 +67,8 @@ export default async function upload(items: Item[]) {
         message: 'Error when uploading data...',
         description: errors.join(' | '),
         type: 'danger',
-        icon: 'danger'
+        icon: 'danger',
+        duration: 6000
       });
     }
   }
@@ -79,6 +80,7 @@ async function uploadPhotos(images: Image[]) {
   let errors: string[] = [];
 
   for (let image of images) {
+    console.log('Trying to upload: ' + JSON.stringify(image));
     if (!image.location) continue;
 
     try {
@@ -102,15 +104,17 @@ async function uploadPhotos(images: Image[]) {
         body: formdata
       });
 
+      console.log('Response status: ' + response.status);
+
       if (response.status === 200) {
         const responseData = await response.json(); // { link: '', errors: [] }
+        console.log(responseData)
 
         image.link = responseData.link;
         errors = [...errors, ...responseData.errors];
 
         await FileSystem.deleteAsync(image.location);
       } else {
-        console.log('Response status: ' + response.status);
         errors = [...errors, `Response status: ${response.status}`];
       }
     } catch (error) {
@@ -123,7 +127,8 @@ async function uploadPhotos(images: Image[]) {
         message: 'Backend error...',
         description: errors.join(' | '),
         type: 'danger',
-        icon: 'danger'
+        icon: 'danger',
+        duration: 6000
       });
     }
   }
