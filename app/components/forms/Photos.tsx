@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, Image as RNImage, Platform } from 'react-native';
 import { InputField, InputGroup } from './Input';
 import TextField from './TextField';
@@ -46,7 +46,6 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        quality: 1,
       });
 
       for (const asset of (result?.assets || [])) {
@@ -67,7 +66,6 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
     try {
       const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        quality: 1,
       });
 
       for (const asset of (result?.assets || [])) {
