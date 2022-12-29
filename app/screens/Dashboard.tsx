@@ -53,7 +53,7 @@ function Dashboard() {
             🗓️ {lastActiveDate}
           </Text>
           <Text style={tailwind('m-2')}>
-            📍 {lastActiveLocation}
+            📍 {lastActiveLocation || 'somewhere'}
           </Text>
 
           <Heading title='Summary of collected data' actionTitle='' actionOnPress={() => {}} />
@@ -65,9 +65,6 @@ function Dashboard() {
             ))
           }
           <Text style={tailwind('m-2')}>🗑️ Trash:</Text>
-          {!statistics.Trash && (
-            <Text>-</Text>
-          )}
           {Object.entries(statistics.Trash || {}).map((entry, index) => (
             <ListItem key={index}><Text>{` ️ ${print(entry[1], Category[entry[0]])}`}</Text></ListItem>
           ))}

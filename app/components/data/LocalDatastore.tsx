@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'; // https:/
 import * as FileSystem from 'expo-file-system';
 import Item from '../../model/Item';
 import upload from './Uploader';
+import { ImagePickerAsset } from 'expo-image-picker';
 
 export default class Datastore {
 
@@ -109,11 +110,11 @@ export default class Datastore {
     }
   }
 
-  static async savePhoto(photo, filename: string) {
+  static async savePhoto(asset: ImagePickerAsset, filename: string) {
     try {
-      const location = `${FileSystem.documentDirectory}${filename}`;
+      let location = `${FileSystem.documentDirectory}${filename}`;
 
-      await FileSystem.writeAsStringAsync(location, photo.assets[0].base64, {
+      await FileSystem.writeAsStringAsync(location, asset.base64, {
         encoding: FileSystem.EncodingType.Base64
       });
 
@@ -123,7 +124,8 @@ export default class Datastore {
         message: 'Could not save photo.',
         description: error.message,
         type: 'warning',
-        icon: 'danger'
+        icon: 'danger',
+        duration: 6000
       });
     }
   }

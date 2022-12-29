@@ -8,7 +8,7 @@ import GlobalContext from '../context/GlobalContext';
 import { showMessage } from 'react-native-flash-message';
 import { useTailwind } from 'tailwind-rn';
 
-function Signing({ visible, items, closeAction }) {
+function Signing({ visible, setVisible, items, closeAction }) {
   const tailwind = useTailwind();
 
   const save = async (withSignature) => {
@@ -57,7 +57,10 @@ function Signing({ visible, items, closeAction }) {
           saveText='Sign'
           saveAction={() => { save(true); }}
           discardText='Skip'
-          discardAction={() => { save(false); }} />
+          discardAction={() => { save(false); }}
+          resetText='Cancel'
+          resetAction={() => { setVisible(false); }}
+        />
       </View>
     </Modal>
   );

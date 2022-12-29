@@ -172,7 +172,7 @@ function BeachClean({ navigation, route }) {
 
       <SubmitButtons 
         saveAction={openSigning} discardAction={() => setConfirmVisible(true)} resetAction={() => reset()} />
-      <Signing visible={signingVisible} items={trashItems()} closeAction={closeSigning} />
+      <Signing visible={signingVisible} setVisible={setSigningVisible} items={trashItems()} closeAction={closeSigning} />
       <ConfirmPrompt visible={confirmVisible}
         actionPhrase='discard this data entry'
         actionButtonText='Discard'

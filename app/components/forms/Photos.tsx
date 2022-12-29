@@ -1,22 +1,38 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { InputField, InputGroup } from './Input';
 import TextField from './TextField';
-import * as ImagePicker from 'expo-image-picker';
+import Image from '../../model/Image';
 import { useTailwind } from 'tailwind-rn';
 import { showMessage } from 'react-native-flash-message';
+import * as ImagePicker from 'expo-image-picker';
+import * as MediaLibrary from 'expo-media-library';
+import Datastore from '../data/LocalDatastore';
+import { ImagePickerAsset } from 'expo-image-picker';
 
-function Photos({ flashMessage, photoNames, photosNote, addPhoto, setPhotosNote }) {
+function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, removePhoto, setPhotosNote }) {
   const tailwind = useTailwind();
 
+  const [showSelectedImageModal, setShowSelectedImageModal] = useState(false);
+  const [selectedImageURI, setSelectedImageURI] = useState(undefined);
+
   const photoList = () => {
-    if (photoNames.length == 0) {
+    // <TouchableOpacity onPress={() => openPhoto(image.location)} style={tailwind('px-2 border border-gray-300 rounded-md bg-white')}>
+    //   <Text style={tailwind('my-2')} key={image.filename}>{image.filename}</Text> 
+    // </TouchableOpacity>
+    
+    if (photos.length == 0) {
       return (
-        <Text style={tailwind('my-2')} key='none'>None selected yet.</Text>
+        <Text style={tailwind('my-2')} key='none'>None yet.</Text>
       );
     } else {
-      return photoNames.map(name => (
-        <Text style={tailwind('my-2')} key={name}> 📷 { name }</Text> // TODO allow for deletion
+      return photos.map((image: Image) => (
+        <View key={image.filename} style={tailwind('flex flex-row items-center justify-between my-2')}>
+          <Text style={tailwind('my-2')} key={image.filename}>{image.filename}</Text> 
+          <TouchableOpacity onPress={() => removePhoto(image)} style={tailwind('w-10 px-2 py-2 border border-gray-300 rounded-md bg-white')}>
+            <Text>❌</Text>
+          </TouchableOpacity>
+        </View>
       ));
     }
   };
@@ -28,24 +44,79 @@ function Photos({ flashMessage, photoNames, photosNote, addPhoto, setPhotosNote 
     );
   };
 
-  const pickPhoto = async (action, source) => {
+  const openPhoto = (imageUri: string) => {
+    setSelectedImageURI(imageUri);
+    setShowSelectedImageModal(true);
+  };
+
+  const choosePhoto = async () => {
     try {
-      const result = await action({
+      const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: false,
         base64: true,
         quality: 1,
       });
 
-      await addPhoto(result);
+      for (const asset of (result?.assets || [])) {
+        await addPhoto(createImage(asset));
+      }
     } catch (error) {
       showMessage({
-        message: `Failed to access ${source}.`,
+        message: `Failed to access gallery.`,
         description: `${error}`,
         type: 'danger',
-        icon: 'warning'
+        icon: 'warning',
+        duration: 3000
       });
     }
+  };
+
+  const takePhoto = async () => {
+    try {
+      const result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: false,
+        base64: true,
+        quality: 1,
+      });
+
+      for (const asset of (result?.assets || [])) {
+        const image = createImage(asset);
+
+        try {
+          await MediaLibrary.saveToLibraryAsync(asset.uri);
+        } catch (error) {
+          showMessage({
+            message: `Failed to save photo to your gallery. It will only be stored locally in this app.`,
+            description: `${error}`,
+            type: 'danger',
+            icon: 'warning',
+            duration: 4000
+          });
+
+          const location = await Datastore.savePhoto(asset, image.filename);
+          if (location) image.location = location;
+        }
+
+        await addPhoto(image);
+      }
+    } catch (error) {
+      showMessage({
+        message: `Failed to access camera.`,
+        description: `${error}`,
+        type: 'danger',
+        icon: 'warning',
+        duration: 3000
+      });
+    }
+  };
+
+  const createImage = (asset: ImagePickerAsset) => {
+    const uriparts = asset.uri.split('.');
+    const filetype = uriparts[uriparts.length - 1];
+    const name = photoFileName(filetype).replaceAll(' ', '-');
+    return new Image(name, asset.uri);
   };
 
   return (
@@ -56,11 +127,11 @@ function Photos({ flashMessage, photoNames, photosNote, addPhoto, setPhotosNote 
       <InputField
         text='Take photo with camera'
         textColor={'#cccccc'}
-        action={() => pickPhoto(ImagePicker.launchCameraAsync, 'camera')} />
+        action={() => takePhoto()} />
       <InputField
         text='Pick photo from gallery'
         textColor={'#cccccc'}
-        action={() => pickPhoto(ImagePicker.launchImageLibraryAsync, 'gallery')} />
+        action={() => choosePhoto()} />
       <TextField
         label='Or describe which picture(s) on whose camera:'
         numberOfLines={4}

@@ -36,7 +36,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>49</string>
+    <string>50</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NSAppTransportSecurity</key>
@@ -57,9 +57,9 @@
     <key>NSMicrophoneUsageDescription</key>
     <string>Allow $(PRODUCT_NAME) to access your microphone</string>
     <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>Love the Oceans would like access to your photo gallery</string>
+    <string>The app wants to save photos to your gallery.</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>The app accesses your photos to share them with Love the Oceans.</string>
+    <string>The app wants to access your photos so you can share them with Love the Oceans.</string>
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>
     <key>UIRequiredDeviceCapabilities</key>

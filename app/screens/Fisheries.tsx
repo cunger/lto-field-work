@@ -31,7 +31,7 @@ function Fisheries({ navigation, route }) {
   const [isNoCatch, setIsNoCatch] = useState(false);
   const [isSchoolOfFish, setIsSchoolOfFish] = useState(false);
   const [isMinMaxSpecies, setIsMinMaxSpecies] = useState(false);
-  const [photoNames, setPhotoNames] = useState([]);
+  const [photos, setPhotos] = useState([]);
   const [signatureVisible, setSignatureVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [hideOtherMethod, setHideOtherMethod] = useState(true);
@@ -76,7 +76,7 @@ function Fisheries({ navigation, route }) {
       setIsSchoolOfFish(item.quantity > 1);
       setHideOtherMethod(!item.other_method);
       setSpeciesSpecificFields(item.species);
-      setPhotoNames(item.photos.map(photo => photo.filename));
+      setPhotos(item.photos);
     });
   };
   
@@ -102,7 +102,7 @@ function Fisheries({ navigation, route }) {
     // You probably want to log several catches, so we're not resetting
     // the coordinates, base, and method.
     setItem(new Catch(date, location, item.base, item.method, item.other_method));
-    setPhotoNames([]);
+    setPhotos([]);
     hideAllSpeciesSpecificFields();
     setIsSchoolOfFish(false);
     setIsMinMaxSpecies(false);
@@ -114,7 +114,7 @@ function Fisheries({ navigation, route }) {
     setDate(now);
     setLocation(null);
     setItem(new Catch(now, null));
-    setPhotoNames([]);
+    setPhotos([]);
     hideAllSpeciesSpecificFields();
     setIsSchoolOfFish(false);
     setIsMinMaxSpecies(false);
@@ -446,19 +446,20 @@ function Fisheries({ navigation, route }) {
 
       <Photos
         flashMessage={photoFlashMessage}
-        addPhoto={async (photo) => {
-          const uriparts = photo.assets[0].uri.split('.');
-          const filetype = uriparts[uriparts.length - 1];
-          const name = photoFileName(filetype).replaceAll(' ', '-');
-          const location = await Datastore.savePhoto(photo, name);
-          if (location) {
-            update({ photos: [...item.photos, new Image(name, location)] });
-            setPhotoNames([...photoNames, name]);
+        photos={item.photos}
+        addPhoto={(image: Image) => {
+          update({ photos: [...item.photos, image ] });
+        }}
+        removePhoto={(image: Image) => {
+          const index = item.photos.indexOf(image);
+          if (index >= 0) {
+            item.photos.splice(index, 1);
+            update({ photos: item.photos });
           }
         }}
-        photoNames={photoNames}
+        photoFileName={photoFileName}
         photosNote={item.photosNote}
-        setPhotosNote={(note) => update({ photosNote: note })}
+        setPhotosNote={(note: string) => update({ photosNote: note })}
       />
 
       <View>
@@ -467,12 +468,12 @@ function Fisheries({ navigation, route }) {
           numberOfLines={4}
           label='If there is something else that is important, let us know:'
           value={item.additionalNotes}
-          updateAction={(value) => update({ additionalNotes: value })}
+          updateAction={(value: string) => update({ additionalNotes: value })}
         />
       </View>
 
       <SubmitButtons saveAction={openSigning} discardAction={() => setConfirmVisible(true)} resetAction={() => resetAllFields()} />
-      <Signing visible={signatureVisible} items={[item]} closeAction={closeSigning} />
+      <Signing visible={signatureVisible} setVisible={setSignatureVisible} items={[item]} closeAction={closeSigning} />
       <ConfirmPrompt visible={confirmVisible}
         actionPhrase='discard this data entry'
         actionButtonText='Discard'
