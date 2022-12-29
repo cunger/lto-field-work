@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image as RNImage, Platform } from 'react-native';
 import { InputField, InputGroup } from './Input';
 import TextField from './TextField';
 import Image from '../../model/Image';
@@ -12,27 +12,26 @@ import { ImagePickerAsset } from 'expo-image-picker';
 function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, removePhoto, setPhotosNote }) {
   const tailwind = useTailwind();
 
-  const [showSelectedImageModal, setShowSelectedImageModal] = useState(false);
-  const [selectedImageURI, setSelectedImageURI] = useState(undefined);
-
   const photoList = () => {
-    // <TouchableOpacity onPress={() => openPhoto(image.location)} style={tailwind('px-2 border border-gray-300 rounded-md bg-white')}>
-    //   <Text style={tailwind('my-2')} key={image.filename}>{image.filename}</Text> 
-    // </TouchableOpacity>
-    
     if (photos.length == 0) {
       return (
         <Text style={tailwind('my-2')} key='none'>None yet.</Text>
       );
     } else {
-      return photos.map((image: Image) => (
-        <View key={image.filename} style={tailwind('flex flex-row items-center justify-between my-2')}>
-          <Text style={tailwind('my-2')} key={image.filename}>{image.filename}</Text> 
-          <TouchableOpacity onPress={() => removePhoto(image)} style={tailwind('w-10 px-2 py-2 border border-gray-300 rounded-md bg-white')}>
-            <Text>❌</Text>
-          </TouchableOpacity>
-        </View>
-      ));
+      return (
+        <View style={tailwind('flex flex-row flex-wrap my-2')}>
+        {photos.map((image: Image) => (
+          <View key={image.filename} style={tailwind('mx-2 my-1 flex flex-row items-start justify-start')}>
+            <RNImage source={{ uri: image.location }} style={{ width: 60, height: 60, borderRadius: 5 }} /> 
+            <TouchableOpacity 
+              onPress={() => removePhoto(image)}
+              style={tailwind('px-1 py-1 mx-1 border border-gray-300 rounded-md bg-white')}>
+              <Text>❌</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
+      </View>
+      );
     }
   };
 
@@ -43,17 +42,10 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
     );
   };
 
-  const openPhoto = (imageUri: string) => {
-    setSelectedImageURI(imageUri);
-    setShowSelectedImageModal(true);
-  };
-
   const choosePhoto = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsMultipleSelection: true,
-        allowsEditing: true,
         quality: 1,
       });
 
@@ -75,7 +67,6 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
     try {
       const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
         quality: 1,
       });
 

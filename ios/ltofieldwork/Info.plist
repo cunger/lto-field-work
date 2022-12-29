@@ -57,9 +57,9 @@
     <key>NSMicrophoneUsageDescription</key>
     <string>Allow $(PRODUCT_NAME) to access your microphone</string>
     <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>The app wants to save photos to your gallery.</string>
+    <string>Allow $(PRODUCT_NAME) to save photos.</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>The app wants to access your photos so you can share them with Love the Oceans.</string>
+    <string>The app wants to access to your photos so you can pick those you want to share with Love the Oceans.</string>
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>
     <key>UIRequiredDeviceCapabilities</key>
