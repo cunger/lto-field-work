@@ -7,7 +7,6 @@ import { useTailwind } from 'tailwind-rn';
 import { showMessage } from 'react-native-flash-message';
 import * as ImagePicker from 'expo-image-picker';
 import * as MediaLibrary from 'expo-media-library';
-import Datastore from '../data/LocalDatastore';
 import { ImagePickerAsset } from 'expo-image-picker';
 
 function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, removePhoto, setPhotosNote }) {
@@ -52,9 +51,9 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
   const choosePhoto = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: false,
-        base64: true,
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsMultipleSelection: true,
+        allowsEditing: true,
         quality: 1,
       });
 
@@ -75,15 +74,12 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
   const takePhoto = async () => {
     try {
       const result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: false,
-        base64: true,
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
         quality: 1,
       });
 
       for (const asset of (result?.assets || [])) {
-        const image = createImage(asset);
-
         try {
           await MediaLibrary.saveToLibraryAsync(asset.uri);
         } catch (error) {
@@ -94,12 +90,9 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
             icon: 'warning',
             duration: 4000
           });
-
-          const location = await Datastore.savePhoto(asset, image.filename);
-          if (location) image.location = location;
         }
 
-        await addPhoto(image);
+        await addPhoto(createImage(asset));
       }
     } catch (error) {
       showMessage({

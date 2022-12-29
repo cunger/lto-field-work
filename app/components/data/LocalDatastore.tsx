@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'; // https:/
 import * as FileSystem from 'expo-file-system';
 import Item from '../../model/Item';
 import upload from './Uploader';
-import { ImagePickerAsset } from 'expo-image-picker';
 
 export default class Datastore {
 
@@ -110,26 +109,6 @@ export default class Datastore {
     }
   }
 
-  static async savePhoto(asset: ImagePickerAsset, filename: string) {
-    try {
-      let location = `${FileSystem.documentDirectory}${filename}`;
-
-      await FileSystem.writeAsStringAsync(location, asset.base64, {
-        encoding: FileSystem.EncodingType.Base64
-      });
-
-      return location;
-    } catch(error) {
-      showMessage({
-        message: 'Could not save photo.',
-        description: error.message,
-        type: 'warning',
-        icon: 'danger',
-        duration: 6000
-      });
-    }
-  }
-
   static async syncAll() {
     try {
       const items: Item[] = [];
@@ -162,7 +141,21 @@ export default class Datastore {
     }
   }
 
-  static async remove(items: Item[]) {
+  static async removeItem(itemId: string) {
+    try {
+      await AsyncStorage.removeItem(itemId);
+    } catch(error) {
+      console.log(error);
+      showMessage({
+        message: 'There was an error when deleting data.',
+        description: `${error}`,
+        type: 'warning',
+        icon: 'danger'
+      });
+    }
+  }
+
+  static async removeItems(items: Item[]) {
     for (const item of items) {
       try {
         await AsyncStorage.removeItem(item.id);

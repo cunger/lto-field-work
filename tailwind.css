@@ -63,8 +63,16 @@
   margin-left: 0.25rem
 }
 
+.inline {
+  display: inline
+}
+
 .flex {
   display: flex
+}
+
+.h-px {
+  height: 1px
 }
 
 .h-full {
@@ -153,6 +161,11 @@
   background-color: rgb(255 92 51 / var(--tw-bg-opacity))
 }
 
+.bg-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity))
+}
+
 .p-2 {
   padding: 0.5rem
 }
@@ -191,6 +204,10 @@
 
 .pr-2 {
   padding-right: 0.5rem
+}
+
+.text-center {
+  text-align: center
 }
 
 .text-sm {

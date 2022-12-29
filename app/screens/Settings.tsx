@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { InputLabel } from '../components/forms/Input';
-import SafeContainer from '../components/SafeContainer';
 import Datastore from '../components/data/LocalDatastore';
 import { useTailwind } from 'tailwind-rn';
+import SafeContainer from '../components/SafeContainer';
 
 function Settings({ navigation }) {
   const tailwind = useTailwind();
@@ -11,7 +11,6 @@ function Settings({ navigation }) {
   const [name, setName] = useState('');
   const [token, setToken] = useState('');
   const [email, setEmail] = useState('');
-  // const [verified, setVerified] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -51,6 +50,10 @@ function Settings({ navigation }) {
     //   });
     // }
     navigation.navigate('Dashboard');
+  };
+
+  const clearStorage = async () => {
+    await Datastore.clearAll();
   };
 
   return (

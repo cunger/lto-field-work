@@ -31,7 +31,6 @@ function Fisheries({ navigation, route }) {
   const [isNoCatch, setIsNoCatch] = useState(false);
   const [isSchoolOfFish, setIsSchoolOfFish] = useState(false);
   const [isMinMaxSpecies, setIsMinMaxSpecies] = useState(false);
-  const [photos, setPhotos] = useState([]);
   const [signatureVisible, setSignatureVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [hideOtherMethod, setHideOtherMethod] = useState(true);
@@ -76,7 +75,6 @@ function Fisheries({ navigation, route }) {
       setIsSchoolOfFish(item.quantity > 1);
       setHideOtherMethod(!item.other_method);
       setSpeciesSpecificFields(item.species);
-      setPhotos(item.photos);
     });
   };
   
@@ -102,7 +100,6 @@ function Fisheries({ navigation, route }) {
     // You probably want to log several catches, so we're not resetting
     // the coordinates, base, and method.
     setItem(new Catch(date, location, item.base, item.method, item.other_method));
-    setPhotos([]);
     hideAllSpeciesSpecificFields();
     setIsSchoolOfFish(false);
     setIsMinMaxSpecies(false);
@@ -114,7 +111,6 @@ function Fisheries({ navigation, route }) {
     setDate(now);
     setLocation(null);
     setItem(new Catch(now, null));
-    setPhotos([]);
     hideAllSpeciesSpecificFields();
     setIsSchoolOfFish(false);
     setIsMinMaxSpecies(false);
@@ -133,7 +129,8 @@ function Fisheries({ navigation, route }) {
     // so we don't navigate to another screen.
   };
 
-  const discard = () => {
+  const discard = async () => {
+    await Datastore.removeItem(item.id);
     reset();
     navigation.navigate('DataEntry', { screen: 'Select' });
   };
@@ -475,7 +472,7 @@ function Fisheries({ navigation, route }) {
       <SubmitButtons saveAction={openSigning} discardAction={() => setConfirmVisible(true)} resetAction={() => resetAllFields()} />
       <Signing visible={signatureVisible} setVisible={setSignatureVisible} items={[item]} closeAction={closeSigning} />
       <ConfirmPrompt visible={confirmVisible}
-        actionPhrase='discard this data entry'
+        actionPhrase='discard this data entry (and lose all information logged here)'
         actionButtonText='Discard'
         action={discard}
         hide={() => setConfirmVisible(false)} />

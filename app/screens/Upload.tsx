@@ -15,8 +15,7 @@ function Upload({ navigation }) {
   
   const [signedUnsyncedItems, setSignedUnsyncedItems] = useState<Item[]>([]);
   const [unsignedUnsyncedItems, setUnsignedUnsyncedItems] = useState<Item[]>([]);
-  const [confirmDeleteAllVisible, setConfirmDeleteAllVisible] = useState(false);
-  const [confirmDeleteUnsignedVisible, setConfirmDeleteUnsignedVisible] = useState(false);
+  const [confirmDeleteUnsignedItemsVisible, setConfirmDeleteUnsignedItemsVisible] = useState(false);
 
   async function loadData() {
     GlobalContext.load();
@@ -47,12 +46,7 @@ function Upload({ navigation }) {
   };
 
   const deleteUnsigned = async () => {
-    await Datastore.remove(unsignedUnsyncedItems);
-    await loadData();
-  };
-
-  const clearAll = async () => {
-    await Datastore.clearAll();
+    await Datastore.removeItems(unsignedUnsyncedItems);
     await loadData();
   };
 
@@ -77,7 +71,7 @@ function Upload({ navigation }) {
       {
         signedUnsyncedItems.length === 0 &&
         <Text style={tailwind('m-2')}>
-          All data has been uploaded. Way to go!
+          You have no data waiting to be uploaded.
         </Text>
       }
       {
@@ -99,13 +93,13 @@ function Upload({ navigation }) {
         </View>
       }
       <Heading title='Unsigned data' actionTitle='🔥 Delete' actionOnPress={() => {
-        setConfirmDeleteUnsignedVisible(true);
+        setConfirmDeleteUnsignedItemsVisible(true);
         return Promise.resolve();
       }} />
       {
         unsignedUnsyncedItems.length === 0 &&
         <Text style={tailwind('m-2')}>
-          You have no unsigned data. Looks good!
+          You have no unsigned data.
         </Text>
       }
       {
@@ -124,28 +118,15 @@ function Upload({ navigation }) {
               </View>
             </ListItem>          
           ))}
-          <ConfirmPrompt visible={confirmDeleteUnsignedVisible}
+          <ConfirmPrompt visible={confirmDeleteUnsignedItemsVisible}
             actionPhrase='delete all unsigned data'
             actionExplanation='This will delete all data you collected but did not sign.'
             actionButtonText='Delete all'
             action={deleteUnsigned}
-            hide={() => setConfirmDeleteUnsignedVisible(false)} />
+            hide={() => setConfirmDeleteUnsignedItemsVisible(false)}
+          />
         </View>
       }
-
-      <Heading title='App storage' actionTitle='🔥 Clear' actionOnPress={() => {
-        setConfirmDeleteAllVisible(true);
-        return Promise.resolve();
-      }} />
-      <Text style={tailwind('m-2')}>
-        Only clear the app storage if you have nothing to upload. You will really lose all (!) data.
-      </Text>
-      <ConfirmPrompt visible={confirmDeleteAllVisible}
-        actionPhrase='clear the storage'
-        actionExplanation='This will delete data that was not yet uploaded as well as your whole history.'
-        actionButtonText='Delete all'
-        action={clearAll}
-        hide={() => setConfirmDeleteAllVisible(false)} />
     </ScrollContainer>
   );
 }
