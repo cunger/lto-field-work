@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "50",
+      "buildNumber": "51",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "The app accesses your photos to share them with Love the Oceans.",
         "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
@@ -59,14 +59,14 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "The app wants to access to your photos so you can pick those you want to share with Love the Oceans."
+          "photosPermission": "We want to access your photo gallery so you can pick pictures you want to share with us."
         }
       ],
       [
         "expo-media-library",
         {
-          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
-          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+          "photosPermission": "Allow us to access your photo gallery.",
+          "savePhotosPermission": "Allow us to save pictures you take to your photo gallery.",
           "isAccessMediaLocationEnabled": true
         }
       ]
