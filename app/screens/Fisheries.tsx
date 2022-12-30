@@ -445,13 +445,13 @@ function Fisheries({ navigation, route }) {
         flashMessage={photoFlashMessage}
         photos={item.photos}
         addPhoto={(image: Image) => {
-          update({ photos: [...item.photos, image ] });
+          update({ photos: [ ...item.photos, image ] });
         }}
         removePhoto={(image: Image) => {
           const index = item.photos.indexOf(image);
           if (index >= 0) {
             item.photos.splice(index, 1);
-            update({ photos: item.photos });
+            update({ photos: [ ...item.photos ] });
           }
         }}
         photoFileName={photoFileName}

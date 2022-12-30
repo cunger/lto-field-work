@@ -7,10 +7,17 @@ function Heading({ title, actionTitle, actionOnPress }) {
 
   const [actionIsInProgress, setActionIsInProgress] = useState(false);
 
-  if (!actionOnPress) actionOnPress = () => Promise.resolve();
-  const actionOnPressWithActivityIndication = () => {
-    setActionIsInProgress(true);
-    actionOnPress().finally(() => setActionIsInProgress(false));
+  const actionOnPressWithActivityIndication = async () => {
+    if (!actionOnPress || actionIsInProgress) return;
+    // If we're not already in action, start it.
+    try {
+      setActionIsInProgress(true);
+      await actionOnPress();
+    } catch(error) {
+      console.log(error);
+    } finally {
+      setActionIsInProgress(false);
+    }
   };
 
   if (actionTitle) {

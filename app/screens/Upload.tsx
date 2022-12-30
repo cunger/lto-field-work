@@ -27,10 +27,13 @@ function Upload({ navigation }) {
       .filter(item => Item.signed(item) && !item.synced)
       .sort(byDate)
     );
+
     setUnsignedUnsyncedItems(items
       .filter(item => !Item.signed(item) && !item.synced)
       .sort(byDate)
     );
+
+    await Datastore.clearSyncedItems();
   }
 
   useFocusEffect(

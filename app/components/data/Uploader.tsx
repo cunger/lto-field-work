@@ -85,8 +85,6 @@ async function uploadPhotos(images: Image[]) {
 
     try {
       const formdata = new FormData();
-      // const file = await toFile(image.location, image.filename, image.mimetype);
-      // formdata.append('file', file);
       formdata.append('file', {
         uri: image.location,
         name: image.filename,

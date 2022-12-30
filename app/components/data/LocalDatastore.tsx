@@ -122,7 +122,9 @@ export default class Datastore {
 
         // Signed items are uploaded.
         // Unsigned items are ignored. 
-        if (Item.signed(item)) items.push(item);
+        if (!item.synced && Item.signed(item)) {
+          items.push(item);
+        }
       }
 
       const uploaded = await upload(items);
@@ -170,26 +172,28 @@ export default class Datastore {
       }
     }
   }
+
+  // ---- Cleaning up ----
   
-  static async clearAll() {
+  static async clearSyncedItems() {
     try {
-      // Delete all entries in database (except for user info).
-      const keys = await AsyncStorage.getAllKeys();
-      await AsyncStorage.multiRemove(keys.filter(key => !key.startsWith('@user')));
-      
-      // Delete all photos stored in local filesystem.
-      const localFiles = await FileSystem.readDirectoryAsync(`${FileSystem.documentDirectory}`);
-      localFiles.forEach(filename => {
-        FileSystem.deleteAsync(`${FileSystem.documentDirectory}${filename}`);
-      });
+      const items = await this.items();
+      const syncedItems = items.filter(item => item.synced);
+      for (const item of syncedItems) {
+        try {
+          await AsyncStorage.removeItem(item.id);
+        } catch(error) {
+          console.log(error);
+          showMessage({
+            message: 'There was an error when cleaning up.',
+            description: `${error}`,
+            type: 'warning',
+            icon: 'danger'
+          });
+        }
+      }
     } catch(error) {
       console.log(error);
-      showMessage({
-        message: 'There was an error when deleting data.',
-        description: `${error}`,
-        type: 'warning',
-        icon: 'danger'
-      });
     }
   }
 };
