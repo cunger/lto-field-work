@@ -2,7 +2,6 @@ import { showMessage } from 'react-native-flash-message';
 import NetInfo from '@react-native-community/netinfo'; // https://github.com/react-native-netinfo/react-native-netinfo
 import Item from '../../model/Item';
 import Image from '../../model/Image';
-import * as FileSystem from 'expo-file-system';
 
 const BASE_URL = 'https://lto-back-office.netlify.app/.netlify/functions/api';
 
@@ -111,7 +110,7 @@ async function uploadPhotos(images: Image[]) {
         image.link = responseData.link;
         errors = [...errors, ...responseData.errors];
 
-        await FileSystem.deleteAsync(image.location);
+        // TODO clear image from cache?
       } else {
         errors = [...errors, `Response status: ${response.status}`];
       }
