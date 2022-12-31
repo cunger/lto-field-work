@@ -88,10 +88,10 @@ function Dashboard() {
             {i18n.t('DASHBOARD_ONBOARDING_STEP1').replace('$SETTINGS', `<Text style={tailwind('text-blue')}>{i18n.t('MENU_SETTINGS')}</Text>`)}
           </Text>
           <Text style={tailwind('m-2')}>
-            {i18n.t('DASHBOARD_ONBOARDING_STEP1').replace('$DATA_ENTRY', `<Text style={tailwind('text-blue')}>{i18n.t('MENU_DATA_ENTRY')}</Text>`)}
+            {i18n.t('DASHBOARD_ONBOARDING_STEP2').replace('$DATA_ENTRY', `<Text style={tailwind('text-blue')}>{i18n.t('MENU_DATA_ENTRY')}</Text>`)}
           </Text>
           <Text style={tailwind('m-2')}>
-            {i18n.t('DASHBOARD_ONBOARDING_STEP1').replace('$UPLOAD', `<Text style={tailwind('text-blue')}>{i18n.t('MENU_UPLOAD')}</Text>`)}
+            {i18n.t('DASHBOARD_ONBOARDING_STEP3').replace('$UPLOAD', `<Text style={tailwind('text-blue')}>{i18n.t('MENU_UPLOAD')}</Text>`)}
           </Text>
           <Text style={tailwind('m-2')}>
             🎉 {i18n.t('DASHBOARD_ONBOARDING_THANKS')}

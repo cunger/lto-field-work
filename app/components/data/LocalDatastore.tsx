@@ -24,6 +24,10 @@ export default class Datastore {
     await AsyncStorage.setItem('@useremail', email);
   }
 
+  static async setLanguage(iso6391code: string) {
+    return AsyncStorage.setItem('@language', iso6391code);
+  }
+
   static async getUserName() {
     return AsyncStorage.getItem('@username');
   }
@@ -38,6 +42,10 @@ export default class Datastore {
 
   static async getUserEmail() {
     return AsyncStorage.getItem('@useremail');
+  }
+
+  static async getLanguage() {
+    return AsyncStorage.getItem('@language');
   }
 
   // ---- Analytics ----

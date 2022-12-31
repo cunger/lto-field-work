@@ -24,6 +24,11 @@
   margin-bottom: 2.5rem
 }
 
+.mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem
+}
+
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem
@@ -42,11 +47,6 @@
 .my-1 {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem
-}
-
-.mx-1 {
-  margin-left: 0.25rem;
-  margin-right: 0.25rem
 }
 
 .my-4 {
@@ -159,14 +159,14 @@
   border-color: rgb(229 231 235 / var(--tw-border-opacity))
 }
 
-.border-gray {
-  --tw-border-opacity: 1;
-  border-color: rgb(175 186 204 / var(--tw-border-opacity))
-}
-
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity))
+}
+
+.border-gray {
+  --tw-border-opacity: 1;
+  border-color: rgb(175 186 204 / var(--tw-border-opacity))
 }
 
 .bg-white {

@@ -4,22 +4,29 @@ import { InputLabel } from '../components/forms/Input';
 import Datastore from '../components/data/LocalDatastore';
 import { useTailwind } from 'tailwind-rn';
 import SafeContainer from '../components/SafeContainer';
+import GlobalContext from '../context/GlobalContext';
+import SelectField from '../components/forms/SelectField';
 
 function Settings({ navigation }) {
   const tailwind = useTailwind();
+  const i18n = GlobalContext.i18n;
 
+  const [language, setLanguage] = useState('en');
   const [name, setName] = useState('');
   const [token, setToken] = useState('');
   const [email, setEmail] = useState('');
 
   useEffect(() => {
     (async () => {
+      GlobalContext.load();
+
+      setLanguage(await GlobalContext.language());
       setName(await Datastore.getUserName());
       setToken(await Datastore.getUserToken());
       setEmail(await Datastore.getUserEmail());
-      // setVerified((await Datastore.getUserVerified()) == 'true');
 
       return () => {
+        setLanguage(language);
         setName(name);
         setToken(token);
         setEmail(email);
@@ -43,23 +50,33 @@ function Settings({ navigation }) {
     saveName();
     saveToken();
     saveEmail();
-    // if (name && token) {
-    //   TokenHandler.verify(name, token).then(status => {
-    //     setVerified(status);
-    //     Datastore.setUserVerified(status);
-    //   });
-    // }
     navigation.navigate('Dashboard');
   };
 
-  const clearStorage = async () => {
-    await Datastore.clearAll();
+  const switchLanguageTo = (language: string) => {
+    GlobalContext.switchTo(language);
+    i18n.locale = language;
+    setLanguage(language);
   };
 
   return (
     <SafeContainer>
+      <View style={tailwind('mb-2')}>
+        <InputLabel text={i18n.t('SETTINGS_LANGUAGE')} />
+        <SelectField
+            value={language}
+            items={[
+              { label: `🇬🇧 ${i18n.t('LANGUAGE_EN')}`, value: 'en' },
+              { label: `🇲🇿 ${i18n.t('LANGUAGE_PT')}`, value: 'pt' },
+            ]}
+            updateAction={(value: string) => {
+              if (value) switchLanguageTo(value);
+            }}
+          />
+      </View>
+
       <View>
-        <InputLabel text='User name' />
+        <InputLabel text={i18n.t('SETTINGS_USER_NAME')} />
         <TextInput
           value={name}
           onChangeText={(value) => { setName(value); }}
@@ -69,7 +86,7 @@ function Settings({ navigation }) {
       </View>
 
       <View>
-        <InputLabel text='Email (so we can get in touch)' />
+        <InputLabel text={i18n.t('SETTINGS_EMAIL')} />
         <TextInput
           value={email}
           onChangeText={(value) => { setEmail(value); }}
@@ -79,20 +96,20 @@ function Settings({ navigation }) {
       </View>
 
       <View>
-        <InputLabel text='Token' />
+        <InputLabel text={i18n.t('SETTINGS_TOKEN')} />
         <TextInput
           value={token}
           onChangeText={(value) => { setToken(value); }}
           onEndEdition={saveToken}
           style={tailwind('mb-4 p-2 bg-white border-gray rounded-md')}
         />
-        <Text>The token is used for signing data entries. You can get one from the Love The Oceans staff.</Text>
+        <Text>{i18n.t('SETTINGS_TOKEN_EXPLANATION')}</Text>
       </View>
 
       <View style={tailwind('flex flex-row items-stretch my-6')}>
         <TouchableOpacity onPress={save} style={tailwind('px-4 py-2 mr-4 rounded-md bg-blue')}>
           <Text style={tailwind('text-sm text-white font-medium')}>
-            Save
+            {i18n.t('BUTTON_SAVE')}
           </Text>
         </TouchableOpacity>
       </View>
