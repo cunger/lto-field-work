@@ -1,10 +1,12 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import Modal from 'react-native-modal';
+import GlobalContext from '../context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
 
 function ConfirmPrompt({ visible, actionPhrase, actionExplanation, actionButtonText, action, hide }) {
   const tailwind = useTailwind();
+  const i18n = GlobalContext.i18n;
 
   return (
     <Modal
@@ -13,7 +15,7 @@ function ConfirmPrompt({ visible, actionPhrase, actionExplanation, actionButtonT
       animationOutTiming={1000}>
       <View style={tailwind('bg-white p-4 rounded-md')}>
         <Text style={tailwind('my-2')}>
-          Do you really want to {actionPhrase}?
+          {actionPhrase}
         </Text>
         <Text style={tailwind('my-2')}>
           {actionExplanation}
@@ -30,7 +32,7 @@ function ConfirmPrompt({ visible, actionPhrase, actionExplanation, actionButtonT
             style={tailwind('px-4 py-2 rounded-md bg-danger')}
             onPress={hide}>
             <Text style={tailwind('text-sm text-white font-medium')}>
-              Cancel
+              {i18n.t('BUTTON_CANCEL')}
             </Text>
           </TouchableOpacity>
         </View>

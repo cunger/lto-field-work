@@ -12,6 +12,7 @@ import Item from '../model/Item';
 
 function Upload({ navigation }) {
   const tailwind = useTailwind();
+  const i18n = GlobalContext.i18n;
   
   const [signedUnsyncedItems, setSignedUnsyncedItems] = useState<Item[]>([]);
   const [unsignedUnsyncedItems, setUnsignedUnsyncedItems] = useState<Item[]>([]);
@@ -70,17 +71,17 @@ function Upload({ navigation }) {
 
   return (
     <ScrollContainer>
-      <Heading title='Local data' actionTitle='Upload' actionOnPress={upload} />
+      <Heading title={i18n.t('UPLOAD_H_LOCAL_DATA')} actionTitle={i18n.t('UPLOAD')} actionOnPress={upload} />
       {
         signedUnsyncedItems.length === 0 &&
         <Text style={tailwind('m-2')}>
-          You have no data waiting to be uploaded.
+          {i18n.t('UPLOAD_NO_SIGNED_DATA')}
         </Text>
       }
       {
         signedUnsyncedItems.length > 0 &&
         <View>
-          <Text style={tailwind('mx-4 my-2')}>The following data has not yet been uploaded. (Click on the logo to open it.)</Text>
+          <Text style={tailwind('mx-4 my-2')}>{i18n.t('UPLOAD_TODO_SIGNED')}</Text>
           
           {signedUnsyncedItems.map((item, index) => (
             <ListItem key={index}>
@@ -95,20 +96,20 @@ function Upload({ navigation }) {
           ))}
         </View>
       }
-      <Heading title='Unsigned data' actionTitle='🔥 Delete' actionOnPress={() => {
+      <Heading title={i18n.t('UPLOAD_H_UNSIGNED_DATA')} actionTitle={`🔥 ${i18n.t('BUTTON_DELETE')}`} actionOnPress={() => {
         setConfirmDeleteUnsignedItemsVisible(true);
         return Promise.resolve();
       }} />
       {
         unsignedUnsyncedItems.length === 0 &&
         <Text style={tailwind('m-2')}>
-          You have no unsigned data.
+          {i18n.t('UPLOAD_NO_UNSIGNED_DATA')}
         </Text>
       }
       {
         unsignedUnsyncedItems.length > 0 &&
         <View>
-          <Text style={tailwind('mx-4 my-2')}>The following entries are unsigned and will not be uploaded unless you sign them. (Click on the logo to open it.)</Text>
+          <Text style={tailwind('mx-4 my-2')}>{i18n.t('UPLOAD_TODO_UNSIGNED')}</Text>
 
           {unsignedUnsyncedItems.map((item, index) => (
             <ListItem key={index}>
@@ -122,9 +123,9 @@ function Upload({ navigation }) {
             </ListItem>          
           ))}
           <ConfirmPrompt visible={confirmDeleteUnsignedItemsVisible}
-            actionPhrase='delete all unsigned data'
-            actionExplanation='This will delete all data you collected but did not sign.'
-            actionButtonText='Delete all'
+            actionPhrase={i18n.t('UPLOAD_DELETE_ALL_UNSIGNED')}
+            actionExplanation={i18n.t('UPLOAD_DELETE_ALL_UNSIGNED_EXPLANATION')}
+            actionButtonText={i18n.t('UPLOAD_DELETE_ALL')}
             action={deleteUnsigned}
             hide={() => setConfirmDeleteUnsignedItemsVisible(false)}
           />

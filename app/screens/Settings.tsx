@@ -55,7 +55,7 @@ function Settings({ navigation }) {
 
   const switchLanguageTo = (language: string) => {
     GlobalContext.switchTo(language);
-    i18n.locale = language;
+    i18n.locale = language; // Just to make sure.
     setLanguage(language);
   };
 

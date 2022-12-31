@@ -55,7 +55,7 @@ function Dashboard() {
             🗓️ {lastActiveDate}
           </Text>
           <Text style={tailwind('m-2')}>
-            📍 {lastActiveLocation || 'somewhere'}
+            📍 {lastActiveLocation || i18n.t('FALLBACK_LOCATION')}
           </Text>
 
           <Heading title={ i18n.t('DASHBOARD_H_SUMMARY') } actionTitle='' actionOnPress={() => {}} />
