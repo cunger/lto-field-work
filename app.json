@@ -18,11 +18,9 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "54",
+      "buildNumber": "55",
       "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "The app accesses your photos to share them with Love the Oceans.",
-        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
-        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+        "CFBundleAllowMixedLocalizations": true
       },
       "bundleIdentifier": "lto-field-work"
     },
@@ -41,6 +39,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "locales": {
+      "en": "./languages/english.json",
+      "pt": "./languages/portuguese.json"
     },
     "plugins": [
       [
@@ -65,8 +67,6 @@
       [
         "expo-media-library",
         {
-          "photosPermission": "Allow us to access your photo gallery.",
-          "savePhotosPermission": "Allow us to save pictures you take to your photo gallery.",
           "isAccessMediaLocationEnabled": true
         }
       ]

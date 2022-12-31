@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import ScrollContainer from '../components/ScrollContainer';
 import Heading from '../components/Heading';
 import Datastore from '../components/data/LocalDatastore';
-import GlobalContext from '../components/context/GlobalContext';
+import GlobalContext from '../context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
 import ListItem from '../components/ListItem';
 import { print } from '../components/utils/PrettyPrinter';
@@ -12,6 +12,7 @@ import Category from '../model/beachclean/Category';
 
 function Dashboard() {
   const tailwind = useTailwind();
+  const i18n = GlobalContext.i18n;
 
   const [lastActiveDate, setLastActiveDate] = useState(null);
   const [lastActiveLocation, setLastActiveLocation] = useState(null);
@@ -37,18 +38,19 @@ function Dashboard() {
         lastActiveDate && lastActiveLocation &&
         <View>
           <Text style={tailwind('my-2')}>
-            👋 Welcome back, ocean hero!
+            👋 { i18n.t('DASHBOARD_WELCOME_BACK') }
           </Text>
 
           {
             GlobalContext.unsyncedItems > 0 && 
             <Text style={tailwind('m-2 text-blue')}>
-              Don't forget! You have {GlobalContext.unsyncedItems} data item{GlobalContext.unsyncedItems > 1 ? 's ' : ' '}
-              that ha{GlobalContext.unsyncedItems > 1 ? 've' : 's'} not yet been uploaded.
+              { GlobalContext.unsyncedItems > 1 
+              ? i18n.t('DASHBOARD_DONT_FORGET_UPLOAD_SG') 
+              : i18n.t('DASHBOARD_DONT_FORGET_UPLOAD_PL').replace('$COUNT', `${GlobalContext.unsyncedItems}`) }
             </Text>
           }
 
-          <Heading title='Last activity' actionTitle='' actionOnPress={() => {}} />
+          <Heading title={ i18n.t('DASHBOARD_H_LAST_ACTIVITY') } actionTitle='' actionOnPress={() => {}} />
           <Text style={tailwind('m-2')}>
             🗓️ {lastActiveDate}
           </Text>
@@ -56,7 +58,7 @@ function Dashboard() {
             📍 {lastActiveLocation || 'somewhere'}
           </Text>
 
-          <Heading title='Summary of collected data' actionTitle='' actionOnPress={() => {}} />
+          <Heading title={ i18n.t('DASHBOARD_H_SUMMARY') } actionTitle='' actionOnPress={() => {}} />
           <Text style={tailwind('m-2')}>🎣 Catches:</Text>
           {Object.entries(statistics.Catch || {})
             .filter((entry, index) => entry[1] > 0)
@@ -74,28 +76,25 @@ function Dashboard() {
         !(lastActiveDate && lastActiveLocation) &&
         <View>
           <Text style={tailwind('my-10')}>
-            👋 Welcome, ocean hero!
+            👋 {i18n.t('DASHBOARD_WELCOME')}
           </Text>
           <Text style={tailwind('m-2')}>
-            Great to have you onboard.
+            {i18n.t('DASHBOARD_ONBOARDING_GREAT')}
           </Text>
           <Text style={tailwind('m-2')}>
-            Here are your first steps to get started:
+            {i18n.t('DASHBOARD_ONBOARDING_GET_STARTED')}
           </Text>
           <Text style={tailwind('m-2')}>
-            1. Go to <Text style={tailwind('text-blue')}>Settings</Text> and set up your user information. 
-            (This is important so we know who collected the data we receive.)
+            {i18n.t('DASHBOARD_ONBOARDING_STEP1').replace('$SETTINGS', `<Text style={tailwind('text-blue')}>{i18n.t('MENU_SETTINGS')}</Text>`)}
           </Text>
           <Text style={tailwind('m-2')}>
-            2. Click on <Text style={tailwind('text-blue')}>Data Entry</Text> and start collecting data. 
-            (You don't need an internet connection. The data is stored locally on your phone.)
+            {i18n.t('DASHBOARD_ONBOARDING_STEP1').replace('$DATA_ENTRY', `<Text style={tailwind('text-blue')}>{i18n.t('MENU_DATA_ENTRY')}</Text>`)}
           </Text>
           <Text style={tailwind('m-2')}>
-            3. When you have an internet connection, come back and go to <Text style={tailwind('text-blue')}>Upload</Text>. 
-            Then click on the Upload button to send your collected data to us.
+            {i18n.t('DASHBOARD_ONBOARDING_STEP1').replace('$UPLOAD', `<Text style={tailwind('text-blue')}>{i18n.t('MENU_UPLOAD')}</Text>`)}
           </Text>
           <Text style={tailwind('m-2')}>
-            🎉 Thanks!
+            🎉 {i18n.t('DASHBOARD_ONBOARDING_THANKS')}
           </Text>
         </View>
       }

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import FlashMessage from 'react-native-flash-message';
 import MainMenu from './app/components/navigation/MainMenu';
-import GlobalContext from './app/components/context/GlobalContext';
+import GlobalContext from './app/context/GlobalContext';
 import { TailwindProvider } from 'tailwind-rn';
 import utilities from './tailwind.json';
 

@@ -1,0 +1,5 @@
+{
+  "NSPhotoLibraryUsageDescription": "Allow us to access your photo gallery so you can choose pictures you want to share with Love the Oceans.",
+  "NSPhotoLibraryAddUsageDescription": "Allow us to save pictures you have taken to you photo gallery.",
+  "NSCameraUsageDescription": "Allow us access to your camera so you can take pictures when logging data."
+}

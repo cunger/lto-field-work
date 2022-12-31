@@ -8,6 +8,11 @@ Tailwind:
 $ npm run build:tailwind
 ```
 
+Translations:
+```
+$ npm run build:translations
+```
+
 ## Test
 
 ```

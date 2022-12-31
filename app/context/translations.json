@@ -1,0 +1,38 @@
+{
+  "en": {
+    "MENU_DASHBOARD": "Dashboard",
+    "MENU_DATA_ENTRY": "Data Entry",
+    "MENU_UPLOAD": "Upload",
+    "MENU_SETTINGS": "Settings",
+    "DASHBOARD_WELCOME": "Welcome, ocean hero!",
+    "DASHBOARD_WELCOME_BACK": "Welcome back, ocean hero!",
+    "DASHBOARD_ONBOARDING_GREAT": "Great to have you onboard.",
+    "DASHBOARD_ONBOARDING_GET_STARTED": "Here are your first steps to get started:",
+    "DASHBOARD_ONBOARDING_STEP1": "1. Go to SETTINGS and set up your user information. (This is important so we know who collected the data we receive.)",
+    "DASHBOARD_ONBOARDING_STEP2": "2. Click on DATA_ENTRY and start collecting data. (You don't need an internet connection. The data is stored locally on your phone.)",
+    "DASHBOARD_ONBOARDING_STEP3": "3. When you have an internet connection, come back and go to $UPLOAD. Then click on the Upload button to send your collected data to us.",
+    "DASHBOARD_ONBOARDING_THANKS": "Thanks!",
+    "DASHBOARD_H_LAST_ACTIVITY": "Last activity",
+    "DASHBOARD_H_SUMMARY": "Summary of collected data",
+    "DASHBOARD_DONT_FORGET_UPLOAD_SG": "Don't forget: You have one data item that has not yet been uploaded.",
+    "DASHBOARD_DONT_FORGET_UPLOAD_PL": "Don't forget: You have $COUNT data items that have not yet been uploaded."
+  },
+  "pt": {
+    "MENU_DASHBOARD": "",
+    "MENU_DATA_ENTRY": "",
+    "MENU_UPLOAD": "",
+    "MENU_SETTINGS": "",
+    "DASHBOARD_WELCOME": "",
+    "DASHBOARD_WELCOME_BACK": "",
+    "DASHBOARD_ONBOARDING_GREAT": "",
+    "DASHBOARD_ONBOARDING_GET_STARTED": "",
+    "DASHBOARD_ONBOARDING_STEP1": "",
+    "DASHBOARD_ONBOARDING_STEP2": "",
+    "DASHBOARD_ONBOARDING_STEP3": "",
+    "DASHBOARD_ONBOARDING_THANKS": "Obrigada!",
+    "DASHBOARD_H_LAST_ACTIVITY": "",
+    "DASHBOARD_H_SUMMARY": "",
+    "DASHBOARD_DONT_FORGET_UPLOAD_SG": "",
+    "DASHBOARD_DONT_FORGET_UPLOAD_PL": ""
+  }
+}

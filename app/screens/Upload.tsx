@@ -6,7 +6,7 @@ import Heading from '../components/Heading';
 import ListItem from '../components/ListItem';
 import ConfirmPrompt from '../components/ConfirmPrompt';
 import Datastore from '../components/data/LocalDatastore';
-import GlobalContext from '../components/context/GlobalContext';
+import GlobalContext from '../context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
 import Item from '../model/Item';
 

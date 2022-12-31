@@ -4,7 +4,7 @@ import Dashboard from '../../screens/Dashboard';
 import DataEntryMenu from './DataEntryMenu';
 import Upload from '../../screens/Upload';
 import Settings from '../../screens/Settings';
-import GlobalContext from '../context/GlobalContext';
+import GlobalContext from '../../context/GlobalContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTailwind } from 'tailwind-rn';
