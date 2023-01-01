@@ -13,6 +13,7 @@ BUTTON_CANCEL ; Cancel ;
 BUTTON_RESET ; Reset ;
 BUTTON_UPLOAD ; Upload ;
 BUTTON_DELETE ; Delete ;
+BUTTON_DISCARD ; Discard ;
 
 DASHBOARD_WELCOME ; Welcome, ocean hero! ;
 DASHBOARD_WELCOME_BACK ; Welcome back, ocean hero! ;
@@ -46,8 +47,41 @@ UPLOAD_DELETE_ALL_UNSIGNED ; Do you really want to delete all unsigned data? ;
 UPLOAD_DELETE_ALL_UNSIGNED_EXPLANATION ; You will lose all data that you collected but did not sign. ;
 UPLOAD_DELETE_ALL ; Delete all ;
 
+BEACHCLEAN_ADDITIONAL_NOTES ; Additional notes ;
+BEACHCLEAN_ADDITIONAL_NOTES_LABEL ; If there is something else that is important, let us know: ;
+BEACHCLEAN_CONFIRM_DISCARD ;  Do you really want to discard this data? ;
+BEACHCLEAN_ITEMS ; Items ;
+
 FALLBACK_LOCATION ; somewhere ;
+
+DATA_WAS_DISCARDED ; Data was discarded. ;
 
 NOT_AVAILABLE_YET ; Not available yet, but you'll be able to log this soon. ;
 HUMPBACKS ; You saw humpback whales? So lucky! ; 
 MANTAS ; You saw manta rays? Nice! ; 
+
+CATEGORY_PlasticS ; Plastic < 1 cm ; Plástico < 1 cm 
+CATEGORY_PlasticM ; Plastic 1-2.5 cm ; Plástico 1-2.5 cm
+CATEGORY_PlasticL ; Plastic > 2.5 cm ; Plástico > 2.5 cm
+CATEGORY_PlasticBottleCap ; Plastic bottle cap ;
+CATEGORY_Rope ; Rope ;
+CATEGORY_PlasticBag ; Plastic bag ;
+CATEGORY_FoodWrapper ; Food wrapper ;
+CATEGORY_PlasticFoam ; Plastic foam ;
+CATEGORY_PlasticBottle ; Plastic bottle ;
+CATEGORY_FishingGear ; Fishing gear ;
+CATEGORY_Footwear ; Footwear ;
+CATEGORY_CigaretteButt ; Cigarette butt ;
+CATEGORY_Glass ; Glass ;
+CATEGORY_Straw ; Straw ;
+CATEGORY_Paper ; Paper ;
+CATEGORY_Fabric ; Fabric ;
+CATEGORY_Toothbrush ; Toothbrush ;
+CATEGORY_MetalBottleCap ; Metal bottle cap ;
+CATEGORY_AluminumCan ; Aluminum can ;
+CATEGORY_OtherCan ; Other can ;
+CATEGORY_Lighter ; Lighter ;
+CATEGORY_GlowStick ; Glow stick ;
+
+OTHER ; Other ; 
+UNKNOWN ; Unknown ; 

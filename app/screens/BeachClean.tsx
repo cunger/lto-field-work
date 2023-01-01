@@ -14,9 +14,11 @@ import { showMessage } from 'react-native-flash-message';
 import { useTailwind } from 'tailwind-rn';
 import { useFocusEffect } from '@react-navigation/core';
 import Datastore from '../components/data/LocalDatastore';
+import GlobalContext from '../context/GlobalContext';
 
 function BeachClean({ navigation, route }) {
   const tailwind = useTailwind();
+  const i18n = GlobalContext.i18n;
 
   const [date, setDate] = useState(new Date());
   const [location, setLocation] = useState(null);
@@ -123,7 +125,7 @@ function BeachClean({ navigation, route }) {
   const discard = () => {
     reset();
     showMessage({
-      message: 'Data was discarded.',
+      message: i18n.t('DATA_WAS_DISCARDED'),
       type: 'warning',
       icon: 'info'
     });
@@ -142,7 +144,7 @@ function BeachClean({ navigation, route }) {
       />
 
       <View>
-        <InputGroup text='Items' />
+        <InputGroup text={i18n.t('BEACHCLEAN_ITEMS')} />
         {lines.map(line => {
           return (
             <InputSpinner
@@ -150,7 +152,7 @@ function BeachClean({ navigation, route }) {
             	step={1}
             	value={line.quantity}
             	onChange={(value) => { updateItem(value, line.category); }}
-              prepend={(<Text style={tailwind('w-1/2')}> {Category[line.category]} </Text>)}
+              prepend={(<Text style={tailwind('w-1/2')}> {i18n.t(Category[line.category])} </Text>)}
               height={30}
               rounded={false}
               key={line.key}
@@ -161,10 +163,10 @@ function BeachClean({ navigation, route }) {
       </View>
 
       <View>
-        <InputGroup text='Additional notes' />
+        <InputGroup text={i18n.t('BEACHCLEAN_ADDITIONAL_NOTES')} />
         <TextField
           numberOfLines={4}
-          label='If there is something else that is important, let us know:'
+          label={i18n.t('BEACHCLEAN_ADDITIONAL_NOTES_LABEL')}
           value={additionalNotes}
           updateAction={setAdditionalNotes}
         />
@@ -174,8 +176,8 @@ function BeachClean({ navigation, route }) {
         saveAction={openSigning} discardAction={() => setConfirmVisible(true)} resetAction={() => reset()} />
       <Signing visible={signingVisible} setVisible={setSigningVisible} items={trashItems()} closeAction={closeSigning} />
       <ConfirmPrompt visible={confirmVisible}
-        actionPhrase='discard this data entry'
-        actionButtonText='Discard'
+        actionPhrase={i18n.t('BEACHCLEAN_CONFIRM_DISCARD')}
+        actionButtonText={i18n.t('BUTTON_DISCARD')}
         action={discard}
         hide={() => setConfirmVisible(false)} />
     </ScrollContainer>
