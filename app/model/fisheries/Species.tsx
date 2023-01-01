@@ -1,12 +1,12 @@
 enum Species {
-  TeleostFish = 'Teleost fish',
-  GameFish = 'Game fish',
-  Shark = 'Shark',
-  Ray = 'Ray',
-  Crayfish = 'Crayfish',
-  Crab = 'Crab',
-  Cephalopod = 'Cephalopod',
-  Other = 'Other',
+  TeleostFish = 'SPECIES_TeleostFish',
+  GameFish = 'SPECIES_GameFish',
+  Shark = 'SPECIES_Shark',
+  Ray = 'SPECIES_Ray',
+  Crayfish = 'SPECIES_Crayfish',
+  Crab = 'SPECIES_Crab',
+  Cephalopod = 'SPECIES_Cephalopod',
+  Other = 'OTHER',
 };
 
 export default Species;

@@ -163,10 +163,10 @@ function BeachClean({ navigation, route }) {
       </View>
 
       <View>
-        <InputGroup text={i18n.t('BEACHCLEAN_ADDITIONAL_NOTES')} />
+        <InputGroup text={i18n.t('ADDITIONAL_NOTES')} />
         <TextField
           numberOfLines={4}
-          label={i18n.t('BEACHCLEAN_ADDITIONAL_NOTES_LABEL')}
+          label={i18n.t('ADDITIONAL_NOTES_LABEL')}
           value={additionalNotes}
           updateAction={setAdditionalNotes}
         />
@@ -176,7 +176,7 @@ function BeachClean({ navigation, route }) {
         saveAction={openSigning} discardAction={() => setConfirmVisible(true)} resetAction={() => reset()} />
       <Signing visible={signingVisible} setVisible={setSigningVisible} items={trashItems()} closeAction={closeSigning} />
       <ConfirmPrompt visible={confirmVisible}
-        actionPhrase={i18n.t('BEACHCLEAN_CONFIRM_DISCARD')}
+        actionPhrase={i18n.t('CONFIRM_DISCARD')}
         actionButtonText={i18n.t('BUTTON_DISCARD')}
         action={discard}
         hide={() => setConfirmVisible(false)} />

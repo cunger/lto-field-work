@@ -47,10 +47,31 @@ UPLOAD_DELETE_ALL_UNSIGNED ; Do you really want to delete all unsigned data? ;
 UPLOAD_DELETE_ALL_UNSIGNED_EXPLANATION ; You will lose all data that you collected but did not sign. ;
 UPLOAD_DELETE_ALL ; Delete all ;
 
-BEACHCLEAN_ADDITIONAL_NOTES ; Additional notes ;
-BEACHCLEAN_ADDITIONAL_NOTES_LABEL ; If there is something else that is important, let us know: ;
-BEACHCLEAN_CONFIRM_DISCARD ;  Do you really want to discard this data? ;
+ADDITIONAL_NOTES ; Additional notes ;
+ADDITIONAL_NOTES_LABEL ; If there is something else that is important, let us know: ;
+CONFIRM_DISCARD ;  Do you really want to discard this data? ;
+
 BEACHCLEAN_ITEMS ; Items ;
+
+FISHERIES_INCLUDE_PIC_FOR_SEXING ; Please make sure to include a picture that can be used for sexing. ;
+FISHERIES_METHOD ; Fishing method ;
+FISHERIES_WHICH_METHOD : Which method? ;
+FISHERIES_BASE ; From where? ; 
+FISHERIES_OTHER_METHOD ; Plase describe method: ;
+FISHERIES_CATCH ; Catch ;
+FISHERIES_NO_CATCH ; No catch. ;
+FISHERIES_REASON ; Reason: ;
+FISHERIES_SEX ; Which sex? ;
+FISHERIES_SPECIES ; Which species? ;
+FISHERIES_COMMON_NAME ; Common name ;
+
+COORDINATES ; Coordinates ;
+COORDINATES_DATE ; Date ; 
+COORDINATES_TIME ; Time ; 
+COORDINATES_HOURS ; Hours ; 
+COORDINATES_MINUTES ; Minutes ; 
+COORDINATES_LOCATION ; Location ;
+COORDINATES_WHICH_BAY ; Which bay? ;
 
 FALLBACK_LOCATION ; somewhere ;
 
@@ -82,6 +103,33 @@ CATEGORY_AluminumCan ; Aluminum can ;
 CATEGORY_OtherCan ; Other can ;
 CATEGORY_Lighter ; Lighter ;
 CATEGORY_GlowStick ; Glow stick ;
+
+BASE_Shore ; Shore ;
+BASE_Kayak ; Kayak ;
+BASE_BoatWithEngine ; Boat with engine ;
+BASE_BoatWithoutEngine ; Boat without engine ;
+BASE_JetSki ; Jet ski ;
+
+METHOD_Net ; Net ; 
+METHOD_PoleAndLine ; Pole and line ;
+METHOD_Spearfishing ; Spearfishing ;
+METHOD_Poison ; Poison ;
+METHOD_ForeignSportsFisherman ; Foreign sports fisherman ;
+
+SEX_Female ; Female ;
+SEX_Male ; Male ;
+
+SPECIES_TeleostFish ; Teleost fish ;
+SPECIES_GameFish ; Game fish ;
+SPECIES_Shark ; Shark ;
+SPECIES_Ray ; Ray ;
+SPECIES_Crayfish ; Crayfish ;
+SPECIES_Crab ; Crab ;
+SPECIES_Cephalopod ; Cephalopod ;
+
+TOTAL ; total ;
+MIN ; min ; 
+MAX ; max ;
 
 OTHER ; Other ; 
 UNKNOWN ; Unknown ; 

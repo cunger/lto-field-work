@@ -1,10 +1,10 @@
 enum Method {
-  Net = 'Net',
-  PoleAndLine = 'Pole and line',
-  Spearfishing = 'Spearfishing',
-  Poison = 'Poison',
-  ForeignSportsFisherman = 'Foreign sports fisherman',
-  Other = 'Other'
+  Net = 'METHOD_Net',
+  PoleAndLine = 'METHOD_PoleAndLine',
+  Spearfishing = 'METHOD_Spearfishing',
+  Poison = 'METHOD_Poison',
+  ForeignSportsFisherman = 'METHOD_ForeignSportsFisherman',
+  Other = 'OTHER'
 };
 
 export default Method;

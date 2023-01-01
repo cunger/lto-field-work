@@ -21,9 +21,11 @@ import Signing from '../components/forms/Signing';
 import ConfirmPrompt from '../components/ConfirmPrompt';
 import { useTailwind } from 'tailwind-rn';
 import { useFocusEffect } from '@react-navigation/core';
+import GlobalContext from '../context/GlobalContext';
 
 function Fisheries({ navigation, route }) {
   const tailwind = useTailwind();
+  const i18n = GlobalContext.i18n;
 
   const [date, setDate] = useState(new Date());
   const [location, setLocation] = useState(null);
@@ -137,7 +139,7 @@ function Fisheries({ navigation, route }) {
 
   const photoFlashMessage = () => {
     if (item.species == Species.Shark || item.species == Species.Ray) {
-      return 'Please make sure to include a picture that can be used for sexing.';
+      return i18n.t('FISHERIES_INCLUDE_PIC_FOR_SEXING');
     } else {
       return '';
     }
@@ -189,10 +191,10 @@ function Fisheries({ navigation, route }) {
       />
 
       <View>
-        <InputGroup text='Fishing method' />
+        <InputGroup text={i18n.t('FISHERIES_METHOD')} />
         <View style={tailwind('flex flex-row items-stretch my-2')}>
           <SelectField
-            label='Which method?'
+            label={i18n.t('FISHERIES_WHICH_METHOD')}
             value={item.method}
             type={Method}
             updateAction={(value: string) => {
@@ -201,14 +203,14 @@ function Fisheries({ navigation, route }) {
             }}
           />
           <SelectField
-            label='From where?'
+            label={i18n.t('FISHERIES_BASE')}
             value={item.base}
             type={Base}
             updateAction={(value: string) => update({ base: value })}
           />
         </View>
         <TextField
-          label='Please describe method:'
+          label={i18n.t('FISHERIES_OTHER_METHOD')}
           value={item.other_method}
           updateAction={(value: string) => update({ other_method: value })}
           hide={hideOtherMethod}
@@ -216,14 +218,14 @@ function Fisheries({ navigation, route }) {
       </View>
 
       <View>
-        <InputGroup text='Catch' />
+        <InputGroup text={i18n.t('FISHERIES_CATCH')} />
 
         <View style={tailwind('mb-2 py-2 border-b border-gray-200')}>
           <BouncyCheckbox
             size={25}
             fillColor='#6ec1e4'
             unfillColor='white'
-            text='No catch.'
+            text={i18n.t('FISHERIES_NO_CATCH')}
             textStyle={{ textDecorationLine: 'none' }}
             iconStyle={{ borderColor: '#6ec1e4' }}
             isChecked={isNoCatch}
@@ -240,7 +242,7 @@ function Fisheries({ navigation, route }) {
             }}
           />
           <TextField
-            label='Reason:'
+            label={i18n.t('FISHERIES_REASON')}
             value={item.reason}
             updateAction={(value) => update({ reason: value })}
             hide={!isNoCatch}
@@ -263,13 +265,13 @@ function Fisheries({ navigation, route }) {
             style={tailwind('mr-4')}
           />
           <SelectField
-            label='Which sex?'
+            label={i18n.t('FISHERIES_SEX')}
             value={item.sex}
             type={Sex}
             updateAction={(value: string) => update({ sex: value })}
           />
           <SelectField
-            label='Which species?'
+            label={i18n.t('FISHERIES_SPECIES')}
             value={item.species}
             type={Species}
             updateAction={(value: string) => {
@@ -280,7 +282,7 @@ function Fisheries({ navigation, route }) {
         </View>
 
         <TextField
-          label='Common name'
+          label={i18n.t('FISHERIES_COMMON_NAME')}
           value={item.common_name}
           updateAction={(value: string) => update({ common_name: value })}
         />
@@ -460,10 +462,10 @@ function Fisheries({ navigation, route }) {
       />
 
       <View>
-        <InputGroup text='Additional notes' />
+        <InputGroup text={i18n.t('ADDITIONAL_NOTES')} />
         <TextField
           numberOfLines={4}
-          label='If there is something else that is important, let us know:'
+          label={i18n.t('ADDITIONAL_NOTES_LABEL')}
           value={item.additionalNotes}
           updateAction={(value: string) => update({ additionalNotes: value })}
         />
@@ -472,8 +474,8 @@ function Fisheries({ navigation, route }) {
       <SubmitButtons saveAction={openSigning} discardAction={() => setConfirmVisible(true)} resetAction={() => resetAllFields()} />
       <Signing visible={signatureVisible} setVisible={setSignatureVisible} items={[item]} closeAction={closeSigning} />
       <ConfirmPrompt visible={confirmVisible}
-        actionPhrase='discard this data entry (and lose all information logged here)'
-        actionButtonText='Discard'
+        actionPhrase={i18n.t('CONFIRM_DISCARD')}
+        actionButtonText={i18n.t('BUTTON_DISCARD')}
         action={discard}
         hide={() => setConfirmVisible(false)} />
     </ScrollContainer>

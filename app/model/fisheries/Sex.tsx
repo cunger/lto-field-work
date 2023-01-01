@@ -1,7 +1,7 @@
 enum Sex {
-  Unknown = 'Unknown',
-  Female = 'Female',
-  Male = 'Male',
+  Unknown = 'UNKNOWN',
+  Female = 'SEX_Female',
+  Male = 'SEX_Male',
 };
 
 export default Sex;
