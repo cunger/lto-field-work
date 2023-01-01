@@ -4,6 +4,8 @@ import Location from './Location';
 import Image from './Image';
 import { print } from '../components/utils/PrettyPrinter';
 import Category from '../model/beachclean/Category';
+import GlobalContext from '../context/GlobalContext';
+import { I18n } from 'i18n-js/typings';
 
 export default class Item {
   id: string;
@@ -31,11 +33,11 @@ export default class Item {
     return !!(item.signature && item.signature.token);
   }
 
-  public static prettyPrint(item: Item): string {
+  public static prettyPrint(item: Item, i18n: I18n): string {
     switch (item.type) {
-      case 'Catch': return print(item.quantity, item.common_name || item.species || 'fish', 'no catch');
-      case 'Trash': return print(item.quantity, Category[item.category]);
-      default: return 'something';
+      case 'Catch': return print(item.quantity, item.common_name || item.species || 'Fish', i18n, 'NO_CATCH');
+      case 'Trash': return print(item.quantity, Category[item.category], i18n);
+      default: return 'SOMETHING';
     }
   }
 
@@ -47,7 +49,7 @@ export default class Item {
     }
   }
 
-  public static printDetails(item: Item): string {
+  public static printDetails(item: Item, locale: string): string {
     let location = item.location;
     let date = item.date;
     if (date && typeof date == 'string') {
@@ -55,9 +57,9 @@ export default class Item {
     }
 
     if (date && location) {
-      return `(${date.toLocaleDateString()}, ${location})`;
+      return `(${date.toLocaleDateString(locale)}, ${location})`;
     } else if (date) {
-      return `(${date.toLocaleDateString()})`;
+      return `(${date.toLocaleDateString(locale)})`;
     } else if (location) {
       return `(${location})`;
     }

@@ -20,7 +20,13 @@ function Dashboard() {
 
   async function loadData() {
     GlobalContext.load();
-    Datastore.lastActiveDate().then(date => setLastActiveDate(date));
+    Datastore.lastActiveDate().then(date => {
+      if (date) {
+        setLastActiveDate(new Date(parseInt(date)).toLocaleDateString(i18n.locale));
+      } else {
+        setLastActiveDate('-');
+      }
+    });
     Datastore.lastActiveLocation().then(location => setLastActiveLocation(location));
     Datastore.statistics().then(statistics => setStatistics(statistics));
   }
@@ -63,12 +69,12 @@ function Dashboard() {
           {Object.entries(statistics.Catch || {})
             .filter((entry, index) => entry[1] > 0)
             .map((entry, index) => (
-              <ListItem key={index}><Text>{` ️ ${print(entry[1], entry[0])}`}</Text></ListItem>
+              <ListItem key={index}><Text>{` ️ ${print(entry[1], entry[0], i18n)}`}</Text></ListItem>
             ))
           }
           <Text style={tailwind('m-2')}>🗑️ Trash:</Text>
           {Object.entries(statistics.Trash || {}).map((entry, index) => (
-            <ListItem key={index}><Text>{` ️ ${print(entry[1], Category[entry[0]])}`}</Text></ListItem>
+            <ListItem key={index}><Text>{` ️ ${print(entry[1], Category[entry[0]], i18n)}`}</Text></ListItem>
           ))}
         </View>
       }

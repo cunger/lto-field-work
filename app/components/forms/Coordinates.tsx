@@ -62,7 +62,7 @@ function Coordinates({ inputDate, inputLocation, setDateOnParent, setLocationOnP
         <InputGroup text={i18n.t('COORDINATES')} />
         <InputLabel text={i18n.t('COORDINATES_DATE')} />
         <InputField 
-          text={date.toDateString()}
+          text={date.toLocaleDateString(i18n.locale)}
           action={() => setDatePickerVisible(true)} 
         />
         <DateTimePickerModal

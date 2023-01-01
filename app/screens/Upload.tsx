@@ -89,8 +89,8 @@ function Upload({ navigation }) {
                 <TouchableOpacity onPress={() => openItem(item)} style={tailwind('w-10 px-2 py-2 border border-gray-300 rounded-md bg-white')}>
                   <Text>{Item.logoFor(item)}</Text>
                 </TouchableOpacity>
-                <Text> {Item.prettyPrint(item)}</Text>
-                <Text style={tailwind('text-gray-500')}> {Item.printDetails(item)}</Text>
+                <Text> {Item.prettyPrint(item, i18n)}</Text>
+                <Text style={tailwind('text-gray-500')}> {Item.printDetails(item, i18n.locale)}</Text>
               </View>
             </ListItem>          
           ))}
@@ -117,8 +117,8 @@ function Upload({ navigation }) {
                 <TouchableOpacity onPress={() => openItem(item)} style={tailwind('w-10 px-2 py-2 border border-gray-300 rounded-md bg-white')}>
                   <Text>{Item.logoFor(item)}</Text>
                 </TouchableOpacity>
-                <Text> {Item.prettyPrint(item)}</Text>
-                <Text style={tailwind('text-gray-500')}> {Item.printDetails(item)}</Text>
+                <Text> {Item.prettyPrint(item, i18n)}</Text>
+                <Text style={tailwind('text-gray-500')}> {Item.printDetails(item, i18n.locale)}</Text>
               </View>
             </ListItem>          
           ))}

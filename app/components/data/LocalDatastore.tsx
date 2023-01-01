@@ -1,6 +1,5 @@
 import { showMessage } from 'react-native-flash-message';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // https://react-native-async-storage.github.io/async-storage/docs/api/
-import * as FileSystem from 'expo-file-system';
 import Item from '../../model/Item';
 import upload from './Uploader';
 
@@ -56,7 +55,7 @@ export default class Datastore {
   }
 
   static async saveInStatistics(item: Item) {
-    await AsyncStorage.setItem('@lastactivedate', item.date.toLocaleDateString());
+    await AsyncStorage.setItem('@lastactivedate', `${item.date.getTime()}`);
     await AsyncStorage.setItem('@lastactivelocation', `${item.location}`);
 
     const statisticsString = await AsyncStorage.getItem('@statistics');
@@ -69,7 +68,7 @@ export default class Datastore {
     }
 
     if (item.type == 'Trash') {
-      const category = `${item.category.startsWith('Plastic') ? 'Plastic piece' : item.category}`;
+      const category = `${item.category.startsWith('Plastic') ? 'Plastic' : item.category}`;
       statistics.Trash = statistics.Trash || {};
       statistics.Trash[category] = (statistics.Trash[category] || 0) + item.quantity;
     }

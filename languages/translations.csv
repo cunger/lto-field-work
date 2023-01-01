@@ -74,6 +74,7 @@ COORDINATES_LOCATION ; Location ;
 COORDINATES_WHICH_BAY ; Which bay? ;
 
 FALLBACK_LOCATION ; somewhere ;
+NO_CATCH ; no catch ;
 
 DATA_WAS_DISCARDED ; Data was discarded. ;
 
@@ -81,6 +82,7 @@ NOT_AVAILABLE_YET ; Not available yet, but you'll be able to log this soon. ;
 HUMPBACKS ; You saw humpback whales? So lucky! ; 
 MANTAS ; You saw manta rays? Nice! ; 
 
+CATEGORY_Plastic ; Plastic piece ; Plástico 
 CATEGORY_PlasticS ; Plastic < 1 cm ; Plástico < 1 cm 
 CATEGORY_PlasticM ; Plastic 1-2.5 cm ; Plástico 1-2.5 cm
 CATEGORY_PlasticL ; Plastic > 2.5 cm ; Plástico > 2.5 cm
@@ -119,6 +121,7 @@ METHOD_ForeignSportsFisherman ; Foreign sports fisherman ;
 SEX_Female ; Female ;
 SEX_Male ; Male ;
 
+SPECIES_Fish ; Fish ;
 SPECIES_TeleostFish ; Teleost fish ;
 SPECIES_GameFish ; Game fish ;
 SPECIES_Shark ; Shark ;
@@ -131,5 +134,6 @@ TOTAL ; total ;
 MIN ; min ; 
 MAX ; max ;
 
+SOMETHING ; Something ;
 OTHER ; Other ; 
-UNKNOWN ; Unknown ; 
+UNKNOWN ; Unknown ;
