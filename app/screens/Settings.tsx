@@ -66,8 +66,8 @@ function Settings({ navigation }) {
         <SelectField
             value={language}
             items={[
-              { label: `🇬🇧 ${i18n.t('LANGUAGE_EN')}`, value: 'en' },
-              { label: `🇲🇿 ${i18n.t('LANGUAGE_PT')}`, value: 'pt' },
+              { label: `🇬🇧 ${i18n.t('LANGUAGE_EN')}`, value: 'en', key: 'en' },
+              { label: `🇲🇿 ${i18n.t('LANGUAGE_PT')}`, value: 'pt', key: 'pt' },
             ]}
             updateAction={(value: string) => {
               if (value) switchLanguageTo(value);

@@ -291,17 +291,17 @@ function Fisheries({ navigation, route }) {
           isSchoolOfFish && isMinMaxSpecies &&
           <View>
             <Text style={tailwind('my-2 text-blue')}>
-              Please specify all properties both for the smallest and the biggest of the caught fish.
+              {i18n.t('FISHERIES_MIN_MAX_NOTE')}
             </Text>
             <MinMaxTextField
-              label='Total length (cm)'
+              label={i18n.t('FISHERIES_TOTAL_LENGTH')}
               minValue={item.length.min}
               maxValue={item.length.max}
               minUpdateAction={(value: string) => updateDimension('length', 'min', value)}
               maxUpdateAction={(value: string) => updateDimension('length', 'max', value)}
             />
             <MinMaxTextField
-              label='Head length (cm)'
+              label={i18n.t('FISHERIES_HEAD_LENGTH')}
               minValue={item.head_length.min}
               maxValue={item.head_length.max}
               minUpdateAction={(value: string) => updateDimension('head_length', 'min', value)}
@@ -309,7 +309,7 @@ function Fisheries({ navigation, route }) {
               hide={hideHeadLength}
             />
             <MinMaxTextField
-              label='Head width (cm)'
+              label={i18n.t('FISHERIES_HEAD_WIDTH')}
               minValue={item.head_width.min}
               maxValue={item.head_width.max}
               minUpdateAction={(value: string) => updateDimension('head_width', 'min', value)}
@@ -317,7 +317,7 @@ function Fisheries({ navigation, route }) {
               hide={hideHeadWidth}
             />
             <MinMaxTextField
-              label='Fork length (cm)'
+              label={i18n.t('FISHERIES_FORK_LENGTH')}
               minValue={item.fork_length.min}
               maxValue={item.fork_length.max}
               minUpdateAction={(value: string) => updateDimension('fork_length', 'min', value)}
@@ -325,7 +325,7 @@ function Fisheries({ navigation, route }) {
               hide={hideForkLength}
             />
             <MinMaxTextField
-              label='Precaudal length (cm)'
+              label={i18n.t('FISHERIES_PRECAUDAL_LENGTH')}
               minValue={item.precaudal_length.min}
               maxValue={item.precaudal_length.max}
               minUpdateAction={(value: string) => updateDimension('precaudal_length', 'min', value)}
@@ -333,7 +333,7 @@ function Fisheries({ navigation, route }) {
               hide={hidePrecaudalLength}
             />
             <MinMaxTextField
-              label='Carapace length (cm)'
+              label={i18n.t('FISHERIES_CARAPACE_LENGTH')}
               minValue={item.carapace_length.min}
               maxValue={item.carapace_length.max}
               minUpdateAction={(value: string) => updateDimension('carapace_length', 'min', value)}
@@ -341,7 +341,7 @@ function Fisheries({ navigation, route }) {
               hide={hideCarapaceLength}
             />
             <MinMaxTextField
-              label="Carapace width (cm)"
+              label={i18n.t('FISHERIES_CARAPACE_WIDTH')}
               minValue={item.carapace_width.min}
               maxValue={item.carapace_width.max}
               minUpdateAction={(value: string) => updateDimension('carapace_width', 'min', value)}
@@ -349,7 +349,7 @@ function Fisheries({ navigation, route }) {
               hide={hideCarapaceWidth}
             />
             <MinMaxTextField
-              label='Tail length (cm)'
+              label={i18n.t('FISHERIES_TAIL_LENGTH')}
               minValue={item.tail_length.min}
               maxValue={item.tail_length.max}
               minUpdateAction={(value: string) => updateDimension('tail_length', 'min', value)}
@@ -357,7 +357,7 @@ function Fisheries({ navigation, route }) {
               hide={hideTailLength}
             />
             <MinMaxTextField
-              label='Disk width (cm)'
+              label={i18n.t('FISHERIES_DISK_WIDTH')}
               minValue={item.disk_width.min}
               maxValue={item.disk_width.max}
               minUpdateAction={(value: string) => updateDimension('disk_width', 'min', value)}
@@ -370,7 +370,7 @@ function Fisheries({ navigation, route }) {
           isSchoolOfFish && !isMinMaxSpecies &&
           <View>
             <Text style={tailwind('my-2 text-blue')}>
-              If they have different sizes, please log them separately.
+              {i18n.t('FISHERIES_SCHOOL_OF_FISH_NOTE')}
             </Text>
           </View>
         }
@@ -378,62 +378,62 @@ function Fisheries({ navigation, route }) {
           (!isSchoolOfFish || !isMinMaxSpecies) &&
           <View>
             <TextField
-              label='Total length (cm)'
+              label={i18n.t('FISHERIES_TOTAL_LENGTH')}
               value={item.length.total}
               updateAction={(value: string) => updateDimension('length', 'total', value)}
               keyboardType='numeric'
             />
             <TextField
-              label='Head length (cm)'
+              label={i18n.t('FISHERIES_HEAD_LENGTH')}
               value={item.head_length.total}
               updateAction={(value: string) => updateDimension('head_length', 'total', value)}
               keyboardType='numeric'
               hide={hideHeadLength}
             />
             <TextField
-              label='Head width (cm)'
+              label={i18n.t('FISHERIES_HEAD_WIDTH')}
               value={item.head_width.total}
               updateAction={(value: string) => updateDimension('head_width', 'total', value)}
               keyboardType='numeric'
               hide={hideHeadWidth}
             />
             <TextField
-              label='Fork length (cm)'
+              label={i18n.t('FISHERIES_FORK_LENGTH')}
               value={item.fork_length.total}
               updateAction={(value: string) => updateDimension('fork_length', 'total', value)}
               keyboardType='numeric'
               hide={hideForkLength}
             />
             <TextField
-              label='Precaudal length (cm)'
+              label={i18n.t('FISHERIES_PRECAUDAL_LENGTH')}
               value={item.precaudal_length.total}
               updateAction={(value: string) => updateDimension('precaudal_length', 'total', value)}
               keyboardType='numeric'
               hide={hidePrecaudalLength}
             />
             <TextField
-              label='Carapace length (cm)'
+              label={i18n.t('FISHERIES_CARAPACE_LENGTH')}
               value={item.carapace_length.total}
               updateAction={(value: string) => updateDimension('carapace_length', 'total', value)}
               keyboardType='numeric'
               hide={hideCarapaceLength}
             />
             <TextField
-              label="Carapace width (cm) if it's a crab"
+              label={i18n.t('FISHERIES_CARAPACE_WIDTH')}
               value={item.carapace_width.total}
               updateAction={(value: string) => updateDimension('carapace_width', 'total', value)}
               keyboardType='numeric'
               hide={hideCarapaceWidth}
             />
             <TextField
-              label='Tail length (cm)'
+              label={i18n.t('FISHERIES_TAIL_LENGTH')}
               value={item.tail_length.total}
               updateAction={(value: string) => updateDimension('tail_length', 'total', value)}
               keyboardType='numeric'
               hide={hideTailLength}
             />
             <TextField
-              label='Disk width (cm)'
+              label={i18n.t('FISHERIES_DISK_WIDTH')}
               value={item.disk_width.total}
               updateAction={(value: string) => updateDimension('disk_width', 'total', value)}
               keyboardType='numeric'

@@ -71,7 +71,7 @@ function Upload({ navigation }) {
 
   return (
     <ScrollContainer>
-      <Heading title={i18n.t('UPLOAD_H_LOCAL_DATA')} actionTitle={i18n.t('UPLOAD')} actionOnPress={upload} />
+      <Heading title={i18n.t('UPLOAD_H_LOCAL_DATA')} actionTitle={i18n.t('BUTTON_UPLOAD')} actionOnPress={upload} />
       {
         signedUnsyncedItems.length === 0 &&
         <Text style={tailwind('m-2')}>

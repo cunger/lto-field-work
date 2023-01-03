@@ -12,6 +12,7 @@ import { useTailwind } from 'tailwind-rn';
 const Tab = createBottomTabNavigator();
 const MainMenu = () => {
   const tailwind = useTailwind();
+  const i18n = GlobalContext.i18n;
 
   const [count, setCount] = useState(GlobalContext.unsyncedItems);
   GlobalContext.subscribe(setCount);
@@ -38,7 +39,7 @@ const MainMenu = () => {
           name='Dashboard'
           component={Dashboard}
           options={{
-            tabBarLabel: 'Dashboard',
+            tabBarLabel: i18n.t('MENU_DASHBOARD'),
             tabBarIcon: ({ color, size }) => (
               <Feather name='clipboard' size={size} color={color} />
             ),
@@ -48,7 +49,7 @@ const MainMenu = () => {
           name='DataEntry'
           component={DataEntryMenu}
           options={{
-            tabBarLabel: 'Data Entry',
+            tabBarLabel: i18n.t('MENU_DATA_ENTRY'),
             tabBarIcon: ({ color, size }) => (
               <Feather name='plus-circle' size={size} color={color} />
             ),
@@ -59,7 +60,7 @@ const MainMenu = () => {
           name='Upload'
           component={Upload}
           options={{
-            tabBarLabel: 'Upload',
+            tabBarLabel: i18n.t('MENU_UPLOAD'),
             tabBarIcon: ({ color, size }) => (
               <Feather name='upload' size={size} color={color} />
             ),
@@ -70,7 +71,7 @@ const MainMenu = () => {
           name='Settings'
           component={Settings}
           options={{
-            tabBarLabel: 'Settings',
+            tabBarLabel: i18n.t('MENU_SETTINGS'),
             tabBarIcon: ({ color, size }) => (
               <Feather name='settings' size={size} color={color} />
             ),

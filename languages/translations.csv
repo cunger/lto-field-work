@@ -1,9 +1,14 @@
 key ; english ; portuguese
 
 MENU_DASHBOARD ; Dashboard ;
-MENU_DATA_ENTRY ; Data Entry ;
+MENU_DATA_ENTRY ; Data entry ;
 MENU_UPLOAD ; Upload ;
 MENU_SETTINGS ; Settings ;
+MENU_SELECT ; Select ;
+MENU_BEACHCLEAN ; Beach clean ;
+MENU_FISHERIES ; Fisheries ;
+MENU_WHALE ; Humpback whale ; 
+MENU_TURTLE ; Turtle ;
 
 LANGUAGE_EN ; English ; Inglês
 LANGUAGE_PT ; Portuguese ; Português 
@@ -39,8 +44,8 @@ SETTINGS_TOKEN_EXPLANATION ; The token is used for signing data entries. You can
 
 UPLOAD_H_LOCAL_DATA ; Local data ;
 UPLOAD_H_UNSIGNED_DATA ; Unsigned data ;
-UPLOAD_NO_SIGNED ; You have no data waiting to be uploaded. ;
-UPLOAD_NO_UNSIGNED ; You have no unsigned data. ;
+UPLOAD_NO_SIGNED_DATA ; You have no data waiting to be uploaded. ;
+UPLOAD_NO_UNSIGNED_DATA ; You have no unsigned data. ;
 UPLOAD_TODO_SIGNED ; The following data has not yet been uploaded. (Click on the logo to open it.) ;
 UPLOAD_TODO_UNSIGNED ; The following entries are unsigned and will not be uploaded unless you sign them. (Click on the logo to open it.) ;
 UPLOAD_DELETE_ALL_UNSIGNED ; Do you really want to delete all unsigned data? ; 
@@ -54,8 +59,10 @@ CONFIRM_DISCARD ;  Do you really want to discard this data? ;
 BEACHCLEAN_ITEMS ; Items ;
 
 FISHERIES_INCLUDE_PIC_FOR_SEXING ; Please make sure to include a picture that can be used for sexing. ;
+FISHERIES_SCHOOL_OF_FISH_NOTE ; If they have different sizes, please log them separately. ;
+FISHERIES_MIN_MAX_NOTE ; Please specify all properties both for the smallest and the biggest of the caught fish. ; 
 FISHERIES_METHOD ; Fishing method ;
-FISHERIES_WHICH_METHOD : Which method? ;
+FISHERIES_WHICH_METHOD ; Which method? ;
 FISHERIES_BASE ; From where? ; 
 FISHERIES_OTHER_METHOD ; Plase describe method: ;
 FISHERIES_CATCH ; Catch ;
@@ -64,6 +71,15 @@ FISHERIES_REASON ; Reason: ;
 FISHERIES_SEX ; Which sex? ;
 FISHERIES_SPECIES ; Which species? ;
 FISHERIES_COMMON_NAME ; Common name ;
+FISHERIES_TOTAL_LENGTH ; Total length (cm) ;
+FISHERIES_HEAD_LENGTH ; Head length (cm) ;
+FISHERIES_HEAD_WIDTH ; Head width (cm) ;
+FISHERIES_FORK_LENGTH ; Fork length (cm) ;
+FISHERIES_PRECAUDAL_LENGTH ; Precaudal length (cm) ;
+FISHERIES_CARAPACE_LENGTH ; Carapace length (cm) ;
+FISHERIES_CARAPACE_WIDTH ; Carapace width (cm) ;
+FISHERIES_TAIL_LENGTH ; Tail length (cm) ;
+FISHERIES_DISK_WIDTH ; Disk width (cm) ;
 
 COORDINATES ; Coordinates ;
 COORDINATES_DATE ; Date ; 
@@ -73,14 +89,19 @@ COORDINATES_MINUTES ; Minutes ;
 COORDINATES_LOCATION ; Location ;
 COORDINATES_WHICH_BAY ; Which bay? ;
 
-FALLBACK_LOCATION ; somewhere ;
-NO_CATCH ; no catch ;
-
 DATA_WAS_DISCARDED ; Data was discarded. ;
 
-NOT_AVAILABLE_YET ; Not available yet, but you'll be able to log this soon. ;
+NOT_AVAILABLE_YET ; You'll be able to log this soon. ;
 HUMPBACKS ; You saw humpback whales? So lucky! ; 
-MANTAS ; You saw manta rays? Nice! ; 
+TURTLES ; You saw turtles? Nice! ; 
+
+LOCATION_Guinjata ; Guinjata ; Guinjata
+LOCATION_Paindane ; Paindane ; Paindane 
+LOCATION_Coconut ; Coconut ; Coconut
+
+FALLBACK_LOCATION ; somewhere ;
+
+NO_CATCH ; no catch ;
 
 CATEGORY_Plastic ; Plastic piece ; Plástico 
 CATEGORY_PlasticS ; Plastic < 1 cm ; Plástico < 1 cm 

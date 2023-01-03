@@ -6,9 +6,10 @@ export const print = (count: number, noun: string, i18n: I18n, zeroAlternative?:
   }
 
   if (!noun || noun == 'undefined') {
-    noun = i18n.t('OTHER');
+    noun = 'OTHER';
   }
-  
+
+  noun = i18n.t(noun);
   noun = noun.toLowerCase();
 
   let plural = (noun: string) => noun;

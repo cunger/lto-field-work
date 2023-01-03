@@ -9,6 +9,7 @@ import { useTailwind } from 'tailwind-rn';
 import ListItem from '../components/ListItem';
 import { print } from '../components/utils/PrettyPrinter';
 import Category from '../model/beachclean/Category';
+import Species from '../model/fisheries/Species';
 
 function Dashboard() {
   const tailwind = useTailwind();
@@ -22,7 +23,9 @@ function Dashboard() {
     GlobalContext.load();
     Datastore.lastActiveDate().then(date => {
       if (date) {
-        setLastActiveDate(new Date(parseInt(date)).toLocaleDateString(i18n.locale));
+        const locale = i18n.locale == 'en' ? 'en-UK' : i18n.locale;
+        const lastDate = new Date(parseInt(date)).toLocaleDateString(locale, { dateStyle: 'long' });
+        setLastActiveDate(lastDate);
       } else {
         setLastActiveDate('-');
       }
@@ -67,15 +70,17 @@ function Dashboard() {
           <Heading title={ i18n.t('DASHBOARD_H_SUMMARY') } actionTitle='' actionOnPress={() => {}} />
           <Text style={tailwind('m-2')}>🎣 Catches:</Text>
           {Object.entries(statistics.Catch || {})
-            .filter((entry, index) => entry[1] > 0)
+            .filter((entry) => entry[1] > 0)
             .map((entry, index) => (
-              <ListItem key={index}><Text>{` ️ ${print(entry[1], entry[0], i18n)}`}</Text></ListItem>
+              <ListItem key={index}><Text>{` ️ ${print(entry[1], Species[entry[0]], i18n)}`}</Text></ListItem>
             ))
           }
           <Text style={tailwind('m-2')}>🗑️ Trash:</Text>
-          {Object.entries(statistics.Trash || {}).map((entry, index) => (
-            <ListItem key={index}><Text>{` ️ ${print(entry[1], Category[entry[0]], i18n)}`}</Text></ListItem>
-          ))}
+          {Object.entries(statistics.Trash || {})
+            .map((entry, index) => (
+              <ListItem key={index}><Text>{` ️ ${print(entry[1], Category[entry[0]], i18n)}`}</Text></ListItem>
+            ))
+          }
         </View>
       }
       { 

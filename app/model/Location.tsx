@@ -1,7 +1,7 @@
 enum Location {
-  Guinjata = 'Guinjata',
-  Paindane = 'Paindane',
-  Coconut = 'Coconut',
+  Guinjata = 'LOCATION_Guinjata',
+  Paindane = 'LOCATION_Paindane',
+  Coconut = 'LOCATION_Coconut',
 };
 
 export default Location;

@@ -7,7 +7,6 @@ import { useTailwind } from 'tailwind-rn';
 import { showMessage } from 'react-native-flash-message';
 import * as ImagePicker from 'expo-image-picker';
 import * as MediaLibrary from 'expo-media-library';
-import { ImagePickerAsset } from 'expo-image-picker';
 
 function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, removePhoto, setPhotosNote }) {
   const tailwind = useTailwind();
@@ -44,12 +43,20 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
 
   const choosePhoto = async () => {
     try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      });
+      const permissionResponse = await MediaLibrary.requestPermissionsAsync();
+      if (permissionResponse.granted) {
+        const result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images
+        });
 
-      for (const asset of (result?.assets || [])) {
-        await addPhoto(createImage(asset));
+        for (const asset of (result?.assets || [])) {
+          if (!asset?.assetId) continue;
+          const info = await MediaLibrary.getAssetInfoAsync(asset.assetId);
+          if (!info?.localUri) continue;
+          await addPhoto(createImage(info.localUri));
+        }
+      } else {
+        // TODO what?
       }
     } catch (error) {
       showMessage({
@@ -64,24 +71,29 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
 
   const takePhoto = async () => {
     try {
-      const result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      });
+      const permission = await MediaLibrary.requestPermissionsAsync();
+      if (permission.granted) {
+        const result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        });
 
-      for (const asset of (result?.assets || [])) {
-        try {
-          await MediaLibrary.saveToLibraryAsync(asset.uri);
-        } catch (error) {
-          showMessage({
-            message: `Failed to save photo to your gallery. It will only be stored locally in this app.`,
-            description: `${error}`,
-            type: 'danger',
-            icon: 'warning',
-            duration: 4000
-          });
+        for (const asset of (result?.assets || [])) {
+          try {
+            if (!asset?.uri) continue;
+            const savedAsset = await MediaLibrary.createAssetAsync(asset.uri);
+            await addPhoto(createImage(savedAsset.uri));
+          } catch (error) {
+            showMessage({
+              message: `Failed to save photo to your gallery.`,
+              description: `${error}`,
+              type: 'danger',
+              icon: 'warning',
+              duration: 3000
+            });
+          }
         }
-
-        await addPhoto(createImage(asset));
+      } else {
+        // TODO what?
       }
     } catch (error) {
       showMessage({
@@ -94,11 +106,11 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
     }
   };
 
-  const createImage = (asset: ImagePickerAsset) => {
-    const uriparts = asset.uri.split('.');
+  const createImage = (uri: string) => {
+    const uriparts = uri.split('.');
     const filetype = uriparts[uriparts.length - 1];
     const name = photoFileName(filetype).replaceAll(' ', '-');
-    return new Image(name, asset.uri);
+    return new Image(name, uri);
   };
 
   return (
