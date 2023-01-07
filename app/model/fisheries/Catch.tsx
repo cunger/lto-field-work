@@ -37,7 +37,7 @@ export default class Catch extends Item {
   carapace_width: Dimensions;
   disk_width: Dimensions;
 
-  constructor(date: Date, location: Location | null, base?: Base, method?: Method, other_method?: string) {
+  constructor(date: number, location: Location | null, base?: Base, method?: Method, other_method?: string) {
     super('Catch', date, location);
     this.quantity = 1;
     this.common_name = '';

@@ -10,8 +10,8 @@ MENU_FISHERIES ; Fisheries ;
 MENU_WHALE ; Humpback whale ; 
 MENU_TURTLE ; Turtle ;
 
-LANGUAGE_EN ; English ; Inglês
-LANGUAGE_PT ; Portuguese ; Português 
+LANGUAGE_EN ; English ; English
+LANGUAGE_PT ; Português ; Português 
 
 BUTTON_SAVE ; Save ; 
 BUTTON_CANCEL ; Cancel ; 
@@ -19,6 +19,8 @@ BUTTON_RESET ; Reset ;
 BUTTON_UPLOAD ; Upload ;
 BUTTON_DELETE ; Delete ;
 BUTTON_DISCARD ; Discard ;
+BUTTON_SIGN ; Sign ;
+BUTTON_SKIP ; Skip ;
 
 DASHBOARD_WELCOME ; Welcome, ocean hero! ;
 DASHBOARD_WELCOME_BACK ; Welcome back, ocean hero! ;
@@ -35,6 +37,11 @@ DASHBOARD_H_SUMMARY ; Summary of collected data ;
 
 DASHBOARD_DONT_FORGET_UPLOAD_SG ; Don't forget: You have one data item that has not yet been uploaded. ;
 DASHBOARD_DONT_FORGET_UPLOAD_PL ; Don't forget: You have $COUNT data items that have not yet been uploaded. ;
+
+DASHBOARD_CATCHES ; Catches ;
+DASHBOARD_TRASH ; Trash ; 
+
+DATA_ENTRY_PICK ; Please open the menu and pick what data you want to enter. ;
 
 SETTINGS_LANGUAGE ; Language ; 
 SETTINGS_USER_NAME ; User name ; 
@@ -81,6 +88,15 @@ FISHERIES_CARAPACE_WIDTH ; Carapace width (cm) ;
 FISHERIES_TAIL_LENGTH ; Tail length (cm) ;
 FISHERIES_DISK_WIDTH ; Disk width (cm) ;
 
+FISHERIES_SMALLEST ; smallest ; 
+FISHERIES_BIGGEST ; biggest ;
+
+PICTURES ; Pictures ;
+PICTURES_NONE_YET ; None yet. ;
+PICTURES_TAKE_PHOTO ; Take photo with camera ;
+PICTURES_CHOOSE_PHOTO ; Pick photo from gallery ;
+PICTURES_DESCRIBE ; Or describe which picture(s) on whose camera: ;
+
 COORDINATES ; Coordinates ;
 COORDINATES_DATE ; Date ; 
 COORDINATES_TIME ; Time ; 
@@ -98,8 +114,6 @@ TURTLES ; You saw turtles? Nice! ;
 LOCATION_Guinjata ; Guinjata ; Guinjata
 LOCATION_Paindane ; Paindane ; Paindane 
 LOCATION_Coconut ; Coconut ; Coconut
-
-FALLBACK_LOCATION ; somewhere ;
 
 NO_CATCH ; no catch ;
 
@@ -158,3 +172,22 @@ MAX ; max ;
 SOMETHING ; Something ;
 OTHER ; Other ; 
 UNKNOWN ; Unknown ;
+
+SIGN_PROMPT ; Do you want to sign? ;
+SIGN_EXPLANATION_1 ; Signing means you confirm that you collected the data as entered. We can then use the data for our studies. ;
+SIGN_EXPLANATION_2 ; If you're testing or simply fooling around, please skip this step. The data will still be saved, we just won't use it as real data. ;
+SIGN_EXPLANATION_3 ; Go to Settings to set up your signature. ;
+
+MESSAGE_SAVED ; Saved. ; 
+MESSAGE_READY_TO_UPLOAD ; Data entry is ready to upload. ; 
+MESSAGE_NOT_SIGNED ; Data entry was not signed and will only be used for testing. ;
+
+ERROR_FAILED_TO_ACCESS_GALLERY ; Failed to access gallery. ;
+ERROR_FAILED_TO_ACCESS_CAMERA ; Failed to access camera. ;
+ERROR_FAILED_TO_SAVE_PHOTO ; Failed to save photo to your gallery. ;
+ERROR_NO_INTERNET ; No internet connection. ;
+ERROR_TRY_AGAIN_WHEN_ONLINE ; Please try again when connected. ;
+ERROR_UPLOAD ; Error when uploading data. ; 
+ERROR_BACKEND ; Backend error. ;
+ERROR_FAILED_TO_SAVE_DATA ; Could not save data. ;
+ERROR_CLEANING_UP ; There was an error when cleaning up. ;

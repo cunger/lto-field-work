@@ -8,6 +8,7 @@ import GlobalContext from '../context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
 import ListItem from '../components/ListItem';
 import { print } from '../components/utils/PrettyPrinter';
+import Location from '../model/Location';
 import Category from '../model/beachclean/Category';
 import Species from '../model/fisheries/Species';
 
@@ -15,8 +16,8 @@ function Dashboard() {
   const tailwind = useTailwind();
   const i18n = GlobalContext.i18n;
 
-  const [lastActiveDate, setLastActiveDate] = useState(null);
-  const [lastActiveLocation, setLastActiveLocation] = useState(null);
+  const [lastActiveDate, setLastActiveDate] = useState('-');
+  const [lastActiveLocation, setLastActiveLocation] = useState('-');
   const [statistics, setStatistics] = useState({});
 
   async function loadData() {
@@ -26,11 +27,13 @@ function Dashboard() {
         const locale = i18n.locale == 'en' ? 'en-UK' : i18n.locale;
         const lastDate = new Date(parseInt(date)).toLocaleDateString(locale, { dateStyle: 'long' });
         setLastActiveDate(lastDate);
-      } else {
-        setLastActiveDate('-');
       }
     });
-    Datastore.lastActiveLocation().then(location => setLastActiveLocation(location));
+    Datastore.lastActiveLocation().then(location => {
+      if (location) {
+        setLastActiveLocation(location);
+      }
+    });
     Datastore.statistics().then(statistics => setStatistics(statistics));
   }
 
@@ -64,18 +67,18 @@ function Dashboard() {
             🗓️ {lastActiveDate}
           </Text>
           <Text style={tailwind('m-2')}>
-            📍 {lastActiveLocation || i18n.t('FALLBACK_LOCATION')}
+            📍 {lastActiveLocation}
           </Text>
 
           <Heading title={ i18n.t('DASHBOARD_H_SUMMARY') } actionTitle='' actionOnPress={() => {}} />
-          <Text style={tailwind('m-2')}>🎣 Catches:</Text>
+          <Text style={tailwind('m-2')}>🎣 {i18n.t('DASHBOARD_CATCHES')}:</Text>
           {Object.entries(statistics.Catch || {})
             .filter((entry) => entry[1] > 0)
             .map((entry, index) => (
               <ListItem key={index}><Text>{` ️ ${print(entry[1], Species[entry[0]], i18n)}`}</Text></ListItem>
             ))
           }
-          <Text style={tailwind('m-2')}>🗑️ Trash:</Text>
+          <Text style={tailwind('m-2')}>🗑️ {i18n.t('DASHBOARD_TRASH')}:</Text>
           {Object.entries(statistics.Trash || {})
             .map((entry, index) => (
               <ListItem key={index}><Text>{` ️ ${print(entry[1], Category[entry[0]], i18n)}`}</Text></ListItem>

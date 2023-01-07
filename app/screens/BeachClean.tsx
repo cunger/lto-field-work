@@ -108,13 +108,13 @@ function BeachClean({ navigation, route }) {
     for (let [category, quantity] of Object.entries(items)) {
     if (loadedItem && loadedItem.category === category) {
         const item = loadedItem;
-        item.date = date;
+        item.date = date.getTime();
         item.location = location;
         item.quantity = quantity;
         item.additionalNotes = additionalNotes;
         trashItems.push(item);
       } else {
-        trashItems.push(new Trash(date, location, category, quantity, additionalNotes));
+        trashItems.push(new Trash(date.getTime(), location, category, quantity, additionalNotes));
       }
     }
 

@@ -90,7 +90,7 @@ function Upload({ navigation }) {
                   <Text>{Item.logoFor(item)}</Text>
                 </TouchableOpacity>
                 <Text> {Item.prettyPrint(item, i18n)}</Text>
-                <Text style={tailwind('text-gray-500')}> {Item.printDetails(item, i18n.locale)}</Text>
+                <Text style={tailwind('text-gray-500')}> {Item.printDetails(item, i18n)}</Text>
               </View>
             </ListItem>          
           ))}
@@ -118,7 +118,7 @@ function Upload({ navigation }) {
                   <Text>{Item.logoFor(item)}</Text>
                 </TouchableOpacity>
                 <Text> {Item.prettyPrint(item, i18n)}</Text>
-                <Text style={tailwind('text-gray-500')}> {Item.printDetails(item, i18n.locale)}</Text>
+                <Text style={tailwind('text-gray-500')}> {Item.printDetails(item, i18n)}</Text>
               </View>
             </ListItem>          
           ))}

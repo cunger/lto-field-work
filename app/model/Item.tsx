@@ -12,13 +12,13 @@ export default class Item {
   type: string;
   synced: boolean;
   signature?: Signature;
-  date: Date;
+  date: number;
   location: Location | null;
   photos: Image[];
   photosNote: string;
   additionalNotes: string;
  
-  constructor(type: string, date: Date, location: Location | null, additionalNotes?: string) {
+  constructor(type: string, date: number, location: Location | null, additionalNotes?: string) {
     this.id = uuid();
     this.type = type;
     this.date = date;
@@ -49,21 +49,19 @@ export default class Item {
     }
   }
 
-  public static printDetails(item: Item, locale: string): string {
-    if (!locale || locale == 'en') {
+  public static printDetails(item: Item, i18n: I18n): string {
+    let locale = i18n.locale;
+    if (locale == 'en') {
       locale = 'en-UK';
     }
 
     let location = item.location;
     let date = item.date;
-    if (date && typeof date == 'string') {
-      date = new Date(date);
-    }
 
     if (date && location) {
-      return `(${date.toLocaleDateString(locale, { dateStyle: 'short' })}, ${location})`;
+      return `(${new Date(date).toLocaleDateString(locale, { dateStyle: 'short' })}, ${i18n.t(location)})`;
     } else if (date) {
-      return `(${date.toLocaleDateString(locale, { dateStyle: 'short' })})`;
+      return `(${new Date(date).toLocaleDateString(locale, { dateStyle: 'short' })})`;
     } else if (location) {
       return `(${location})`;
     }

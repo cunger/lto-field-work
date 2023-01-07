@@ -7,7 +7,7 @@ export default class Trash extends Item {
   quantity: number = 0;
   category: Category = Category.Other;
 
-  constructor(date: Date, location: Location | null, category: Category, quantity: number, additionalNotes?: '') {
+  constructor(date: number, location: Location | null, category: Category, quantity: number, additionalNotes?: '') {
     super('Trash', date, location, additionalNotes);
     this.category = category;
     this.quantity = quantity;

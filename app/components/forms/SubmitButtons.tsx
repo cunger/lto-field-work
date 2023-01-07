@@ -1,13 +1,15 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
+import GlobalContext from '../../context/GlobalContext';
 
 function SubmitButtons({ saveAction, discardAction, saveText, discardText, resetAction, resetText }) {
   const tailwind = useTailwind();
+  const i18n = GlobalContext.i18n;
 
-  if (!saveText) saveText = 'Save';
-  if (!discardText) discardText = 'Discard';
-  if (!resetText) resetText = 'Reset';
+  if (!saveText) saveText = i18n.t('BUTTON_SAVE');
+  if (!discardText) discardText = i18n.t('BUTTON_DISCARD');
+  if (!resetText) resetText = i18n.t('BUTTON_RESET');
   if (!saveAction) saveAction = () => {};
   if (!discardAction) discardAction = () => {};
   if (!resetAction) resetAction = () => {};

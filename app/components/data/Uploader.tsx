@@ -2,16 +2,17 @@ import { showMessage } from 'react-native-flash-message';
 import NetInfo from '@react-native-community/netinfo'; // https://github.com/react-native-netinfo/react-native-netinfo
 import Item from '../../model/Item';
 import Image from '../../model/Image';
+import { I18n } from 'i18n-js/typings';
 
 const BASE_URL = 'https://lto-back-office.netlify.app/.netlify/functions/api';
 
-export default async function upload(items: Item[]) {
+export default async function upload(items: Item[], i18n: I18n) {
   // First check for internet connection.
   const state = await NetInfo.fetch();
   if (!state.isConnected) {
     showMessage({
-      message: 'No internet connection.',
-      description: 'Please try again when connected.',
+      message: i18n.t('ERROR_NO_INTERNET'),
+      description: i18n.t('ERROR_TRY_AGAIN_WHEN_ONLINE'),
       type: 'warning',
       icon: 'warning',
       duration: 3000
@@ -28,7 +29,7 @@ export default async function upload(items: Item[]) {
   // Upload images (if there are any).
   for (let item of items) {
     if (item.photos) {
-      await uploadPhotos(item.photos);
+      await uploadPhotos(item.photos, i18n);
     }
   }
 
@@ -63,7 +64,7 @@ export default async function upload(items: Item[]) {
 
     if (errors.length > 0) {
       showMessage({
-        message: 'Error when uploading data...',
+        message: i18n.t('ERROR_UPLOAD'),
         description: errors.join(' | '),
         type: 'danger',
         icon: 'danger',
@@ -75,7 +76,7 @@ export default async function upload(items: Item[]) {
   return items.filter(item => uploaded.indexOf(item.id) >= 0);
 }
 
-async function uploadPhotos(images: Image[]) {
+async function uploadPhotos(images: Image[], i18n: I18n) {
   let errors: string[] = [];
 
   for (let image of images) {
@@ -121,7 +122,7 @@ async function uploadPhotos(images: Image[]) {
 
     if (errors.length > 0) {
       showMessage({
-        message: 'Backend error...',
+        message: i18n.t('ERROR_BACKEND'),
         description: errors.join(' | '),
         type: 'danger',
         icon: 'danger',
@@ -129,10 +130,4 @@ async function uploadPhotos(images: Image[]) {
       });
     }
   }
-}
-
-async function toFile(uri: string, filename: string, mimeType: string) {
-  const file = await fetch(uri);
-  const blob = await file.blob();
-  return new File([blob], filename, { type: mimeType });
 }

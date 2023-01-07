@@ -10,6 +10,7 @@ import { useTailwind } from 'tailwind-rn';
 
 function Signing({ visible, setVisible, items, closeAction }) {
   const tailwind = useTailwind();
+  const i18n = GlobalContext.i18n;
 
   const save = async (withSignature) => {
     if (withSignature) {
@@ -27,8 +28,8 @@ function Signing({ visible, setVisible, items, closeAction }) {
     }
 
     showMessage({
-      message: 'Saved.',
-      description: withSignature ? 'Data entry is ready to upload.' : 'Data entry was not signed and will only be used for testing.',
+      message: i18n.t('MESSAGE_SAVED'),
+      description: withSignature ? i18n.t('MESSAGE_READY_TO_UPLOAD') : i18n.t('MESSAGE_NOT_SIGNED'),
       type: 'success',
       icon: 'success'
     });
@@ -44,21 +45,23 @@ function Signing({ visible, setVisible, items, closeAction }) {
       animationOut={'slideOutUp'}
       animationOutTiming={1000}>
       <View style={tailwind('bg-white p-4 rounded-md')}>
-        <Text style={tailwind('my-4 font-bold')}>✍️ Do you want to sign?</Text>
+        <Text style={tailwind('my-4 font-bold')}>✍️ {i18n.t('SIGN_PROMPT')}</Text>
         <Text style={tailwind('my-2')}>
-          Signing means you confirm that you collected the data as entered. We can then use the data for our studies.
+          {i18n.t('SIGN_EXPLANATION_1')}
         </Text>
         <Text style={tailwind('my-2')}>
-          If you're testing or simply fooling around, please skip this step. The data will still be saved; we just won't use it as real data.
+          {i18n.t('SIGN_EXPLANATION_2')}
         </Text>
-        <Text style={tailwind('my-2')}>(Go to Settings to set up your signature.)</Text>
+        <Text style={tailwind('my-2')}>
+          ({i18n.t('SIGN_EXPLANATION_3')})
+        </Text>
 
         <SubmitButtons
-          saveText='Sign'
+          saveText={i18n.t('BUTTON_SIGN')}
           saveAction={() => { save(true); }}
-          discardText='Skip'
+          discardText={i18n.t('BUTTON_SKIP')}
           discardAction={() => { save(false); }}
-          resetText='Cancel'
+          resetText={i18n.t('BUTTON_CANCEL')}
           resetAction={() => { setVisible(false); }}
         />
       </View>

@@ -7,14 +7,16 @@ import { useTailwind } from 'tailwind-rn';
 import { showMessage } from 'react-native-flash-message';
 import * as ImagePicker from 'expo-image-picker';
 import * as MediaLibrary from 'expo-media-library';
+import GlobalContext from '../../context/GlobalContext';
 
 function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, removePhoto, setPhotosNote }) {
   const tailwind = useTailwind();
+  const i18n = GlobalContext.i18n;
 
   const photoList = () => {
     if (photos.length == 0) {
       return (
-        <Text style={tailwind('my-2')} key='none'>None yet.</Text>
+        <Text style={tailwind('my-2')} key='none'>{ i18n.t('PICTURES_NONE_YET') }</Text>
       );
     } else {
       return (
@@ -60,7 +62,7 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
       }
     } catch (error) {
       showMessage({
-        message: `Failed to access gallery.`,
+        message: i18n.t('ERROR_FAILED_TO_ACCESS_GALLERY'),
         description: `${error}`,
         type: 'danger',
         icon: 'warning',
@@ -84,7 +86,7 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
             await addPhoto(createImage(savedAsset.uri));
           } catch (error) {
             showMessage({
-              message: `Failed to save photo to your gallery.`,
+              message: i18n.t('ERROR_FAILED_TO_SAVE_PHOTO'),
               description: `${error}`,
               type: 'danger',
               icon: 'warning',
@@ -97,7 +99,7 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
       }
     } catch (error) {
       showMessage({
-        message: `Failed to access camera.`,
+        message: i18n.t('ERROR_FAILED_TO_ACCESS_CAMERA'),
         description: `${error}`,
         type: 'danger',
         icon: 'warning',
@@ -115,19 +117,19 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
 
   return (
     <View>
-      <InputGroup text='Pictures' />
+      <InputGroup text={i18n.t('PICTURES')} />
         {flash()}
         {photoList()}
       <InputField
-        text='Take photo with camera'
+        text={i18n.t('PICTURES_TAKE_PHOTO')}
         textColor={'#cccccc'}
         action={() => takePhoto()} />
       <InputField
-        text='Pick photo from gallery'
+        text={i18n.t('PICTURES_CHOOSE_PHOTO')}
         textColor={'#cccccc'}
         action={() => choosePhoto()} />
       <TextField
-        label='Or describe which picture(s) on whose camera:'
+        label={i18n.t('PICTURES_DESCRIBE')}
         numberOfLines={4}
         value={photosNote}
         updateAction={setPhotosNote}

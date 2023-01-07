@@ -101,7 +101,7 @@ function Fisheries({ navigation, route }) {
   const reset = () => {
     // You probably want to log several catches, so we're not resetting
     // the coordinates, base, and method.
-    setItem(new Catch(date, location, item.base, item.method, item.other_method));
+    setItem(new Catch(date.getTime(), location, item.base, item.method, item.other_method));
     hideAllSpeciesSpecificFields();
     setIsSchoolOfFish(false);
     setIsMinMaxSpecies(false);

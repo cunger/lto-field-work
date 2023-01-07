@@ -2,8 +2,20 @@ import { showMessage } from 'react-native-flash-message';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // https://react-native-async-storage.github.io/async-storage/docs/api/
 import Item from '../../model/Item';
 import upload from './Uploader';
+import { getLocales } from 'expo-localization';
+import { I18n } from 'i18n-js';
+
+const languages = ['en', 'pt'];
+const localLanguage = getLocales()[0].languageCode;
+const defaultLanguage = languages.includes(localLanguage) ? localLanguage : 'en';
+const translations = require('./translations.json');
+const i18n = new I18n(translations);
+i18n.locale = defaultLanguage;
+i18n.enableFallback = true;
 
 export default class Datastore {
+
+  static i18n = i18n;
 
   // ---- User information ----
 
@@ -24,6 +36,7 @@ export default class Datastore {
   }
 
   static async setLanguage(iso6391code: string) {
+    i18n.locale = iso6391code;
     return AsyncStorage.setItem('@language', iso6391code);
   }
 
@@ -43,8 +56,8 @@ export default class Datastore {
     return AsyncStorage.getItem('@useremail');
   }
 
-  static async getLanguage() {
-    return AsyncStorage.getItem('@language');
+  static async loadLanguage() {
+    return AsyncStorage.getItem('@language').then(language => i18n.locale = language || defaultLanguage);
   }
 
   // ---- Analytics ----
@@ -55,7 +68,7 @@ export default class Datastore {
   }
 
   static async saveInStatistics(item: Item) {
-    await AsyncStorage.setItem('@lastactivedate', `${item.date.getTime()}`);
+    await AsyncStorage.setItem('@lastactivedate', `${item.date?.getTime()}`);
     await AsyncStorage.setItem('@lastactivelocation', `${item.location}`);
 
     const statisticsString = await AsyncStorage.getItem('@statistics');
@@ -108,7 +121,7 @@ export default class Datastore {
       await this.saveInStatistics(item);
     } catch (error) {
       showMessage({
-        message: 'Could not save data.',
+        message: i18n.t('ERRO_FAILED_TO_SAVE_DATA'),
         description: `${error}`,
         type: 'warning',
         icon: 'danger'
@@ -134,7 +147,7 @@ export default class Datastore {
         }
       }
 
-      const uploaded = await upload(items);
+      const uploaded = await upload(items, i18n);
       for (let item of uploaded) {
         item.synced = true;
         await this.save(item);
@@ -192,7 +205,7 @@ export default class Datastore {
         } catch(error) {
           console.log(error);
           showMessage({
-            message: 'There was an error when cleaning up.',
+            message: i18n.t('ERROR_CLEANING_UP'),
             description: `${error}`,
             type: 'warning',
             icon: 'danger'

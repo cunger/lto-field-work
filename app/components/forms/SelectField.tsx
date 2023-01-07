@@ -8,7 +8,7 @@ const i18n = GlobalContext.i18n;
 function SelectField({ label, value, type, items, updateAction }) {
   if (!items && type) {
     items = Object.keys(type).map(key => {
-      return { label: i18n.t(type[key]), value: type[key] };
+      return { label: i18n.t(type[key]), value: type[key], key: key };
     });
   }
 
