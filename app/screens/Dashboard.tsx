@@ -31,7 +31,7 @@ function Dashboard() {
     });
     Datastore.lastActiveLocation().then(location => {
       if (location) {
-        setLastActiveLocation(location);
+        setLastActiveLocation(i18n.t(location));
       }
     });
     Datastore.statistics().then(statistics => setStatistics(statistics));

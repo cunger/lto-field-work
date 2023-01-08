@@ -54,11 +54,12 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
         for (const asset of (result?.assets || [])) {
           if (!asset?.assetId) continue;
           const info = await MediaLibrary.getAssetInfoAsync(asset.assetId);
+          console.log(info);
           if (!info?.localUri) continue;
           await addPhoto(createImage(info.localUri));
         }
       } else {
-        // TODO what?
+        throw new Error(i18n.t('ERROR_MISSING_PERMISSION'));
       }
     } catch (error) {
       showMessage({
@@ -95,7 +96,7 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
           }
         }
       } else {
-        // TODO what?
+        throw new Error(i18n.t('ERROR_MISSING_PERMISSION'));
       }
     } catch (error) {
       showMessage({

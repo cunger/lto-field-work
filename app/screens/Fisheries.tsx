@@ -112,7 +112,7 @@ function Fisheries({ navigation, route }) {
     const now = new Date();
     setDate(now);
     setLocation(null);
-    setItem(new Catch(now, null));
+    setItem(new Catch(now.getTime(), null));
     hideAllSpeciesSpecificFields();
     setIsSchoolOfFish(false);
     setIsMinMaxSpecies(false);
@@ -147,7 +147,7 @@ function Fisheries({ navigation, route }) {
 
   const photoFileName = (filetype: string) => {
     const dateString = `${item.date.getFullYear()}-${item.date.getMonth() + 1}-${item.date.getDate()}`;
-    return `${dateString}-${item.species || item.common_name || 'Fish'}-${Date.now()}.${filetype}`;
+    return `${dateString}-${item.common_name || item.species?.replace('SPECIES_', '') || 'Fish'}-${Date.now()}.${filetype}`;
   }
 
   const setSpeciesSpecificFields = (species: Species) => {

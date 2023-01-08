@@ -160,7 +160,8 @@
     "ERROR_UPLOAD": "Error when uploading data.",
     "ERROR_BACKEND": "Backend error.",
     "ERROR_FAILED_TO_SAVE_DATA": "Could not save data.",
-    "ERROR_CLEANING_UP": "There was an error when cleaning up."
+    "ERROR_CLEANING_UP": "There was an error when cleaning up.",
+    "ERROR_MISSING_PERMISSION": "Missing permission."
   },
   "pt": {
     "MENU_DASHBOARD": "",
@@ -323,6 +324,7 @@
     "ERROR_UPLOAD": "",
     "ERROR_BACKEND": "",
     "ERROR_FAILED_TO_SAVE_DATA": "",
-    "ERROR_CLEANING_UP": ""
+    "ERROR_CLEANING_UP": "",
+    "ERROR_MISSING_PERMISSION": ""
   }
 }

@@ -5,7 +5,6 @@ import Image from './Image';
 import { print } from '../components/utils/PrettyPrinter';
 import Category from '../model/beachclean/Category';
 import { I18n } from 'i18n-js/typings';
-import Species from './fisheries/Species';
 
 export default class Item {
   id: string;
@@ -35,7 +34,7 @@ export default class Item {
 
   public static prettyPrint(item: Item, i18n: I18n): string {
     switch (item.type) {
-      case 'Catch': return print(item.quantity, item.species ? Species[item.species] : 'SPECIES_Fish', i18n, 'NO_CATCH');
+      case 'Catch': return print(item.quantity, item.species || 'SPECIES_Fish', i18n, 'NO_CATCH');
       case 'Trash': return print(item.quantity, Category[item.category], i18n);
       default: return 'SOMETHING';
     }
