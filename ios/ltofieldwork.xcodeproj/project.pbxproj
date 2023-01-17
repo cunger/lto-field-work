@@ -15,6 +15,8 @@
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		E13E02876F154D57A76A02C2 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA58684D974123AE028096 /* noop-file.swift */; };
+		2D422DB0DD7A41EFBB21AB77 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F167F0055C3743F7A1ACF764 /* InfoPlist.strings */; };
+		6F5D826DB5214C4A87FBD1F6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 226B0A5732AB4A17B2631314 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-ltofieldwork/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		04CA58684D974123AE028096 /* noop-file.swift */ = {isa = PBXFileReference; name = "noop-file.swift"; path = "ltofieldwork/noop-file.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
 		73EDF3505B0A49128EC63C41 /* ltofieldwork-Bridging-Header.h */ = {isa = PBXFileReference; name = "ltofieldwork-Bridging-Header.h"; path = "ltofieldwork/ltofieldwork-Bridging-Header.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		F167F0055C3743F7A1ACF764 /* InfoPlist.strings */ = {isa = PBXFileReference; name = "InfoPlist.strings"; path = "en.lproj/InfoPlist.strings"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.plist.strings; explicitFileType = undefined; includeInIndex = 0; };
+		226B0A5732AB4A17B2631314 /* InfoPlist.strings */ = {isa = PBXFileReference; name = "InfoPlist.strings"; path = "pt.lproj/InfoPlist.strings"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.plist.strings; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +120,8 @@
 			isa = PBXGroup;
 			children = (
 				BB2F792C24A3F905000567C9 /* Expo.plist */,
+				2C55C6548B3243FDBC361524 /* en.lproj */,
+				C49F5564B0CB4EAA9502376E /* pt.lproj */,
 			);
 			name = Supporting;
 			path = ltofieldwork/Supporting;
@@ -137,6 +143,24 @@
 			);
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
+		};
+		2C55C6548B3243FDBC361524 /* en.lproj */ = {
+			isa = "PBXGroup";
+			children = (
+				F167F0055C3743F7A1ACF764 /* InfoPlist.strings */,
+			);
+			name = en.lproj;
+			sourceTree = "<group>";
+			path = "";
+		};
+		C49F5564B0CB4EAA9502376E /* pt.lproj */ = {
+			isa = "PBXGroup";
+			children = (
+				226B0A5732AB4A17B2631314 /* InfoPlist.strings */,
+			);
+			name = pt.lproj;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -202,6 +226,8 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
 				B3906BEAEE19487582590706 /* ltofieldwork-Bridging-Header.h in Resources */,
+				2D422DB0DD7A41EFBB21AB77 /* InfoPlist.strings in Resources */,
+				6F5D826DB5214C4A87FBD1F6 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
