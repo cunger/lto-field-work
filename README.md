@@ -1,7 +1,13 @@
 
 Work in progress. Info will be added.
 
-## Build pipeline
+## Run locally
+
+```
+$ npx expo start
+```
+
+## Build
 
 Tailwind:
 ```
@@ -13,18 +19,13 @@ Translations:
 $ npm run build:translations
 ```
 
-## Test
-
+App:
 ```
-$ npx expo start
+$ npm run bundle:ios
+$ npm run eject
 ```
 
 ## Deploy
-
-Ejecting:
-```
-$ npm run eject
-```
 
 Building and submitting the app:
 ```

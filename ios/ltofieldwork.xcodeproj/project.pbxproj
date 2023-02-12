@@ -7,26 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		96905EF65AED1B983A6B3ABC /* libPods-ltofieldwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-ltofieldwork.a */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		E13E02876F154D57A76A02C2 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CA58684D974123AE028096 /* noop-file.swift */; };
-		2D422DB0DD7A41EFBB21AB77 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F167F0055C3743F7A1ACF764 /* InfoPlist.strings */; };
-		6F5D826DB5214C4A87FBD1F6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 226B0A5732AB4A17B2631314 /* InfoPlist.strings */; };
+		5F585AC8998B4E08ABC4D416 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3249D7B0B5574F11985F89F4 /* InfoPlist.strings */; };
+		707B0A5486F049788C40FAB5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 89D5B61C2F8B488FB6A304C0 /* InfoPlist.strings */; };
+		4FFE0B89ACD34DE0805AE4BB /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11493062D630475E8C76F142 /* noop-file.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* ltofieldwork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ltofieldwork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ltofieldwork/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ltofieldwork/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = ltofieldwork/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ltofieldwork/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ltofieldwork/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ltofieldwork/main.m; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objcpp; name = main.m; path = ltofieldwork/main.m; sourceTree = "<group>"; };
 		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-ltofieldwork.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ltofieldwork.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C2E3173556A471DD304B334 /* Pods-ltofieldwork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ltofieldwork.debug.xcconfig"; path = "Target Support Files/Pods-ltofieldwork/Pods-ltofieldwork.debug.xcconfig"; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-ltofieldwork.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ltofieldwork.release.xcconfig"; path = "Target Support Files/Pods-ltofieldwork/Pods-ltofieldwork.release.xcconfig"; sourceTree = "<group>"; };
@@ -34,10 +34,9 @@
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-ltofieldwork/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		04CA58684D974123AE028096 /* noop-file.swift */ = {isa = PBXFileReference; name = "noop-file.swift"; path = "ltofieldwork/noop-file.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
-		73EDF3505B0A49128EC63C41 /* ltofieldwork-Bridging-Header.h */ = {isa = PBXFileReference; name = "ltofieldwork-Bridging-Header.h"; path = "ltofieldwork/ltofieldwork-Bridging-Header.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		F167F0055C3743F7A1ACF764 /* InfoPlist.strings */ = {isa = PBXFileReference; name = "InfoPlist.strings"; path = "en.lproj/InfoPlist.strings"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.plist.strings; explicitFileType = undefined; includeInIndex = 0; };
-		226B0A5732AB4A17B2631314 /* InfoPlist.strings */ = {isa = PBXFileReference; name = "InfoPlist.strings"; path = "pt.lproj/InfoPlist.strings"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.plist.strings; explicitFileType = undefined; includeInIndex = 0; };
+		3249D7B0B5574F11985F89F4 /* InfoPlist.strings */ = {isa = PBXFileReference; name = "InfoPlist.strings"; path = "en.lproj/InfoPlist.strings"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.plist.strings; explicitFileType = undefined; includeInIndex = 0; };
+		89D5B61C2F8B488FB6A304C0 /* InfoPlist.strings */ = {isa = PBXFileReference; name = "InfoPlist.strings"; path = "pt.lproj/InfoPlist.strings"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.plist.strings; explicitFileType = undefined; includeInIndex = 0; };
+		11493062D630475E8C76F142 /* noop-file.swift */ = {isa = PBXFileReference; name = "noop-file.swift"; path = "ltofieldwork/noop-file.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,13 +57,12 @@
 				BB2F792B24A3F905000567C9 /* Supporting */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				04CA58684D974123AE028096 /* noop-file.swift */,
-				73EDF3505B0A49128EC63C41 /* ltofieldwork-Bridging-Header.h */,
+				11493062D630475E8C76F142 /* noop-file.swift */,
 			);
 			name = ltofieldwork;
 			sourceTree = "<group>";
@@ -120,8 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				BB2F792C24A3F905000567C9 /* Expo.plist */,
-				2C55C6548B3243FDBC361524 /* en.lproj */,
-				C49F5564B0CB4EAA9502376E /* pt.lproj */,
+				3BDE97A0D7A748BDAFE21440 /* en.lproj */,
+				D00AF154F9084C15A7E4DAB2 /* pt.lproj */,
 			);
 			name = Supporting;
 			path = ltofieldwork/Supporting;
@@ -144,19 +142,19 @@
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
-		2C55C6548B3243FDBC361524 /* en.lproj */ = {
+		3BDE97A0D7A748BDAFE21440 /* en.lproj */ = {
 			isa = "PBXGroup";
 			children = (
-				F167F0055C3743F7A1ACF764 /* InfoPlist.strings */,
+				3249D7B0B5574F11985F89F4 /* InfoPlist.strings */,
 			);
 			name = en.lproj;
 			sourceTree = "<group>";
 			path = "";
 		};
-		C49F5564B0CB4EAA9502376E /* pt.lproj */ = {
+		D00AF154F9084C15A7E4DAB2 /* pt.lproj */ = {
 			isa = "PBXGroup";
 			children = (
-				226B0A5732AB4A17B2631314 /* InfoPlist.strings */,
+				89D5B61C2F8B488FB6A304C0 /* InfoPlist.strings */,
 			);
 			name = pt.lproj;
 			sourceTree = "<group>";
@@ -225,9 +223,8 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				B3906BEAEE19487582590706 /* ltofieldwork-Bridging-Header.h in Resources */,
-				2D422DB0DD7A41EFBB21AB77 /* InfoPlist.strings in Resources */,
-				6F5D826DB5214C4A87FBD1F6 /* InfoPlist.strings in Resources */,
+				5F585AC8998B4E08ABC4D416 /* InfoPlist.strings in Resources */,
+				707B0A5486F049788C40FAB5 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,7 +243,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\n`node --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n";
+			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" $PROJECT_ROOT ios relative | tail -n 1)\"\nfi\n\n`\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n\n";
 		};
 		08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -278,11 +275,13 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ltofieldwork/Pods-ltofieldwork-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXUpdates/EXUpdates.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXUpdates.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -306,7 +305,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > `node --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/.packager.env'\"`\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open `node --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/launchPackager.command'\"` || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\nexport RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > `$NODE_BINARY --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/.packager.env'\"`\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open `$NODE_BINARY --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/launchPackager.command'\"` || echo \"Can't start packager automatically\"\n  fi\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -316,10 +315,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
-				E13E02876F154D57A76A02C2 /* noop-file.swift in Sources */,
+				4FFE0B89ACD34DE0805AE4BB /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,8 +351,7 @@
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				SWIFT_OBJC_BRIDGING_HEADER = ltofieldwork/ltofieldwork-Bridging-Header.h;
-				CODE_SIGN_ENTITLEMENTS = "ltofieldwork/ltofieldwork.entitlements";
+				CODE_SIGN_ENTITLEMENTS = ltofieldwork/ltofieldwork.entitlements;
 			};
 			name = Debug;
 		};
@@ -377,8 +375,7 @@
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				SWIFT_OBJC_BRIDGING_HEADER = ltofieldwork/ltofieldwork-Bridging-Header.h;
-				CODE_SIGN_ENTITLEMENTS = "ltofieldwork/ltofieldwork.entitlements";
+				CODE_SIGN_ENTITLEMENTS = ltofieldwork/ltofieldwork.entitlements;
 			};
 			name = Release;
 		};
@@ -387,7 +384,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -429,13 +426,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = "\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				CODE_SIGN_ENTITLEMENTS = "ltofieldwork/ltofieldwork.entitlements";
 			};
 			name = Debug;
 		};
@@ -444,7 +440,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -479,13 +475,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = "\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
-				CODE_SIGN_ENTITLEMENTS = "ltofieldwork/ltofieldwork.entitlements";
 			};
 			name = Release;
 		};

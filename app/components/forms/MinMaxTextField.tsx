@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import { InputLabel } from './Input';
 import { useTailwind } from 'tailwind-rn';
 import GlobalContext from '../../context/GlobalContext';
@@ -17,17 +17,17 @@ function MinMaxTextField({ label, minValue, maxValue, minUpdateAction, maxUpdate
         <TextInput
           value={minValue}
           onChangeText={minUpdateAction}
-          onEndEdition={minUpdateAction}
+          onEndEditing={minUpdateAction}
           keyboardType={keyboardType}
-          placeholder={18n.toLocaleString('FISHERIES_SMALLEST')}
+          placeholder={i18n.toLocaleString('FISHERIES_SMALLEST')}
           style={tailwind('w-1/2 mb-2 mr-1 p-2 bg-white border-gray rounded-md')}
         />
         <TextInput
           value={maxValue}
           onChangeText={maxUpdateAction}
-          onEndEdition={maxUpdateAction}
+          onEndEditing={maxUpdateAction}
           keyboardType={keyboardType}
-          placeholder={18n.toLocaleString('FISHERIES_BIGGEST')}
+          placeholder={i18n.toLocaleString('FISHERIES_BIGGEST')}
           style={tailwind('w-1/2 mb-2 ml-1 p-2 bg-white border-gray rounded-md')}
         />
       </View>
