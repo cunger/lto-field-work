@@ -7,7 +7,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "npx expo start --web",
-    "bundle:ios": "npx react-native bundle --entry-file='./index.js' --platform='ios' --bundle-output='./ios/ltofieldwork/main.jsbundle' --dev=false",
+    "bundle:ios": "npx react-native bundle --entry-file='./index.js' --platform='ios' --bundle-output='./ios/ltofieldwork/main.jsbundle' --dev=false --assets-dest='./ios'",
     "eject": "npx expo prebuild",
     "build:tailwind": "tailwindcss --input input.css --output tailwind.css --no-autoprefixer && tailwind-rn",
     "build:translations": "node build-translations.js",

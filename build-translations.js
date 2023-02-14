@@ -1,5 +1,5 @@
 const translationsSource = 'languages/translations.csv';
-const translationsTarget = 'app/context/translations.json';
+const translationsTarget = 'app/components/data/translations.js';
 const translations = {
     en: {},
     pt: {}
@@ -41,7 +41,7 @@ fs.readFile(translationsSource, function read(error, data) {
 
     fs.writeFile(
         translationsTarget,
-        JSON.stringify(translations, null, 2),
+        `export default ${JSON.stringify(translations, null, 2)}`,
         'utf-8',
         (error) => { 
           if (error) throw error;

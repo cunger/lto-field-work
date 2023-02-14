@@ -1,4 +1,4 @@
-{
+export default {
   "en": {
     "MENU_DASHBOARD": "Dashboard",
     "MENU_DATA_ENTRY": "Data entry",

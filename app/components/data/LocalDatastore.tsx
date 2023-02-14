@@ -4,11 +4,11 @@ import Item from '../../model/Item';
 import upload from './Uploader';
 import { getLocales } from 'expo-localization';
 import { I18n } from 'i18n-js';
+import translations from './translations';
 
 const languages = ['en', 'pt'];
 const localLanguage = getLocales()[0].languageCode;
 const defaultLanguage = languages.includes(localLanguage) ? localLanguage : 'en';
-const translations = require('./translations.json');
 const i18n = new I18n(translations);
 i18n.locale = defaultLanguage;
 i18n.enableFallback = true;
