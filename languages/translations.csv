@@ -58,6 +58,7 @@ UPLOAD_TODO_UNSIGNED ; The following entries are unsigned and will not be upload
 UPLOAD_DELETE_ALL_UNSIGNED ; Do you really want to delete all unsigned data? ; 
 UPLOAD_DELETE_ALL_UNSIGNED_EXPLANATION ; You will lose all data that you collected but did not sign. ;
 UPLOAD_DELETE_ALL ; Delete all ;
+UPLOAD_IN_PROGRESS ; Uploading... This can take a while. ;
 
 ADDITIONAL_NOTES ; Additional notes ;
 ADDITIONAL_NOTES_LABEL ; If there is something else that is important, let us know: ;

@@ -17,6 +17,7 @@ function Upload({ navigation }) {
   const [signedUnsyncedItems, setSignedUnsyncedItems] = useState<Item[]>([]);
   const [unsignedUnsyncedItems, setUnsignedUnsyncedItems] = useState<Item[]>([]);
   const [confirmDeleteUnsignedItemsVisible, setConfirmDeleteUnsignedItemsVisible] = useState(false);
+  const [uploadIsInProgress, setUploadIsInProgress] = useState(false);
 
   async function loadData() {
     GlobalContext.load();
@@ -45,7 +46,9 @@ function Upload({ navigation }) {
   );
 
   const upload = async () => {
+    setUploadIsInProgress(true);
     await Datastore.syncAll();
+    setUploadIsInProgress(false);
     await loadData();
   };
 
@@ -73,8 +76,14 @@ function Upload({ navigation }) {
     <ScrollContainer>
       <Heading title={i18n.t('UPLOAD_H_LOCAL_DATA')} actionTitle={i18n.t('BUTTON_UPLOAD')} actionOnPress={upload} />
       {
+        uploadIsInProgress && 
+        <Text style={tailwind('mx-4 my-2 text-blue')}>
+          { i18n.t('UPLOAD_IN_PROGRESS') }
+        </Text>
+      }
+      {
         signedUnsyncedItems.length === 0 &&
-        <Text style={tailwind('m-2')}>
+        <Text style={tailwind('mx-4 my-2')}>
           {i18n.t('UPLOAD_NO_SIGNED_DATA')}
         </Text>
       }
@@ -86,7 +95,7 @@ function Upload({ navigation }) {
           {signedUnsyncedItems.map((item, index) => (
             <ListItem key={index}>
               <View style={tailwind('flex flex-row items-center')}>
-                <TouchableOpacity onPress={() => openItem(item)} style={tailwind('w-10 px-2 py-2 border border-gray-300 rounded-md bg-white')}>
+                <TouchableOpacity onPress={() => openItem(item)} disabled={uploadIsInProgress} style={tailwind('w-10 px-2 py-2 border border-gray-300 rounded-md bg-white')}>
                   <Text>{Item.logoFor(item)}</Text>
                 </TouchableOpacity>
                 <Text> {Item.prettyPrint(item, i18n)}</Text>
