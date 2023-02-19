@@ -51,7 +51,7 @@ export default async function upload(items: Item[], i18n: I18n) {
           'Accept': 'application/json',
           'X-Ship-Name': 'BeanWithBaconMegaRocket'
         },
-        body: JSON.stringify({ items: items.map(item => withTranslatedValues(item, i18n)) })
+        body: JSON.stringify({ items: items.map(item => withPrettyPrintedValues(item, i18n)) })
       });
 
       const responseData = await response.json(); // { uploaded: [], errors: [] }
@@ -144,8 +144,9 @@ function uploadImage(image: Image, i18n: I18n): Promise<void> {
   });
 }
 
-function withTranslatedValues(item: Item, i18n: I18n) {
+function withPrettyPrintedValues(item: Item, i18n: I18n) {
   const newitem = { ...item };
+  if (item.date) newitem.date = new Date(item.date);
   if (item.location) newitem.location = i18n.t(item.location, 'en');
   if (item.base) newitem.base = i18n.t(item.base, 'en');
   if (item.method) newitem.method = i18n.t(item.method, 'en');
