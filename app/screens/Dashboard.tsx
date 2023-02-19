@@ -8,7 +8,6 @@ import GlobalContext from '../context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
 import ListItem from '../components/ListItem';
 import { print } from '../components/utils/PrettyPrinter';
-import Location from '../model/Location';
 import Category from '../model/beachclean/Category';
 import Species from '../model/fisheries/Species';
 
@@ -56,7 +55,7 @@ function Dashboard() {
           {
             GlobalContext.unsyncedItems > 0 && 
             <Text style={tailwind('m-2 text-blue')}>
-              { GlobalContext.unsyncedItems > 1 
+              { GlobalContext.unsyncedItems == 1 
               ? i18n.t('DASHBOARD_DONT_FORGET_UPLOAD_SG') 
               : i18n.t('DASHBOARD_DONT_FORGET_UPLOAD_PL').replace('$COUNT', `${GlobalContext.unsyncedItems}`) }
             </Text>
