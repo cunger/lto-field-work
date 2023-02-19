@@ -15,21 +15,22 @@ export default async function upload(items: Item[], i18n: I18n) {
       description: i18n.t('ERROR_TRY_AGAIN_WHEN_ONLINE'),
       type: 'warning',
       icon: 'warning',
-      duration: 3000
+      duration: 4000
     });
 
     return [];
   }
 
   // If there is a connection, upload data.
-  
-  // (If it's not signed, just pretend it was uploaded for testing and demo purposes.)
-  items = items.filter(item => Item.signed(item));
 
   // Upload images (if there are any).
   for (let item of items) {
     if (item.photos) {
-      await uploadPhotos(item.photos, i18n);
+      const uploads: Promise<void>[] = item.photos
+        .filter(image => image.location)
+        .map(image => uploadImage(image, i18n));
+
+      await Promise.allSettled(uploads);
     }
   }
 
@@ -50,7 +51,7 @@ export default async function upload(items: Item[], i18n: I18n) {
           'Accept': 'application/json',
           'X-Ship-Name': 'BeanWithBaconMegaRocket'
         },
-        body: JSON.stringify({ items: items })
+        body: JSON.stringify({ items: items.map(item => withTranslatedValues(item, i18n)) })
       });
 
       const responseData = await response.json(); // { uploaded: [], errors: [] }
@@ -58,7 +59,6 @@ export default async function upload(items: Item[], i18n: I18n) {
       uploaded = responseData.uploaded || [];
       errors = responseData.errors || [];
     } catch (error) {
-      console.log(`${error}`);
       errors.push(error.message);
     }
 
@@ -76,58 +76,81 @@ export default async function upload(items: Item[], i18n: I18n) {
   return items.filter(item => uploaded.indexOf(item.id) >= 0);
 }
 
-async function uploadPhotos(images: Image[], i18n: I18n) {
-  let errors: string[] = [];
-
-  for (let image of images) {
-    console.log('Trying to upload: ' + JSON.stringify(image));
-    if (!image.location) continue;
-
+function uploadImage(image: Image, i18n: I18n): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
     try {
-      const formdata = new FormData();
-      formdata.append('file', {
+      const formData = new FormData();
+      formData.append('file', {
         uri: image.location,
         name: image.filename,
         type: image.mimetype
       });
 
-      const response = await fetch(`${BASE_URL}/photo`, {
-        method: 'POST',
-        headers: {
-          // Let fetch set the content type header, because it knows the boundary string.
-          // 'Content-Type': 'multipart/form-data',
-          'Accept': 'application/json',
-          'X-Ship-Name': 'BeanWithBaconMegaRocket'
-        },
-        body: formdata
-      });
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', `${BASE_URL}/photo`);
 
-      console.log('Response status: ' + response.status);
-
-      if (response.status === 200) {
-        const responseData = await response.json(); // { link: '', errors: [] }
-        console.log(responseData)
-
-        image.link = responseData.link;
-        errors = [...errors, ...responseData.errors];
-
-        // TODO clear image from cache?
-      } else {
-        errors = [...errors, `Response status: ${response.status}`];
+      if (xhr.upload) {
+        xhr.upload.onprogress = (event: ProgressEvent) => {
+          console.log(event.loaded + ' / ' + event.total);
+          // TODO
+        };
       }
-    } catch (error) {
-      console.log(error);
-      errors.push(error.message);
-    }
 
-    if (errors.length > 0) {
+      xhr.onload = () => {
+        const responseData = JSON.parse(xhr.response || xhr.responseText); // { link: '', errors: [] }
+        image.link = responseData.link;
+        resolve();
+      };
+
+      xhr.onerror = () => {
+        showMessage({
+          message: i18n.t('ERROR_UPLOAD'),
+          description: xhr.responseText,
+          type: 'danger',
+          icon: 'danger',
+          duration: 6000
+        });
+        reject();
+      };
+
+      xhr.ontimeout = () => {
+        // Image was not uploaded, so the item is not uploaded and marked as sync.
+        // The user can just try to upload again later.
+        reject();
+      }
+
+      xhr.onabort = () => {
+        // Image was not uploaded, so the item is not uploaded and marked as sync.
+        // The user can just try to upload again later.
+        reject();
+      };
+
+      // The 'Content-Type': 'multipart/form-data' header should be set automatically, 
+      // because it needs a boundary string.
+      xhr.setRequestHeader('Accept', 'application/json');
+      xhr.setRequestHeader('X-Ship-Name', 'BeanWithBaconMegaRocket');
+      
+      xhr.send(formData);
+    } catch (error) {
       showMessage({
-        message: i18n.t('ERROR_BACKEND'),
-        description: errors.join(' | '),
+        message: i18n.t('ERROR_UPLOAD'),
+        description: `${error}`,
         type: 'danger',
         icon: 'danger',
         duration: 6000
       });
+      reject();
     }
-  }
+  });
+}
+
+function withTranslatedValues(item: Item, i18n: I18n) {
+  const newitem = { ...item };
+  if (item.location) newitem.location = i18n.t(item.location, 'en');
+  if (item.base) newitem.base = i18n.t(item.base, 'en');
+  if (item.method) newitem.method = i18n.t(item.method, 'en');
+  if (item.species) newitem.species = i18n.t(item.species, 'en');
+  if (item.sex) newitem.sex = i18n.t(item.sex, 'en');
+  if (item.category) newitem.category = i18n.t(item.category, 'en');
+  return newitem;
 }

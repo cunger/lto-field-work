@@ -162,7 +162,8 @@ export default {
     "ERROR_BACKEND": "Backend error.",
     "ERROR_FAILED_TO_SAVE_DATA": "Could not save data.",
     "ERROR_CLEANING_UP": "There was an error when cleaning up.",
-    "ERROR_MISSING_PERMISSION": "Missing permission."
+    "ERROR_MISSING_PERMISSION": "Missing permission.",
+    "null": "-"
   },
   "pt": {
     "MENU_DASHBOARD": "",
@@ -327,6 +328,7 @@ export default {
     "ERROR_BACKEND": "",
     "ERROR_FAILED_TO_SAVE_DATA": "",
     "ERROR_CLEANING_UP": "",
-    "ERROR_MISSING_PERMISSION": ""
+    "ERROR_MISSING_PERMISSION": "",
+    "null": "-"
   }
 }

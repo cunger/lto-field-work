@@ -22,7 +22,7 @@ function Upload({ navigation }) {
   async function loadData() {
     GlobalContext.load();
 
-    const byDate = (i1: Item, i2: Item) => new Date(i2.date).getTime() - new Date(i1.date).getTime();
+    const byDate = (i1: Item, i2: Item) => (i2.date || 0) - (i1.date || 0);
     const items = await Datastore.items();
 
     setSignedUnsyncedItems(items

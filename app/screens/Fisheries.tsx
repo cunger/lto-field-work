@@ -119,7 +119,7 @@ function Fisheries({ navigation, route }) {
   };
 
   const openSigning = () => {
-    item.date = date;
+    item.date = date.getTime();
     item.location = location;
     setSignatureVisible(true);
   };
@@ -146,7 +146,8 @@ function Fisheries({ navigation, route }) {
   }
 
   const photoFileName = (filetype: string) => {
-    const dateString = `${item.date.getFullYear()}-${item.date.getMonth() + 1}-${item.date.getDate()}`;
+    const date = new Date(item.date);
+    const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     return `${dateString}-${item.common_name || item.species?.replace('SPECIES_', '') || 'Fish'}-${Date.now()}.${filetype}`;
   }
 

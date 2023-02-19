@@ -21,9 +21,9 @@ function Settings({ navigation }) {
       GlobalContext.load();
 
       setLanguage(await GlobalContext.language());
-      setName(await Datastore.getUserName());
-      setToken(await Datastore.getUserToken());
-      setEmail(await Datastore.getUserEmail());
+      setName(await Datastore.getUserName() || '');
+      setToken(await Datastore.getUserToken() || '');
+      setEmail(await Datastore.getUserEmail() || '');
 
       return () => {
         setLanguage(language);
@@ -80,7 +80,7 @@ function Settings({ navigation }) {
         <TextInput
           value={name}
           onChangeText={(value) => { setName(value); }}
-          onEndEdition={saveName}
+          onEndEditing={saveName}
           style={tailwind('mb-2 p-2 bg-white border-gray rounded-md')}
         />
       </View>
@@ -90,7 +90,7 @@ function Settings({ navigation }) {
         <TextInput
           value={email}
           onChangeText={(value) => { setEmail(value); }}
-          onEndEdition={saveEmail}
+          onEndEditing={saveEmail}
           style={tailwind('mb-4 p-2 bg-white border-gray rounded-md')}
         />
       </View>
@@ -100,7 +100,7 @@ function Settings({ navigation }) {
         <TextInput
           value={token}
           onChangeText={(value) => { setToken(value); }}
-          onEndEdition={saveToken}
+          onEndEditing={saveToken}
           style={tailwind('mb-4 p-2 bg-white border-gray rounded-md')}
         />
         <Text>{i18n.t('SETTINGS_TOKEN_EXPLANATION')}</Text>

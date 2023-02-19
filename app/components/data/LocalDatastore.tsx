@@ -68,7 +68,7 @@ export default class Datastore {
   }
 
   static async saveInStatistics(item: Item) {
-    await AsyncStorage.setItem('@lastactivedate', `${item.date?.getTime()}`);
+    await AsyncStorage.setItem('@lastactivedate', `${item.date}`);
     await AsyncStorage.setItem('@lastactivelocation', `${item.location}`);
 
     const statisticsString = await AsyncStorage.getItem('@statistics');
@@ -120,8 +120,9 @@ export default class Datastore {
       await AsyncStorage.setItem(item.id, JSON.stringify(item));
       await this.saveInStatistics(item);
     } catch (error) {
+      console.log(error);
       showMessage({
-        message: i18n.t('ERRO_FAILED_TO_SAVE_DATA'),
+        message: i18n.t('ERROR_FAILED_TO_SAVE_DATA'),
         description: `${error}`,
         type: 'warning',
         icon: 'danger'
@@ -132,17 +133,19 @@ export default class Datastore {
   static async syncAll() {
     try {
       const items: Item[] = [];
-      const keys: string[] = await AsyncStorage.getAllKeys();
+      const keys: readonly string[] = await AsyncStorage.getAllKeys();
 
       for (let key of keys) {
         if (key.startsWith('@')) continue;
 
         const value = await AsyncStorage.getItem(key);
+        if (!value) continue;
+
         const item = JSON.parse(value);
 
         // Signed items are uploaded.
         // Unsigned items are ignored. 
-        if (!item.synced && Item.signed(item)) {
+        if (Item.signed(item) && !item.synced) {
           items.push(item);
         }
       }
@@ -167,7 +170,6 @@ export default class Datastore {
     try {
       await AsyncStorage.removeItem(itemId);
     } catch(error) {
-      console.log(error);
       showMessage({
         message: 'There was an error when deleting data.',
         description: `${error}`,
@@ -182,7 +184,6 @@ export default class Datastore {
       try {
         await AsyncStorage.removeItem(item.id);
       } catch(error) {
-        console.log(error);
         showMessage({
           message: 'There was an error when deleting data.',
           description: `${error}`,
@@ -203,7 +204,6 @@ export default class Datastore {
         try {
           await AsyncStorage.removeItem(item.id);
         } catch(error) {
-          console.log(error);
           showMessage({
             message: i18n.t('ERROR_CLEANING_UP'),
             description: `${error}`,
