@@ -6,7 +6,7 @@ import { I18n } from 'i18n-js/typings';
 
 const BASE_URL = 'https://lto-back-office.netlify.app/.netlify/functions/api';
 
-export default async function upload(items: Item[], i18n: I18n) {
+export default async function upload(items: Item[], i18n: I18n, increaseUploadProgress: (_ : number) => void, setUploadStatusText: (_: string) => void) {
   // First check for internet connection.
   const state = await NetInfo.fetch();
   if (!state.isConnected) {
@@ -23,14 +23,19 @@ export default async function upload(items: Item[], i18n: I18n) {
 
   // If there is a connection, upload data.
 
+  // For upload progess, determine the number of upload steps.
+  let steps = items.length; 
+  items.map(item => (item.photos || []).length).forEach(n => steps += n);
+  const stepPercentage = 100 / steps;
+
   // Upload images (if there are any).
   for (let item of items) {
-    if (item.photos) {
-      const uploads: Promise<void>[] = item.photos
-        .filter(image => image.location)
-        .map(image => uploadImage(image, i18n));
+    if (!item.photos) continue; 
+    
+    for (let image of item.photos) {
+      if (!image.location) continue;
 
-      await Promise.allSettled(uploads);
+      await uploadImage(image, i18n, increaseUploadProgress, stepPercentage, setUploadStatusText);
     }
   }
 
@@ -44,6 +49,8 @@ export default async function upload(items: Item[], i18n: I18n) {
 
   if (items.length > 0) {
     try {
+      setUploadStatusText('...data');
+
       const response = await fetch(`${BASE_URL}/data`, {
         method: 'POST',
         headers: {
@@ -73,10 +80,13 @@ export default async function upload(items: Item[], i18n: I18n) {
     }
   }
 
+  increaseUploadProgress(stepPercentage);
+  setUploadStatusText('Finished.');
+
   return items.filter(item => uploaded.indexOf(item.id) >= 0);
 }
 
-function uploadImage(image: Image, i18n: I18n): Promise<void> {
+function uploadImage(image: Image, i18n: I18n, increaseUploadProgress: (_ : number) => void, stepPercentage: number, setUploadStatusText: (_: string) => void): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     try {
       const formData = new FormData();
@@ -91,14 +101,15 @@ function uploadImage(image: Image, i18n: I18n): Promise<void> {
 
       if (xhr.upload) {
         xhr.upload.onprogress = (event: ProgressEvent) => {
-          console.log(event.loaded + ' / ' + event.total);
-          // TODO
+          setUploadStatusText('...photo ' + image.filename + ' (' + event.loaded + ' / ' + event.total + ')');
         };
       }
 
       xhr.onload = () => {
         const responseData = JSON.parse(xhr.response || xhr.responseText); // { link: '', errors: [] }
         image.link = responseData.link;
+        increaseUploadProgress(stepPercentage);
+        setUploadStatusText('Done.');
         resolve();
       };
 
@@ -116,12 +127,14 @@ function uploadImage(image: Image, i18n: I18n): Promise<void> {
       xhr.ontimeout = () => {
         // Image was not uploaded, so the item is not uploaded and marked as sync.
         // The user can just try to upload again later.
+        setUploadStatusText('Timeout.')
         reject();
       }
 
       xhr.onabort = () => {
         // Image was not uploaded, so the item is not uploaded and marked as sync.
         // The user can just try to upload again later.
+        setUploadStatusText('Abort.')
         reject();
       };
 
@@ -139,6 +152,8 @@ function uploadImage(image: Image, i18n: I18n): Promise<void> {
         icon: 'danger',
         duration: 6000
       });
+
+      setUploadStatusText('Error.')
       reject();
     }
   });

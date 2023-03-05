@@ -130,7 +130,7 @@ export default class Datastore {
     }
   }
 
-  static async syncAll() {
+  static async syncAll(increaseUploadProgress: (_ : number) => void, setUploadStatusText: (_: string) => void) {
     try {
       const items: Item[] = [];
       const keys: readonly string[] = await AsyncStorage.getAllKeys();
@@ -150,7 +150,7 @@ export default class Datastore {
         }
       }
 
-      const uploaded = await upload(items, i18n);
+      const uploaded = await upload(items, i18n, increaseUploadProgress, setUploadStatusText);
       for (let item of uploaded) {
         item.synced = true;
         await this.save(item);

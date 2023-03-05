@@ -9,6 +9,7 @@ import Datastore from '../components/data/LocalDatastore';
 import GlobalContext from '../context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
 import Item from '../model/Item';
+import * as Progress from 'react-native-progress';
 
 function Upload({ navigation }) {
   const tailwind = useTailwind();
@@ -18,6 +19,12 @@ function Upload({ navigation }) {
   const [unsignedUnsyncedItems, setUnsignedUnsyncedItems] = useState<Item[]>([]);
   const [confirmDeleteUnsignedItemsVisible, setConfirmDeleteUnsignedItemsVisible] = useState(false);
   const [uploadIsInProgress, setUploadIsInProgress] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadStatusText, setUploadStatusText] = useState('');
+
+  const increaseUploadProgress = (n: number) => {
+    setUploadProgress(uploadProgress + n);
+  };
 
   async function loadData() {
     GlobalContext.load();
@@ -47,7 +54,7 @@ function Upload({ navigation }) {
 
   const upload = async () => {
     setUploadIsInProgress(true);
-    await Datastore.syncAll();
+    await Datastore.syncAll(increaseUploadProgress, setUploadStatusText);
     setUploadIsInProgress(false);
     await loadData();
   };
@@ -77,9 +84,15 @@ function Upload({ navigation }) {
       <Heading title={i18n.t('UPLOAD_H_LOCAL_DATA')} actionTitle={i18n.t('BUTTON_UPLOAD')} actionOnPress={upload} />
       {
         uploadIsInProgress && 
-        <Text style={tailwind('mx-4 my-2 text-blue')}>
-          { i18n.t('UPLOAD_IN_PROGRESS') }
-        </Text>
+        <View style={tailwind('mx-4 my-2')}>
+          <Text style={tailwind('text-blue my-1')}>
+            { i18n.t('UPLOAD_IN_PROGRESS') }
+          </Text>
+          <Progress.Bar progress={uploadProgress} width={200} />
+          <Text style={tailwind('text-gray-300 my-1')}>
+            { uploadStatusText }
+          </Text>
+        </View>
       }
       {
         signedUnsyncedItems.length === 0 &&
