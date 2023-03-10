@@ -88,7 +88,7 @@ function Upload({ navigation }) {
           <Text style={tailwind('text-blue my-1')}>
             { i18n.t('UPLOAD_IN_PROGRESS') }
           </Text>
-          <Progress.Bar progress={uploadProgress} width={200} />
+          <Progress.Bar progress={uploadProgress} width={null} color={"rgba(110, 193, 228, 1)"} borderColor={"rgba(110, 193, 228, 1)"} />
           <Text style={tailwind('text-gray-300 my-1')}>
             { uploadStatusText }
           </Text>

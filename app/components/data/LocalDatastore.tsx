@@ -151,6 +151,7 @@ export default class Datastore {
       }
 
       const uploaded = await upload(items, i18n, increaseUploadProgress, setUploadStatusText);
+
       for (let item of uploaded) {
         item.synced = true;
         await this.save(item);

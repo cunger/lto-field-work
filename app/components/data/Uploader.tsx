@@ -49,7 +49,7 @@ export default async function upload(items: Item[], i18n: I18n, increaseUploadPr
 
   if (items.length > 0) {
     try {
-      setUploadStatusText('...data');
+      setUploadStatusText('/data ... ' + items.length + ' entries');
 
       const response = await fetch(`${BASE_URL}/data`, {
         method: 'POST',
@@ -101,7 +101,7 @@ function uploadImage(image: Image, i18n: I18n, increaseUploadProgress: (_ : numb
 
       if (xhr.upload) {
         xhr.upload.onprogress = (event: ProgressEvent) => {
-          setUploadStatusText('...photo ' + image.filename + ' (' + event.loaded + ' / ' + event.total + ')');
+          setUploadStatusText('/photo ...' + image.filename + ' (' + event.loaded + ' / ' + event.total + ')');
         };
       }
 
