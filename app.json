@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "86",
+      "buildNumber": "90",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true
       },
