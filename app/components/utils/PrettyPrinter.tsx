@@ -9,7 +9,8 @@ export const print = (count: number, noun: string, i18n: I18n, zeroAlternative?:
     noun = 'OTHER';
   }
 
-  noun = i18n.t(noun);
+  noun = noun.trim();
+  noun = !i18n.t(noun).startsWith('[missing') ? i18n.t(noun) : noun;
   noun = noun.toLowerCase();
 
   let plural = (noun: string) => noun;

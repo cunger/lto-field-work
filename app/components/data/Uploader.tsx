@@ -24,19 +24,24 @@ export default async function upload(items: Item[], i18n: I18n, increaseUploadPr
   // If there is a connection, upload data.
 
   // For upload progess, determine the number of upload steps.
-  let steps = items.length; 
+  // One step for all data entries (are uploaded at once).
+  let steps = 1;
+  // One step for each photo (uploaded separately).
   items.map(item => (item.photos || []).length).forEach(n => steps += n);
+  // Equal upload progress for each step. (Upload progress is a float in [0,1].)
   const stepPercentage = 100 / steps;
 
   // Upload images (if there are any).
   for (let item of items) {
-    if (!item.photos) continue; 
-    
-    const imageUploads = item.photos
-      .filter(image => image.location)
-      .map(image => uploadImage(image, i18n, increaseUploadProgress, stepPercentage, setUploadStatusText));
-    
-    await Promise.allSettled(imageUploads);
+    for (let photo of (item.photos || [])) {
+      if (!photo.location) continue;
+
+      setUploadStatusText(photo.filename);
+
+      await uploadImage(photo, i18n, increaseUploadProgress, stepPercentage, setUploadStatusText);
+      
+      increaseUploadProgress(stepPercentage);
+    }
   }
 
   // Upload data.
@@ -45,7 +50,7 @@ export default async function upload(items: Item[], i18n: I18n, increaseUploadPr
   let errors: string[] = [];
 
   try {
-    setUploadStatusText('/data: ' + items.length + ' entries');
+    setUploadStatusText(items.length + ' data entries...');
 
     const response = await fetch(`${BASE_URL}/data`, {
       method: 'POST',
@@ -75,18 +80,16 @@ export default async function upload(items: Item[], i18n: I18n, increaseUploadPr
     });
   }
 
+  setUploadStatusText('🗸');
   increaseUploadProgress(stepPercentage);
-  setUploadStatusText('Finished.');
 
   return items.filter(item => uploaded.indexOf(item.id) >= 0);
 }
 
-async function uploadImage(image: Image, i18n: I18n, increaseUploadProgress: (_ : number) => void, stepPercentage: number, setUploadStatusText: (_: string) => void) {
+async function uploadImage(image: Image, i18n: I18n) {
   const errors: string[] = [];
 
   try {
-    setUploadStatusText('/photo: ' + image.filename);
-
     const formData = new FormData();
     formData.append('file', {
       uri: image.location,
@@ -111,8 +114,6 @@ async function uploadImage(image: Image, i18n: I18n, increaseUploadProgress: (_ 
     } else {
       errors.push(`Response status: ${response.status}`);
     }
-
-    increaseUploadProgress(stepPercentage);
   } catch (error) {
     errors.push(`${error}`);
   }

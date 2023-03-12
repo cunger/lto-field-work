@@ -34,7 +34,7 @@ export default class Item {
 
   public static prettyPrint(item: Item, i18n: I18n): string {
     switch (item.type) {
-      case 'Catch': return print(item.quantity, item.species || 'SPECIES_Fish', i18n, 'NO_CATCH');
+      case 'Catch': return print(item.quantity, item.species || item.common_name || 'SPECIES_Fish', i18n, 'NO_CATCH');
       case 'Trash': return print(item.quantity, Category[item.category], i18n);
       default: return 'SOMETHING';
     }

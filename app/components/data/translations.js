@@ -48,7 +48,7 @@ export default {
     "UPLOAD_DELETE_ALL_UNSIGNED": "Do you really want to delete all unsigned data?",
     "UPLOAD_DELETE_ALL_UNSIGNED_EXPLANATION": "You will lose all data that you collected but did not sign.",
     "UPLOAD_DELETE_ALL": "Delete all",
-    "UPLOAD_IN_PROGRESS": "Uploading... This can take a while.",
+    "UPLOAD_IN_PROGRESS": "Uploading...",
     "ADDITIONAL_NOTES": "Additional notes",
     "ADDITIONAL_NOTES_LABEL": "If there is something else that is important, let us know:",
     "CONFIRM_DISCARD": "Do you really want to discard this data?",
