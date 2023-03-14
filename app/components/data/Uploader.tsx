@@ -3,6 +3,7 @@ import NetInfo from '@react-native-community/netinfo'; // https://github.com/rea
 import Item from '../../model/Item';
 import Image from '../../model/Image';
 import { I18n } from 'i18n-js/typings';
+import * as FileSystem from 'expo-file-system';
 
 const BASE_URL = 'https://lto-back-office.netlify.app/.netlify/functions/api';
 
@@ -110,7 +111,10 @@ async function uploadImage(image: Image, i18n: I18n) {
 
     if (response.status === 200) {
       const responseData = await response.json(); // { link: '', errors: [] }
+      
       image.link = responseData.link;
+    
+      await FileSystem.deleteAsync(image.location);
     } else {
       errors.push(`Response status: ${response.status}`);
     }

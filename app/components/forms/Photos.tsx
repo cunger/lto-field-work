@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image as RNImage, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, Image as RNImage } from 'react-native';
 import { InputField, InputGroup } from './Input';
 import TextField from './TextField';
 import Image from '../../model/Image';
@@ -7,6 +7,8 @@ import { useTailwind } from 'tailwind-rn';
 import { showMessage } from 'react-native-flash-message';
 import * as ImagePicker from 'expo-image-picker';
 import * as MediaLibrary from 'expo-media-library';
+import * as FileSystem from 'expo-file-system';
+import uuid from 'react-native-uuid';
 import GlobalContext from '../../context/GlobalContext';
 
 function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, removePhoto, setPhotosNote }) {
@@ -43,10 +45,16 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
     );
   };
 
+  /**
+   * Picking a photo from the media library.
+   */
+
   const choosePhoto = async () => {
     try {
       const permissionResponse = await MediaLibrary.requestPermissionsAsync();
       if (permissionResponse.granted) {
+        await initializeFolder();
+
         const result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images
         });
@@ -54,7 +62,6 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
         for (const asset of (result?.assets || [])) {
           if (!asset?.assetId) continue;
           const info = await MediaLibrary.getAssetInfoAsync(asset.assetId);
-          console.log(info);
           if (!info?.localUri) continue;
           await addPhoto(createImage(info.localUri));
         }
@@ -72,19 +79,40 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
     }
   };
 
+  /**
+   * Taking a picture with the camera.
+   * The resulting asset is saved both in the media library and in an app-specific folder.
+   * It is deleted from the latter folder after it hasbeen uploaded.
+   */
+
+  const PHOTOS_FOLDER = `${FileSystem.documentDirectory || ''}photos`;
+
+  async function initializeFolder() {
+    const info = await FileSystem.getInfoAsync(PHOTOS_FOLDER);
+    
+    if (!info.exists) {
+      await FileSystem.makeDirectoryAsync(PHOTOS_FOLDER, { intermediates: true });
+    }
+  }
+
   const takePhoto = async () => {
     try {
       const permission = await MediaLibrary.requestPermissionsAsync();
       if (permission.granted) {
+        await initializeFolder();
+
         const result = await ImagePicker.launchCameraAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true
         });
 
         for (const asset of (result?.assets || [])) {
           try {
-            if (!asset?.uri) continue;
             const savedAsset = await MediaLibrary.createAssetAsync(asset.uri);
-            await addPhoto(createImage(savedAsset.uri));
+            const newUri = `${PHOTOS_FOLDER}/${uuid.v4()}.jpg`;
+
+            await FileSystem.copyAsync({ from: savedAsset.uri, to: newUri })
+            await addPhoto(createImage(newUri));        
           } catch (error) {
             showMessage({
               message: i18n.t('ERROR_FAILED_TO_SAVE_PHOTO'),
