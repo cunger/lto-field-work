@@ -120,7 +120,6 @@ export default class Datastore {
       await AsyncStorage.setItem(item.id, JSON.stringify(item));
       await this.saveInStatistics(item);
     } catch (error) {
-      console.log(error);
       showMessage({
         message: i18n.t('ERROR_FAILED_TO_SAVE_DATA'),
         description: `${error}`,
@@ -136,6 +135,7 @@ export default class Datastore {
       const keys: readonly string[] = await AsyncStorage.getAllKeys();
 
       for (let key of keys) {
+        // All keys for internal use start with '@', so siply skip them when uploading data.
         if (key.startsWith('@')) continue;
 
         const value = await AsyncStorage.getItem(key);

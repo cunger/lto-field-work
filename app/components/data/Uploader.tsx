@@ -2,6 +2,7 @@ import { showMessage } from 'react-native-flash-message';
 import NetInfo from '@react-native-community/netinfo'; // https://github.com/react-native-netinfo/react-native-netinfo
 import Item from '../../model/Item';
 import Image from '../../model/Image';
+import Category from '../../model/beachclean/Category';
 import { I18n } from 'i18n-js/typings';
 import * as FileSystem from 'expo-file-system';
 
@@ -28,7 +29,7 @@ export default async function upload(items: Item[], i18n: I18n, increaseUploadPr
   // One step for all data entries (are uploaded at once).
   let steps = 1;
   // One step for each photo (uploaded separately).
-  items.map(item => (item.photos || []).length).forEach(n => steps += n);
+  items.forEach(item => steps += (item.photos || []).length);
   // Equal upload progress for each step. (Upload progress is a float in [0,1].)
   const stepPercentage = 100 / steps;
 
@@ -135,12 +136,14 @@ async function uploadImage(image: Image, i18n: I18n) {
 
 function withPrettyPrintedValues(item: Item, i18n: I18n) {
   const newitem = { ...item };
+
   if (item.date) newitem.date = new Date(item.date);
   if (item.location) newitem.location = i18n.t(item.location, 'en');
   if (item.base) newitem.base = i18n.t(item.base, 'en');
   if (item.method) newitem.method = i18n.t(item.method, 'en');
   if (item.species) newitem.species = i18n.t(item.species, 'en');
   if (item.sex) newitem.sex = i18n.t(item.sex, 'en');
-  if (item.category) newitem.category = i18n.t(item.category, 'en');
+  if (item.category) newitem.category = i18n.t(Category[item.category], 'en');
+  
   return newitem;
 }
