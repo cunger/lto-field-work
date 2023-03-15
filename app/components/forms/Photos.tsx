@@ -46,9 +46,21 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
   };
 
   /**
+   * Photos used in the data entries are stored in an app-specific separate folder.
+   */
+  const PHOTOS_FOLDER = `${FileSystem.documentDirectory || ''}photos`;
+
+  async function initializeFolder() {
+    const info = await FileSystem.getInfoAsync(PHOTOS_FOLDER);
+    
+    if (!info.exists) {
+      await FileSystem.makeDirectoryAsync(PHOTOS_FOLDER, { intermediates: true });
+    }
+  }
+
+  /**
    * Picking a photo from the media library.
    */
-
   const choosePhoto = async () => {
     try {
       const permissionResponse = await MediaLibrary.requestPermissionsAsync();
@@ -60,10 +72,10 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
         });
 
         for (const asset of (result?.assets || [])) {
-          if (!asset?.assetId) continue;
-          const info = await MediaLibrary.getAssetInfoAsync(asset.assetId);
-          if (!info?.localUri) continue;
-          await addPhoto(createImage(info.localUri));
+          const newUri = `${PHOTOS_FOLDER}/${uuid.v4()}.jpg`;
+
+          await FileSystem.copyAsync({ from: asset.uri, to: newUri })
+          await addPhoto(createImage(newUri));
         }
       } else {
         throw new Error(i18n.t('ERROR_MISSING_PERMISSION'));
@@ -84,17 +96,6 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
    * The resulting asset is saved both in the media library and in an app-specific folder.
    * It is deleted from the latter folder after it hasbeen uploaded.
    */
-
-  const PHOTOS_FOLDER = `${FileSystem.documentDirectory || ''}photos`;
-
-  async function initializeFolder() {
-    const info = await FileSystem.getInfoAsync(PHOTOS_FOLDER);
-    
-    if (!info.exists) {
-      await FileSystem.makeDirectoryAsync(PHOTOS_FOLDER, { intermediates: true });
-    }
-  }
-
   const takePhoto = async () => {
     try {
       const permission = await MediaLibrary.requestPermissionsAsync();
@@ -112,7 +113,7 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
             const newUri = `${PHOTOS_FOLDER}/${uuid.v4()}.jpg`;
 
             await FileSystem.copyAsync({ from: savedAsset.uri, to: newUri })
-            await addPhoto(createImage(newUri));        
+            await addPhoto(createImage(newUri));
           } catch (error) {
             showMessage({
               message: i18n.t('ERROR_FAILED_TO_SAVE_PHOTO'),
