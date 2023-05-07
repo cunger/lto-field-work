@@ -33,7 +33,7 @@ fs.readFile(translationsSource, function read(error, data) {
     for (const record of records) {
       if (record.key && record.key !== '') {
         translations.en[record.key] = record.english;
-        translations.pt[record.key] = record.portuguese;
+        translations.pt[record.key] = record.portuguese || record.english; // I.e. if there is no pt translation, use the en string.
       }
     }
 
