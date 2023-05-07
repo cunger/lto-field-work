@@ -74,13 +74,13 @@ function Dashboard() {
           {Object.entries(statistics.Catch || {})
             .filter((entry) => entry[1] > 0)
             .map((entry, index) => (
-              <ListItem key={index}><Text>{` ️ ${print(entry[1], Species[entry[0]], i18n)}`}</Text></ListItem>
+              <ListItem key={index}><Text>{` ️ ${print(entry[1], Species[entry[0]] || entry[0], i18n)}`}</Text></ListItem>
             ))
           }
           <Text style={tailwind('m-2')}>🗑️ {i18n.t('DASHBOARD_TRASH')}:</Text>
           {Object.entries(statistics.Trash || {})
             .map((entry, index) => (
-              <ListItem key={index}><Text>{` ️ ${print(entry[1], Category[entry[0]], i18n)}`}</Text></ListItem>
+              <ListItem key={index}><Text>{` ️ ${print(entry[1], Category[entry[0]] || entry[0], i18n)}`}</Text></ListItem>
             ))
           }
         </View>
