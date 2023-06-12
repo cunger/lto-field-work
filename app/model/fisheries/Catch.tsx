@@ -10,11 +10,13 @@ class Dimensions {
   total: string;
   min: string;
   max: string;
+  avg: string;
 
   constructor() {
     this.total = '';
     this.min = '';
     this.max = '';
+    this.avg = '';
   }
 }
 

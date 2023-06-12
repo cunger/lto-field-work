@@ -90,8 +90,9 @@ function Fisheries({ navigation, route }) {
     if (key === 'total') {
       item[dimension].min = '';
       item[dimension].max = '';
+      item[dimension].avg = '';
     }
-    if (key === 'min' || key === 'max') {
+    if (key === 'min' || key === 'max' || key === 'avg') {
       item[dimension].total = '';
     }
     
@@ -298,71 +299,89 @@ function Fisheries({ navigation, route }) {
               label={i18n.t('FISHERIES_TOTAL_LENGTH')}
               minValue={item.length.min}
               maxValue={item.length.max}
+              avgValue={item.length.avg}
               minUpdateAction={(value: string) => updateDimension('length', 'min', value)}
               maxUpdateAction={(value: string) => updateDimension('length', 'max', value)}
+              avgUpdateAction={(value: string) => updateDimension('length', 'avg', value)}
             />
             <MinMaxTextField
               label={i18n.t('FISHERIES_HEAD_LENGTH')}
               minValue={item.head_length.min}
               maxValue={item.head_length.max}
+              avgValue={item.head_length.avg}
               minUpdateAction={(value: string) => updateDimension('head_length', 'min', value)}
               maxUpdateAction={(value: string) => updateDimension('head_length', 'max', value)}
+              avgUpdateAction={(value: string) => updateDimension('head_length', 'avg', value)}
               hide={hideHeadLength}
             />
             <MinMaxTextField
               label={i18n.t('FISHERIES_HEAD_WIDTH')}
               minValue={item.head_width.min}
               maxValue={item.head_width.max}
+              avgValue={item.head_width.avg}
               minUpdateAction={(value: string) => updateDimension('head_width', 'min', value)}
               maxUpdateAction={(value: string) => updateDimension('head_width', 'max', value)}
+              avgUpdateAction={(value: string) => updateDimension('head_width', 'avg', value)}
               hide={hideHeadWidth}
             />
             <MinMaxTextField
               label={i18n.t('FISHERIES_FORK_LENGTH')}
               minValue={item.fork_length.min}
               maxValue={item.fork_length.max}
+              avgValue={item.fork_length.avg}
               minUpdateAction={(value: string) => updateDimension('fork_length', 'min', value)}
               maxUpdateAction={(value: string) => updateDimension('fork_length', 'max', value)}
+              avgUpdateAction={(value: string) => updateDimension('fork_length', 'avg', value)}
               hide={hideForkLength}
             />
             <MinMaxTextField
               label={i18n.t('FISHERIES_PRECAUDAL_LENGTH')}
               minValue={item.precaudal_length.min}
               maxValue={item.precaudal_length.max}
+              avgValue={item.precaudal_length.avg}
               minUpdateAction={(value: string) => updateDimension('precaudal_length', 'min', value)}
               maxUpdateAction={(value: string) => updateDimension('precaudal_length', 'max', value)}
+              avgUpdateAction={(value: string) => updateDimension('precaudal_length', 'avg', value)}
               hide={hidePrecaudalLength}
             />
             <MinMaxTextField
               label={i18n.t('FISHERIES_CARAPACE_LENGTH')}
               minValue={item.carapace_length.min}
               maxValue={item.carapace_length.max}
+              avgValue={item.carapace_length.avg}
               minUpdateAction={(value: string) => updateDimension('carapace_length', 'min', value)}
               maxUpdateAction={(value: string) => updateDimension('carapace_length', 'max', value)}
+              avgUpdateAction={(value: string) => updateDimension('carapace_length', 'avg', value)}
               hide={hideCarapaceLength}
             />
             <MinMaxTextField
               label={i18n.t('FISHERIES_CARAPACE_WIDTH')}
               minValue={item.carapace_width.min}
               maxValue={item.carapace_width.max}
+              avgValue={item.carapace_width.avg}
               minUpdateAction={(value: string) => updateDimension('carapace_width', 'min', value)}
               maxUpdateAction={(value: string) => updateDimension('carapace_width', 'max', value)}
+              avgUpdateAction={(value: string) => updateDimension('carapace_width', 'avg', value)}
               hide={hideCarapaceWidth}
             />
             <MinMaxTextField
               label={i18n.t('FISHERIES_TAIL_LENGTH')}
               minValue={item.tail_length.min}
               maxValue={item.tail_length.max}
+              avgValue={item.tail_length.avg}
               minUpdateAction={(value: string) => updateDimension('tail_length', 'min', value)}
               maxUpdateAction={(value: string) => updateDimension('tail_length', 'max', value)}
+              avgUpdateAction={(value: string) => updateDimension('tail_length', 'avg', value)}
               hide={hideTailLength}
             />
             <MinMaxTextField
               label={i18n.t('FISHERIES_DISK_WIDTH')}
               minValue={item.disk_width.min}
               maxValue={item.disk_width.max}
+              avgValue={item.disk_width.avg}
               minUpdateAction={(value: string) => updateDimension('disk_width', 'min', value)}
               maxUpdateAction={(value: string) => updateDimension('disk_width', 'max', value)}
+              avgUpdateAction={(value: string) => updateDimension('disk_width', 'avg', value)}
               hide={hideWingspan}
             />
           </View>
