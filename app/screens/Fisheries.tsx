@@ -95,7 +95,7 @@ function Fisheries({ navigation, route }) {
     if (key === 'min' || key === 'max' || key === 'avg') {
       item[dimension].total = '';
     }
-    
+
     setItem({ ...item });
   };
 

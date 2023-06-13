@@ -16,16 +16,14 @@ function MinMaxTextField({ label, minValue, maxValue, avgValue, minUpdateAction,
       <View style={{ flex: 2, flexDirection: 'row' }}>
         <TextInput
           value={minValue}
-          onChangeText={minUpdateAction}
-          onEndEditing={minUpdateAction}
+          onChangeText={(text: string) => minUpdateAction(text)}
           keyboardType={keyboardType}
           placeholder={i18n.t('FISHERIES_SMALLEST')}
           style={tailwind('w-1/2 mb-2 mr-1 p-2 bg-white border-gray rounded-md')}
         />
         <TextInput
           value={maxValue}
-          onChangeText={maxUpdateAction}
-          onEndEditing={maxUpdateAction}
+          onChangeText={(text: string) => maxUpdateAction(text)}
           keyboardType={keyboardType}
           placeholder={i18n.t('FISHERIES_BIGGEST')}
           style={tailwind('w-1/2 mb-2 ml-1 p-2 bg-white border-gray rounded-md')}
@@ -34,8 +32,7 @@ function MinMaxTextField({ label, minValue, maxValue, avgValue, minUpdateAction,
       <View>
         <TextInput
           value={avgValue}
-          onChangeText={avgUpdateAction}
-          onEndEditing={avgUpdateAction}
+          onChangeText={(text: string) => avgUpdateAction(text)}
           keyboardType={keyboardType}
           placeholder={i18n.t('FISHERIES_AVERAGE')}
           style={tailwind('mb-2 p-2 bg-white border-gray rounded-md')}
