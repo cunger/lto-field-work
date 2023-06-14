@@ -66,7 +66,8 @@ CONFIRM_DISCARD ;  Do you really want to discard this data? ;
 
 BEACHCLEAN_ITEMS ; Items ;
 
-FISHERIES_INCLUDE_PIC_FOR_SEXING ; Please make sure to include a picture that can be used for sexing. ;
+FISHERIES_INCLUDE_PIC_FOR_SEXING ; Please include a picture that can be used for sexing. ;
+FISHERIES_INCLUDE_PIC_WITH_EGGS ; Please include a picture of the eggs if present. ;
 FISHERIES_SCHOOL_OF_FISH_NOTE ; If they have different sizes, please log them separately. ;
 FISHERIES_MIN_MAX_NOTE ; Please specify all properties both for the smallest and the biggest of the caught fish, and ideally provide an average if it's more than two. ; 
 FISHERIES_METHOD ; Fishing method ;

@@ -141,6 +141,8 @@ function Fisheries({ navigation, route }) {
   const photoFlashMessage = () => {
     if (item.species == Species.Shark || item.species == Species.Ray) {
       return i18n.t('FISHERIES_INCLUDE_PIC_FOR_SEXING');
+    } else if (item.species == Species.Crab || item.species == Species.Crayfish) {
+      return i18n.t('FISHERIES_INCLUDE_PIC_WITH_EGGS');
     } else {
       return '';
     }

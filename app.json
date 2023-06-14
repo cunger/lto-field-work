@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "114",
+      "buildNumber": "115",
       "infoPlist": {
         "NSCameraUsageDescription": "Please allow us to access your camera so you can take pictures when logging data",
         "NSPhotoLibraryAddUsageDescription": "Please allow us to save pictures from your camera to your photo gallery",
