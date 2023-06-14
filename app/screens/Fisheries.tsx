@@ -287,6 +287,14 @@ function Fisheries({ navigation, route }) {
           label={i18n.t('FISHERIES_COMMON_NAME')}
           value={item.common_name}
           updateAction={(value: string) => update({ common_name: value })}
+          helpText={i18n.t('FISHERIES_COMMON_NAME_HELP')}
+        />
+
+        <TextField
+          label={i18n.t('FISHERIES_LATIN_NAME')}
+          value={item.latin_name}
+          updateAction={(value: string) => update({ latin_name: value })}
+          helpText={i18n.t('FISHERIES_LATIN_NAME_HELP')}
         />
 
         {
@@ -303,7 +311,8 @@ function Fisheries({ navigation, route }) {
               minUpdateAction={(value: string) => updateDimension('length', 'min', value)}
               maxUpdateAction={(value: string) => updateDimension('length', 'max', value)}
               avgUpdateAction={(value: string) => updateDimension('length', 'avg', value)}
-            />
+              helpText={i18n.t('FISHERIES_TOTAL_LENGTH_HELP')}
+              />
             <MinMaxTextField
               label={i18n.t('FISHERIES_HEAD_LENGTH')}
               minValue={item.head_length.min}
@@ -313,6 +322,7 @@ function Fisheries({ navigation, route }) {
               maxUpdateAction={(value: string) => updateDimension('head_length', 'max', value)}
               avgUpdateAction={(value: string) => updateDimension('head_length', 'avg', value)}
               hide={hideHeadLength}
+              helpText={i18n.t('FISHERIES_HEAD_LENGTH_HELP')}
             />
             <MinMaxTextField
               label={i18n.t('FISHERIES_HEAD_WIDTH')}
@@ -323,6 +333,7 @@ function Fisheries({ navigation, route }) {
               maxUpdateAction={(value: string) => updateDimension('head_width', 'max', value)}
               avgUpdateAction={(value: string) => updateDimension('head_width', 'avg', value)}
               hide={hideHeadWidth}
+              helpText={i18n.t('FISHERIES_HEAD_WIDTH_HELP')}
             />
             <MinMaxTextField
               label={i18n.t('FISHERIES_FORK_LENGTH')}
@@ -333,6 +344,7 @@ function Fisheries({ navigation, route }) {
               maxUpdateAction={(value: string) => updateDimension('fork_length', 'max', value)}
               avgUpdateAction={(value: string) => updateDimension('fork_length', 'avg', value)}
               hide={hideForkLength}
+              helpText={i18n.t('FISHERIES_FORK_LENGTH_HELP')}
             />
             <MinMaxTextField
               label={i18n.t('FISHERIES_PRECAUDAL_LENGTH')}
@@ -343,6 +355,7 @@ function Fisheries({ navigation, route }) {
               maxUpdateAction={(value: string) => updateDimension('precaudal_length', 'max', value)}
               avgUpdateAction={(value: string) => updateDimension('precaudal_length', 'avg', value)}
               hide={hidePrecaudalLength}
+              helpText={i18n.t('FISHERIES_PRECAUDAL_LENGTH_HELP')}
             />
             <MinMaxTextField
               label={i18n.t('FISHERIES_CARAPACE_LENGTH')}
@@ -353,6 +366,7 @@ function Fisheries({ navigation, route }) {
               maxUpdateAction={(value: string) => updateDimension('carapace_length', 'max', value)}
               avgUpdateAction={(value: string) => updateDimension('carapace_length', 'avg', value)}
               hide={hideCarapaceLength}
+              helpText={i18n.t('FISHERIES_CARAPACE_LENGTH_HELP')}
             />
             <MinMaxTextField
               label={i18n.t('FISHERIES_CARAPACE_WIDTH')}
@@ -363,6 +377,7 @@ function Fisheries({ navigation, route }) {
               maxUpdateAction={(value: string) => updateDimension('carapace_width', 'max', value)}
               avgUpdateAction={(value: string) => updateDimension('carapace_width', 'avg', value)}
               hide={hideCarapaceWidth}
+              helpText={i18n.t('FISHERIES_CARAPACE_WIDTH_HELP')}
             />
             <MinMaxTextField
               label={i18n.t('FISHERIES_TAIL_LENGTH')}
@@ -373,6 +388,7 @@ function Fisheries({ navigation, route }) {
               maxUpdateAction={(value: string) => updateDimension('tail_length', 'max', value)}
               avgUpdateAction={(value: string) => updateDimension('tail_length', 'avg', value)}
               hide={hideTailLength}
+              helpText={i18n.t('FISHERIES_TAIL_LENGTH_HELP')}
             />
             <MinMaxTextField
               label={i18n.t('FISHERIES_DISK_WIDTH')}
@@ -383,6 +399,7 @@ function Fisheries({ navigation, route }) {
               maxUpdateAction={(value: string) => updateDimension('disk_width', 'max', value)}
               avgUpdateAction={(value: string) => updateDimension('disk_width', 'avg', value)}
               hide={hideWingspan}
+              helpText={i18n.t('FISHERIES_DISK_WIDTH_HELP')}
             />
           </View>
         }
@@ -402,6 +419,7 @@ function Fisheries({ navigation, route }) {
               value={item.length.total}
               updateAction={(value: string) => updateDimension('length', 'total', value)}
               keyboardType='numeric'
+              helpText={i18n.t('FISHERIES_TOTAL_LENGTH_HELP')}
             />
             <TextField
               label={i18n.t('FISHERIES_HEAD_LENGTH')}
@@ -409,6 +427,7 @@ function Fisheries({ navigation, route }) {
               updateAction={(value: string) => updateDimension('head_length', 'total', value)}
               keyboardType='numeric'
               hide={hideHeadLength}
+              helpText={i18n.t('FISHERIES_HEAD_LENGTH_HELP')}
             />
             <TextField
               label={i18n.t('FISHERIES_HEAD_WIDTH')}
@@ -416,6 +435,7 @@ function Fisheries({ navigation, route }) {
               updateAction={(value: string) => updateDimension('head_width', 'total', value)}
               keyboardType='numeric'
               hide={hideHeadWidth}
+              helpText={i18n.t('FISHERIES_HEAD_WIDTH_HELP')}
             />
             <TextField
               label={i18n.t('FISHERIES_FORK_LENGTH')}
@@ -423,6 +443,7 @@ function Fisheries({ navigation, route }) {
               updateAction={(value: string) => updateDimension('fork_length', 'total', value)}
               keyboardType='numeric'
               hide={hideForkLength}
+              helpText={i18n.t('FISHERIES_FORK_LENGTH_HELP')}
             />
             <TextField
               label={i18n.t('FISHERIES_PRECAUDAL_LENGTH')}
@@ -437,6 +458,7 @@ function Fisheries({ navigation, route }) {
               updateAction={(value: string) => updateDimension('carapace_length', 'total', value)}
               keyboardType='numeric'
               hide={hideCarapaceLength}
+              helpText={i18n.t('FISHERIES_CARAPACE_LENGTH_HELP')}
             />
             <TextField
               label={i18n.t('FISHERIES_CARAPACE_WIDTH')}
@@ -444,6 +466,7 @@ function Fisheries({ navigation, route }) {
               updateAction={(value: string) => updateDimension('carapace_width', 'total', value)}
               keyboardType='numeric'
               hide={hideCarapaceWidth}
+              helpText={i18n.t('FISHERIES_CARAPACE_WIDTH_HELP')}
             />
             <TextField
               label={i18n.t('FISHERIES_TAIL_LENGTH')}
@@ -451,6 +474,7 @@ function Fisheries({ navigation, route }) {
               updateAction={(value: string) => updateDimension('tail_length', 'total', value)}
               keyboardType='numeric'
               hide={hideTailLength}
+              helpText={i18n.t('FISHERIES_TAIL_LENGTH_HELP')}
             />
             <TextField
               label={i18n.t('FISHERIES_DISK_WIDTH')}
@@ -458,6 +482,7 @@ function Fisheries({ navigation, route }) {
               updateAction={(value: string) => updateDimension('disk_width', 'total', value)}
               keyboardType='numeric'
               hide={hideWingspan}
+              helpText={i18n.t('FISHERIES_DISK_WIDTH_HELP')}
             />
           </View>
         }

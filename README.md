@@ -29,6 +29,6 @@ $ npm run eject
 
 Building and submitting the app:
 ```
-$ eas build --profile production --platform ios
-$ eas submit --profile production --platform ios
+$ eas build --platform ios --profile production 
+$ eas submit --platform ios
 ```

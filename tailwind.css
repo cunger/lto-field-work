@@ -282,6 +282,11 @@
   color: rgb(17 24 39 / var(--tw-text-opacity))
 }
 
+.text-gray-light {
+  --tw-text-opacity: 1;
+  color: rgb(200 209 224 / var(--tw-text-opacity))
+}
+
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity))

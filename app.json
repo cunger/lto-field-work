@@ -2,7 +2,7 @@
   "expo": {
     "name": "lto-field-work",
     "slug": "lto-field-work",
-    "version": "1.0.0",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,9 +18,11 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "109",
+      "buildNumber": "114",
       "infoPlist": {
-        "CFBundleAllowMixedLocalizations": true
+        "NSCameraUsageDescription": "Please allow us to access your camera so you can take pictures when logging data",
+        "NSPhotoLibraryAddUsageDescription": "Please allow us to save pictures from your camera to your photo gallery",
+        "NSPhotoLibraryUsageDescription": "Please allow us to access your photo gallery so you can choose pictures you want to share"
       },
       "bundleIdentifier": "lto-field-work"
     },

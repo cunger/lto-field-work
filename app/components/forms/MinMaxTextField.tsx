@@ -1,10 +1,10 @@
 import React from 'react';
-import { TextInput, View } from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 import { InputLabel } from './Input';
 import { useTailwind } from 'tailwind-rn';
 import GlobalContext from '../../context/GlobalContext';
 
-function MinMaxTextField({ label, minValue, maxValue, avgValue, minUpdateAction, maxUpdateAction, avgUpdateAction, keyboardType='numeric', hide=false }) {
+function MinMaxTextField({ label, minValue, maxValue, avgValue, minUpdateAction, maxUpdateAction, avgUpdateAction, helpText='', keyboardType='numeric', hide=false }) {
   if (hide) return null;
 
   const tailwind = useTailwind();
@@ -13,6 +13,7 @@ function MinMaxTextField({ label, minValue, maxValue, avgValue, minUpdateAction,
   return (
     <View>
       { label && <InputLabel text={label} /> }
+      { helpText && <Text style={tailwind('mb-2 text-gray')}>{helpText}</Text> }
       <View style={{ flex: 2, flexDirection: 'row' }}>
         <TextInput
           value={minValue}

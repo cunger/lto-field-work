@@ -27,6 +27,7 @@ export default class Catch extends Item {
   base: Base | null;
   quantity: number;
   common_name: string;
+  latin_name: string;
   species: Species | null;
   sex: Sex | null;
   length: Dimensions;
@@ -43,6 +44,7 @@ export default class Catch extends Item {
     super('Catch', date, location);
     this.quantity = 1;
     this.common_name = '';
+    this.latin_name = '';
     // We don't want to reset these fields, as they usually don't change.
     this.base = base || null;
     this.method = method || null;
