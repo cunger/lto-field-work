@@ -8,6 +8,7 @@ import Sex from '../model/fisheries/Sex';
 import Method from '../model/fisheries/Method';
 import Base from '../model/fisheries/Base';
 import Image from '../model/Image';
+import DateTime from '../model/DateTime';
 import ScrollContainer from '../components/ScrollContainer';
 import Datastore from '../components/data/LocalDatastore';
 import Coordinates from '../components/forms/Coordinates';
@@ -27,7 +28,7 @@ function Fisheries({ navigation, route }) {
   const tailwind = useTailwind();
   const i18n = GlobalContext.i18n;
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new DateTime());
   const [location, setLocation] = useState(null);
   const [item, setItem] = useState(new Catch(date, location));
   const [isNoCatch, setIsNoCatch] = useState(false);
@@ -70,8 +71,11 @@ function Fisheries({ navigation, route }) {
     Datastore.item(itemId).then(item => { 
       if (!item) return;
 
-      setDate(new Date(item.date));
-      setLocation(item.location);
+      const location = item.location
+      const datetime = item.date ? new DateTime(new Date(item.date)) : new DateTime();
+
+      setDate(datetime);
+      setLocation(location);
       setItem({ ...item });
       setIsNoCatch(item.quantity === 0);
       setIsSchoolOfFish(item.quantity > 1);
@@ -102,7 +106,7 @@ function Fisheries({ navigation, route }) {
   const reset = () => {
     // You probably want to log several catches, so we're not resetting
     // the coordinates, base, and method.
-    setItem(new Catch(date.getTime(), location, item.base, item.method, item.other_method));
+    setItem(new Catch(date.toEpoch(), location, item.base, item.method, item.other_method));
     hideAllSpeciesSpecificFields();
     setIsSchoolOfFish(false);
     setIsMinMaxSpecies(false);
@@ -110,17 +114,17 @@ function Fisheries({ navigation, route }) {
 
   const resetAllFields = () => {
     // This is a hard reset of all fields.
-    const now = new Date();
+    const now = new DateTime();
     setDate(now);
     setLocation(null);
-    setItem(new Catch(now.getTime(), null));
+    setItem(new Catch(now.toEpoch(), null));
     hideAllSpeciesSpecificFields();
     setIsSchoolOfFish(false);
     setIsMinMaxSpecies(false);
   };
 
   const openSigning = () => {
-    item.date = date.getTime();
+    item.date = date.toEpoch();
     item.location = location;
     setSignatureVisible(true);
   };

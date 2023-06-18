@@ -1,4 +1,5 @@
 import { I18n } from 'i18n-js/typings';
+import DateTime from '../../model/DateTime';
 
 export const print = (count: number, noun: string, i18n: I18n, zeroAlternative?: string) => {
   if (count == 0 && zeroAlternative) {
@@ -38,3 +39,23 @@ export const print = (count: number, noun: string, i18n: I18n, zeroAlternative?:
     ? `${count} ${noun}`
     : `${count} ${plural(noun)}`;
 };
+
+export const printDateShort = (date: DateTime, i18n: I18n): string => {
+  switch (i18n.locale) {
+    case 'en': return `${withLeadingZero(date.day)}-${withLeadingZero(date.month)}-${date.year}`;
+    case 'pt': return `${withLeadingZero(date.day)}/${withLeadingZero(date.month)}/${date.year}`;
+    default: return `${withLeadingZero(date.day)}.${withLeadingZero(date.month)}.${date.year}`;
+  }
+}
+
+export const printDateLong = (date: DateTime, i18n: I18n): string => {
+  switch (i18n.locale) {
+    case 'en': return `${i18n.t('MONTH_' + date.month)} ${withLeadingZero(date.day)}, ${date.year}`;
+    case 'pt': return `${date.day} ${i18n.t('MONTH_' + date.month)} ${date.year}`;
+    default: return `${date.day}. ${withLeadingZero(date.month)}. ${date.year}`;
+  }
+}
+
+const withLeadingZero = (num: number): string => {
+  return num < 10 ? `0${num}` : `${num}`;
+} 

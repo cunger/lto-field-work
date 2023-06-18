@@ -113,7 +113,10 @@ PICTURES_CHOOSE_PHOTO ; Pick photo from gallery ;
 PICTURES_DESCRIBE ; Or describe which picture(s) on whose camera: ;
 
 COORDINATES ; Coordinates ;
-COORDINATES_DATE ; Date ; 
+COORDINATES_DATE ; Date ;  
+COORDINATES_YEAR ; Year ;  
+COORDINATES_MONTH ; Month ;  
+COORDINATES_DAY ; Day ;  
 COORDINATES_TIME ; Time ; 
 COORDINATES_HOURS ; Hours ; 
 COORDINATES_MINUTES ; Minutes ; 
@@ -211,3 +214,16 @@ ERROR_CLEANING_UP ; There was an error when cleaning up. ;
 ERROR_MISSING_PERMISSION ; Missing permission. ;
 
 null ; - ; -
+
+MONTH_1 ; January ; janeiro
+MONTH_2 ; February ; fevereiro
+MONTH_3 ; March ; março
+MONTH_4 ; April ; abril
+MONTH_5 ; May ; maio
+MONTH_6 ; June ; junho
+MONTH_7 ; July ; julho
+MONTH_8 ; August ; agosto
+MONTH_9 ; September ; setembro
+MONTH_10 ; October ; outubro
+MONTH_11 ; November ; novembro
+MONTH_12 ; December ; dezembro

@@ -5,6 +5,7 @@ import upload from './Uploader';
 import { getLocales } from 'expo-localization';
 import { I18n } from 'i18n-js';
 import translations from './translations';
+import DateTime from '../../model/DateTime';
 
 const languages = ['en', 'pt'];
 const localLanguage = getLocales()[0].languageCode;
@@ -68,7 +69,7 @@ export default class Datastore {
   }
 
   static async saveInStatistics(item: Item) {
-    await AsyncStorage.setItem('@lastactivedate', `${item.date}`);
+    await AsyncStorage.setItem('@lastactivedate', `${item.date.toEpoch()}`);
     await AsyncStorage.setItem('@lastactivelocation', `${item.location}`);
 
     const statisticsString = await AsyncStorage.getItem('@statistics');
@@ -90,7 +91,9 @@ export default class Datastore {
   }
 
   static async lastActiveDate() {
-    return AsyncStorage.getItem('@lastactivedate');
+    const epochString = await AsyncStorage.getItem('@lastactivedate');
+    if (epochString == null) return null;
+    return new DateTime(new Date(parseInt(epochString)));
   }
 
   static async lastActiveLocation() {

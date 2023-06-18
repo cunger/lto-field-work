@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View } from 'react-native';
-import { InputLabel, InputField, InputGroup } from './Input';
-import DateTimePickerModal from 'react-native-modal-datetime-picker'; // https://www.npmjs.com/package/react-native-modal-datetime-picker
+import { InputLabel, InputGroup } from './Input';
 import SelectField from './SelectField';
 import Location from '../../model/Location';
 import GlobalContext from '../../context/GlobalContext';
@@ -12,32 +11,44 @@ function Coordinates({ inputDate, inputLocation, setDateOnParent, setLocationOnP
   const i18n = GlobalContext.i18n;
   
   const [date, setDate] = useState(inputDate);
-  const [hours, setHours] = useState(date.getHours());
-  const [minutes, setMinutes] = useState(date.getMinutes());
+  const [year, setYear] = useState(inputDate.year);
+  const [month, setMonth] = useState(inputDate.month);
+  const [day, setDay] = useState(inputDate.day);
+  const [hours, setHours] = useState(inputDate.hours);
+  const [minutes, setMinutes] = useState(inputDate.minutes);
   const [location, setLocation] = useState(inputLocation);
-  const [datePickerVisible, setDatePickerVisible] = useState(false);
 
-  const saveDate = (value: object) => {
-    let newDate = value;
-    newDate.setHours(hours);
-    newDate.setMinutes(minutes);
-    setDate(newDate);
-    setDateOnParent(newDate);
-    setDatePickerVisible(false);
+  const saveYear = (year: number) => {
+    setYear(year);
+    date.year = year;
+    setDate(date);
+    setDateOnParent(date);
+  };
+
+  const saveMonth = (month: number) => {
+    setMonth(month);
+    date.month = month;
+    setDate(date);
+    setDateOnParent(date);
+  };
+
+  const saveDay = (day: number) => {
+    setDay(day);
+    date.day = day;
+    setDate(date);
+    setDateOnParent(date);
   };
 
   const saveHours = (hours: number) => {
     setHours(hours);
-    date.setHours(hours);
-    date.setMinutes(minutes);
+    date.hours = hours;
     setDate(date);
     setDateOnParent(date);
   };
 
   const saveMinutes = (minutes: number) => {
     setMinutes(minutes);
-    date.setHours(hours);
-    date.setMinutes(minutes);
+    date.minutes = minutes;
     setDate(date);
     setDateOnParent(date);
   };
@@ -56,37 +67,67 @@ function Coordinates({ inputDate, inputLocation, setDateOnParent, setLocationOnP
     return items;
   }
 
+  const yearRange = () => {
+    const thisYear = new Date().getFullYear();
+    return itemRange(thisYear - 10, thisYear + 1);
+  }
+
+  const monthRange = () => {
+    let items = [];
+    for (let i = 1; i <= 12; i++) {
+      items.push({ label: i18n.t(`MONTH_${i}`), value: i });
+    }
+
+    return items;
+  }
+
+  const dayRange = (month: number) => {
+    // TODO february
+    if ([1, 3, 5, 7, 8, 10, 12].includes(month)) {
+      return itemRange(1, 31);
+    } else {
+      return itemRange(1, 30);
+    }
+  }
+
   return (
     <SafeAreaView>
       <View style={tailwind('mb-2')}>
         <InputGroup text={i18n.t('COORDINATES')} />
-        <InputLabel text={i18n.t('COORDINATES_DATE')} />
-        <InputField 
-          text={date.toLocaleDateString(i18n.locale)}
-          action={() => setDatePickerVisible(true)} 
-        />
-        <DateTimePickerModal
-          date={date}
-          isVisible={datePickerVisible}
-          mode='date'
-          display='inline'
-          onConfirm={saveDate}
-          onCancel={() => setDatePickerVisible(false)}
-          maximumDate={new Date()}
-        />
+        <View style={tailwind('flex flex-row items-stretch my-3')}>
+          <InputLabel text={i18n.t('COORDINATES_DATE') + ': '} />
+          <SelectField
+            label={i18n.t('COORDINATES_DAY')}
+            value={day}
+            items={dayRange(month)}
+            updateAction={(value: number) => saveDay(value)}
+          />
+          <SelectField
+            label={i18n.t('COORDINATES_MONTH')}
+            value={month}
+            items={monthRange()}
+            updateAction={(value: number) => saveMonth(value)}
+          />
+          <SelectField
+            label={i18n.t('COORDINATES_YEAR')}
+            value={year}
+            items={yearRange()}
+            updateAction={(value: number) => saveYear(value)}
+          />
+        </View>
         <View style={tailwind('flex flex-row items-stretch my-2')}>
           <InputLabel text={i18n.t('COORDINATES_TIME') + ': '} />
           <SelectField
             label={i18n.t('COORDINATES_HOURS')}
             value={hours}
-            items={itemRange(0,23)}
-            updateAction={(value) => saveHours(value)}
+            items={itemRange(0, 23)}
+            updateAction={(value: number) => saveHours(value)}
           />
           <SelectField
             label={i18n.t('COORDINATES_MINUTES')}
             value={minutes}
-            items={itemRange(0,59)}
-            updateAction={(value) => saveMinutes(value)}
+            items={itemRange(0, 59)}
+            updateAction={(value: number) => saveMinutes(value)}
           />
         </View>
 
@@ -95,7 +136,7 @@ function Coordinates({ inputDate, inputLocation, setDateOnParent, setLocationOnP
           label={i18n.t('COORDINATES_WHICH_BAY')}
           value={location}
           type={Location}
-          updateAction={(value) => saveLocation(value)}
+          updateAction={(value: Location) => saveLocation(value)}
         />
       </View>
     </SafeAreaView>

@@ -55,6 +55,12 @@
 			"marginBottom": 4
 		}
 	},
+	"my-3": {
+		"style": {
+			"marginTop": 12,
+			"marginBottom": 12
+		}
+	},
 	"mx-2": {
 		"style": {
 			"marginLeft": 8,
@@ -101,11 +107,6 @@
 	"ml-1": {
 		"style": {
 			"marginLeft": 4
-		}
-	},
-	"inline": {
-		"style": {
-			"display": "inline"
 		}
 	},
 	"flex": {

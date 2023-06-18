@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import InputSpinner from 'react-native-input-spinner';
 import Trash from '../model/beachclean/Trash';
 import Category from '../model/beachclean/Category';
+import DateTime from '../model/DateTime';
 import ScrollContainer from '../components/ScrollContainer';
 import Coordinates from '../components/forms/Coordinates';
 import TextField from '../components/forms/TextField';
@@ -20,7 +21,7 @@ function BeachClean({ navigation, route }) {
   const tailwind = useTailwind();
   const i18n = GlobalContext.i18n;
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new DateTime());
   const [location, setLocation] = useState(null);
   const [items, setItems] = useState({});
   const [additionalNotes, setAdditionalNotes] = useState('');
@@ -45,12 +46,14 @@ function BeachClean({ navigation, route }) {
     Datastore.item(itemId).then(item => {
       if (!item) return;
 
+      const location = item.location
+      const datetime = item.date ? new DateTime(new Date(item.date)) : new DateTime();
       const newItems = { [item.category]: item.quantity };
 
       reset();
       setLoadedItem(item);
-      setDate(new Date(item.date));
-      setLocation(item.location);
+      setDate(datetime);
+      setLocation(location);
       setAdditionalNotes(item.additionalNotes || '');
       setItems(newItems);
       setLines(buildAllLinesFrom(newItems));
@@ -80,7 +83,7 @@ function BeachClean({ navigation, route }) {
   };
 
   const reset = () => {
-    setDate(new Date());
+    setDate(new DateTime());
     setLocation(null);
     resetItems();
   };
@@ -108,13 +111,13 @@ function BeachClean({ navigation, route }) {
     for (let [category, quantity] of Object.entries(items)) {
     if (loadedItem && loadedItem.category === category) {
         const item = loadedItem;
-        item.date = date.getTime();
+        item.date = date.toEpoch();
         item.location = location;
         item.quantity = quantity;
         item.additionalNotes = additionalNotes;
         trashItems.push(item);
       } else {
-        trashItems.push(new Trash(date.getTime(), location, category, quantity, additionalNotes));
+        trashItems.push(new Trash(date.toEpoch(), location, category, quantity, additionalNotes));
       }
     }
 

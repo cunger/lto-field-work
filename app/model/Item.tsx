@@ -1,8 +1,9 @@
 import { v4 as uuid } from 'uuid';
 import Signature from './Signature';
 import Location from './Location';
+import DateTime from './DateTime';
 import Image from './Image';
-import { print } from '../components/utils/PrettyPrinter';
+import { print, printDateShort } from '../components/utils/PrettyPrinter';
 import Category from '../model/beachclean/Category';
 import { I18n } from 'i18n-js/typings';
 
@@ -49,20 +50,15 @@ export default class Item {
   }
 
   public static printDetails(item: Item, i18n: I18n): string {
-    let locale = i18n.locale;
-    if (locale == 'en') {
-      locale = 'en-UK';
-    }
-
     let location = item.location;
-    let date = item.date;
+    let datetime = item.date ? new DateTime(new Date(item.date)) : null;
 
-    if (date && location) {
-      return `(${new Date(date).toLocaleDateString(locale, { dateStyle: 'short' })}, ${i18n.t(location)})`;
-    } else if (date) {
-      return `(${new Date(date).toLocaleDateString(locale, { dateStyle: 'short' })})`;
+    if (datetime && location) {
+      return `(${printDateShort(datetime, i18n)} ${i18n.t(location)})`;
+    } else if (datetime) {
+      return `(${printDateShort(datetime, i18n)})`;
     } else if (location) {
-      return `(${location})`;
+      return `(${i18n.t(location)})`;
     }
 
     return '';

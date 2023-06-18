@@ -7,7 +7,7 @@ import Datastore from '../components/data/LocalDatastore';
 import GlobalContext from '../context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
 import ListItem from '../components/ListItem';
-import { print } from '../components/utils/PrettyPrinter';
+import { print, printDateLong } from '../components/utils/PrettyPrinter';
 import Category from '../model/beachclean/Category';
 import Species from '../model/fisheries/Species';
 
@@ -23,8 +23,7 @@ function Dashboard() {
     GlobalContext.load();
     Datastore.lastActiveDate().then(date => {
       if (date) {
-        const locale = i18n.locale == 'en' ? 'en-UK' : i18n.locale;
-        const lastDate = new Date(parseInt(date)).toLocaleDateString(locale, { dateStyle: 'long' });
+        const lastDate = printDateLong(date, i18n);
         setLastActiveDate(lastDate);
       }
     });
