@@ -98,7 +98,7 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
    */
   const takePhoto = async () => {
     try {
-      const permission = await MediaLibrary.requestPermissionsAsync();
+      const permission = await ImagePicker.requestCameraPermissionsAsync();
       if (permission.granted) {
         await initializeFolder();
 
