@@ -104,7 +104,6 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
 
         const result = await ImagePicker.launchCameraAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: true
         });
 
         for (const asset of (result?.assets || [])) {
