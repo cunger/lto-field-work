@@ -69,7 +69,7 @@ export default class Datastore {
   }
 
   static async saveInStatistics(item: Item) {
-    await AsyncStorage.setItem('@lastactivedate', `${item.date.toEpoch()}`);
+    await AsyncStorage.setItem('@lastactivedate', `${item.date}`);
     await AsyncStorage.setItem('@lastactivelocation', `${item.location}`);
 
     const statisticsString = await AsyncStorage.getItem('@statistics');

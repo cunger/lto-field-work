@@ -23,14 +23,16 @@ import ConfirmPrompt from '../components/ConfirmPrompt';
 import { useTailwind } from 'tailwind-rn';
 import { useFocusEffect } from '@react-navigation/core';
 import GlobalContext from '../context/GlobalContext';
+import { photoFileName } from '../components/utils/PrettyPrinter';
 
 function Fisheries({ navigation, route }) {
   const tailwind = useTailwind();
   const i18n = GlobalContext.i18n;
 
-  const [date, setDate] = useState(new DateTime());
   const [location, setLocation] = useState(null);
-  const [item, setItem] = useState(new Catch(date, location));
+  // Note that date is of type DateTime, while item.date is of type number (the epoch).
+  const [date, setDate] = useState(new DateTime());
+  const [item, setItem] = useState(new Catch(date.toEpoch(), location));
   const [isNoCatch, setIsNoCatch] = useState(false);
   const [isSchoolOfFish, setIsSchoolOfFish] = useState(false);
   const [isMinMaxSpecies, setIsMinMaxSpecies] = useState(false);
@@ -150,12 +152,6 @@ function Fisheries({ navigation, route }) {
     } else {
       return '';
     }
-  }
-
-  const photoFileName = (filetype: string) => {
-    const date = new Date(item.date);
-    const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-    return `${dateString}-${item.common_name || item.species?.replace('SPECIES_', '') || 'Fish'}-${Date.now()}.${filetype}`;
   }
 
   const setSpeciesSpecificFields = (species: Species) => {
@@ -507,7 +503,7 @@ function Fisheries({ navigation, route }) {
             update({ photos: [ ...item.photos ] });
           }
         }}
-        photoFileName={photoFileName}
+        photoFileName={(filetype: string) => photoFileName(filetype, item)}
         photosNote={item.photosNote}
         setPhotosNote={(note: string) => update({ photosNote: note })}
       />

@@ -1,5 +1,6 @@
 import { I18n } from 'i18n-js/typings';
 import DateTime from '../../model/DateTime';
+import Catch from '../../model/fisheries/Catch';
 
 export const print = (count: number, noun: string, i18n: I18n, zeroAlternative?: string) => {
   if (count == 0 && zeroAlternative) {
@@ -39,6 +40,13 @@ export const print = (count: number, noun: string, i18n: I18n, zeroAlternative?:
     ? `${count} ${noun}`
     : `${count} ${plural(noun)}`;
 };
+
+export const photoFileName = (filetype: string, item: Catch) => {
+  const date = new Date(item.date);
+  const dateString = `${date.getFullYear()}-${withLeadingZero(date.getMonth() + 1)}-${withLeadingZero(date.getDate())}`;
+  const name = `${dateString}-${item.common_name || item.species?.replace('SPECIES_', '') || 'Fish'}-${Date.now()}.${filetype}`;
+  return name;
+}
 
 export const printDateShort = (date: DateTime, i18n: I18n): string => {
   switch (i18n.locale) {
