@@ -75,7 +75,7 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
           const newUri = `${PHOTOS_FOLDER}/${uuid.v4()}.jpg`;
 
           await FileSystem.copyAsync({ from: asset.uri, to: newUri })
-          await addPhoto(createImage(newUri));
+          await addPhoto(createImage(newUri, asset.fileName));
         }
       } else {
         throw new Error(i18n.t('ERROR_MISSING_PERMISSION'));
@@ -94,7 +94,7 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
   /**
    * Taking a picture with the camera.
    * The resulting asset is saved both in the media library and in an app-specific folder.
-   * It is deleted from the latter folder after it hasbeen uploaded.
+   * It is deleted from the latter folder after it has been uploaded.
    */
   const takePhoto = async () => {
     try {
@@ -112,7 +112,7 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
             const newUri = `${PHOTOS_FOLDER}/${uuid.v4()}.jpg`;
 
             await FileSystem.copyAsync({ from: savedAsset.uri, to: newUri })
-            await addPhoto(createImage(newUri));
+            await addPhoto(createImage(newUri, savedAsset.filename));
           } catch (error) {
             showMessage({
               message: i18n.t('ERROR_FAILED_TO_SAVE_PHOTO'),
@@ -137,10 +137,11 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
     }
   };
 
-  const createImage = (uri: string) => {
+  const createImage = (uri: string, filename: string | null | undefined) => {
     const uriparts = uri.split('.');
     const filetype = uriparts[uriparts.length - 1];
-    const name = photoFileName(filetype).replaceAll(' ', '-');
+    const name = filename || photoFileName(filetype).replaceAll(' ', '-');
+
     return new Image(name, uri);
   };
 
