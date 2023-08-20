@@ -1,217 +1,217 @@
 key ; english ; portuguese
 
-MENU_DASHBOARD ; Dashboard ;
-MENU_DATA_ENTRY ; Data entry ;
-MENU_UPLOAD ; Upload ;
-MENU_SETTINGS ; Settings ;
-MENU_SELECT ; Select ;
-MENU_BEACHCLEAN ; Beach clean ;
-MENU_FISHERIES ; Fisheries ;
-MENU_WHALE ; Humpback whale ; 
-MENU_TURTLE ; Turtle ;
+MENU_DASHBOARD ; Dashboard ; Painel de controlo
+MENU_DATA_ENTRY ; Data entry ; Entrada de dados
+MENU_UPLOAD ; Upload ; Carregar
+MENU_SETTINGS ; Settings ; Definições
+MENU_SELECT ; Select ; Seleccionar
+MENU_BEACHCLEAN ; Beach clean; Limpeza da praia
+MENU_FISHERIES ; Fisheries ; Pescarias
+MENU_WHALE ; Humpback whale ; Baleias jubarte
+MENU_TURTLE ; Turtle ; Tartaruga
 
 LANGUAGE_EN ; English ; English
 LANGUAGE_PT ; Português ; Português 
 
-BUTTON_SAVE ; Save ; 
-BUTTON_CANCEL ; Cancel ; 
-BUTTON_RESET ; Reset ;
-BUTTON_UPLOAD ; Upload ;
-BUTTON_DELETE ; Delete ;
-BUTTON_DISCARD ; Discard ;
-BUTTON_SIGN ; Sign ;
-BUTTON_SKIP ; Skip ;
+BUTTON_SAVE ; Save ; Guardar
+BUTTON_CANCEL ; Cancel ; Cancelar
+BUTTON_RESET ; Reset ; Reiniciar
+BUTTON_UPLOAD ; Upload ; Carregar
+BUTTON_DELETE ; Delete ; Apagar
+BUTTON_DISCARD ; Discard ; Descartar
+BUTTON_SIGN ; Sign ; Entrar
+BUTTON_SKIP ; Skip ; Saltar
 
-DASHBOARD_WELCOME ; Welcome, ocean hero! ;
-DASHBOARD_WELCOME_BACK ; Welcome back, ocean hero! ;
+DASHBOARD_WELCOME ; Welcome, ocean hero! ; Bem-vindo, heroí do oceano!
+DASHBOARD_WELCOME_BACK ; Welcome back, ocean hero! ; Bem-vindo de volta, heroí do oceano!
 
-DASHBOARD_ONBOARDING_GREAT ; Great to have you onboard. ; 
-DASHBOARD_ONBOARDING_GET_STARTED ; Here are your first steps to get started: ;
-DASHBOARD_ONBOARDING_STEP1 ; 1. Go to $SETTINGS and set up your user information. (This is important so we know who collected the data we receive.) ;
-DASHBOARD_ONBOARDING_STEP2 ; 2. Click on $DATA_ENTRY and start collecting data. (You don't need an internet connection. The data is stored locally on your phone.) ;
-DASHBOARD_ONBOARDING_STEP3 ; 3. When you have an internet connection, come back and go to $UPLOAD. Then click on the Upload button to send your collected data to us. ;
+DASHBOARD_ONBOARDING_GREAT ; Great to have you onboard. ; Óptimo ter você a bordo.
+DASHBOARD_ONBOARDING_GET_STARTED ; Here are your first steps to get started: ; Aqui estão os seus primeiros passos para comecar:
+DASHBOARD_ONBOARDING_STEP1 ; 1. Go to $SETTINGS and set up your user information. (This is important so we know who collected the data we receive.) ; 1. Vai para $SETTINGS e coloca a informação do usuário. (É importante para saber quem colectou os dados que recebemos.)
+DASHBOARD_ONBOARDING_STEP2 ; 2. Click on $DATA_ENTRY and start collecting data. (You don't need an internet connection. The data is stored locally on your phone.) ; 2. Clique em $DATA_ENTRY e comece a colectar dados. (Você não precisa de uma conexão com a Internet. Os dados são armazenados localmente no seu telefone.)
+DASHBOARD_ONBOARDING_STEP3 ; 3. When you have an internet connection, come back and go to $UPLOAD. Then click on the Upload button to send your collected data to us. ; 3. Quando você tiver uma conexão com a Internet, volte e vá para $UPLOAD. Em seguida, clique no botão Carregar para enviar seus dados colectados para nós.
 DASHBOARD_ONBOARDING_THANKS ; Thanks! ; Obrigada!
 
-DASHBOARD_H_LAST_ACTIVITY ; Last activity ;
-DASHBOARD_H_SUMMARY ; Summary of collected data ;
+DASHBOARD_H_LAST_ACTIVITY ; Last activity ; Ultíma actividade
+DASHBOARD_H_SUMMARY ; Summary of collected data ; Sumário dos dados colectados
 
-DASHBOARD_DONT_FORGET_UPLOAD_SG ; Don't forget: You have one data item that has not yet been uploaded. ;
-DASHBOARD_DONT_FORGET_UPLOAD_PL ; Don't forget: You have $COUNT data items that have not yet been uploaded. ;
+DASHBOARD_DONT_FORGET_UPLOAD_SG ; Don't forget: You have one data item that has not yet been uploaded. ; Não te esqueças: Tem um itens de dados que ainda não foi carregado.
+DASHBOARD_DONT_FORGET_UPLOAD_PL ; Don't forget: You have $COUNT data items that have not yet been uploaded. ; Não se esqueças: Tem $COUNT itens de dados que ainda não foram carregados.
 
-DASHBOARD_CATCHES ; Catches ;
-DASHBOARD_TRASH ; Trash ; 
+DASHBOARD_CATCHES ; Catches ; Capturas
+DASHBOARD_TRASH ; Trash ; Lixo
 
-DATA_ENTRY_PICK ; Please open the menu and pick what data you want to enter. ;
+DATA_ENTRY_PICK ; Please open the menu and pick what data you want to enter. ; Por favor abra o menu e escolha os dados que deseja inserir.
 
-SETTINGS_LANGUAGE ; Language ; 
-SETTINGS_USER_NAME ; User name ; 
-SETTINGS_EMAIL ; Email (so we can get in touch) ;
-SETTINGS_TOKEN ; Token ; 
-SETTINGS_TOKEN_EXPLANATION ; The token is used for signing data entries. You can get one from the Love The Oceans staff. ;
+SETTINGS_LANGUAGE ; Language ; Língua
+SETTINGS_USER_NAME ; User name ; Nome do usuário
+SETTINGS_EMAIL ; Email (so we can get in touch) ; Email
+SETTINGS_TOKEN ; Token ; Símbolo
+SETTINGS_TOKEN_EXPLANATION ; The token is used for signing data entries. You can get one from the Love The Oceans staff. ; O símbolo é usado para assinar entradas de dados. Você pode obter um da equipe Love The Oceans.
 
-UPLOAD_H_LOCAL_DATA ; Local data ;
-UPLOAD_H_UNSIGNED_DATA ; Unsigned data ;
-UPLOAD_NO_SIGNED_DATA ; You have no data waiting to be uploaded. ;
-UPLOAD_NO_UNSIGNED_DATA ; You have no unsigned data. ;
-UPLOAD_TODO_SIGNED ; The following data has not yet been uploaded. (Click on the logo to open it.) ;
-UPLOAD_TODO_UNSIGNED ; The following entries are unsigned and will not be uploaded unless you sign them. (Click on the logo to open it.) ;
-UPLOAD_DELETE_ALL_UNSIGNED ; Do you really want to delete all unsigned data? ; 
-UPLOAD_DELETE_ALL_UNSIGNED_EXPLANATION ; You will lose all data that you collected but did not sign. ;
-UPLOAD_DELETE_ALL ; Delete all ;
-UPLOAD_IN_PROGRESS ; Uploading... ;
+UPLOAD_H_LOCAL_DATA ; Local data ; Dados locais
+UPLOAD_H_UNSIGNED_DATA ; Unsigned data ; Dados não assinados
+UPLOAD_NO_SIGNED_DATA ; You have no data waiting to be uploaded. ; Você não tem dados esperando para serem carregados.
+UPLOAD_NO_UNSIGNED_DATA ; You have no unsigned data. ; Você não tem dados não assinados.
+UPLOAD_TODO_SIGNED ; The following data has not yet been uploaded. (Click on the logo to open it.) ; Os dados seguintes ainda não foram carregados. (Clique no logotipo para abrí-los.)
+UPLOAD_TODO_UNSIGNED ; The following entries are unsigned and will not be uploaded unless you sign them. (Click on the logo to open it.) ; As seguintes entradas não estão assinadas e não serão carregadas a menos que as assine. (Clica no logotipo para abri-las.)
+UPLOAD_DELETE_ALL_UNSIGNED ; Do you really want to delete all unsigned data? ; Tem certeza que quer apagar todos dados não assinados.
+UPLOAD_DELETE_ALL_UNSIGNED_EXPLANATION ; You will lose all data that you collected but did not sign. ; Perderá todos os dados que colectou por não ter assinado.
+UPLOAD_DELETE_ALL ; Delete all ; Apagar todos
+UPLOAD_IN_PROGRESS ; Uploading... ; Carregando...
 
-ADDITIONAL_NOTES ; Additional notes ;
-ADDITIONAL_NOTES_LABEL ; If there is something else that is important, let us know: ;
-CONFIRM_DISCARD ;  Do you really want to discard this data? ;
+ADDITIONAL_NOTES ; Additional notes ; Notas adicionais
+ADDITIONAL_NOTES_LABEL ; If there is something else that is important, let us know: ; Se tiver algo mais importante, diga-nos:
+CONFIRM_DISCARD ;  Do you really want to discard this data? ; Tem certeza que quer descartar esses dados?
 
-BEACHCLEAN_ITEMS ; Items ;
+BEACHCLEAN_ITEMS ; Items ; Itens
 
-FISHERIES_INCLUDE_PIC_FOR_SEXING ; Please include a picture that can be used for sexing. ;
-FISHERIES_INCLUDE_PIC_WITH_EGGS ; Please include a picture of the eggs if present. ;
-FISHERIES_SCHOOL_OF_FISH_NOTE ; If they have different sizes, please log them separately. ;
-FISHERIES_MIN_MAX_NOTE ; Please specify all properties both for the smallest and the biggest of the caught fish, and ideally provide an average if it's more than two. ; 
-FISHERIES_METHOD ; Fishing method ;
-FISHERIES_WHICH_METHOD ; Which method? ;
-FISHERIES_BASE ; From where? ; 
-FISHERIES_OTHER_METHOD ; Plase describe method: ;
-FISHERIES_CATCH ; Catch ;
-FISHERIES_NO_CATCH ; No catch. ;
-FISHERIES_REASON ; Reason: ;
-FISHERIES_SEX ; Which sex? ;
-FISHERIES_SPECIES ; Which species? ;
-FISHERIES_COMMON_NAME ; Common name ;
-FISHERIES_COMMON_NAME_HELP ; This is the everyday name of the animal. ;
-FISHERIES_LATIN_NAME ; Latin name ;
-FISHERIES_LATIN_NAME_HELP ; This is the Genus and the Species name.  ;
-FISHERIES_TOTAL_LENGTH ; Total length (cm);
-FISHERIES_TOTAL_LENGTH_HELP ; Measure from the nose to the end of the tail. ;
-FISHERIES_HEAD_LENGTH ; Head length (cm) ;
-FISHERIES_HEAD_LENGTH_HELP ; Measure from nose to end of gills. ;
-FISHERIES_HEAD_WIDTH ; Head width (cm) ;
-FISHERIES_HEAD_WIDTH_HELP ; Measure from bottom of head to top where the gills are. ;
-FISHERIES_FORK_LENGTH ; Fork length (cm) ;
-FISHERIES_FORK_LENGTH_HELP ; Measure from the nose to the fork of the tail. ;
-FISHERIES_PRECAUDAL_LENGTH ; Precaudal length (cm) ;
-FISHERIES_PRECAUDAL_LENGTH_HELP ; Measure from the nose to the beginning of the tail, before the caudal fin. ;
-FISHERIES_CARAPACE_LENGTH ; Carapace length (cm) ;
-FISHERIES_CARAPACE_LENGTH_HELP ; Measure from the tip of the head to the beginning of the tail - the non segmented part. ;
-FISHERIES_CARAPACE_WIDTH ; Carapace width (cm) ;
-FISHERIES_CARAPACE_WIDTH_HELP ; Measure from side to side on the crab. ;
-FISHERIES_TAIL_LENGTH ; Tail length (cm) ;
-FISHERIES_TAIL_LENGTH_HELP ; Measure the segmented part of the animal. ;
-FISHERIES_DISK_WIDTH ; Disk width (cm);
-FISHERIES_DISK_WIDTH_HELP ; Measure across the widest part of the wingspan from tip to tip. ;
+FISHERIES_INCLUDE_PIC_FOR_SEXING ; Please include a picture that can be used for sexing. ; Inclua por favor, uma fotografia que possa ser utilizada para a definir o sexo do animal.
+FISHERIES_INCLUDE_PIC_WITH_EGGS ; Please include a picture of the eggs if present. ; Inclua por favor, uma fotografia dos ovos, se existirem.
+FISHERIES_SCHOOL_OF_FISH_NOTE ; If they have different sizes, please log them separately. ; Se os tamanhos forem diferentes, por favor registá-los separadamente.
+FISHERIES_MIN_MAX_NOTE ; Please specify all properties both for the smallest and the biggest of the caught fish, and ideally provide an average if it's more than two. ; Especifique todas as propriedades do peixe mais pequeno e do maior e, se possível, forneça uma média se forem mais de dois.
+FISHERIES_METHOD ; Fishing method ; Método de pesca
+FISHERIES_WHICH_METHOD ; Which method? ; Que método?
+FISHERIES_BASE ; From where? ; De onde?
+FISHERIES_OTHER_METHOD ; Please describe method: ; Por favor, descreva o método:
+FISHERIES_CATCH ; Catch ; Captura
+FISHERIES_NO_CATCH ; No catch. ; Sem captura.
+FISHERIES_REASON ; Reason: ; Motivo:
+FISHERIES_SEX ; Which sex? ; Qual é o sexo?
+FISHERIES_SPECIES ; Which species? ; Que espécies?
+FISHERIES_COMMON_NAME ; Common name ; Nome comum
+FISHERIES_COMMON_NAME_HELP ; This is the everyday name of the animal. ; Este é o usual do animal.
+FISHERIES_LATIN_NAME ; Latin name ; Nome em latim
+FISHERIES_LATIN_NAME_HELP ; This is the Genus and the Species name. ; Este é o nome do Género e da Espécie.
+FISHERIES_TOTAL_LENGTH ; Total length (cm) ; Comprimento total (cm)
+FISHERIES_TOTAL_LENGTH_HELP ; Measure from the nose to the end of the tail. ; Medir da cabeça até ao fim da cauda.
+FISHERIES_HEAD_LENGTH ; Head length (cm) ; Comprimento da cabeça (cm)
+FISHERIES_HEAD_LENGTH_HELP ; Measure from nose to end of gills. ; Medir da cabeça até ao fim das brânquias.
+FISHERIES_HEAD_WIDTH ; Head width (cm) ; Largura da cabeça (cm)
+FISHERIES_HEAD_WIDTH_HELP ; Measure from bottom of head to top where the gills are. ; Medir da parte inferior da cabeça até à parte superior, onde se encontram as brânquias.
+FISHERIES_FORK_LENGTH ; Fork length (cm) ; Comprimento 
+FISHERIES_FORK_LENGTH_HELP ; Measure from the nose to the fork of the tail. ; 
+FISHERIES_PRECAUDAL_LENGTH ; Precaudal length (cm) ; Comprimento pré-caudal (cm)
+FISHERIES_PRECAUDAL_LENGTH_HELP ; Measure from the nose to the beginning of the tail, before the caudal fin. ; Medir do início da cabeça até ao início da cauda, antes da barbatana caudal.
+FISHERIES_CARAPACE_LENGTH ; Carapace length (cm) ; Comprimento da carapaça (cm)
+FISHERIES_CARAPACE_LENGTH ; Measure from the tip of the head to the beginning of the tail - the non segmented part. ; Medir da ponta da cabeça até ao início da cauda - a parte não segmentada.
+FISHERIES_CARAPACE_WIDTH ; Carapace width (cm) ; Largura da carapaça (cm)
+FISHERIES_CARAPACE_WIDTH_HELP ; From side to side on the crab. ; De um lado para o outro lado no caranguejo.
+FISHERIES_TAIL_LENGTH ; Tail length (cm) ; Comprimento da cauda (cm)
+FISHERIES_TAIL_LENGTH_HELP ; Measure the segmented part of the animal. ; Medir a parte segmentada do animal.
+FISHERIES_DISK_WIDTH ; Disk width (cm) ; Largura do disco (cm)
+FISHERIES_DISK_WIDTH_HELP ; Measure across the widest part of the wingspan from tip to tip. ; Medir a parte mais larga da envergadura da asa, de ponta a ponta.
 
-FISHERIES_SMALLEST ; smallest ; 
-FISHERIES_BIGGEST ; biggest ;
-FISHERIES_AVERAGE ; average ;
+FISHERIES_SMALLEST ; smallest ; menor
+FISHERIES_BIGGEST ; biggest ; maior
+FISHERIES_AVERAGE ; average ; médio
 
-PICTURES ; Pictures ;
-PICTURES_NONE_YET ; None yet. ;
-PICTURES_TAKE_PHOTO ; Take photo with camera ;
-PICTURES_CHOOSE_PHOTO ; Pick photo from gallery ;
-PICTURES_DESCRIBE ; Or describe which picture(s) on whose camera: ;
+PICTURES ; Pictures ; Fotografias
+PICTURES_NONE_YET ; None yet. ; Nenhuma ainda.
+PICTURES_TAKE_PHOTO ; Take photo with camera ; Tirar foto com a câmera
+PICTURES_CHOOSE_PHOTO ; Pick photo from gallery ; Escolher foto da galeria
+PICTURES_DESCRIBE ; Or describe which picture(s) on whose camera: ; Ou descrever a(s) fotografia(s) na câmara de quem:
 
-COORDINATES ; Coordinates ;
-COORDINATES_DATE ; Date ;  
-COORDINATES_YEAR ; Year ;  
-COORDINATES_MONTH ; Month ;  
-COORDINATES_DAY ; Day ;  
-COORDINATES_TIME ; Time ; 
-COORDINATES_HOURS ; Hours ; 
-COORDINATES_MINUTES ; Minutes ; 
-COORDINATES_LOCATION ; Location ;
-COORDINATES_WHICH_BAY ; Which bay? ;
+COORDINATES ; Coordinates ; Coordenadas
+COORDINATES_DATE ; Date ; Dia
+COORDINATES_YEAR ; Year ; Ano
+COORDINATES_MONTH ; Month ; Mês
+COORDINATES_DAY ; Day ; Dia
+COORDINATES_TIME ; Time ; Tempo
+COORDINATES_HOURS ; Hours ; Hora
+COORDINATES_MINUTES ; Minutes ; Minutos
+COORDINATES_LOCATION ; Location ; Localização
+COORDINATES_WHICH_BAY ; Which bay? ; Que baía?
 
-DATA_WAS_DISCARDED ; Data was discarded. ;
+DATA_WAS_DISCARDED ; Data was discarded. ; Dados foram descartados.
 
-NOT_AVAILABLE_YET ; You'll be able to log this soon. ;
-HUMPBACKS ; You saw humpback whales? So lucky! ; 
-TURTLES ; You saw turtles? Nice! ; 
+NOT_AVAILABLE_YET ; You'll be able to log this soon. ; Poderá registrar isso em breve.
+HUMPBACKS ; You saw humpback whales? So lucky! ; Viu baleias jubarte? Que sorte!
+TURTLES ; You saw turtles? Nice! ; Viu tartarugas? Muito bom!
 
 LOCATION_Guinjata ; Guinjata ; Guinjata
 LOCATION_Paindane ; Paindane ; Paindane 
 LOCATION_Coconut ; Coconut ; Coconut
 
-NO_CATCH ; no catch ;
+NO_CATCH ; no catch ; sem capturas
 
-CATEGORY_Plastic ; Plastic piece ; Plástico 
-CATEGORY_PlasticS ; Plastic < 1 cm ; Plástico < 1 cm 
+CATEGORY_Plastic ; Plastic piece ; Plástico
+CATEGORY_PlasticS ; Plastic < 1 cm ; Plástico < 1 cm
 CATEGORY_PlasticM ; Plastic 1-2.5 cm ; Plástico 1-2.5 cm
 CATEGORY_PlasticL ; Plastic > 2.5 cm ; Plástico > 2.5 cm
-CATEGORY_PlasticBottleCap ; Plastic bottle cap ;
-CATEGORY_Rope ; Rope ;
-CATEGORY_PlasticBag ; Plastic bag ;
-CATEGORY_FoodWrapper ; Food wrapper ;
-CATEGORY_PlasticFoam ; Plastic foam ;
-CATEGORY_PlasticBottle ; Plastic bottle ;
-CATEGORY_FishingGear ; Fishing gear ;
-CATEGORY_Footwear ; Footwear ;
-CATEGORY_CigaretteButt ; Cigarette butt ;
-CATEGORY_Glass ; Glass ;
-CATEGORY_Straw ; Straw ;
-CATEGORY_Paper ; Paper ;
-CATEGORY_Fabric ; Fabric ;
-CATEGORY_Toothbrush ; Toothbrush ;
-CATEGORY_MetalBottleCap ; Metal bottle cap ;
-CATEGORY_AluminumCan ; Aluminum can ;
-CATEGORY_OtherCan ; Other can ;
-CATEGORY_Lighter ; Lighter ;
-CATEGORY_GlowStick ; Glow stick ;
+CATEGORY_PlasticBottleCap ; Plastic bottle cap ; Tampas de garrafas plásticas
+CATEGORY_Rope ; Rope ; Corda
+CATEGORY_PlasticBag ; Plastic bag ; Saco de plástico
+CATEGORY_FoodWrapper ; Food wrapper ; Embalagem de comida
+CATEGORY_PlasticFoam ; Plastic foam ; Esponja de plástico
+CATEGORY_PlasticBottle ; Plastic bottle ; Garrafa plástica
+CATEGORY_FishingGear ; Fishing gear ; Rede de pesca
+CATEGORY_Footwear ; Footwear ; Calçados
+CATEGORY_CigaretteButt ; Cigarette butt ; Beata de cigarro
+CATEGORY_Glass ; Glass ; Copo
+CATEGORY_Straw ; Straw ; Palhinha
+CATEGORY_Paper ; Paper ; Papel
+CATEGORY_Fabric ; Fabric ; Tecido
+CATEGORY_Toothbrush ; Toothbrush ; Escova de dentes
+CATEGORY_MetalBottleCap ; Metal bottle cap ; Tampa metálica de garrafa
+CATEGORY_AluminumCan ; Aluminum can ; Lata de alumínio
+CATEGORY_OtherCan ; Other can ; Outra lata
+CATEGORY_Lighter ; Lighter ; Ísqueiro
+CATEGORY_GlowStick ; Glow stick ; 
 
-BASE_Shore ; Shore ;
-BASE_Kayak ; Kayak ;
-BASE_BoatWithEngine ; Boat with engine ;
-BASE_BoatWithoutEngine ; Boat without engine ;
-BASE_JetSki ; Jet ski ;
+BASE_Shore ; Shore ; Costa
+BASE_Kayak ; Kayak ; Caiaque
+BASE_BoatWithEngine ; Boat with engine ; Barco a motor
+BASE_BoatWithoutEngine ; Boat without engine ; Barco sem motor
+BASE_JetSki ; Jet ski ; Jet ski
 
-METHOD_Net ; Net ; 
-METHOD_PoleAndLine ; Pole and line ;
-METHOD_Spearfishing ; Spearfishing ;
-METHOD_Poison ; Poison ;
-METHOD_ForeignSportsFisherman ; Foreign sports fisherman ;
+METHOD_Net ; Net ; Rede
+METHOD_PoleAndLine ; Pole and line ; Vara e linha
+METHOD_Spearfishing ; Spearfishing ; 
+METHOD_Poison ; Poison ; Veneno
+METHOD_ForeignSportsFisherman ; Foreign sports fisherman ; 
 
-SEX_Female ; Female ;
-SEX_Male ; Male ;
+SEX_Female ; Female ; Fêmea
+SEX_Male ; Male ; Macho
 
-SPECIES_Fish ; Fish ;
-SPECIES_TeleostFish ; Teleost fish ;
-SPECIES_GameFish ; Game fish ;
-SPECIES_Shark ; Shark ;
-SPECIES_Ray ; Ray ;
-SPECIES_Crayfish ; Crayfish ;
-SPECIES_Crab ; Crab ;
-SPECIES_Cephalopod ; Cephalopod ;
+SPECIES_Fish ; Fish ; Peixe
+SPECIES_TeleostFish ; Teleost fish ; Peixe teleósteos
+SPECIES_GameFish ; Game fish ; 
+SPECIES_Shark ; Shark ; Tubarão
+SPECIES_Ray ; Ray ; Raia
+SPECIES_Crayfish ; Crayfish ; Lagostim
+SPECIES_Crab ; Crab ; Caranguejo
+SPECIES_Cephalopod ; Cephalopod ; Cefalópodes
 
-TOTAL ; total ;
-MIN ; min ; 
-MAX ; max ;
-AVG ; average ;
+TOTAL ; total ; total
+MIN ; min ; min
+MAX ; max ; max
+AVG ; average ; médio
 
-SOMETHING ; Something ;
-OTHER ; Other ; 
-UNKNOWN ; Unknown ;
+SOMETHING ; Something ; Alguma coisa
+OTHER ; Other ; Outros
+UNKNOWN ; Unknown ; Desconhecido
 
-SIGN_PROMPT ; Do you want to sign? ;
-SIGN_EXPLANATION_1 ; Signing means you confirm that you collected the data as entered. We can then use the data for our studies. ;
-SIGN_EXPLANATION_2 ; If you're testing or simply fooling around, please skip this step. The data will still be saved, we just won't use it as real data. ;
-SIGN_EXPLANATION_3 ; Go to Settings to set up your signature. ;
+SIGN_PROMPT ; Do you want to sign? ; Quer se increver?
+SIGN_EXPLANATION_1 ; Signing means you confirm that you collected the data as entered. We can then use the data for our studies. ; Ao assinar, está a confirmar que recolheu os dados tal como foram introduzidos. Podemos então utilizar os dados para os nossos estudos.
+SIGN_EXPLANATION_2 ; If you're testing or simply fooling around, please skip this step. The data will still be saved, we just won't use it as real data. ; Se estiver a testar, ignore este passo. Os dados continuarão a ser guardados, mas não serão utilizados como dados reais.
+SIGN_EXPLANATION_3 ; Go to Settings to set up your signature. ; Aceda as Definições para configurar a tua assinatura.
 
-MESSAGE_SAVED ; Saved. ; 
-MESSAGE_READY_TO_UPLOAD ; Data entry is ready to upload. ; 
-MESSAGE_NOT_SIGNED ; Data entry was not signed and will only be used for testing. ;
+MESSAGE_SAVED ; Saved. ; Salvo.
+MESSAGE_READY_TO_UPLOAD ; Data entry is ready to upload. ; Dados inseridos prontos para serem carregados.
+MESSAGE_NOT_SIGNED ; Data entry was not signed and will only be used for testing. ; A entrada de dados não foi assinada e será utilizada apenas para testes.
 
-ERROR_FAILED_TO_ACCESS_GALLERY ; Failed to access gallery. ;
-ERROR_FAILED_TO_ACCESS_CAMERA ; Failed to access camera. ;
-ERROR_FAILED_TO_SAVE_PHOTO ; Failed to save photo to your gallery. ;
-ERROR_NO_INTERNET ; No internet connection. ;
-ERROR_TRY_AGAIN_WHEN_ONLINE ; Please try again when connected. ;
-ERROR_IMAGE_UPLOAD ; Not all photos have been uploded. ; 
-ERROR_DATA_UPLOAD ; Error when uploading data. ; 
-ERROR_BACKEND ; Backend error. ;
-ERROR_FAILED_TO_SAVE_DATA ; Could not save data. ;
-ERROR_CLEANING_UP ; There was an error when cleaning up. ;
-ERROR_MISSING_PERMISSION ; Missing permission. ;
+ERROR_FAILED_TO_ACCESS_GALLERY ; Failed to access gallery. ; Falha no acesso as fotografias.
+ERROR_FAILED_TO_ACCESS_CAMERA ; Failed to access camera. ; Falha no acesso a câmera.
+ERROR_FAILED_TO_SAVE_PHOTO ; Failed to save photo to your gallery. ; Falha ao guardar as fotos nas fotografias.
+ERROR_NO_INTERNET ; No internet connection. ; Sem conexão a internet.
+ERROR_TRY_AGAIN_WHEN_ONLINE ; Please try again when connected. ; Por favor tenta de novo quando tiver conexão.
+ERROR_DATA_UPLOAD ; Error when uploading data. ; Erro ao carregar os dados.
+ERROR_IMAGE_UPLOADE ; Not all photos have been uploded. ; Nem todas as fotos foram carregadas.
+ERROR_BACKEND ; Backend error. ; 
+ERROR_FAILED_TO_SAVE_DATA ; Could not save data. ; Não é possível guardar os dados.
+ERROR_CLEANING_UP ; There was an error when cleaning up. ; Ocorreu um erro na limpeza.
+ERROR_MISSING_PERMISSION ; Missing permission. ; Autorização em falta.
 
 null ; - ; -
 
