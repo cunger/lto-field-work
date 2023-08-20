@@ -1,5 +1,5 @@
 {
-  "NSPhotoLibraryUsageDescription": "Please allow us to access your photo gallery so you can choose pictures you want to share.",
-  "NSPhotoLibraryAddUsageDescription": "Please allow us to save pictures from your camera to your photo gallery.",
-  "NSCameraUsageDescription": "Please allow us to access your camera so you can take pictures when logging data."
+  "NSPhotoLibraryUsageDescription": "Permita-nos aceder as suas fotografias para que possa escolher as imagens que pretende partilhar.",
+  "NSPhotoLibraryAddUsageDescription": "Permita-nos guardar imagens da sua câmara na sua galeria de fotografias.",
+  "NSCameraUsageDescription": "Permita-nos o acesso à sua câmara para poder tirar fotografias durante o registo de dados."
 }

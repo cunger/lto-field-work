@@ -52,7 +52,7 @@ export default async function upload(items: Item[], i18n: I18n, increaseUploadPr
   let errors: string[] = [];
 
   try {
-    setUploadStatusText(items.length + ' data entries...');
+    setUploadStatusText(items.length + (i18n.locale == 'pt' ? ' itens...' : ' items...'));
 
     const response = await fetch(`${BASE_URL}/data`, {
       method: 'POST',
@@ -137,13 +137,17 @@ async function uploadImage(image: Image, i18n: I18n) {
 function withPrettyPrintedValues(item: Item, i18n: I18n) {
   const newitem = { ...item };
 
+  console.log(item);
+
   if (item.date) newitem.date = new Date(item.date);
-  if (item.location) newitem.location = i18n.t(item.location, 'en');
-  if (item.base) newitem.base = i18n.t(item.base, 'en');
-  if (item.method) newitem.method = i18n.t(item.method, 'en');
-  if (item.species) newitem.species = i18n.t(item.species, 'en');
-  if (item.sex) newitem.sex = i18n.t(item.sex, 'en');
-  if (item.category) newitem.category = i18n.t(Category[item.category], 'en');
+  if (item.location) newitem.location = i18n.t(item.location, { locale: 'en' });
+  if (item.base) newitem.base = i18n.t(item.base, { locale: 'en' });
+  if (item.method) newitem.method = i18n.t(item.method, { locale: 'en' });
+  if (item.species) newitem.species = i18n.t(item.species, { locale: 'en' });
+  if (item.sex) newitem.sex = i18n.t(item.sex, { locale: 'en' });
+  if (item.category) newitem.category = i18n.t(Category[item.category], { locale: 'en' });
   
+  console.log(newitem);
+
   return newitem;
 }
