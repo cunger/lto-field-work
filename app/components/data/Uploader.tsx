@@ -137,8 +137,6 @@ async function uploadImage(image: Image, i18n: I18n) {
 function withPrettyPrintedValues(item: Item, i18n: I18n) {
   const newitem = { ...item };
 
-  console.log(item);
-
   if (item.date) newitem.date = new Date(item.date);
   if (item.location) newitem.location = i18n.t(item.location, { locale: 'en' });
   if (item.base) newitem.base = i18n.t(item.base, { locale: 'en' });
@@ -147,7 +145,5 @@ function withPrettyPrintedValues(item: Item, i18n: I18n) {
   if (item.sex) newitem.sex = i18n.t(item.sex, { locale: 'en' });
   if (item.category) newitem.category = i18n.t(Category[item.category], { locale: 'en' });
   
-  console.log(newitem);
-
   return newitem;
 }
