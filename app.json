@@ -2,7 +2,7 @@
   "expo": {
     "name": "lto-field-work",
     "slug": "lto-field-work",
-    "version": "1.0.8",
+    "version": "1.0.10",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "120",
+      "buildNumber": "123",
       "infoPlist": {
         "NSCameraUsageDescription": "Please allow us to access your camera so you can take pictures when logging data",
         "NSPhotoLibraryAddUsageDescription": "Please allow us to save pictures from your camera to your photo gallery",

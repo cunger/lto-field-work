@@ -15,7 +15,9 @@ const MainMenu = () => {
   const i18n = GlobalContext.i18n;
 
   const [count, setCount] = useState(GlobalContext.unsyncedItems);
-  GlobalContext.subscribe(setCount);
+  const [locale, setLocale] = useState(GlobalContext.language());
+  GlobalContext.subscribeToCount(setCount);
+  GlobalContext.subscribeToLanguage(setLocale);
 
   return (
     <SafeAreaView style={tailwind('flex-1')}>
@@ -39,7 +41,7 @@ const MainMenu = () => {
           name='Dashboard'
           component={Dashboard}
           options={{
-            tabBarLabel: i18n.t('MENU_DASHBOARD'),
+            tabBarLabel: i18n.t('MENU_DASHBOARD', { locale: locale }),
             tabBarIcon: ({ color, size }) => (
               <Feather name='clipboard' size={size} color={color} />
             ),
@@ -49,7 +51,7 @@ const MainMenu = () => {
           name='DataEntry'
           component={DataEntryMenu}
           options={{
-            tabBarLabel: i18n.t('MENU_DATA_ENTRY'),
+            tabBarLabel: i18n.t('MENU_DATA_ENTRY', { locale: locale }),
             tabBarIcon: ({ color, size }) => (
               <Feather name='plus-circle' size={size} color={color} />
             ),
@@ -60,7 +62,7 @@ const MainMenu = () => {
           name='Upload'
           component={Upload}
           options={{
-            tabBarLabel: i18n.t('MENU_UPLOAD'),
+            tabBarLabel: i18n.t('MENU_UPLOAD', { locale: locale }),
             tabBarIcon: ({ color, size }) => (
               <Feather name='upload' size={size} color={color} />
             ),
@@ -71,7 +73,7 @@ const MainMenu = () => {
           name='Settings'
           component={Settings}
           options={{
-            tabBarLabel: i18n.t('MENU_SETTINGS'),
+            tabBarLabel: i18n.t('MENU_SETTINGS', { locale: locale }),
             tabBarIcon: ({ color, size }) => (
               <Feather name='settings' size={size} color={color} />
             ),

@@ -1,7 +1,7 @@
 key ; english ; portuguese
 
-MENU_DASHBOARD ; Dashboard ; Painel de controlo
-MENU_DATA_ENTRY ; Data entry ; Entrada de dados
+MENU_DASHBOARD ; Dashboard ; Controle
+MENU_DATA_ENTRY ; Data entry ; Dados
 MENU_UPLOAD ; Upload ; Carregar
 MENU_SETTINGS ; Settings ; Definições
 MENU_SELECT ; Select ; Seleccionar
@@ -90,7 +90,7 @@ FISHERIES_HEAD_LENGTH_HELP ; Measure from nose to end of gills. ; Medir da cabe�
 FISHERIES_HEAD_WIDTH ; Head width (cm) ; Largura da cabeça (cm)
 FISHERIES_HEAD_WIDTH_HELP ; Measure from bottom of head to top where the gills are. ; Medir da parte inferior da cabeça até à parte superior, onde se encontram as brânquias.
 FISHERIES_FORK_LENGTH ; Fork length (cm) ; Comprimento 
-FISHERIES_FORK_LENGTH_HELP ; Measure from the nose to the fork of the tail. ; 
+FISHERIES_FORK_LENGTH_HELP ; Measure from the nose to the fork of the tail. ; Medir da cabeça até ao comprimento da cauda.
 FISHERIES_PRECAUDAL_LENGTH ; Precaudal length (cm) ; Comprimento pré-caudal (cm)
 FISHERIES_PRECAUDAL_LENGTH_HELP ; Measure from the nose to the beginning of the tail, before the caudal fin. ; Medir do início da cabeça até ao início da cauda, antes da barbatana caudal.
 FISHERIES_CARAPACE_LENGTH ; Carapace length (cm) ; Comprimento da carapaça (cm)
@@ -157,7 +157,7 @@ CATEGORY_MetalBottleCap ; Metal bottle cap ; Tampa metálica de garrafa
 CATEGORY_AluminumCan ; Aluminum can ; Lata de alumínio
 CATEGORY_OtherCan ; Other can ; Outra lata
 CATEGORY_Lighter ; Lighter ; Ísqueiro
-CATEGORY_GlowStick ; Glow stick ; 
+CATEGORY_GlowStick ; Glow stick ; Bastão luminoso
 
 BASE_Shore ; Shore ; Costa
 BASE_Kayak ; Kayak ; Caiaque
@@ -167,16 +167,16 @@ BASE_JetSki ; Jet ski ; Jet ski
 
 METHOD_Net ; Net ; Rede
 METHOD_PoleAndLine ; Pole and line ; Vara e linha
-METHOD_Spearfishing ; Spearfishing ; 
+METHOD_Spearfishing ; Spearfishing ; Caça submarina
 METHOD_Poison ; Poison ; Veneno
-METHOD_ForeignSportsFisherman ; Foreign sports fisherman ; 
+METHOD_ForeignSportsFisherman ; Foreign sports fisherman ; Pescador desportivo estrangeiro
 
 SEX_Female ; Female ; Fêmea
 SEX_Male ; Male ; Macho
 
 SPECIES_Fish ; Fish ; Peixe
 SPECIES_TeleostFish ; Teleost fish ; Peixe teleósteos
-SPECIES_GameFish ; Game fish ; 
+SPECIES_GameFish ; Game fish ; Peixe esportivo
 SPECIES_Shark ; Shark ; Tubarão
 SPECIES_Ray ; Ray ; Raia
 SPECIES_Crayfish ; Crayfish ; Lagostim
