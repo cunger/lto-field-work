@@ -94,7 +94,7 @@ FISHERIES_FORK_LENGTH_HELP ; Measure from the nose to the fork of the tail. ; Me
 FISHERIES_PRECAUDAL_LENGTH ; Precaudal length (cm) ; Comprimento pré-caudal (cm)
 FISHERIES_PRECAUDAL_LENGTH_HELP ; Measure from the nose to the beginning of the tail, before the caudal fin. ; Medir do início da cabeça até ao início da cauda, antes da barbatana caudal.
 FISHERIES_CARAPACE_LENGTH ; Carapace length (cm) ; Comprimento da carapaça (cm)
-FISHERIES_CARAPACE_LENGTH ; Measure from the tip of the head to the beginning of the tail - the non segmented part. ; Medir da ponta da cabeça até ao início da cauda - a parte não segmentada.
+FISHERIES_CARAPACE_LENGTH_HELP ; Measure from the tip of the head to the beginning of the tail - the non segmented part. ; Medir da ponta da cabeça até ao início da cauda - a parte não segmentada.
 FISHERIES_CARAPACE_WIDTH ; Carapace width (cm) ; Largura da carapaça (cm)
 FISHERIES_CARAPACE_WIDTH_HELP ; From side to side on the crab. ; De um lado para o outro lado no caranguejo.
 FISHERIES_TAIL_LENGTH ; Tail length (cm) ; Comprimento da cauda (cm)
@@ -207,7 +207,7 @@ ERROR_FAILED_TO_SAVE_PHOTO ; Failed to save photo to your gallery. ; Falha ao gu
 ERROR_NO_INTERNET ; No internet connection. ; Sem conexão a internet.
 ERROR_TRY_AGAIN_WHEN_ONLINE ; Please try again when connected. ; Por favor tenta de novo quando tiver conexão.
 ERROR_DATA_UPLOAD ; Error when uploading data. ; Erro ao carregar os dados.
-ERROR_IMAGE_UPLOADE ; Not all photos have been uploded. ; Nem todas as fotos foram carregadas.
+ERROR_IMAGE_UPLOAD ; Not all photos have been uploded. ; Nem todas as fotos foram carregadas.
 ERROR_BACKEND ; Backend error. ; 
 ERROR_FAILED_TO_SAVE_DATA ; Could not save data. ; Não é possível guardar os dados.
 ERROR_CLEANING_UP ; There was an error when cleaning up. ; Ocorreu um erro na limpeza.

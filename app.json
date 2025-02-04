@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "123",
+      "buildNumber": "124",
       "infoPlist": {
         "NSCameraUsageDescription": "Please allow us to access your camera so you can take pictures when logging data",
         "NSPhotoLibraryAddUsageDescription": "Please allow us to save pictures from your camera to your photo gallery",
@@ -31,7 +31,6 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#6ec1e4"
       },
-      "package": "LTO.FieldWork",
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.READ_EXTERNAL_STORAGE",
@@ -50,9 +49,9 @@
         "expo-build-properties",
         {
           "android": {
-            "compileSdkVersion": 31,
-            "targetSdkVersion": 31,
-            "buildToolsVersion": "31.0.0"
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "buildToolsVersion": "35.0.0"
           },
           "ios": {
             "deploymentTarget": "13.0"
