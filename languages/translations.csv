@@ -65,6 +65,8 @@ ADDITIONAL_NOTES_LABEL ; If there is something else that is important, let us kn
 CONFIRM_DISCARD ;  Do you really want to discard this data? ; Tem certeza que quer descartar esses dados?
 
 BEACHCLEAN_ITEMS ; Items ; Itens
+BEACHCLEAN_TOTAL_WEIGHT ; Total weight (kg) ; Peso total (kg)
+BEACHCLEAN_NUMBER_OF_PEOPLE ; Number of people ; Número de pessoas
 
 FISHERIES_INCLUDE_PIC_FOR_SEXING ; Please include a picture that can be used for sexing. ; Inclua por favor, uma fotografia que possa ser utilizada para a definir o sexo do animal.
 FISHERIES_INCLUDE_PIC_WITH_EGGS ; Please include a picture of the eggs if present. ; Inclua por favor, uma fotografia dos ovos, se existirem.
@@ -118,6 +120,8 @@ COORDINATES_YEAR ; Year ; Ano
 COORDINATES_MONTH ; Month ; Mês
 COORDINATES_DAY ; Day ; Dia
 COORDINATES_TIME ; Time ; Tempo
+COORDINATES_START_TIME ; Start time ; Tempo de início
+COORDINATES_END_TIME ; End time ; Tempo do fim
 COORDINATES_HOURS ; Hours ; Hora
 COORDINATES_MINUTES ; Minutes ; Minutos
 COORDINATES_LOCATION ; Location ; Localização

@@ -8,7 +8,7 @@ import GlobalContext from '../../context/GlobalContext';
 import { showMessage } from 'react-native-flash-message';
 import { useTailwind } from 'tailwind-rn';
 
-function Signing({ visible, setVisible, items, closeAction }) {
+function Signing({ visible, setVisible, items, session, closeAction }) {
   const tailwind = useTailwind();
   const i18n = GlobalContext.i18n;
 
@@ -21,6 +21,10 @@ function Signing({ visible, setVisible, items, closeAction }) {
       items.forEach(item =>
         item.signature = Signature(userName, userEmail, userToken)
       );
+
+      if (session) {
+        session.signature = Signature(userName, userEmail, userToken)
+      }
     }
 
     for (let item of items) {

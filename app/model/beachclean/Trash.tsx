@@ -1,14 +1,16 @@
 import 'react-native-get-random-values';
 import Item from '../Item';
 import Category from './Category';
-import Location from '../Location';
+import BeachCleanSession from '../BeachCleanSession';
 
 export default class Trash extends Item {
+  sessionId: string;
   quantity: number = 0;
   category: Category = Category.Other;
 
-  constructor(date: number, location: Location | null, category: Category, quantity: number, additionalNotes?: '') {
-    super('Trash', date, location, additionalNotes);
+  constructor(session: BeachCleanSession, category: Category, quantity: number) {
+    super('Trash', session.startDate, session.location);
+    this.sessionId = session.id;
     this.category = category;
     this.quantity = quantity;
   }

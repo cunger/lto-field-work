@@ -5,7 +5,7 @@ import Trash from '../model/beachclean/Trash';
 import Category from '../model/beachclean/Category';
 import DateTime from '../model/DateTime';
 import ScrollContainer from '../components/ScrollContainer';
-import Coordinates from '../components/forms/Coordinates';
+import CoordinatesWithDuration from '../components/forms/CoordinatesWithDuration';
 import TextField from '../components/forms/TextField';
 import { InputGroup } from '../components/forms/Input';
 import SubmitButtons from '../components/forms/SubmitButtons';
@@ -16,14 +16,21 @@ import { useTailwind } from 'tailwind-rn';
 import { useFocusEffect } from '@react-navigation/core';
 import Datastore from '../components/data/LocalDatastore';
 import GlobalContext from '../context/GlobalContext';
+import { v4 as uuid } from 'uuid';
+import BeachCleanSession from '../model/BeachCleanSession';
 
 function BeachClean({ navigation, route }) {
   const tailwind = useTailwind();
   const i18n = GlobalContext.i18n;
 
-  const [date, setDate] = useState(new DateTime());
+  const now = new DateTime();
+  const [sessionId, setSessionId] = useState(uuid());
+  const [startDate, setStartDate] = useState(now);
+  const [endDate, setEndDate] = useState(now);
   const [location, setLocation] = useState(null);
   const [items, setItems] = useState({});
+  const [totalWeightInKg, setTotalWeightInKg] = useState(null);
+  const [numberOfPeople, setNumberOfPeople] = useState(null);
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [signingVisible, setSigningVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
@@ -42,21 +49,29 @@ function BeachClean({ navigation, route }) {
     }, [route])
   );
 
-  const load = (itemId: string) => {
+  const load = (itemId: string, sessionId: string) => {
     Datastore.item(itemId).then(item => {
       if (!item) return;
 
-      const location = item.location
-      const datetime = item.date ? new DateTime(new Date(item.date)) : new DateTime();
-      const newItems = { [item.category]: item.quantity };
+      Datastore.item(sessionId).then(session => {
 
-      reset();
-      setLoadedItem(item);
-      setDate(datetime);
-      setLocation(location);
-      setAdditionalNotes(item.additionalNotes || '');
-      setItems(newItems);
-      setLines(buildAllLinesFrom(newItems));
+        const location = session.location
+        const startDate = session.startDate ? new DateTime(new Date(session.startDate)) : new DateTime();
+        const endDate = session.endDate ? new DateTime(new Date(session.endDate)) : new DateTime();
+        const newItems = { [item.category]: item.quantity };
+  
+        reset();
+        setLoadedItem(item);
+        setSessionId(session.id);
+        setStartDate(startDate);
+        setEndDate(endDate);
+        setLocation(location);
+        setTotalWeightInKg(session.totalWeightInKg);
+        setNumberOfPeople(session.numberOfPeople);
+        setAdditionalNotes(session.additionalNotes);
+        setItems(newItems);
+        setLines(buildAllLinesFrom(newItems));
+      });
     });
   } 
 
@@ -83,13 +98,19 @@ function BeachClean({ navigation, route }) {
   };
 
   const reset = () => {
-    setDate(new DateTime());
+    const now = new DateTime();
+    setStartDate(now);
+    setEndDate(now);
     setLocation(null);
+    setTotalWeightInKg(null);
+    setNumberOfPeople(null);
     resetItems();
   };
 
   const resetItems = () => {
     setItems({});
+    setTotalWeightInKg(null);
+    setNumberOfPeople(null);
     setAdditionalNotes('');
     setLoadedItem(null);
     setLines(buildAllLinesFrom({}));
@@ -109,21 +130,21 @@ function BeachClean({ navigation, route }) {
   const trashItems = () => {
     let trashItems = [];
     for (let [category, quantity] of Object.entries(items)) {
-    if (loadedItem && loadedItem.category === category) {
+      if (loadedItem && loadedItem.category === category) {
         const item = loadedItem;
-        item.date = date.toEpoch();
-        item.location = location;
         item.quantity = quantity;
-        item.additionalNotes = additionalNotes;
         trashItems.push(item);
       } else {
-        trashItems.push(new Trash(date.toEpoch(), location, category, quantity, additionalNotes));
+        trashItems.push(new Trash(category, quantity));
       }
     }
 
     return trashItems;
   };
 
+  const session = () => {
+    return new BeachCleanSession(sessionId, startDate.toEpoch(), endDate.toEpoch(), location, additionalNotes, totalWeightInKg, numberOfPeople);
+  };
 
   const discard = () => {
     reset();
@@ -138,11 +159,13 @@ function BeachClean({ navigation, route }) {
 
   return (
     <ScrollContainer>
-      <Coordinates
+      <CoordinatesWithDuration
         key={`${date}-${location}`}
-        inputDate={date}
+        inputStartDate={startDate}
+        inputEndDate={endDate}
         inputLocation={location}
-        setDateOnParent={setDate}
+        setStartDateOnParent={setStartDate}
+        setEndDateOnParent={setEndDate}
         setLocationOnParent={setLocation}
       />
 
@@ -175,9 +198,25 @@ function BeachClean({ navigation, route }) {
         />
       </View>
 
+      <View>
+        <InputGroup text={i18n.t('SUMMARY')} />
+        <TextField
+          label={i18n.t('BEACHCLEAN_TOTAL_WEIGHT')}
+          value={totalWeightInKg}
+          updateAction={setTotalWeightInKg}
+          keyboardType='numeric'
+        />
+        <TextField
+          label={i18n.t('BEACHCLEAN_NUMBER_OF_PEOPLE')}
+          value={numberOfPeople}
+          updateAction={setNumberOfPeople}
+          keyboardType='numeric'
+        />
+      </View>
+
       <SubmitButtons 
         saveAction={openSigning} discardAction={() => setConfirmVisible(true)} resetAction={() => reset()} />
-      <Signing visible={signingVisible} setVisible={setSigningVisible} items={trashItems()} closeAction={closeSigning} />
+      <Signing visible={signingVisible} setVisible={setSigningVisible} items={trashItems()} session={session()} closeAction={closeSigning} />
       <ConfirmPrompt visible={confirmVisible}
         actionPhrase={i18n.t('CONFIRM_DISCARD')}
         actionButtonText={i18n.t('BUTTON_DISCARD')}

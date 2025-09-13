@@ -6,7 +6,7 @@ import Location from '../../model/Location';
 import GlobalContext from '../../context/GlobalContext';
 import { useTailwind } from 'tailwind-rn';
 
-function Coordinates({ inputDate, inputLocation, setDateOnParent, setLocationOnParent }) {
+function CoordinatesWithTime({ inputDate, inputLocation, setDateOnParent, setLocationOnParent }) {
   const tailwind = useTailwind();
   const i18n = GlobalContext.i18n;
   
@@ -143,4 +143,4 @@ function Coordinates({ inputDate, inputLocation, setDateOnParent, setLocationOnP
   );
 }
 
-export default Coordinates;
+export default CoordinatesWithTime;

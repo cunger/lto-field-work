@@ -28,6 +28,12 @@
           <string>lto-field-work</string>
         </array>
       </dict>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>exp+lto-field-work</string>
+        </array>
+      </dict>
     </array>
     <key>CFBundleVersion</key>
     <string>124</string>

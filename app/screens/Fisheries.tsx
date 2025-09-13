@@ -11,7 +11,7 @@ import Image from '../model/Image';
 import DateTime from '../model/DateTime';
 import ScrollContainer from '../components/ScrollContainer';
 import Datastore from '../components/data/LocalDatastore';
-import Coordinates from '../components/forms/Coordinates';
+import CoordinatesWithTime from '../components/forms/CoordinatesWithTime';
 import Photos from '../components/forms/Photos';
 import { InputGroup } from '../components/forms/Input';
 import TextField from '../components/forms/TextField';
@@ -186,7 +186,7 @@ function Fisheries({ navigation, route }) {
 
   return (
     <ScrollContainer>
-      <Coordinates
+      <CoordinatesWithTime
         key={`${date}-${location}`}
         inputDate={date}
         inputLocation={location}
@@ -314,7 +314,7 @@ function Fisheries({ navigation, route }) {
               maxUpdateAction={(value: string) => updateDimension('length', 'max', value)}
               avgUpdateAction={(value: string) => updateDimension('length', 'avg', value)}
               helpText={i18n.t('FISHERIES_TOTAL_LENGTH_HELP')}
-              />
+            />
             <MinMaxTextField
               label={i18n.t('FISHERIES_HEAD_LENGTH')}
               minValue={item.head_length.min}
@@ -519,7 +519,7 @@ function Fisheries({ navigation, route }) {
       </View>
 
       <SubmitButtons saveAction={openSigning} discardAction={() => setConfirmVisible(true)} resetAction={() => resetAllFields()} />
-      <Signing visible={signatureVisible} setVisible={setSignatureVisible} items={[item]} closeAction={closeSigning} />
+      <Signing visible={signatureVisible} setVisible={setSignatureVisible} items={[item]} session={null} closeAction={closeSigning} />
       <ConfirmPrompt visible={confirmVisible}
         actionPhrase={i18n.t('CONFIRM_DISCARD')}
         actionButtonText={i18n.t('BUTTON_DISCARD')}
