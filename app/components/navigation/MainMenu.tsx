@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Feather from 'react-native-vector-icons/Feather';
+import { Feather } from '@expo/vector-icons';
 import Dashboard from '../../screens/Dashboard';
 import Upload from '../../screens/Upload';
 import Settings from '../../screens/Settings';

@@ -51,7 +51,10 @@ export default class Item {
 
   public static printDetails(item: Item, i18n: I18n): string {
     let location = item.location;
-    let datetime = item.date ? new DateTime(new Date(item.date)) : null;
+    let datetime = null;
+    if (item.date) {
+      datetime = new DateTime(new Date(item.date));
+    }
 
     if (datetime && location) {
       return `(${printDateShort(datetime, i18n)} ${i18n.t(location)})`;

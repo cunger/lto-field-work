@@ -14,11 +14,11 @@ function DataEntryMenu() {
   return (
     <Stack.Navigator>
       <Stack.Screen 
-        name='DataEntry' 
+        name='DataEntrySelection' 
         component={DataEntry} 
         options={{ 
           title: i18n.t('MENU_DATA_ENTRY'),
-          headerShown: false
+          headerShown: true
         }} 
       />
       <Stack.Screen 
@@ -37,31 +37,25 @@ function DataEntryMenu() {
 
 function DataEntry({ navigation }) {
   const i18n = GlobalContext.i18n;
-  const buttonStyle = "rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50 dark:bg-white/10 dark:text-white dark:shadow-none dark:inset-ring-white/5 dark:hover:bg-white/20";
+  const buttonStyle = "px-4 py-2 border border-gray-300 rounded-md bg-white";
   
   return (
-    <SafeAreaView className="flex-1">
-      <ScrollView className="p-4">
-        <Text className="m-4">
-          {i18n.t('DATA_ENTRY_PICK')}
-        </Text>
+    <SafeAreaView className="flex-1 gap-10 p-4">
+      <TouchableOpacity
+        key="BeachClean"
+        className="p-4 border border-gray-300 rounded-md bg-white"
+        onPress={() => navigation.navigate('BeachClean')}
+      >
+        <Text>🗑️ {i18n.t('MENU_BEACHCLEAN')}</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity
-          key="BeachClean"
-          className={buttonStyle}
-          onPress={() => navigation.navigate('BeachClean', { screen: BeachClean })}
-        >
-          <Text>🗑️ {i18n.t('MENU_BEACHCLEAN')}</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          key="Fisheries"
-          className={buttonStyle}
-          onPress={() => navigation.navigate('Fisheries', { screen: Fisheries })}
-        >
-          <Text>🎣 {i18n.t('MENU_FISHERIES')}</Text>
-        </TouchableOpacity>
-      </ScrollView>
+      <TouchableOpacity
+        key="Fisheries"
+        className="p-4 border border-gray-300 rounded-md bg-white"
+        onPress={() => navigation.navigate('Fisheries')}
+      >
+        <Text>🎣 {i18n.t('MENU_FISHERIES')}</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }

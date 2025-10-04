@@ -14,7 +14,7 @@ import { showMessage } from 'react-native-flash-message';
 import { useFocusEffect } from '@react-navigation/core';
 import Datastore from '../components/data/LocalDatastore';
 import GlobalContext from '../context/GlobalContext';
-import BeachCleanSession from '../model/BeachCleanSession';
+import BeachCleanSession from '../model/beachclean/BeachCleanSession';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import uuid from 'react-native-uuid';
 
@@ -52,7 +52,6 @@ function BeachClean({ navigation, route }) {
       if (!item) return;
 
       Datastore.item(sessionId).then(session => {
-
         const location = session.location
         const startDate = session.startDate ? new DateTime(new Date(session.startDate)) : new DateTime();
         const endDate = session.endDate ? new DateTime(new Date(session.endDate)) : new DateTime();
@@ -156,8 +155,8 @@ function BeachClean({ navigation, route }) {
   };
 
   return (
-    <SafeAreaView className="flex-1">
-      <ScrollView className="flex-1 p-4">
+    <SafeAreaView>
+      <ScrollView className="flex-1">
         <CoordinatesWithDuration
           key={`${startDate}-${endDate}-${location}`}
           inputStartDate={startDate}

@@ -10,9 +10,6 @@ import Category from '../model/beachclean/Category';
 import Species from '../model/fisheries/Species';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { verifyInstallation } from 'nativewind';
-verifyInstallation();
-
 function Dashboard() {
   const i18n = GlobalContext.i18n;
 

@@ -22,19 +22,19 @@ function Heading({ title, actionTitle, actionOnPress }) {
     const activity = <ActivityIndicator animating={true} size='small' color='#6ec1e4' />;
 
     return (
-      <View className="('flex flex-row mt-4 pl-4 pr-2 py-2 justify-between items-center border-b border-gray-200 rounded-md">
-        <Text className="('text-lg font-medium text-gray-900">
+      <View className="flex flex-row mt-4 pl-4 pr-2 py-2 justify-between items-center border-b border-gray-200 rounded-md">
+        <Text className="text-lg font-medium text-gray-900">
           {title}
         </Text>
-        <TouchableOpacity onPress={actionOnPressWithActivityIndication} className="('px-4 py-2 border border-gray-300 rounded-md bg-white">
+        <TouchableOpacity onPress={actionOnPressWithActivityIndication} className="px-4 py-2 border border-gray-300 rounded-md bg-white">
           {actionIsInProgress ? activity : text}
         </TouchableOpacity>
       </View>
     );
   } else {
     return (
-      <View className="('p-2 my-2 border-b border-gray-200">
-        <Text className="('text-lg font-medium text-gray-900">
+      <View className="p-2 my-2 border-b border-gray-200">
+        <Text className="text-lg font-medium text-gray-900">
           {title}
         </Text>
       </View>

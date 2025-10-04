@@ -1,6 +1,6 @@
 import Item from '../Item';
 import Category from './Category';
-import BeachCleanSession from '../BeachCleanSession';
+import BeachCleanSession from './BeachCleanSession';
 
 export default class Trash extends Item {
   sessionId: string;

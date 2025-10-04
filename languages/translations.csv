@@ -79,8 +79,8 @@ FISHERIES_OTHER_METHOD ; Please describe method: ; Por favor, descreva o método
 FISHERIES_CATCH ; Catch ; Captura
 FISHERIES_NO_CATCH ; No catch. ; Sem captura.
 FISHERIES_REASON ; Reason: ; Motivo:
-FISHERIES_SEX ; Which sex? ; Qual é o sexo?
-FISHERIES_SPECIES ; Which species? ; Que espécies?
+FISHERIES_SEX ; Sex ; Sexo
+FISHERIES_SPECIES ; Species ; Espécies
 FISHERIES_COMMON_NAME ; Common name ; Nome comum
 FISHERIES_COMMON_NAME_HELP ; This is the everyday name of the animal. ; Este é o usual do animal.
 FISHERIES_LATIN_NAME ; Latin name ; Nome em latim
@@ -195,6 +195,8 @@ AVG ; average ; médio
 SOMETHING ; Something ; Alguma coisa
 OTHER ; Other ; Outros
 UNKNOWN ; Unknown ; Desconhecido
+
+SUMMARY ; Summary ; Sumário
 
 SIGN_PROMPT ; Do you want to sign? ; Quer se increver?
 SIGN_EXPLANATION_1 ; Signing means you confirm that you collected the data as entered. We can then use the data for our studies. ; Ao assinar, está a confirmar que recolheu os dados tal como foram introduzidos. Podemos então utilizar os dados para os nossos estudos.
