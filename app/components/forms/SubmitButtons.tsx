@@ -1,10 +1,8 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { useTailwind } from 'tailwind-rn';
 import GlobalContext from '../../context/GlobalContext';
 
 function SubmitButtons({ saveAction, discardAction, saveText, discardText, resetAction, resetText }) {
-  const tailwind = useTailwind();
   const i18n = GlobalContext.i18n;
 
   if (!saveText) saveText = i18n.t('BUTTON_SAVE');
@@ -16,19 +14,19 @@ function SubmitButtons({ saveAction, discardAction, saveText, discardText, reset
 
   return (
     <View>
-      <View style={tailwind('flex flex-row items-stretch my-6')}>
-        <TouchableOpacity onPress={saveAction} style={tailwind('px-4 py-2 mr-4 rounded-md bg-blue')}>
-          <Text style={tailwind('text-sm text-white font-medium')}>
+      <View className="flex flex-row items-stretch my-6">
+        <TouchableOpacity onPress={saveAction} className="px-4 py-2 mr-4 rounded-md bg-blue">
+          <Text className="text-sm text-white font-medium">
             {saveText}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={discardAction} style={tailwind('px-4 py-2 mr-4 rounded-md bg-danger')}>
-          <Text style={tailwind('text-sm text-white font-medium')}>
+        <TouchableOpacity onPress={discardAction} className="px-4 py-2 mr-4 rounded-md bg-danger">
+          <Text className="text-sm text-white font-medium">
             {discardText}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={resetAction} style={tailwind('px-4 py-2 rounded-md bg-white')}>
-          <Text style={tailwind('text-sm text-black font-medium')}>
+        <TouchableOpacity onPress={resetAction} className="px-4 py-2 rounded-md bg-white">
+          <Text className="text-sm text-black font-medium">
             {resetText}
           </Text>
         </TouchableOpacity>

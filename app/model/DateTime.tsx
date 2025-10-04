@@ -7,7 +7,7 @@ type DateTime = {
   toEpoch: () => number,
 };
 
-function DateTime(date: Date | undefined): DateTime {
+function DateTime(date?: Date): DateTime {
   if (!date) date = new Date();
 
   return {

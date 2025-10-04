@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import uuid from 'react-native-uuid';
 import Signature from './Signature';
 import Location from './Location';
 import DateTime from './DateTime';
@@ -19,7 +19,7 @@ export default class Item {
   additionalNotes: string;
  
   constructor(type: string, date: number, location: Location | null, additionalNotes?: string) {
-    this.id = uuid();
+    this.id = uuid.v4();
     this.type = type;
     this.date = date;
     this.location = location;

@@ -1,10 +1,10 @@
+import './global.css';
+
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import FlashMessage from 'react-native-flash-message';
 import MainMenu from './app/components/navigation/MainMenu';
 import GlobalContext from './app/context/GlobalContext';
-import { TailwindProvider } from 'tailwind-rn';
-import utilities from './tailwind.json';
 
 export default function App() {
   useEffect(() => {
@@ -16,11 +16,9 @@ export default function App() {
   }, []);
 
   return (
-    <TailwindProvider utilities={utilities}>
-      <NavigationContainer>
-        <MainMenu />
-        <FlashMessage position='top' />
-      </NavigationContainer>
-    </TailwindProvider>
+    <NavigationContainer>
+      <MainMenu />
+      <FlashMessage position='top' />
+    </NavigationContainer>
   );
 }

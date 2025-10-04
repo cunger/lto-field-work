@@ -3,32 +3,30 @@ import { View, Text, TouchableOpacity, Image as RNImage } from 'react-native';
 import { InputField, InputGroup } from './Input';
 import TextField from './TextField';
 import Image from '../../model/Image';
-import { useTailwind } from 'tailwind-rn';
 import { showMessage } from 'react-native-flash-message';
 import * as ImagePicker from 'expo-image-picker';
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
-import uuid from 'react-native-uuid';
 import GlobalContext from '../../context/GlobalContext';
+import uuid from 'react-native-uuid';
 
 function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, removePhoto, setPhotosNote }) {
-  const tailwind = useTailwind();
   const i18n = GlobalContext.i18n;
 
   const photoList = () => {
     if (photos.length == 0) {
       return (
-        <Text style={tailwind('my-2')} key='none'>{ i18n.t('PICTURES_NONE_YET') }</Text>
+        <Text className="my-2" key='none'>{ i18n.t('PICTURES_NONE_YET') }</Text>
       );
     } else {
       return (
-        <View style={tailwind('flex flex-row flex-wrap my-2')}>
+        <View className="flex flex-row flex-wrap my-2">
         {photos.map((image: Image) => (
-          <View key={image.filename} style={tailwind('mx-2 my-1 flex flex-row items-start justify-start')}>
+          <View key={image.filename} className="mx-2 my-1 flex flex-row items-start justify-start">
             <RNImage source={{ uri: image.location }} style={{ width: 60, height: 60, borderRadius: 5 }} /> 
             <TouchableOpacity 
               onPress={() => removePhoto(image)}
-              style={tailwind('px-1 py-1 mx-1 border border-gray-300 rounded-md bg-white')}>
+              className="px-1 py-1 mx-1 border border-gray-300 rounded-md bg-white">
               <Text>❌</Text>
             </TouchableOpacity>
           </View>
@@ -41,7 +39,7 @@ function Photos({ flashMessage, photos, photosNote, photoFileName, addPhoto, rem
   const flash = () => {
     const message = flashMessage();
     if (message) return (
-      <Text style={tailwind('my-2 text-blue')}>{message}</Text>
+      <Text className="my-2 text-blue">{message}</Text>
     );
   };
 

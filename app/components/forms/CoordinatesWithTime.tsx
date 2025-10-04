@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { InputLabel, InputGroup } from './Input';
 import SelectField from './SelectField';
 import Location from '../../model/Location';
 import GlobalContext from '../../context/GlobalContext';
-import { useTailwind } from 'tailwind-rn';
 
 function CoordinatesWithTime({ inputDate, inputLocation, setDateOnParent, setLocationOnParent }) {
-  const tailwind = useTailwind();
   const i18n = GlobalContext.i18n;
   
   const [date, setDate] = useState(inputDate);
@@ -92,9 +91,9 @@ function CoordinatesWithTime({ inputDate, inputLocation, setDateOnParent, setLoc
 
   return (
     <SafeAreaView>
-      <View style={tailwind('mb-2')}>
+      <View className="mb-2">
         <InputGroup text={i18n.t('COORDINATES')} />
-        <View style={tailwind('flex flex-row items-stretch my-3')}>
+        <View className="flex flex-row items-stretch my-3">
           <InputLabel text={i18n.t('COORDINATES_DATE') + ': '} />
           <SelectField
             label={i18n.t('COORDINATES_DAY')}
@@ -115,7 +114,7 @@ function CoordinatesWithTime({ inputDate, inputLocation, setDateOnParent, setLoc
             updateAction={(value: number) => saveYear(value)}
           />
         </View>
-        <View style={tailwind('flex flex-row items-stretch my-2')}>
+        <View className="flex flex-row items-stretch my-2">
           <InputLabel text={i18n.t('COORDINATES_TIME') + ': '} />
           <SelectField
             label={i18n.t('COORDINATES_HOURS')}

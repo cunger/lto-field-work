@@ -1,6 +1,5 @@
 {
   "expo": {
-    "sdkVersion": "51.0.0",
     "name": "lto-field-work",
     "slug": "lto-field-work",
     "version": "1.0.10",
@@ -57,7 +56,7 @@
             "buildToolsVersion": "35.0.0"
           },
           "ios": {
-            "deploymentTarget": "13.4"
+            "deploymentTarget": "15.1"
           }
         }
       ],

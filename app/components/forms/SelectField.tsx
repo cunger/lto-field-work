@@ -1,6 +1,5 @@
 import React from 'react';
-import RNPickerSelect from 'react-native-picker-select'; // https://github.com/lawnstarter/react-native-picker-select
-import styles from '../../styles/select';
+import { Picker } from '@react-native-picker/picker';
 import GlobalContext from '../../context/GlobalContext';
 
 const i18n = GlobalContext.i18n;
@@ -13,18 +12,19 @@ function SelectField({ label, value, type, items, updateAction }) {
   }
 
   return (
-    <RNPickerSelect
-      value={value}
-      placeholder={{ label: label, value: undefined }}
+    <Picker
+      selectedValue={value}
       onValueChange={(value, _) => updateAction(value)}
-      items={items}
-      style={{
-        inputAndroid: styles.input,
-        inputAndroidContainer: styles.inputContainer,
-        inputIOS: styles.input,
-        inputIOSContainer: styles.inputContainer
-      }}
-    />
+    >
+      <Picker.Item label={label} value={undefined} />
+
+      {items.map((item) => (
+        <Picker.Item 
+          label={item.label} 
+          value={item.value} 
+        />
+      ))}
+    </Picker>
   );
 }
 

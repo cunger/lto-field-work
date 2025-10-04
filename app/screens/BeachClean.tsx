@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import InputSpinner from 'react-native-input-spinner';
 import Trash from '../model/beachclean/Trash';
 import Category from '../model/beachclean/Category';
 import DateTime from '../model/DateTime';
-import ScrollContainer from '../components/ScrollContainer';
 import CoordinatesWithDuration from '../components/forms/CoordinatesWithDuration';
 import TextField from '../components/forms/TextField';
 import { InputGroup } from '../components/forms/Input';
@@ -12,19 +11,18 @@ import SubmitButtons from '../components/forms/SubmitButtons';
 import Signing from '../components/forms/Signing';
 import ConfirmPrompt from '../components/ConfirmPrompt';
 import { showMessage } from 'react-native-flash-message';
-import { useTailwind } from 'tailwind-rn';
 import { useFocusEffect } from '@react-navigation/core';
 import Datastore from '../components/data/LocalDatastore';
 import GlobalContext from '../context/GlobalContext';
-import { v4 as uuid } from 'uuid';
 import BeachCleanSession from '../model/BeachCleanSession';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import uuid from 'react-native-uuid';
 
 function BeachClean({ navigation, route }) {
-  const tailwind = useTailwind();
   const i18n = GlobalContext.i18n;
 
   const now = new DateTime();
-  const [sessionId, setSessionId] = useState(uuid());
+  const [sessionId, setSessionId] = useState(uuid.v4());
   const [startDate, setStartDate] = useState(now);
   const [endDate, setEndDate] = useState(now);
   const [location, setLocation] = useState(null);
@@ -158,71 +156,73 @@ function BeachClean({ navigation, route }) {
   };
 
   return (
-    <ScrollContainer>
-      <CoordinatesWithDuration
-        key={`${date}-${location}`}
-        inputStartDate={startDate}
-        inputEndDate={endDate}
-        inputLocation={location}
-        setStartDateOnParent={setStartDate}
-        setEndDateOnParent={setEndDate}
-        setLocationOnParent={setLocation}
-      />
-
-      <View>
-        <InputGroup text={i18n.t('BEACHCLEAN_ITEMS')} />
-        {lines.map(line => {
-          return (
-            <InputSpinner
-            	min={0}
-            	step={1}
-            	value={line.quantity}
-            	onChange={(value) => { updateItem(value, line.category); }}
-              prepend={(<Text style={tailwind('w-1/2')}> {i18n.t(Category[line.category])} </Text>)}
-              height={30}
-              rounded={false}
-              key={line.key}
-              style={tailwind('mb-2 bg-white')}
-            />
-          );
-        })}
-      </View>
-
-      <View>
-        <InputGroup text={i18n.t('ADDITIONAL_NOTES')} />
-        <TextField
-          numberOfLines={4}
-          label={i18n.t('ADDITIONAL_NOTES_LABEL')}
-          value={additionalNotes}
-          updateAction={setAdditionalNotes}
+    <SafeAreaView className="flex-1">
+      <ScrollView className="flex-1 p-4">
+        <CoordinatesWithDuration
+          key={`${startDate}-${endDate}-${location}`}
+          inputStartDate={startDate}
+          inputEndDate={endDate}
+          inputLocation={location}
+          setStartDateOnParent={setStartDate}
+          setEndDateOnParent={setEndDate}
+          setLocationOnParent={setLocation}
         />
-      </View>
 
-      <View>
-        <InputGroup text={i18n.t('SUMMARY')} />
-        <TextField
-          label={i18n.t('BEACHCLEAN_TOTAL_WEIGHT')}
-          value={totalWeightInKg}
-          updateAction={setTotalWeightInKg}
-          keyboardType='numeric'
-        />
-        <TextField
-          label={i18n.t('BEACHCLEAN_NUMBER_OF_PEOPLE')}
-          value={numberOfPeople}
-          updateAction={setNumberOfPeople}
-          keyboardType='numeric'
-        />
-      </View>
+        <View>
+          <InputGroup text={i18n.t('BEACHCLEAN_ITEMS')} />
+          {lines.map(line => {
+            return (
+              <InputSpinner
+                min={0}
+                step={1}
+                value={line.quantity}
+                onChange={(value) => { updateItem(value, line.category); }}
+                prepend={(<Text className="w-1/2"> {i18n.t(Category[line.category])} </Text>)}
+                height={30}
+                rounded={false}
+                key={line.key}
+                className="mb-2 bg-white"
+              />
+            );
+          })}
+        </View>
 
-      <SubmitButtons 
-        saveAction={openSigning} discardAction={() => setConfirmVisible(true)} resetAction={() => reset()} />
-      <Signing visible={signingVisible} setVisible={setSigningVisible} items={trashItems()} session={session()} closeAction={closeSigning} />
-      <ConfirmPrompt visible={confirmVisible}
-        actionPhrase={i18n.t('CONFIRM_DISCARD')}
-        actionButtonText={i18n.t('BUTTON_DISCARD')}
-        action={discard}
-        hide={() => setConfirmVisible(false)} />
-    </ScrollContainer>
+        <View>
+          <InputGroup text={i18n.t('ADDITIONAL_NOTES')} />
+          <TextField
+            numberOfLines={4}
+            label={i18n.t('ADDITIONAL_NOTES_LABEL')}
+            value={additionalNotes}
+            updateAction={setAdditionalNotes}
+          />
+        </View>
+
+        <View>
+          <InputGroup text={i18n.t('SUMMARY')} />
+          <TextField
+            label={i18n.t('BEACHCLEAN_TOTAL_WEIGHT')}
+            value={totalWeightInKg}
+            updateAction={setTotalWeightInKg}
+            keyboardType='numeric'
+          />
+          <TextField
+            label={i18n.t('BEACHCLEAN_NUMBER_OF_PEOPLE')}
+            value={numberOfPeople}
+            updateAction={setNumberOfPeople}
+            keyboardType='numeric'
+          />
+        </View>
+
+        <SubmitButtons 
+          saveAction={openSigning} discardAction={() => setConfirmVisible(true)} resetAction={() => reset()} />
+        <Signing visible={signingVisible} setVisible={setSigningVisible} items={trashItems()} session={session()} closeAction={closeSigning} />
+        <ConfirmPrompt visible={confirmVisible}
+          actionPhrase={i18n.t('CONFIRM_DISCARD')}
+          actionButtonText={i18n.t('BUTTON_DISCARD')}
+          action={discard}
+          hide={() => setConfirmVisible(false)} />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

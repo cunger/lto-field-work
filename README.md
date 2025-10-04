@@ -9,11 +9,6 @@ $ npx expo start
 
 ## Build
 
-Tailwind:
-```
-$ npm run build:tailwind
-```
-
 Translations:
 ```
 $ npm run build:translations
@@ -21,8 +16,8 @@ $ npm run build:translations
 
 App:
 ```
-$ npm run bundle:ios
-$ npm run eject
+$ npx expo prebuild
+$ npx expo export --platform ios
 ```
 
 ## Deploy

@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { InputLabel } from '../components/forms/Input';
 import Datastore from '../components/data/LocalDatastore';
-import { useTailwind } from 'tailwind-rn';
-import SafeContainer from '../components/SafeContainer';
 import GlobalContext from '../context/GlobalContext';
 import SelectField from '../components/forms/SelectField';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function Settings({ navigation }) {
-  const tailwind = useTailwind();
   const i18n = GlobalContext.i18n;
 
   const [language, setLanguage] = useState('en');
@@ -60,8 +58,8 @@ function Settings({ navigation }) {
   };
 
   return (
-    <SafeContainer>
-      <View style={tailwind('mb-2')}>
+    <SafeAreaView className="flex-1">
+      <View className="mb-2">
         <InputLabel text={i18n.t('SETTINGS_LANGUAGE')} />
         <SelectField
             value={language}
@@ -81,7 +79,7 @@ function Settings({ navigation }) {
           value={name}
           onChangeText={(value) => { setName(value); }}
           onEndEditing={saveName}
-          style={tailwind('mb-2 p-2 bg-white border-gray rounded-md')}
+          className="mb-2 p-2 bg-white border-gray rounded-md"
         />
       </View>
 
@@ -91,7 +89,7 @@ function Settings({ navigation }) {
           value={email}
           onChangeText={(value) => { setEmail(value); }}
           onEndEditing={saveEmail}
-          style={tailwind('mb-4 p-2 bg-white border-gray rounded-md')}
+          className="mb-4 p-2 bg-white border-gray rounded-md"
         />
       </View>
 
@@ -101,19 +99,19 @@ function Settings({ navigation }) {
           value={token}
           onChangeText={(value) => { setToken(value); }}
           onEndEditing={saveToken}
-          style={tailwind('mb-4 p-2 bg-white border-gray rounded-md')}
+          className="mb-4 p-2 bg-white border-gray rounded-md"
         />
         <Text>{i18n.t('SETTINGS_TOKEN_EXPLANATION')}</Text>
       </View>
 
-      <View style={tailwind('flex flex-row items-stretch my-6')}>
-        <TouchableOpacity onPress={save} style={tailwind('px-4 py-2 mr-4 rounded-md bg-blue')}>
-          <Text style={tailwind('text-sm text-white font-medium')}>
+      <View className="flex flex-row items-stretch my-6">
+        <TouchableOpacity onPress={save} className="px-4 py-2 mr-4 rounded-md bg-blue">
+          <Text className="text-sm text-white font-medium">
             {i18n.t('BUTTON_SAVE')}
           </Text>
         </TouchableOpacity>
       </View>
-    </SafeContainer>
+    </SafeAreaView>
   );
 }
 

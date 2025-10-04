@@ -1,4 +1,3 @@
-import 'react-native-get-random-values';
 import Item from '../Item';
 import Category from './Category';
 import BeachCleanSession from '../BeachCleanSession';

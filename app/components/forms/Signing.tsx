@@ -6,10 +6,8 @@ import SubmitButtons from './SubmitButtons';
 import Datastore from '../data/LocalDatastore';
 import GlobalContext from '../../context/GlobalContext';
 import { showMessage } from 'react-native-flash-message';
-import { useTailwind } from 'tailwind-rn';
 
 function Signing({ visible, setVisible, items, session, closeAction }) {
-  const tailwind = useTailwind();
   const i18n = GlobalContext.i18n;
 
   const save = async (withSignature) => {
@@ -48,15 +46,15 @@ function Signing({ visible, setVisible, items, session, closeAction }) {
       isVisible={visible}
       animationOut={'slideOutUp'}
       animationOutTiming={1000}>
-      <View style={tailwind('bg-white p-4 rounded-md')}>
-        <Text style={tailwind('my-4 font-bold')}>✍️ {i18n.t('SIGN_PROMPT')}</Text>
-        <Text style={tailwind('my-2')}>
+      <View className="bg-white p-4 rounded-md">
+        <Text className="my-4 font-bold">✍️ {i18n.t('SIGN_PROMPT')}</Text>
+        <Text className="my-2">
           {i18n.t('SIGN_EXPLANATION_1')}
         </Text>
-        <Text style={tailwind('my-2')}>
+        <Text className="my-2">
           {i18n.t('SIGN_EXPLANATION_2')}
         </Text>
-        <Text style={tailwind('my-2')}>
+        <Text className="my-2">
           ({i18n.t('SIGN_EXPLANATION_3')})
         </Text>
 

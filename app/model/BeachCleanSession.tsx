@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import uuid from 'react-native-uuid';
 import Signature from './Signature';
 import Location from './Location';
 
@@ -14,7 +14,7 @@ export default class BeachCleanSession {
   signature?: Signature;
  
   constructor(startDate: number, endDate: number, location: Location | null, additionalNotes?: string, totalWeightInKg?: number, numberOfPeople?: number) {
-    this.id = uuid();
+    this.id = uuid.v4();
     this.startDate = startDate;
     this.endDate = endDate;
     this.location = location;
