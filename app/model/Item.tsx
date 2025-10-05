@@ -1,36 +1,18 @@
 import uuid from 'react-native-uuid';
-import Signature from './Signature';
-import Location from './Location';
 import DateTime from './DateTime';
-import Image from './Image';
 import { print, printDateShort } from '../components/utils/PrettyPrinter';
 import Category from '../model/beachclean/Category';
 import { I18n } from 'i18n-js/typings';
 
 export default class Item {
-  id: string;
   type: string;
-  synced: boolean;
-  signature?: Signature;
-  date: number;
-  location: Location | null;
-  photos: Image[];
-  photosNote: string;
-  additionalNotes: string;
+  id: string;
+  sessionId: string;
  
-  constructor(type: string, date: number, location: Location | null, additionalNotes?: string) {
-    this.id = uuid.v4();
+  constructor(type: string, sessionId: string) {
     this.type = type;
-    this.date = date;
-    this.location = location;
-    this.synced = false;
-    this.photos = [];
-    this.photosNote = '';
-    this.additionalNotes = additionalNotes || '';
-  }
-
-  public static signed(item: Item): boolean {
-    return !!(item.signature && item.signature.token);
+    this.id = uuid.v4();
+    this.sessionId = sessionId;
   }
 
   public static prettyPrint(item: Item, i18n: I18n): string {

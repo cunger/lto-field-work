@@ -6,6 +6,9 @@ import { getLocales } from 'expo-localization';
 import { I18n } from 'i18n-js';
 import translations from './translations';
 import DateTime from '../../model/DateTime';
+import Session from '../../model/Session';
+import FisheriesSession from '../../model/fisheries/FisheriesSession';
+import BeachCleanSession from '../../model/beachclean/BeachCleanSession';
 
 const languages = ['en', 'pt'];
 const localLanguage = getLocales()[0].languageCode;
@@ -68,23 +71,24 @@ export default class Datastore {
     return items.filter(item => Item.signed(item) && !item.synced).length;
   }
 
-  static async saveInStatistics(item: Item) {
-    await AsyncStorage.setItem('@lastactivedate', `${item.date}`);
-    await AsyncStorage.setItem('@lastactivelocation', `${item.location}`);
+  static async saveInStatistics(session: Session) {
+    await AsyncStorage.setItem('@lastactivedate', `${session.startDate}`);
+    await AsyncStorage.setItem('@lastactivelocation', `${session.location}`);
 
     const statisticsString = await AsyncStorage.getItem('@statistics');
     const statistics = statisticsString ? JSON.parse(statisticsString) : {};
     
-    if (item.type == 'Catch' && item.quantity > 0) {
-      const species = `${item.species || 'Fish'}`;
-      statistics.Catch = statistics.Catch || {};
-      statistics.Catch[species] = (statistics.Catch[species] || 0) + item.quantity;
+    if (session.type == 'Fisheries') {
+      statistics.fisheries = (statistics.fisheries || 0) + 1;
+      statistics.catches = (statistics.catches || 0) + (session as FisheriesSession).items.length;
     }
 
-    if (item.type == 'Trash') {
-      const category = `${item.category.startsWith('Plastic') ? 'Plastic' : item.category}`;
-      statistics.Trash = statistics.Trash || {};
-      statistics.Trash[category] = (statistics.Trash[category] || 0) + item.quantity;
+    if (session.type == 'BeachClean') {
+      statistics.beachcleans = (statistics.beachcleans || 0) + 1;
+      statistics.trashitems = (statistics.trashitems || 0) + (session as BeachCleanSession).items.length;
+      if ((session as BeachCleanSession).totalWeightInKg) {
+        statistics.trashkg = (statistics.trashkg || 0) + (session as BeachCleanSession).totalWeightInKg;
+      }
     }
 
     await AsyncStorage.setItem('@statistics', JSON.stringify(statistics));
@@ -107,21 +111,21 @@ export default class Datastore {
 
   // ---- Colleced data and photos ----
 
-  static async item(id: string): Promise<Item> {
+  static async session(id: string): Promise<Session> {
     const value = await AsyncStorage.getItem(id);
     return value ? JSON.parse(value) : null;
   }
 
-  static async items(): Promise<Item[]> {
+  static async sessions(): Promise<Session[]> {
     const keys = await AsyncStorage.getAllKeys();
     const values = await AsyncStorage.multiGet(keys.filter(key => !key.startsWith('@')));
     return values.map((value) => JSON.parse(value[1]));
   }
 
-  static async save(item: Item) {
+  static async save(session: Session) {
     try {
-      await AsyncStorage.setItem(item.id, JSON.stringify(item));
-      await this.saveInStatistics(item);
+      await AsyncStorage.setItem(session.id, JSON.stringify(session));
+      await this.saveInStatistics(session);
     } catch (error) {
       showMessage({
         message: i18n.t('ERROR_FAILED_TO_SAVE_DATA'),
@@ -134,30 +138,31 @@ export default class Datastore {
 
   static async syncAll(increaseUploadProgress: (_ : number) => void, setUploadStatusText: (_: string) => void) {
     try {
-      const items: Item[] = [];
+      const sessions: Session[] = [];
       const keys: readonly string[] = await AsyncStorage.getAllKeys();
 
       for (let key of keys) {
-        // All keys for internal use start with '@', so siply skip them when uploading data.
+        // All keys for internal use start with '@', so simply skip them when uploading data.
         if (key.startsWith('@')) continue;
 
         const value = await AsyncStorage.getItem(key);
         if (!value) continue;
 
-        const item = JSON.parse(value);
+        const session = JSON.parse(value);
 
-        // Signed items are uploaded.
-        // Unsigned items are ignored. 
-        if (Item.signed(item) && !item.synced) {
-          items.push(item);
+        // Signed sessions are uploaded.
+        // Unsigned sessions are ignored. 
+        if (session.signed() && !session.synced) {
+          sessions.push(session);
         }
       }
 
-      const uploaded = await upload(items, i18n, increaseUploadProgress, setUploadStatusText);
+      const uploaded = await upload(sessions, i18n, increaseUploadProgress, setUploadStatusText);
 
-      for (let item of uploaded) {
-        item.synced = true;
-        await this.save(item);
+      for (let session of uploaded) {
+        session.synced = true;
+        await this.save(session);
+        // TODO For Fisheries, we want to upload catches separately.
       }
     } catch (error) {
       console.log(error);

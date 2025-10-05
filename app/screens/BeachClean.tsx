@@ -121,7 +121,7 @@ function BeachClean({ navigation, route }) {
     resetItems();
     setSigningVisible(false);
     // You probably finished the beach clean, so go back to menu.
-    navigation.navigate('DataEntry', { screen: 'Select' });
+    navigation.navigate('DataEntry');
   };
 
   const trashItems = () => {
@@ -132,7 +132,7 @@ function BeachClean({ navigation, route }) {
         item.quantity = quantity;
         trashItems.push(item);
       } else {
-        trashItems.push(new Trash(category, quantity));
+        trashItems.push(new Trash(session, category, quantity));
       }
     }
 

@@ -25,6 +25,7 @@ function Signing({ visible, setVisible, items, session, closeAction }) {
       }
     }
 
+    await Datastore.save(session);
     for (let item of items) {
       await Datastore.save(item);
     }

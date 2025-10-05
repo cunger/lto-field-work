@@ -1,5 +1,5 @@
 import Item from '../Item';
-import Location from '../Location';
+import Image from '../Image';
 import Species from './Species';
 import Sex from './Sex';
 import Method from './Method';
@@ -21,9 +21,9 @@ class Dimensions {
 
 export default class Catch extends Item {
   reason?: String;
-  method: Method | null;
+  method?: Method;
   other_method?: string;
-  base: Base | null;
+  base?: Base;
   quantity: number;
   common_name: string;
   latin_name: string;
@@ -38,15 +38,17 @@ export default class Catch extends Item {
   carapace_length: Dimensions;
   carapace_width: Dimensions;
   disk_width: Dimensions;
+  photos: Image[];
+  photosNote: string;
 
-  constructor(date: number, location: Location | null, base?: Base, method?: Method, other_method?: string) {
-    super('Catch', date, location);
+  constructor(sessionId: string, base?: Base, method?: Method, other_method?: string) {
+    super('Catch', sessionId);
     this.quantity = 1;
     this.common_name = '';
     this.latin_name = '';
     // We don't want to reset these fields, as they usually don't change.
-    this.base = base || null;
-    this.method = method || null;
+    this.base = base;
+    this.method = method;
     this.other_method = other_method;
     // Set those properties to null which you want to reset after saving a catch.
     this.species = null;
@@ -61,5 +63,8 @@ export default class Catch extends Item {
     this.carapace_width = new Dimensions();
     this.carapace_length = new Dimensions();
     this.disk_width = new Dimensions();
+    // Photos
+    this.photos = [];
+    this.photosNote = '';
   }
 };
