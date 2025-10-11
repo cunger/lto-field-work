@@ -1,14 +1,16 @@
 import { showMessage } from 'react-native-flash-message';
 import NetInfo from '@react-native-community/netinfo'; // https://github.com/react-native-netinfo/react-native-netinfo
+import Session from '../../model/Session';
 import Item from '../../model/Item';
 import Image from '../../model/Image';
 import Category from '../../model/beachclean/Category';
 import { I18n } from 'i18n-js/typings';
 import * as FileSystem from 'expo-file-system';
+import Catch from '../../model/fisheries/Catch';
 
 const BASE_URL = 'https://lto-back-office.netlify.app/.netlify/functions/api';
 
-export default async function upload(items: Item[], i18n: I18n, increaseUploadProgress: (_ : number) => void, setUploadStatusText: (_: string) => void) {
+export default async function upload(sessions: Session[], i18n: I18n, increaseUploadProgress: (_ : number) => void, setUploadStatusText: (_: string) => void) {
   // First check for internet connection.
   const state = await NetInfo.fetch();
   if (!state.isConnected) {
@@ -24,68 +26,110 @@ export default async function upload(items: Item[], i18n: I18n, increaseUploadPr
   }
 
   // If there is a connection, upload data.
-
-  // For upload progess, determine the number of upload steps.
-  // One step for all data entries (are uploaded at once).
-  let steps = 1;
-  // One step for each photo (uploaded separately).
-  items.forEach(item => steps += (item.photos || []).length);
-  // Equal upload progress for each step. (Upload progress is a float in [0,1].)
-  const stepPercentage = 100 / steps;
-
-  // Upload images (if there are any).
-  for (let item of items) {
-    for (let photo of (item.photos || [])) {
-      if (!photo.location) continue;
-
-      setUploadStatusText(photo.filename);
-
-      await uploadImage(photo, i18n, increaseUploadProgress, stepPercentage, setUploadStatusText);
-      
-      increaseUploadProgress(stepPercentage);
-    }
-  }
-
-  // Upload data.
-  
-  let uploaded: string[] = [];
   let errors: string[] = [];
 
+  // First upload the sessions without their items.
   try {
-    setUploadStatusText(items.length + (i18n.locale == 'pt' ? ' itens...' : ' items...'));
+    setUploadStatusText(sessions.length + (i18n.locale == 'pt' ? ' sessões...' : ' sessions...'));
 
-    const response = await fetch(`${BASE_URL}/data`, {
+    const response = await fetch(`${BASE_URL}/sessions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'X-Ship-Name': 'BeanWithBaconMegaRocket'
       },
-      body: JSON.stringify({ items: items.map(item => withPrettyPrintedValues(item, i18n)) })
+      body: JSON.stringify({
+        sessions: sessions.map(session => withPrettyPrintedSessionValues(session, i18n))
+      })
     });
 
     const responseData = await response.json(); // { uploaded: [], errors: [] }
+    const success = responseData.uploaded || [];
+    for (const session of sessions) {
+      if (success.contains(session.id)) {
+        session.synced = true;
+      }
+    }
 
-    uploaded = responseData.uploaded || [];
     errors = responseData.errors || [];
   } catch (error) {
     errors.push(error.message);
   }
 
-  if (errors.length > 0) {
-    showMessage({
-      message: i18n.t('ERROR_DATA_UPLOAD'),
-      description: errors.join(' | '),
-      type: 'danger',
-      icon: 'danger',
-      duration: 6000
+  // Then upload the items.
+  for (const session of sessions) {
+    const items = session.items;
+
+    // For upload progess, determine the number of upload steps.
+    // One step for all data entries (are uploaded at once).
+    let steps = 1;
+    // One step for each photo (uploaded separately).
+    items.forEach((item: Item) => {
+      if (item.type === 'Catch') {
+        steps += ((item as Catch).photos || []).length 
+      }
     });
+    // Equal upload progress for each step. (Upload progress is a float in [0,1].)
+    const stepPercentage = 100 / steps;
+
+    // Upload images (if there are any).
+    for (let item of items) {
+      if (item.type === 'Catch') {
+        for (let photo of ((item as Catch).photos || [])) {
+          if (!photo.location) continue;
+
+          setUploadStatusText(photo.filename);
+
+          await uploadImage(photo, i18n, increaseUploadProgress, stepPercentage, setUploadStatusText);
+          
+          increaseUploadProgress(stepPercentage);
+        }
+      }
+    }
+
+    // Upload items.
+    try {
+      setUploadStatusText(items.length + (i18n.locale == 'pt' ? ' itens...' : ' items...'));
+
+      const response = await fetch(`${BASE_URL}/items`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-Ship-Name': 'BeanWithBaconMegaRocket'
+        },
+        body: JSON.stringify({
+          items: items.map(item => withPrettyPrintedItemValues(item, i18n))
+        })
+      });
+
+      const responseData = await response.json(); // { uploaded: [], errors: [] }
+      const success = responseData.uploaded || [];
+      for (const item of items) {
+        if (success.contains(item.id)) {
+          item.synced = true;
+        }
+      }
+      
+      errors = responseData.errors || [];
+    } catch (error) {
+      errors.push(error.message);
+    }
+
+    if (errors.length > 0) {
+      showMessage({
+        message: i18n.t('ERROR_DATA_UPLOAD'),
+        description: errors.join(' | '),
+        type: 'danger',
+        icon: 'danger',
+        duration: 6000
+      });
+    }
+
+    setUploadStatusText('🗸');
+    increaseUploadProgress(stepPercentage);
   }
-
-  setUploadStatusText('🗸');
-  increaseUploadProgress(stepPercentage);
-
-  return items.filter(item => uploaded.indexOf(item.id) >= 0);
 }
 
 async function uploadImage(image: Image, i18n: I18n) {
@@ -134,7 +178,15 @@ async function uploadImage(image: Image, i18n: I18n) {
   }
 }
 
-function withPrettyPrintedValues(item: Item, i18n: I18n) {
+function withPrettyPrintedSessionValues(session: Session, i18n: I18n) {
+  const newsession = { ...session };
+
+  if (session.location) newsession.location = i18n.t(session.location, { locale: 'en' });
+  
+  return newsession;
+}
+
+function withPrettyPrintedItemValues(item: Item, i18n: I18n) {
   const newitem = { ...item };
 
   if (item.date) newitem.date = new Date(item.date);

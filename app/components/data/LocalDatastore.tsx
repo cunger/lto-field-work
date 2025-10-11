@@ -157,12 +157,10 @@ export default class Datastore {
         }
       }
 
-      const uploaded = await upload(sessions, i18n, increaseUploadProgress, setUploadStatusText);
+      await upload(sessions, i18n, increaseUploadProgress, setUploadStatusText);
 
-      for (let session of uploaded) {
-        session.synced = true;
+      for (let session of sessions) {
         await this.save(session);
-        // TODO For Fisheries, we want to upload catches separately.
       }
     } catch (error) {
       console.log(error);
