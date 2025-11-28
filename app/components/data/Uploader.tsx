@@ -28,50 +28,23 @@ export default async function upload(sessions: Session[], i18n: I18n, increaseUp
   // If there is a connection, upload data.
   let errors: string[] = [];
 
-  // First upload the sessions without their items.
-  try {
-    setUploadStatusText(sessions.length + (i18n.locale == 'pt' ? ' sessões...' : ' sessions...'));
-
-    const response = await fetch(`${BASE_URL}/sessions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'X-Ship-Name': 'BeanWithBaconMegaRocket'
-      },
-      body: JSON.stringify({
-        sessions: sessions.map(session => withPrettyPrintedSessionValues(session, i18n))
-      })
-    });
-
-    const responseData = await response.json(); // { uploaded: [], errors: [] }
-    const success = responseData.uploaded || [];
-    for (const session of sessions) {
-      if (success.contains(session.id)) {
-        session.synced = true;
-      }
-    }
-
-    errors = responseData.errors || [];
-  } catch (error) {
-    errors.push(error.message);
-  }
-
-  // Then upload the items.
-  for (const session of sessions) {
-    const items = session.items;
-
-    // For upload progess, determine the number of upload steps.
-    // One step for all data entries (are uploaded at once).
-    let steps = 1;
-    // One step for each photo (uploaded separately).
-    items.forEach((item: Item) => {
+  // For upload progess, determine the number of upload steps.
+  // One step for each session.
+  let steps = sessions.length;
+  // One step for each photo (uploaded separately).
+  sessions.forEach((session: Session) => 
+    session.items.forEach((item: Item) => {
       if (item.type === 'Catch') {
         steps += ((item as Catch).photos || []).length 
       }
-    });
-    // Equal upload progress for each step. (Upload progress is a float in [0,1].)
-    const stepPercentage = 100 / steps;
+    })
+  );
+  // Equal upload progress for each step. (Upload progress is a float in [0,1].)
+  const stepPercentage = 100 / steps;
+
+  // First, upload the photos, so that the uploaded data contains the final image links.
+  for (const session of sessions) {
+    const items = session.items;
 
     // Upload images (if there are any).
     for (let item of items) {
@@ -87,49 +60,57 @@ export default async function upload(sessions: Session[], i18n: I18n, increaseUp
         }
       }
     }
+  }
 
-    // Upload items.
-    try {
-      setUploadStatusText(items.length + (i18n.locale == 'pt' ? ' itens...' : ' items...'));
+  // Then upload the session data.
+  try {
+    setUploadStatusText(sessions.length + (i18n.locale == 'pt' ? ' sessões...' : ' sessions...'));
 
-      const response = await fetch(`${BASE_URL}/items`, {
+    for (let session of sessions) {
+      session.items = session.items.map(item => withPrettyPrintedItemValues(item, i18n));
+
+      const response = await fetch(`${BASE_URL}/sessions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'X-Ship-Name': 'BeanWithBaconMegaRocket'
         },
-        body: JSON.stringify({
-          items: items.map(item => withPrettyPrintedItemValues(item, i18n))
-        })
+        body: JSON.stringify(withPrettyPrintedSessionValues(session, i18n))
       });
 
       const responseData = await response.json(); // { uploaded: [], errors: [] }
-      const success = responseData.uploaded || [];
-      for (const item of items) {
-        if (success.contains(item.id)) {
+      const uploaded = responseData?.uploaded ?? [];
+      
+      if (uploaded.contains(session.id)) {
+        session.synced = true;
+      }
+
+      for (let item of session.items) {
+        if (uploaded.contains(item.id)) {
           item.synced = true;
         }
       }
-      
-      errors = responseData.errors || [];
-    } catch (error) {
-      errors.push(error.message);
-    }
 
-    if (errors.length > 0) {
-      showMessage({
-        message: i18n.t('ERROR_DATA_UPLOAD'),
-        description: errors.join(' | '),
-        type: 'danger',
-        icon: 'danger',
-        duration: 6000
-      });
-    }
+      errors = [...errors, ...(responseData?.errors ?? [])];
 
-    setUploadStatusText('🗸');
-    increaseUploadProgress(stepPercentage);
+      increaseUploadProgress(stepPercentage);
+    }
+  } catch (error) {
+    errors.push(error.message);
   }
+
+  if (errors.length > 0) {
+    showMessage({
+      message: i18n.t('ERROR_DATA_UPLOAD'),
+      description: errors.join(' | '),
+      type: 'danger',
+      icon: 'danger',
+      duration: 6000
+    });
+  }
+
+  setUploadStatusText('🗸');
 }
 
 async function uploadImage(image: Image, i18n: I18n) {
