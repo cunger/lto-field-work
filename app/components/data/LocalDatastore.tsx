@@ -67,8 +67,8 @@ export default class Datastore {
   // ---- Analytics ----
 
   static async numberOfUnsynced() {
-    const items = await this.items();
-    return items.filter(item => Item.signed(item) && !item.synced).length;
+    const sessions = await this.sessions();
+    return sessions.filter(session => session.signed() && !session.synced).length;
   }
 
   static async saveInStatistics(session: Session) {

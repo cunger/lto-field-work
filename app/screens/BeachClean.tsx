@@ -24,7 +24,7 @@ function BeachClean({ navigation, route }) {
   const now = new DateTime();
   const [sessionId, setSessionId] = useState(uuid.v4());
   const [startDate, setStartDate] = useState(now);
-  const [endDate, setEndDate] = useState(now);
+  const [endDate, setEndDate] = useState(null);
   const [location, setLocation] = useState(null);
   const [items, setItems] = useState({});
   const [totalWeightInKg, setTotalWeightInKg] = useState(null);
@@ -32,7 +32,6 @@ function BeachClean({ navigation, route }) {
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [signingVisible, setSigningVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
-
   const [loadedItem, setLoadedItem] = useState(null);
   const [lines, setLines] = useState([]);
 

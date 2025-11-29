@@ -4,7 +4,7 @@ Work in progress. Info will be added.
 ## Run locally
 
 ```
-$ npx expo start
+$ npm run start
 ```
 
 ## Build
