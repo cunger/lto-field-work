@@ -96,7 +96,7 @@ function BeachClean({ navigation, route }) {
   const reset = () => {
     const now = new DateTime();
     setStartDate(now);
-    setEndDate(now);
+    setEndDate(null);
     setLocation(null);
     setTotalWeightInKg(null);
     setNumberOfPeople(null);
@@ -113,6 +113,11 @@ function BeachClean({ navigation, route }) {
   };
 
   const openSigning = () => {
+    // If end date was not set manually, set it to now.
+    if (endDate == null) {
+      endDate = new DateTime();
+    }
+    // Open modal to sign the session.
     setSigningVisible(true);
   };
 
@@ -139,7 +144,16 @@ function BeachClean({ navigation, route }) {
   };
 
   const session = () => {
-    return new BeachCleanSession(sessionId, startDate.toEpoch(), endDate.toEpoch(), location, additionalNotes, totalWeightInKg, numberOfPeople);
+    return new BeachCleanSession(
+      sessionId,
+      startDate.toEpoch(),
+      endDate?.toEpoch(),
+      location,
+      items,
+      additionalNotes,
+      totalWeightInKg,
+      numberOfPeople
+    );
   };
 
   const discard = () => {

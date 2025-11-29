@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { InputLabel } from '../components/forms/Input';
 import Datastore from '../components/data/LocalDatastore';
 import GlobalContext from '../context/GlobalContext';
@@ -58,8 +58,8 @@ function Settings({ navigation }) {
   };
 
   return (
-    <SafeAreaView className="flex-1">
-      <View className="mb-2">
+    <SafeAreaView className="flex-1 p-4">
+      <View className="flex-1 mb-2">
         <InputLabel text={i18n.t('SETTINGS_LANGUAGE')} />
         <SelectField
             value={language}

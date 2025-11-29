@@ -57,6 +57,8 @@ export const printDateShort = (date: DateTime, i18n: I18n): string => {
 }
 
 export const printDateLong = (date: DateTime, i18n: I18n): string => {
+  if (!date) return '-';
+
   switch (i18n.locale) {
     case 'en': return `${i18n.t('MONTH_' + date.month)} ${withLeadingZero(date.day)}, ${date.year}`;
     case 'pt': return `${date.day} ${i18n.t('MONTH_' + date.month)} ${date.year}`;

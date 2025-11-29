@@ -5,7 +5,9 @@ import Upload from '../../screens/Upload';
 import Settings from '../../screens/Settings';
 import GlobalContext from '../../context/GlobalContext';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import DataEntryMenu from './DataEntryMenu';
+import { Platform } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,16 +19,19 @@ const MainMenu = () => {
   GlobalContext.subscribeToCount(setCount);
   GlobalContext.subscribeToLanguage(setLocale);
 
+  const insets = useSafeAreaInsets();
+
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={() => ({
         tabBarShowLabel: true,
         tabBarLabelPosition: 'below-icon',
         tabBarActiveTintColor: '#6ec1e4',
         tabBarInactiveTintColor: 'gray',
         tabBarStyle: {
-          paddingVertical: 10,
-          height: 66,
+          paddingBottom: Platform.OS === 'ios' ? insets.bottom : 20,
+          paddingTop: 10,
+          height: Platform.OS === 'ios' ? 70 + insets.bottom : 70,
         },
         tabBarLabelStyle: {
           fontSize: 14,

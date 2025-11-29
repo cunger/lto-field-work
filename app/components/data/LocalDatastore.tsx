@@ -96,12 +96,20 @@ export default class Datastore {
 
   static async lastActiveDate() {
     const epochString = await AsyncStorage.getItem('@lastactivedate');
-    if (epochString == null) return null;
-    return new DateTime(new Date(parseInt(epochString)));
+    if (epochString === 'undefined') {
+      return null;
+    } else {
+      return new DateTime(new Date(parseInt(epochString)));
+    }
   }
 
   static async lastActiveLocation() {
-    return AsyncStorage.getItem('@lastactivelocation');
+    const location = await AsyncStorage.getItem('@lastactivelocation');
+    if (location === 'undefined') {
+      return null;
+    } else {
+      return location;
+    }
   }
 
   static async statistics() {

@@ -19,17 +19,19 @@ function Dashboard() {
 
   async function loadData() {
     GlobalContext.load();
-    Datastore.lastActiveDate().then(date => {
-      if (date) {
-        const lastDate = printDateLong(date, i18n);
-        setLastActiveDate(lastDate);
-      }
-    });
-    Datastore.lastActiveLocation().then(location => {
-      if (location) {
-        setLastActiveLocation(i18n.t(location));
-      }
-    });
+    
+    const date = await Datastore.lastActiveDate();
+    if (date) {
+      console.log(date);
+      setLastActiveDate(printDateLong(date, i18n));
+    }
+    
+    const location = await Datastore.lastActiveLocation();
+    if (location) {
+      console.log(typeof location);
+      setLastActiveLocation(i18n.t(location));
+    }
+
     Datastore.statistics().then(statistics => setStatistics(statistics));
   }
 

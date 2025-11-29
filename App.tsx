@@ -4,6 +4,7 @@ import './global.css';
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import FlashMessage from 'react-native-flash-message';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import MainMenu from './app/components/navigation/MainMenu';
 import GlobalContext from './app/context/GlobalContext';
 
@@ -23,9 +24,11 @@ export default function App() {
   }, []);
 
   return (
-    <NavigationContainer>
-      <MainMenu />
-      <FlashMessage position='top' />
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <MainMenu />
+        <FlashMessage position='top' />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }

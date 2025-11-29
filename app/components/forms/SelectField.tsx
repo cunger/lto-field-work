@@ -22,7 +22,6 @@ function SelectField({ label, value, type, items, updateAction, style }) {
       onChange={(item) => updateAction(item.value)}
       placeholderStyle={{ color: 'gray' }}
       style={{
-        flex: 1,
         backgroundColor: 'white',
         borderWidth: 0,
         borderRadius: 8,
