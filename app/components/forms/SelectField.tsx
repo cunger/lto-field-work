@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import GlobalContext from '../../context/GlobalContext';
 
@@ -13,24 +14,26 @@ function SelectField({ label, value, type, items, updateAction, style }) {
   }
 
   return (
-    <Dropdown
-      data={items}
-      labelField="label"
-      valueField="value"
-      placeholder={label}
-      value={value}
-      onChange={(item) => updateAction(item.value)}
-      placeholderStyle={{ color: 'gray' }}
-      style={{
-        backgroundColor: 'white',
-        borderWidth: 0,
-        borderRadius: 8,
-        paddingHorizontal: 4,
-        paddingVertical: 2,
-        marginHorizontal: 4,
-        ...style
-      }}
-    />
+    <View style={style}>
+      <Dropdown
+        data={items}
+        labelField="label"
+        valueField="value"
+        placeholder={label}
+        value={value}
+        onChange={(item) => updateAction(item.value)}
+        placeholderStyle={{ color: 'gray' }}
+        style={{
+          backgroundColor: 'white',
+          borderWidth: 0,
+          borderRadius: 8,
+          paddingHorizontal: 4,
+          paddingVertical: 4,
+          marginHorizontal: 4,
+          minHeight: 36,
+        }}
+      />
+    </View>
   );
 }
 

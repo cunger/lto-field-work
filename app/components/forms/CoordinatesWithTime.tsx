@@ -97,55 +97,58 @@ function CoordinatesWithTime({ inputDate, inputLocation, setDateOnParent, setLoc
   }
 
   return (
-    <SafeAreaView className="mb-2">
+    <SafeAreaView>
       <InputGroup text={i18n.t('COORDINATES')} />
-      <View className="flex flex-row gap-4 m-2">
+      <View className="flex flex-row items-center mt-2 mb-2">
         <InputLabel text={i18n.t('COORDINATES_DATE') + ': '} />
         <SelectField
           label={i18n.t('COORDINATES_DAY')}
           value={day}
           items={dayRange(month)}
           updateAction={(value: number) => saveDay(value)}
-          style={{ width: 40 }}
+          style={{ flex: 1 }}
         />
         <SelectField
           label={i18n.t('COORDINATES_MONTH')}
           value={month}
           items={monthRange()}
           updateAction={(value: number) => saveMonth(value)}
-          style={{ width: 160 }}
+          style={{ flex: 2 }}
         />
         <SelectField
           label={i18n.t('COORDINATES_YEAR')}
           value={year}
           items={yearRange()}
           updateAction={(value: number) => saveYear(value)}
-          style={{ width: 80 }}
+          style={{ flex: 1 }}
         />
       </View>
-      <View className="flex flex-row gap-4 m-2">
+      <View className="flex flex-row items-center mt-2 mb-2">
         <InputLabel text={i18n.t('COORDINATES_TIME') + ': '} />
         <SelectField
           label={i18n.t('COORDINATES_HOURS')}
           value={hours}
           items={itemRange(0, 23)}
           updateAction={(value: number) => saveHours(value)}
+          style={{ flex: 1 }}
         />
         <SelectField
           label={i18n.t('COORDINATES_MINUTES')}
           value={minutes}
           items={itemRange(0, 59)}
           updateAction={(value: number) => saveMinutes(value)}
+          style={{ flex: 1 }}
         />
       </View>
 
-      <View className="flex flex-row gap-4 m-2">
+      <View className="flex flex-row items-center mt-2 mb-2">
         <InputLabel text={i18n.t('COORDINATES_LOCATION') + ': '} />
         <SelectField
           label={i18n.t('COORDINATES_WHICH_BAY')}
           value={location}
           type={Location}
           updateAction={(value: Location) => saveLocation(value)}
+          style={{ flex: 1 }}
         />
       </View>
     </SafeAreaView>

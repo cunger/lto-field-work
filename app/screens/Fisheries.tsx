@@ -195,7 +195,7 @@ function Fisheries({ navigation, route }) {
 
         <View>
           <InputGroup text={i18n.t('FISHERIES_METHOD')} />
-          <View className="flex flex-row items-stretch my-2">
+          <View className="flex flex-row items-center mt-2 mb-2">
             <SelectField
               label={i18n.t('FISHERIES_WHICH_METHOD')}
               value={item.method}
@@ -204,13 +204,15 @@ function Fisheries({ navigation, route }) {
                 setHideOtherMethod(value !== Method.Other);
                 update({ method: value });
               }}
-            />
+              style={{ flex: 1 }}
+              />
             <SelectField
               label={i18n.t('FISHERIES_BASE')}
               value={item.base}
               type={Base}
               updateAction={(value: string) => update({ base: value })}
-            />
+              style={{ flex: 1 }}
+              />
           </View>
           <TextField
             label={i18n.t('FISHERIES_OTHER_METHOD')}

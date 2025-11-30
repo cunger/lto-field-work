@@ -13,8 +13,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 function Dashboard() {
   const i18n = GlobalContext.i18n;
 
-  const [lastActiveDate, setLastActiveDate] = useState('-');
-  const [lastActiveLocation, setLastActiveLocation] = useState('-');
+  const [lastActiveDate, setLastActiveDate] = useState(undefined);
+  const [lastActiveLocation, setLastActiveLocation] = useState(undefined);
   const [statistics, setStatistics] = useState({});
 
   async function loadData() {
@@ -98,13 +98,13 @@ function Dashboard() {
               {i18n.t('DASHBOARD_ONBOARDING_GET_STARTED')}
             </Text>
             <Text className="m-2">
-              {i18n.t('DASHBOARD_ONBOARDING_STEP1').replace('$SETTINGS', `<Text className="text-blue">{i18n.t('MENU_SETTINGS')}</Text>`)}
+              {i18n.t('DASHBOARD_ONBOARDING_STEP1').replace('$SETTINGS', i18n.t('MENU_SETTINGS'))}
             </Text>
             <Text className="m-2">
-              {i18n.t('DASHBOARD_ONBOARDING_STEP2').replace('$DATA_ENTRY', `<Text className="text-blue">{i18n.t('MENU_DATA_ENTRY')}</Text>`)}
+              {i18n.t('DASHBOARD_ONBOARDING_STEP2').replace('$DATA_ENTRY', i18n.t('MENU_DATA_ENTRY'))}
             </Text>
             <Text className="m-2">
-              {i18n.t('DASHBOARD_ONBOARDING_STEP3').replace('$UPLOAD', `<Text className="text-blue">{i18n.t('MENU_UPLOAD')}</Text>`)}
+              {i18n.t('DASHBOARD_ONBOARDING_STEP3').replace('$UPLOAD', i18n.t('MENU_UPLOAD'))}
             </Text>
             <Text className="m-2">
               🎉 {i18n.t('DASHBOARD_ONBOARDING_THANKS')}

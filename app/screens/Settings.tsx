@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { InputLabel } from '../components/forms/Input';
 import Datastore from '../components/data/LocalDatastore';
 import GlobalContext from '../context/GlobalContext';
@@ -59,50 +59,64 @@ function Settings({ navigation }) {
 
   return (
     <SafeAreaView className="flex-1 p-4">
-      <View className="flex-1 mb-2">
-        <InputLabel text={i18n.t('SETTINGS_LANGUAGE')} />
-        <SelectField
-            value={language}
-            items={[
-              { label: `🇬🇧 ${i18n.t('LANGUAGE_EN')}`, value: 'en', key: 'en' },
-              { label: `🇲🇿 ${i18n.t('LANGUAGE_PT')}`, value: 'pt', key: 'pt' },
-            ]}
-            updateAction={(value: string) => {
-              if (value) switchLanguageTo(value);
-            }}
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View className="mb-2">
+          <InputLabel text={i18n.t('SETTINGS_LANGUAGE')} />
+          <SelectField
+              value={language}
+              items={[
+                { label: `🇬🇧 ${i18n.t('LANGUAGE_EN')}`, value: 'en', key: 'en' },
+                { label: `🇲🇿 ${i18n.t('LANGUAGE_PT')}`, value: 'pt', key: 'pt' },
+              ]}
+              updateAction={(value: string) => {
+                if (value) switchLanguageTo(value);
+              }}
+            />
+        </View>
+      </TouchableWithoutFeedback>
+
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View>
+          <InputLabel text={i18n.t('SETTINGS_USER_NAME')} />
+          <TextInput
+            value={name}
+            onChangeText={(value) => { setName(value); }}
+            onEndEditing={saveName}
+            className="mb-2 p-2 bg-white border-gray rounded-md"
+            returnKeyType="done"
+            blurOnSubmit={true}
           />
-      </View>
+        </View>
+      </TouchableWithoutFeedback>
 
-      <View>
-        <InputLabel text={i18n.t('SETTINGS_USER_NAME')} />
-        <TextInput
-          value={name}
-          onChangeText={(value) => { setName(value); }}
-          onEndEditing={saveName}
-          className="mb-2 p-2 bg-white border-gray rounded-md"
-        />
-      </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View>
+          <InputLabel text={i18n.t('SETTINGS_EMAIL')} />
+          <TextInput
+            value={email}
+            onChangeText={(value) => { setEmail(value); }}
+            onEndEditing={saveEmail}
+            className="mb-4 p-2 bg-white border-gray rounded-md"
+            returnKeyType="done"
+            blurOnSubmit={true}
+          />
+        </View>
+      </TouchableWithoutFeedback>
 
-      <View>
-        <InputLabel text={i18n.t('SETTINGS_EMAIL')} />
-        <TextInput
-          value={email}
-          onChangeText={(value) => { setEmail(value); }}
-          onEndEditing={saveEmail}
-          className="mb-4 p-2 bg-white border-gray rounded-md"
-        />
-      </View>
-
-      <View>
-        <InputLabel text={i18n.t('SETTINGS_TOKEN')} />
-        <TextInput
-          value={token}
-          onChangeText={(value) => { setToken(value); }}
-          onEndEditing={saveToken}
-          className="mb-4 p-2 bg-white border-gray rounded-md"
-        />
-        <Text>{i18n.t('SETTINGS_TOKEN_EXPLANATION')}</Text>
-      </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View>
+          <InputLabel text={i18n.t('SETTINGS_TOKEN')} />
+          <TextInput
+            value={token}
+            onChangeText={(value) => { setToken(value); }}
+            onEndEditing={saveToken}
+            className="mb-4 p-2 bg-white border-gray rounded-md"
+            returnKeyType="done"
+            blurOnSubmit={true}
+          />
+          <Text>{i18n.t('SETTINGS_TOKEN_EXPLANATION')}</Text>
+        </View>
+      </TouchableWithoutFeedback>
 
       <View className="flex flex-row items-stretch my-6">
         <TouchableOpacity onPress={save} className="px-4 py-2 mr-4 rounded-md bg-blue">

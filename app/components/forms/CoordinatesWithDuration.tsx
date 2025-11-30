@@ -17,8 +17,8 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
 
   const [startHours, setStartHours] = useState(inputStartDate.hours);
   const [startMinutes, setStartMinutes] = useState(inputStartDate.minutes);
-  const [endHours, setEndHours] = useState(inputEndDate.hours);
-  const [endMinutes, setEndMinutes] = useState(inputEndDate.minutes);
+  const [endHours, setEndHours] = useState(inputEndDate ? inputEndDate.hours : null);
+  const [endMinutes, setEndMinutes] = useState(inputEndDate ? inputEndDate.minutes : null);
 
   const [location, setLocation] = useState(inputLocation);
 
@@ -125,67 +125,75 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
   }
 
   return (
-    <SafeAreaView className="mb-2">
+    <SafeAreaView>
       <InputGroup text={i18n.t('COORDINATES')} />
-      <View className="flex flex-row gap-4 m-2">
+      <View className="flex flex-row items-center mt-2 mb-2">
         <InputLabel text={i18n.t('COORDINATES_DATE') + ': '} />
         <SelectField
           label={i18n.t('COORDINATES_DAY')}
           value={day}
           items={dayRange(month)}
           updateAction={(value: number) => saveDay(value)}
+          style={{ flex: 1 }}
         />
         <SelectField
           label={i18n.t('COORDINATES_MONTH')}
           value={month}
           items={monthRange()}
           updateAction={(value: number) => saveMonth(value)}
+          style={{ flex: 2 }}
         />
         <SelectField
           label={i18n.t('COORDINATES_YEAR')}
           value={year}
           items={yearRange()}
           updateAction={(value: number) => saveYear(value)}
+          style={{ flex: 1 }}
         />
       </View>
-      <View className="flex flex-row gap-4 m-2">
+      <View className="flex flex-row items-center mt-2 mb-2">
         <InputLabel text={i18n.t('COORDINATES_START_TIME') + ': '} />
         <SelectField
           label={i18n.t('COORDINATES_HOURS')}
           value={startHours}
           items={itemRange(0, 23)}
           updateAction={(value: number) => saveStartHours(value)}
+          style={{ flex: 1 }}
         />
         <SelectField
           label={i18n.t('COORDINATES_MINUTES')}
           value={startMinutes}
           items={itemRange(0, 59)}
           updateAction={(value: number) => saveStartMinutes(value)}
+          style={{ flex: 1 }}
         />
       </View>
-      <View className="flex flex-row gap-4 m-2">
+      <View className="flex flex-row items-center mt-2 mb-2">
         <InputLabel text={i18n.t('COORDINATES_END_TIME') + ': '} />
         <SelectField
           label={i18n.t('COORDINATES_HOURS')}
           value={endHours}
           items={itemRange(0, 23)}
           updateAction={(value: number) => saveEndHours(value)}
+          style={{ flex: 1 }}
         />
         <SelectField
           label={i18n.t('COORDINATES_MINUTES')}
           value={endMinutes}
           items={itemRange(0, 59)}
           updateAction={(value: number) => saveEndMinutes(value)}
+          style={{ flex: 1 }}
         />
       </View>
 
-      <View className="flex flex-row gap-4 m-2">
+      <View className="flex flex-row items-center mt-2 mb-2">
         <InputLabel text={i18n.t('COORDINATES_LOCATION') + ': '} />
         <SelectField
           label={i18n.t('COORDINATES_WHICH_BAY')}
           value={location}
           type={Location}
           updateAction={(value: Location) => saveLocation(value)}
+          style={{ flex: 1 }}
         />
       </View>
     </SafeAreaView>

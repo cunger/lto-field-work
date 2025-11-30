@@ -53,7 +53,7 @@ function BeachClean({ navigation, route }) {
       Datastore.item(sessionId).then(session => {
         const location = session.location
         const startDate = session.startDate ? new DateTime(new Date(session.startDate)) : new DateTime();
-        const endDate = session.endDate ? new DateTime(new Date(session.endDate)) : new DateTime();
+        const endDate = session.endDate ? new DateTime(new Date(session.endDate)) : null;
         const newItems = { [item.category]: item.quantity };
   
         reset();
@@ -94,8 +94,7 @@ function BeachClean({ navigation, route }) {
   };
 
   const reset = () => {
-    const now = new DateTime();
-    setStartDate(now);
+    setStartDate(new DateTime());
     setEndDate(null);
     setLocation(null);
     setTotalWeightInKg(null);
@@ -168,7 +167,7 @@ function BeachClean({ navigation, route }) {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView className="flex-1 pl-4 pr-4">
       <ScrollView className="flex-1">
         <CoordinatesWithDuration
           key={`${startDate}-${endDate}-${location}`}
