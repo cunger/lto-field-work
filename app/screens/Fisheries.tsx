@@ -31,6 +31,7 @@ function Fisheries({ navigation, route }) {
   // Note that date is of type DateTime, while item.date is of type number (the epoch).
   const [date, setDate] = useState(new DateTime());
   const [item, setItem] = useState(new Catch(date.toEpoch(), location));
+  const [isNoFishing, setIsNoFishing] = useState(false);
   const [isNoCatch, setIsNoCatch] = useState(false);
   const [isSchoolOfFish, setIsSchoolOfFish] = useState(false);
   const [isMinMaxSpecies, setIsMinMaxSpecies] = useState(false);
@@ -195,6 +196,34 @@ function Fisheries({ navigation, route }) {
 
         <View>
           <InputGroup text={i18n.t('FISHERIES_METHOD')} />
+
+          <View className="mb-2 py-2 border-b border-gray-200">
+            <BouncyCheckbox
+              size={25}
+              fillColor='#6ec1e4'
+              unfillColor='white'
+              text={i18n.t('FISHERIES_NO_FISHING')}
+              textStyle={{ textDecorationLine: 'none' }}
+              iconStyle={{ borderColor: '#6ec1e4' }}
+              isChecked={isNoFishing}
+              onPress={(value) => {
+                if (value) {
+                  setIsNoFishing(true);
+                  update({ method: 'No fishing', quantity: 0 });
+                } else {
+                  setIsNoFishing(false);
+                  update({ method: null, reason: null });
+                }
+              }}
+            />
+            <TextField
+              label={i18n.t('FISHERIES_REASON')}
+              value={item.reason}
+              updateAction={(value) => update({ reason: value })}
+              hide={!isNoFishing}
+            />
+          </View>
+
           <View className="flex flex-row items-center mt-2 mb-2">
             <SelectField
               label={i18n.t('FISHERIES_WHICH_METHOD')}
