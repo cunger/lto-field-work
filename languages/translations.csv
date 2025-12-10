@@ -78,7 +78,7 @@ FISHERIES_BASE ; From where? ; De onde?
 FISHERIES_OTHER_METHOD ; Please describe method: ; Por favor, descreva o método:
 FISHERIES_CATCH ; Catch ; Captura
 FISHERIES_NO_CATCH ; No catch. ; Sem captura.
-FISHERIES_NO_FISHING ; No fishermen. ; Sem ...
+FISHERIES_NO_FISHING ; No fishermen. ; Nenhum pescador foi pescar.
 FISHERIES_REASON ; Reason: ; Motivo:
 FISHERIES_SEX ; Sex ; Sexo
 FISHERIES_SPECIES ; Species ; Espécies

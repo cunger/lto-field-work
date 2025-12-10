@@ -268,7 +268,7 @@ export default {
     "FISHERIES_OTHER_METHOD": "Por favor, descreva o método:",
     "FISHERIES_CATCH": "Captura",
     "FISHERIES_NO_CATCH": "Sem captura.",
-    "FISHERIES_NO_FISHING": "Sem ...",
+    "FISHERIES_NO_FISHING": "Nenhum pescador foi pescar.",
     "FISHERIES_REASON": "Motivo:",
     "FISHERIES_SEX": "Sexo",
     "FISHERIES_SPECIES": "Espécies",
