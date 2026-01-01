@@ -68,6 +68,7 @@
     "@types/react": "19.1.10",
     "autoprefixer": "10.3.7",
     "babel-plugin-module-resolver": "5.0.0",
+    "baseline-browser-mapping": "^2.9.11",
     "csv-parse": "5.3.3",
     "metro-react-native-babel-preset": "0.75.0",
     "postcss": "8.5.6",

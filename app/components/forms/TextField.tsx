@@ -16,6 +16,8 @@ function TextField({ label, value, updateAction, helpText='', numberOfLines=1, k
         onChangeText={updateAction}
         onEndEdition={updateAction}
         keyboardType={keyboardType}
+        returnKeyType="done"
+        blurOnSubmit={true}
         className="mb-2 p-2 bg-white border-gray rounded-md"
       />
     </View>

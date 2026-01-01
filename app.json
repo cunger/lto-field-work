@@ -2,7 +2,7 @@
   "expo": {
     "name": "lto-field-work",
     "slug": "lto-field-work",
-    "version": "1.0.10",
+    "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {

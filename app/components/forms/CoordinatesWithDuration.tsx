@@ -68,6 +68,10 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
 
   const saveEndHours = (hours: number) => {
     setEndHours(hours);
+    if (!endDate) {
+      setEndDate(startDate);
+      endDate.minutes = 0;
+    }
     endDate.hours = hours;
     setEndDate(endDate);
     setEndDateOnParent(endDate);
@@ -75,6 +79,9 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
 
   const saveEndMinutes = (minutes: number) => {
     setEndMinutes(minutes);
+    if (!endDate) {
+      setEndDate(startDate);
+    }
     endDate.minutes = minutes;
     setEndDate(endDate);
     setEndDateOnParent(endDate);
