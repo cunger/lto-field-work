@@ -5,6 +5,7 @@ import { InputLabel, InputGroup } from './Input';
 import SelectField from './SelectField';
 import Location from '../../model/Location';
 import GlobalContext from '../../context/GlobalContext';
+import DateTime from '../../model/DateTime';
 
 function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, setStartDateOnParent, setEndDateOnParent, setLocationOnParent }) {
   const i18n = GlobalContext.i18n;
@@ -15,8 +16,8 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
   const [month, setMonth] = useState(inputStartDate.month);
   const [day, setDay] = useState(inputStartDate.day);
 
-  const [startHours, setStartHours] = useState(inputStartDate.hours);
-  const [startMinutes, setStartMinutes] = useState(inputStartDate.minutes);
+  const [startHours, setStartHours] = useState(inputStartDate ? inputStartDate.hours : null);
+  const [startMinutes, setStartMinutes] = useState(inputStartDate ? inputStartDate.minutes : null);
   const [endHours, setEndHours] = useState(inputEndDate ? inputEndDate.hours : null);
   const [endMinutes, setEndMinutes] = useState(inputEndDate ? inputEndDate.minutes : null);
 
@@ -54,37 +55,48 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
 
   const saveStartHours = (hours: number) => {
     setStartHours(hours);
-    startDate.hours = hours;
-    setStartDate(startDate);
-    setStartDateOnParent(startDate);
+    let newStartDate = startDate;
+    if (newStartDate === null) {
+      newStartDate = new DateTime();
+      newStartDate.minutes = 0;
+    }
+    newStartDate.hours = hours;
+    setStartDate(newStartDate);
+    setStartDateOnParent(newStartDate);
   };
 
   const saveStartMinutes = (minutes: number) => {
     setStartMinutes(minutes);
-    startDate.minutes = minutes;
-    setStartDate(startDate);
-    setStartDateOnParent(startDate);
+    let newStartDate = startDate;
+    if (newStartDate === null) {
+      newStartDate = new DateTime();
+    }
+    newStartDate.minutes = minutes;
+    setStartDate(newStartDate);
+    setStartDateOnParent(newStartDate);
   };
 
   const saveEndHours = (hours: number) => {
     setEndHours(hours);
-    if (!endDate) {
-      setEndDate(startDate);
-      endDate.minutes = 0;
+    let newEndDate = endDate;
+    if (newEndDate === null) {
+      newEndDate = new DateTime();
+      newEndDate.minutes = 0;
     }
-    endDate.hours = hours;
-    setEndDate(endDate);
-    setEndDateOnParent(endDate);
+    newEndDate.hours = hours;
+    setEndDate(newEndDate);
+    setEndDateOnParent(newEndDate);
   };
 
   const saveEndMinutes = (minutes: number) => {
     setEndMinutes(minutes);
-    if (!endDate) {
-      setEndDate(startDate);
+    let newEndDate = endDate;
+    if (newEndDate === null) {
+      newEndDate = new DateTime();
     }
-    endDate.minutes = minutes;
-    setEndDate(endDate);
-    setEndDateOnParent(endDate);
+    newEndDate.minutes = minutes;
+    setEndDate(newEndDate);
+    setEndDateOnParent(newEndDate);
   };
 
   const saveLocation = (location: Location) => {
@@ -121,8 +133,13 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
   }
 
   const dayRange = (month: number) => {
-    // TODO february
-    let maxDay = [1, 3, 5, 7, 8, 10, 12].includes(month) ? 31 : 30;
+    let maxDay;
+    if (month === 2) {
+      maxDay = 29;
+    } else {
+      maxDay = [1, 3, 5, 7, 8, 10, 12].includes(month) ? 31 : 30;
+    }
+    
     let items = [];
     for (let i = 1; i <= maxDay; i++) {
       items.push({ key: `${i}`, label: `${i}`, value: i });

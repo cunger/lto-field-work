@@ -27,3 +27,5 @@ Building and submitting the app:
 $ eas build --platform ios --profile production 
 $ eas submit --platform ios
 ```
+
+Make sure to increase the version in `app.json` before building and deploying.
