@@ -549,7 +549,7 @@ function Fisheries({ navigation, route }) {
         </View>
 
         <SubmitButtons saveAction={openSigning} discardAction={() => setConfirmVisible(true)} resetAction={() => resetAllFields()} />
-        <Signing visible={signatureVisible} setVisible={setSignatureVisible} items={[item]} session={null} closeAction={closeSigning} />
+        <Signing visible={signatureVisible} setVisible={setSignatureVisible} session={null} closeAction={closeSigning} />
         <ConfirmPrompt visible={confirmVisible}
           actionPhrase={i18n.t('CONFIRM_DISCARD')}
           actionButtonText={i18n.t('BUTTON_DISCARD')}

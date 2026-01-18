@@ -285,7 +285,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "lto-field-work";
+				PRODUCT_BUNDLE_IDENTIFIER = "lto.fieldwork";
 				PRODUCT_NAME = "ltofieldwork";
 				SWIFT_OBJC_BRIDGING_HEADER = "ltofieldwork/ltofieldwork-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -314,7 +314,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "lto-field-work";
+				PRODUCT_BUNDLE_IDENTIFIER = "lto.fieldwork";
 				PRODUCT_NAME = "ltofieldwork";
 				SWIFT_OBJC_BRIDGING_HEADER = "ltofieldwork/ltofieldwork-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

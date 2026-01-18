@@ -1,12 +1,10 @@
 import { showMessage } from 'react-native-flash-message';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // https://react-native-async-storage.github.io/async-storage/docs/api/
-import Item from '../../model/Item';
 import upload from './Uploader';
 import { getLocales } from 'expo-localization';
 import { I18n } from 'i18n-js';
 import translations from './translations';
 import DateTime from '../../model/DateTime';
-import Session from '../../model/Session';
 import FisheriesSession from '../../model/fisheries/FisheriesSession';
 import BeachCleanSession from '../../model/beachclean/BeachCleanSession';
 
@@ -71,19 +69,19 @@ export default class Datastore {
     return sessions.filter(session => session.signed() && !session.synced).length;
   }
 
-  static async saveInStatistics(session: Session) {
+  static async saveInStatistics(session: BeachCleanSession | FisheriesSession) {
     await AsyncStorage.setItem('@lastactivedate', `${session.startDate}`);
     await AsyncStorage.setItem('@lastactivelocation', `${session.location}`);
 
     const statisticsString = await AsyncStorage.getItem('@statistics');
     const statistics = statisticsString ? JSON.parse(statisticsString) : {};
     
-    if (session.type == 'Fisheries') {
+    if (session instanceof FisheriesSession) {
       statistics.fisheries = (statistics.fisheries || 0) + 1;
       statistics.catches = (statistics.catches || 0) + (session as FisheriesSession).items.length;
     }
 
-    if (session.type == 'BeachClean') {
+    if (session instanceof BeachCleanSession) {
       statistics.beachcleans = (statistics.beachcleans || 0) + 1;
       statistics.trashitems = (statistics.trashitems || 0) + (session as BeachCleanSession).items.length;
       if ((session as BeachCleanSession).totalWeightInKg) {
@@ -119,18 +117,20 @@ export default class Datastore {
 
   // ---- Colleced data and photos ----
 
-  static async session(id: string): Promise<Session> {
+  static async session(id: string): Promise<BeachCleanSession | FisheriesSession> {
     const value = await AsyncStorage.getItem(id);
     return value ? JSON.parse(value) : null;
   }
 
-  static async sessions(): Promise<Session[]> {
+  static async sessions(): Promise<(BeachCleanSession | FisheriesSession)[]> {
     const keys = await AsyncStorage.getAllKeys();
     const values = await AsyncStorage.multiGet(keys.filter(key => !key.startsWith('@')));
-    return values.map((value) => JSON.parse(value[1]));
+    return values
+      .map((value) => JSON.parse(value[1]))
+      .filter((item) => item instanceof BeachCleanSession || item instanceof FisheriesSession);
   }
 
-  static async save(session: Session) {
+  static async save(session: BeachCleanSession | FisheriesSession) {
     try {
       await AsyncStorage.setItem(session.id, JSON.stringify(session));
       await this.saveInStatistics(session);
@@ -146,7 +146,7 @@ export default class Datastore {
 
   static async syncAll(increaseUploadProgress: (_ : number) => void, setUploadStatusText: (_: string) => void) {
     try {
-      const sessions: Session[] = [];
+      const sessions: (BeachCleanSession | FisheriesSession)[] = [];
       const keys: readonly string[] = await AsyncStorage.getAllKeys();
 
       for (let key of keys) {
@@ -181,9 +181,23 @@ export default class Datastore {
     }
   }
 
-  static async removeItem(itemId: string) {
+  static async removeSession(sessionId: string) {
     try {
-      await AsyncStorage.removeItem(itemId);
+      const storedSession : BeachCleanSession | FisheriesSession = await Datastore.session(sessionId); 
+
+      await AsyncStorage.removeItem(sessionId);
+      for (const item of storedSession.items) {
+        try {
+          await AsyncStorage.removeItem(item.id);
+        } catch(error) {
+          showMessage({
+            message: 'There was an error when deleting data.',
+            description: `${error}`,
+            type: 'warning',
+            icon: 'danger'
+          });
+        }
+      }
     } catch(error) {
       showMessage({
         message: 'There was an error when deleting data.',
@@ -194,10 +208,10 @@ export default class Datastore {
     }
   }
 
-  static async removeItems(items: Item[]) {
-    for (const item of items) {
+  static async removeSessions(sessions: (BeachCleanSession | FisheriesSession)[]) {
+    for (const session of sessions) {
       try {
-        await AsyncStorage.removeItem(item.id);
+        await this.removeSession(session.id);
       } catch(error) {
         showMessage({
           message: 'There was an error when deleting data.',
@@ -213,7 +227,7 @@ export default class Datastore {
   
   static async clearSyncedItems() {
     try {
-      const items = await this.items();
+      const items = await this.items(); // FIXME
       const syncedItems = items.filter(item => item.synced);
       for (const item of syncedItems) {
         try {

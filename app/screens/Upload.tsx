@@ -6,15 +6,16 @@ import ListItem from '../components/ListItem';
 import ConfirmPrompt from '../components/ConfirmPrompt';
 import Datastore from '../components/data/LocalDatastore';
 import GlobalContext from '../context/GlobalContext';
-import Item from '../model/Item';
 import * as Progress from 'react-native-progress';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import BeachCleanSession from '../model/beachclean/BeachCleanSession';
+import FisheriesSession from '../model/fisheries/FisheriesSession';
 
 function Upload({ navigation }) {
   const i18n = GlobalContext.i18n;
   
-  const [signedUnsyncedItems, setSignedUnsyncedItems] = useState<Item[]>([]);
-  const [unsignedUnsyncedItems, setUnsignedUnsyncedItems] = useState<Item[]>([]);
+  const [signedUnsyncedSessions, setSignedUnsyncedSessions] = useState<(BeachCleanSession | FisheriesSession)[]>([]);
+  const [unsignedUnsyncedSessions, setUnsignedUnsyncedSessions] = useState<(BeachCleanSession | FisheriesSession)[]>([]);
   const [confirmDeleteUnsignedItemsVisible, setConfirmDeleteUnsignedItemsVisible] = useState(false);
   const [uploadIsInProgress, setUploadIsInProgress] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -27,20 +28,22 @@ function Upload({ navigation }) {
   async function loadData() {
     GlobalContext.load();
 
-    const byDate = (i1: Item, i2: Item) => (i2.date || 0) - (i1.date || 0);
-    const items = await Datastore.items();
+    try {
+      const byDate = (s1: BeachCleanSession | FisheriesSession, s2: BeachCleanSession | FisheriesSession) => (s2.startDate || 0) - (s1.startDate || 0);
+      const sessions = await Datastore.sessions();
 
-    setSignedUnsyncedItems(items
-      .filter(item => Item.signed(item) && !item.synced)
-      .sort(byDate)
-    );
-
-    setUnsignedUnsyncedItems(items
-      .filter(item => !Item.signed(item) && !item.synced)
-      .sort(byDate)
-    );
-
-    await Datastore.clearSyncedItems();
+      setSignedUnsyncedSessions(sessions
+        .filter(session => session.signed() && !session.synced)
+        .sort(byDate)
+      );
+      
+      setUnsignedUnsyncedSessions(sessions
+        .filter(session => !session.signed() && !session.synced)
+        .sort(byDate)
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useFocusEffect(
@@ -53,26 +56,29 @@ function Upload({ navigation }) {
   const upload = async () => {
     setUploadIsInProgress(true);
     await Datastore.syncAll(increaseUploadProgress, setUploadStatusText);
+    await Datastore.clearSyncedItems();
     setUploadIsInProgress(false);
+
     await loadData();
   };
 
   const deleteUnsigned = async () => {
-    await Datastore.removeItems(unsignedUnsyncedItems);
+    await Datastore.removeSessions(unsignedUnsyncedSessions);
+
     await loadData();
   };
 
-  const openItem = (item: Item) => {
-    if (item.type == 'Catch') { 
+  const openSession = (session: BeachCleanSession | FisheriesSession) => {
+    if (session instanceof FisheriesSession) { 
       navigation.navigate('DataEntry', { 
         screen: 'Fisheries', 
-        params: { itemId: item.id }
+        params: { sessionId: session.id }
       });
     }
-    if (item.type == 'Trash') {
+    if (session instanceof BeachCleanSession) {
       navigation.navigate('DataEntry', { 
         screen: 'BeachClean', 
-        params: { itemId: item.id } 
+        params: { sessionId: session.id } 
       });
     }
   };
@@ -94,24 +100,24 @@ function Upload({ navigation }) {
           </View>
         }
         {
-          signedUnsyncedItems.length === 0 &&
+          signedUnsyncedSessions.length === 0 &&
           <Text className="mx-4 my-2">
             {i18n.t('UPLOAD_NO_SIGNED_DATA')}
           </Text>
         }
         {
-          signedUnsyncedItems.length > 0 &&
+          signedUnsyncedSessions.length > 0 &&
           <View>
             <Text className="mx-4 my-2">{i18n.t('UPLOAD_TODO_SIGNED')}</Text>
             
-            {signedUnsyncedItems.map((item, index) => (
+            {signedUnsyncedSessions.map((session, index) => (
               <ListItem key={index}>
                 <View className="flex flex-row items-center">
-                  <TouchableOpacity onPress={() => openItem(item)} disabled={uploadIsInProgress} className="w-10 px-2 py-2 border border-gray-300 rounded-md bg-white">
-                    <Text>{Item.logoFor(item)}</Text>
+                  <TouchableOpacity onPress={() => openSession(session)} disabled={uploadIsInProgress} className="w-10 px-2 py-2 border border-gray-300 rounded-md bg-white">
+                    <Text>{session.logo()}</Text>
                   </TouchableOpacity>
-                  <Text> {Item.prettyPrint(item, i18n)}</Text>
-                  <Text className="text-gray-500"> {Item.printDetails(item, i18n)}</Text>
+                  <Text> {session.printCoordinates(i18n)}</Text>
+                  <Text className="text-gray-500"> {session.printDetails(i18n)}</Text>
                 </View>
               </ListItem>          
             ))}
@@ -122,24 +128,24 @@ function Upload({ navigation }) {
           return Promise.resolve();
         }} />
         {
-          unsignedUnsyncedItems.length === 0 &&
+          unsignedUnsyncedSessions.length === 0 &&
           <Text className="m-2">
             {i18n.t('UPLOAD_NO_UNSIGNED_DATA')}
           </Text>
         }
         {
-          unsignedUnsyncedItems.length > 0 &&
+          unsignedUnsyncedSessions.length > 0 &&
           <View>
             <Text className="mx-4 my-2">{i18n.t('UPLOAD_TODO_UNSIGNED')}</Text>
 
-            {unsignedUnsyncedItems.map((item, index) => (
+            {unsignedUnsyncedSessions.map((session, index) => (
               <ListItem key={index}>
                 <View className="flex flex-row items-center">
-                  <TouchableOpacity onPress={() => openItem(item)} className="w-10 px-2 py-2 border border-gray-300 rounded-md bg-white">
-                    <Text>{Item.logoFor(item)}</Text>
+                  <TouchableOpacity onPress={() => openSession(session)} className="w-10 px-2 py-2 border border-gray-300 rounded-md bg-white">
+                    <Text>{session.logo()}</Text>
                   </TouchableOpacity>
-                  <Text> {Item.prettyPrint(item, i18n)}</Text>
-                  <Text className="text-gray-500"> {Item.printDetails(item, i18n)}</Text>
+                  <Text> {session.printCoordinates(i18n)}</Text>
+                  <Text className="text-gray-500"> {session.printDetails(i18n)}</Text>
                 </View>
               </ListItem>          
             ))}

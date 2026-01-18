@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { InputLabel, InputGroup } from './Input';
@@ -7,7 +7,7 @@ import Location from '../../model/Location';
 import GlobalContext from '../../context/GlobalContext';
 import DateTime from '../../model/DateTime';
 
-function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, setStartDateOnParent, setEndDateOnParent, setLocationOnParent }) {
+function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, setStartDateOnParent, setEndDateOnParent, setLocationOnParent, resetTrigger }) {
   const i18n = GlobalContext.i18n;
   
   const [startDate, setStartDate] = useState(inputStartDate);
@@ -147,6 +147,21 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
 
     return items;
   }
+
+  useEffect(() => {
+    if (resetTrigger > 0) {
+      const now = new DateTime();
+      setStartDate(now)
+      setStartDateOnParent(now);
+      setStartHours(now.hours);
+      setStartMinutes(now.minutes);
+      setEndDate(null);
+      setEndDateOnParent(null);
+      setEndHours(null);
+      setEndMinutes(null);
+      saveLocation(null);
+    }
+  }, [resetTrigger]);
 
   return (
     <SafeAreaView>

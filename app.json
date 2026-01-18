@@ -2,7 +2,7 @@
   "expo": {
     "name": "lto-field-work",
     "slug": "lto-field-work",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -18,13 +18,12 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "124",
       "infoPlist": {
         "NSCameraUsageDescription": "Please allow us to access your camera so you can take pictures when logging data",
         "NSPhotoLibraryAddUsageDescription": "Please allow us to save pictures from your camera to your photo gallery",
         "NSPhotoLibraryUsageDescription": "Please allow us to access your photo gallery so you can choose pictures you want to share"
       },
-      "bundleIdentifier": "lto-field-work"
+      "bundleIdentifier": "lto.fieldwork"
     },
     "android": {
       "adaptiveIcon": {
@@ -35,9 +34,13 @@
         "android.permission.CAMERA",
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.WRITE_EXTERNAL_STORAGE",
-        "android.permission.ACCESS_MEDIA_LOCATION"
+        "android.permission.ACCESS_MEDIA_LOCATION",
+        "android.permission.READ_MEDIA_VISUAL_USER_SELECTED",
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.READ_MEDIA_VIDEO",
+        "android.permission.READ_MEDIA_AUDIO"
       ],
-      "package": "com.chru.ltofieldwork"
+      "package": "lto.fieldwork"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

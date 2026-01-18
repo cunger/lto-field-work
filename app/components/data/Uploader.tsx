@@ -1,16 +1,18 @@
 import { showMessage } from 'react-native-flash-message';
 import NetInfo from '@react-native-community/netinfo'; // https://github.com/react-native-netinfo/react-native-netinfo
-import Session from '../../model/Session';
 import Item from '../../model/Item';
 import Image from '../../model/Image';
 import Category from '../../model/beachclean/Category';
 import { I18n } from 'i18n-js/typings';
 import * as FileSystem from 'expo-file-system';
 import Catch from '../../model/fisheries/Catch';
+import BeachCleanSession from '../../model/beachclean/BeachCleanSession';
+import FisheriesSession from '../../model/fisheries/FisheriesSession';
+import Trash from '../../model/beachclean/Trash';
 
 const BASE_URL = 'https://lto-back-office.netlify.app/.netlify/functions/api';
 
-export default async function upload(sessions: Session[], i18n: I18n, increaseUploadProgress: (_ : number) => void, setUploadStatusText: (_: string) => void) {
+export default async function upload(sessions: (BeachCleanSession | FisheriesSession)[], i18n: I18n, increaseUploadProgress: (_ : number) => void, setUploadStatusText: (_: string) => void) {
   // First check for internet connection.
   const state = await NetInfo.fetch();
   if (!state.isConnected) {
@@ -32,7 +34,7 @@ export default async function upload(sessions: Session[], i18n: I18n, increaseUp
   // One step for each session.
   let steps = sessions.length;
   // One step for each photo (uploaded separately).
-  sessions.forEach((session: Session) => 
+  sessions.forEach((session: BeachCleanSession | FisheriesSession) => 
     session.items.forEach((item: Item) => {
       if (item.type === 'Catch') {
         steps += ((item as Catch).photos || []).length 
@@ -159,24 +161,29 @@ async function uploadImage(image: Image, i18n: I18n) {
   }
 }
 
-function withPrettyPrintedSessionValues(session: Session, i18n: I18n) {
+function withPrettyPrintedSessionValues(session: BeachCleanSession | FisheriesSession, i18n: I18n): any{
   const newsession = { ...session };
 
   if (session.location) newsession.location = i18n.t(session.location, { locale: 'en' });
+  if (session.startDate) newsession.startDate = new Date(session.startDate);
+  if (session.endDate) newsession.endDate = new Date(session.endDate);
   
   return newsession;
 }
 
-function withPrettyPrintedItemValues(item: Item, i18n: I18n) {
+function withPrettyPrintedItemValues(item: Trash | Catch, i18n: I18n): any {
   const newitem = { ...item };
 
-  if (item.date) newitem.date = new Date(item.date);
-  if (item.location) newitem.location = i18n.t(item.location, { locale: 'en' });
-  if (item.base) newitem.base = i18n.t(item.base, { locale: 'en' });
-  if (item.method) newitem.method = i18n.t(item.method, { locale: 'en' });
-  if (item.species) newitem.species = i18n.t(item.species, { locale: 'en' });
-  if (item.sex) newitem.sex = i18n.t(item.sex, { locale: 'en' });
-  if (item.category) newitem.category = i18n.t(Category[item.category], { locale: 'en' });
+  if (item instanceof Trash) {
+    if (item.category) newitem.category = i18n.t(Category[item.category], { locale: 'en' });
+  }
+
+  if (item instanceof Catch) {
+    if (item.base) newitem.base = i18n.t(item.base, { locale: 'en' });
+    if (item.method) newitem.method = i18n.t(item.method, { locale: 'en' });
+    if (item.species) newitem.species = i18n.t(item.species, { locale: 'en' });
+    if (item.sex) newitem.sex = i18n.t(item.sex, { locale: 'en' });
+  }
   
   return newitem;
 }

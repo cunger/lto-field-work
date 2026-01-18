@@ -22,13 +22,11 @@ function Dashboard() {
     
     const date = await Datastore.lastActiveDate();
     if (date) {
-      console.log(date);
       setLastActiveDate(printDateLong(date, i18n));
     }
     
     const location = await Datastore.lastActiveLocation();
     if (location) {
-      console.log(typeof location);
       setLastActiveLocation(i18n.t(location));
     }
 
@@ -70,7 +68,7 @@ function Dashboard() {
             </Text>
 
             <Heading title={ i18n.t('DASHBOARD_H_SUMMARY') } actionTitle='' actionOnPress={() => {}} />
-            <Text className="m-2">🎣 {i18n.t('DASHBOARD_CATCHES')}:</Text>
+            <Text className="m-2">🐠 {i18n.t('DASHBOARD_CATCHES')}:</Text>
             {Object.entries(statistics.Catch || {})
               .filter((entry) => entry[1] > 0)
               .map((entry, index) => (

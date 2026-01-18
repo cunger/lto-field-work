@@ -64,6 +64,9 @@ ADDITIONAL_NOTES ; Additional notes ; Notas adicionais
 ADDITIONAL_NOTES_LABEL ; If there is something else that is important, let us know: ; Se tiver algo mais importante, diga-nos:
 CONFIRM_DISCARD ;  Do you really want to discard this data? ; Tem certeza que quer descartar esses dados?
 
+ITEMS ; items ; itens
+CATCHES ; catches ; capturas
+
 BEACHCLEAN_ITEMS ; Items ; Itens
 BEACHCLEAN_TOTAL_WEIGHT ; Total weight (kg) ; Peso total (kg)
 BEACHCLEAN_NUMBER_OF_PEOPLE ; Number of people ; Número de pessoas

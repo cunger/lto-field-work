@@ -39,10 +39,10 @@ function DataEntry({ navigation }) {
   const i18n = GlobalContext.i18n;
   
   return (
-    <SafeAreaView className="flex-1 gap-10 pl-4 pr-4">
+    <SafeAreaView className="flex-1 gap-8 pl-4 pr-4">
       <TouchableOpacity
         key="BeachClean"
-        className="px-4 py-2 border border-gray-300 rounded-md bg-white"
+        className="px-4 py-2 rounded-md bg-white"
         onPress={() => navigation.navigate('BeachClean')}
       >
         <Text>🗑️ {i18n.t('MENU_BEACHCLEAN')}</Text>
@@ -50,13 +50,15 @@ function DataEntry({ navigation }) {
 
       <TouchableOpacity
         key="Fisheries"
-        className="px-4 py-2 border border-gray-300 rounded-md bg-white"
+        className="px-4 py-2 rounded-md bg-white"
         onPress={() => navigation.navigate('Fisheries')}
       >
-        <Text>🎣 {i18n.t('MENU_FISHERIES')}</Text>
+        <Text>🐠 {i18n.t('MENU_FISHERIES')}</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
+
+  // ⏱️ {i18n.t('MENU_FISHERY_HOURS')}
 }
 
 export default DataEntryMenu;

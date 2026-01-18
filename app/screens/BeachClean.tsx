@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import InputSpinner from 'react-native-input-spinner';
-import Trash from '../model/beachclean/Trash';
 import Category from '../model/beachclean/Category';
 import DateTime from '../model/DateTime';
 import CoordinatesWithDuration from '../components/forms/CoordinatesWithDuration';
@@ -22,6 +21,7 @@ function BeachClean({ navigation, route }) {
   const i18n = GlobalContext.i18n;
 
   const now = new DateTime();
+  const [session, setSession] = useState<BeachCleanSession | null>(null);
   const [sessionId, setSessionId] = useState(uuid.v4());
   const [startDate, setStartDate] = useState(now);
   const [endDate, setEndDate] = useState(null);
@@ -32,13 +32,13 @@ function BeachClean({ navigation, route }) {
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [signingVisible, setSigningVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
-  const [loadedItem, setLoadedItem] = useState(null);
   const [lines, setLines] = useState([]);
+  const [coordinatesResetTrigger, setCoordinatesResetTrigger] = useState(0);
 
   useFocusEffect(
     React.useCallback(() => {
-      if (route?.params?.itemId) {
-        load(route.params.itemId);
+      if (route?.params?.sessionId) {
+        load(route.params.sessionId);
       } else {
         setLines(buildAllLinesFrom(items));
       }
@@ -46,28 +46,29 @@ function BeachClean({ navigation, route }) {
     }, [route])
   );
 
-  const load = (itemId: string, sessionId: string) => {
-    Datastore.item(itemId).then(item => {
-      if (!item) return;
+  const load = (sessionId: string) => {
+    Datastore.session(sessionId).then(session => {
+      if (!session) return;
 
-      Datastore.item(sessionId).then(session => {
-        const location = session.location
-        const startDate = session.startDate ? new DateTime(new Date(session.startDate)) : new DateTime();
-        const endDate = session.endDate ? new DateTime(new Date(session.endDate)) : null;
-        const newItems = { [item.category]: item.quantity };
-  
-        reset();
-        setLoadedItem(item);
-        setSessionId(session.id);
-        setStartDate(startDate);
-        setEndDate(endDate);
-        setLocation(location);
-        setTotalWeightInKg(session.totalWeightInKg);
-        setNumberOfPeople(session.numberOfPeople);
-        setAdditionalNotes(session.additionalNotes);
-        setItems(newItems);
-        setLines(buildAllLinesFrom(newItems));
-      });
+      const location = session.location
+      const startDate = session.startDate ? new DateTime(new Date(session.startDate)) : new DateTime();
+      const endDate = session.endDate ? new DateTime(new Date(session.endDate)) : null;
+      const newItems = {};
+      for (const item of session.items) {
+        newItems[item.category] = item.quantity;
+      }
+
+      reset();
+      setSessionId(session.id);
+      setStartDate(startDate);
+      setEndDate(endDate);
+      setLocation(location);
+      setTotalWeightInKg(session.totalWeightInKg);
+      setNumberOfPeople(session.numberOfPeople);
+      setAdditionalNotes(session.additionalNotes);
+      setItems(newItems);
+      setLines(buildAllLinesFrom(newItems));
+      updateSession();
     });
   } 
 
@@ -91,23 +92,16 @@ function BeachClean({ navigation, route }) {
       items[category] = quantity;
     }
     setItems({ ...items });
+    updateSession();
   };
 
   const reset = () => {
-    setStartDate(new DateTime());
-    setEndDate(null);
-    setLocation(null);
-    setTotalWeightInKg(null);
-    setNumberOfPeople(null);
-    resetItems();
-  };
-
-  const resetItems = () => {
-    setItems({});
+    setCoordinatesResetTrigger(coordinatesResetTrigger + 1);
     setTotalWeightInKg(null);
     setNumberOfPeople(null);
     setAdditionalNotes('');
-    setLoadedItem(null);
+    setSession(null);
+    setItems({});
     setLines(buildAllLinesFrom({}));
   };
 
@@ -121,29 +115,18 @@ function BeachClean({ navigation, route }) {
   };
 
   const closeSigning = () => {
-    resetItems();
-    setSigningVisible(false);
-    // You probably finished the beach clean, so go back to menu.
-    navigation.navigate('DataEntry');
-  };
-
-  const trashItems = () => {
-    let trashItems = [];
-    for (let [category, quantity] of Object.entries(items)) {
-      if (loadedItem && loadedItem.category === category) {
-        const item = loadedItem;
-        item.quantity = quantity;
-        trashItems.push(item);
-      } else {
-        trashItems.push(new Trash(session, category, quantity));
-      }
+    try {
+      reset();
+    } catch (error) {
+      console.log(error);
     }
-
-    return trashItems;
+    setSigningVisible(false);
+    // You probably finished the beach clean, so go to upload screen.
+    navigation.navigate('Upload');
   };
 
-  const session = () => {
-    return new BeachCleanSession(
+  const updateSession = () => {
+    setSession(new BeachCleanSession(
       sessionId,
       startDate.toEpoch(),
       endDate?.toEpoch(),
@@ -152,7 +135,7 @@ function BeachClean({ navigation, route }) {
       additionalNotes,
       totalWeightInKg,
       numberOfPeople
-    );
+    ));
   };
 
   const discard = () => {
@@ -177,6 +160,7 @@ function BeachClean({ navigation, route }) {
           setStartDateOnParent={setStartDate}
           setEndDateOnParent={setEndDate}
           setLocationOnParent={setLocation}
+          resetTrigger={coordinatesResetTrigger}
         />
 
         <View>
@@ -191,6 +175,7 @@ function BeachClean({ navigation, route }) {
                 prepend={(<Text className="w-1/2"> {i18n.t(Category[line.category])} </Text>)}
                 height={30}
                 rounded={false}
+                editable={true}
                 key={line.key}
                 className="mb-2 bg-white"
               />
@@ -226,7 +211,7 @@ function BeachClean({ navigation, route }) {
 
         <SubmitButtons 
           saveAction={openSigning} discardAction={() => setConfirmVisible(true)} resetAction={() => reset()} />
-        <Signing visible={signingVisible} setVisible={setSigningVisible} items={trashItems()} session={session()} closeAction={closeSigning} />
+        <Signing visible={signingVisible} setVisible={setSigningVisible} session={session} closeAction={closeSigning} />
         <ConfirmPrompt visible={confirmVisible}
           actionPhrase={i18n.t('CONFIRM_DISCARD')}
           actionButtonText={i18n.t('BUTTON_DISCARD')}
