@@ -1,28 +1,27 @@
+import { printDateShort } from '../../components/utils/PrettyPrinter';
+import { I18n } from 'i18n-js/typings';
 import Location from '../Location';
 import Catch from './Catch';
 import Signature from '../Signature';
-import { printDateShort } from '../../components/utils/PrettyPrinter';
-import { I18n } from 'i18n-js/typings';
+import DateTime from '../DateTime';
 
 export default class FisheriesSession {
   id: string;
-  startDate: number;
-  endDate: number;
-  location: Location | null;
+  type: string;
   items: Catch[];
+  startDate?: number;
+  endDate?: number;
+  location?: Location;
   reason?: String;
   additionalNotes: string;
   synced: boolean;
   signature?: Signature;
  
-  constructor(id: string, startDate: number, endDate: number, location: Location | null, items?: Catch[], reason?: string, additionalNotes?: string) {
+  constructor(id: string) {
     this.id = id;
-    this.startDate = startDate;
-    this.endDate = endDate;
-    this.location = location;
-    this.items = items ?? [];
-    this.reason = reason;
-    this.additionalNotes = additionalNotes ?? '';
+    this.type = 'FisheriesSession';
+    this.items = [];
+    this.additionalNotes = '';
     this.synced = false;
   }
 
@@ -42,7 +41,7 @@ export default class FisheriesSession {
     let location = this.location;
     let datetime = null;
     if (this.startDate) {
-      datetime = new DateTime(new Date(this.startDate));
+      datetime = DateTime(new Date(this.startDate));
     }
 
     if (datetime && location) {

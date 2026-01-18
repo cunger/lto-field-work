@@ -23,14 +23,19 @@ import { useFocusEffect } from '@react-navigation/core';
 import GlobalContext from '../context/GlobalContext';
 import { photoFileName } from '../components/utils/PrettyPrinter';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import FisheriesSession from '../model/fisheries/FisheriesSession';
+import BeachCleanSession from '../model/beachclean/BeachCleanSession';
+import uuid from 'react-native-uuid';
 
 function Fisheries({ navigation, route }) {
   const i18n = GlobalContext.i18n;
 
-  const [location, setLocation] = useState(null);
+  const [sessionId, setSessionId] = useState(uuid.v4());
+
+  const [location, setLocation] = useState(undefined);
   // Note that date is of type DateTime, while item.date is of type number (the epoch).
-  const [date, setDate] = useState(new DateTime());
-  const [item, setItem] = useState(new Catch(date.toEpoch(), location));
+  const [date, setDate] = useState<DateTime>(DateTime());
+  const [item, setItem] = useState<Catch | undefined>(undefined);
   const [isNoFishing, setIsNoFishing] = useState(false);
   const [isNoCatch, setIsNoCatch] = useState(false);
   const [isSchoolOfFish, setIsSchoolOfFish] = useState(false);
@@ -61,27 +66,30 @@ function Fisheries({ navigation, route }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (route?.params?.itemId) {
-        load(route.params.itemId);
+      if (route?.params?.sessionId) {
+        load(route.params.sessionId);
       }
       return () => {};
     }, [route])
   );
 
-  const load = (itemId: string) => {
-    Datastore.item(itemId).then(item => { 
-      if (!item) return;
+  const load = (sessionId: string) => {
+    Datastore.session(sessionId).then((session: FisheriesSession | BeachCleanSession | null) => { 
+      if (!session) return;
 
-      const location = item.location
-      const datetime = item.date ? new DateTime(new Date(item.date)) : new DateTime();
+      const location = session.location;
+      const datetime = session.startDate ? DateTime(new Date(session.startDate)) : DateTime();
+      const item = session.items[0] as Catch || new Catch(sessionId);
 
       setDate(datetime);
       setLocation(location);
-      setItem({ ...item });
+      setItem(item);
       setIsNoCatch(item.quantity === 0);
       setIsSchoolOfFish(item.quantity > 1);
       setHideOtherMethod(!item.other_method);
-      setSpeciesSpecificFields(item.species);
+      if (item.species) {
+        setSpeciesSpecificFields(item.species);
+      }
     });
   };
   
@@ -90,24 +98,25 @@ function Fisheries({ navigation, route }) {
   };
 
   const updateDimension = (dimension: string, key: string, value: string) => {
-    item[dimension][key] = value;
+    const newItem = item || new Catch(sessionId);
 
+    newItem[dimension][key] = value;
     if (key === 'total') {
-      item[dimension].min = '';
-      item[dimension].max = '';
-      item[dimension].avg = '';
+      newItem[dimension].min = '';
+      newItem[dimension].max = '';
+      newItem[dimension].avg = '';
     }
     if (key === 'min' || key === 'max' || key === 'avg') {
-      item[dimension].total = '';
+      newItem[dimension].total = '';
     }
 
-    setItem({ ...item });
+    setItem(newItem);
   };
 
   const reset = () => {
     // You probably want to log several catches, so we're not resetting
     // the coordinates, base, and method.
-    setItem(new Catch(date.toEpoch(), location, item.base, item.method, item.other_method));
+    setItem(new Catch(sessionId, item.base, item.method, item.other_method));
     hideAllSpeciesSpecificFields();
     setIsSchoolOfFish(false);
     setIsMinMaxSpecies(false);
@@ -115,10 +124,10 @@ function Fisheries({ navigation, route }) {
 
   const resetAllFields = () => {
     // This is a hard reset of all fields.
-    const now = new DateTime();
+    const now = DateTime();
     setDate(now);
-    setLocation(null);
-    setItem(new Catch(now.toEpoch(), null));
+    setLocation(undefined);
+    setItem(undefined);
     hideAllSpeciesSpecificFields();
     setIsSchoolOfFish(false);
     setIsMinMaxSpecies(false);

@@ -59,7 +59,7 @@ export default class Datastore {
   }
 
   static async loadLanguage() {
-    return AsyncStorage.getItem('@language').then(language => i18n.locale = language || defaultLanguage);
+    return AsyncStorage.getItem('@language').then((language: string) => i18n.locale = language || defaultLanguage);
   }
 
   // ---- Analytics ----
@@ -95,16 +95,16 @@ export default class Datastore {
   static async lastActiveDate() {
     const epochString = await AsyncStorage.getItem('@lastactivedate');
     if (epochString === 'undefined') {
-      return null;
+      return undefined;
     } else {
-      return new DateTime(new Date(parseInt(epochString)));
+      return DateTime(new Date(parseInt(epochString)));
     }
   }
 
   static async lastActiveLocation() {
     const location = await AsyncStorage.getItem('@lastactivelocation');
     if (location === 'undefined') {
-      return null;
+      return undefined;
     } else {
       return location;
     }
@@ -117,17 +117,29 @@ export default class Datastore {
 
   // ---- Colleced data and photos ----
 
-  static async session(id: string): Promise<BeachCleanSession | FisheriesSession> {
+  static async session(id: string): Promise<BeachCleanSession | FisheriesSession | null> {
     const value = await AsyncStorage.getItem(id);
     return value ? JSON.parse(value) : null;
   }
 
   static async sessions(): Promise<(BeachCleanSession | FisheriesSession)[]> {
     const keys = await AsyncStorage.getAllKeys();
-    const values = await AsyncStorage.multiGet(keys.filter(key => !key.startsWith('@')));
+    const values = await AsyncStorage.multiGet(keys.filter((key: string) => !key.startsWith('@')));
     return values
-      .map((value) => JSON.parse(value[1]))
-      .filter((item) => item instanceof BeachCleanSession || item instanceof FisheriesSession);
+      .map((value: any) => JSON.parse(value[1]))
+      .filter((data: any) => data.type === 'BeachCleanSession' || data.type === 'FisheriesSession')
+      .map((data: any) => {
+        if (data.type === 'BeachCleanSession') {
+          const session = new BeachCleanSession(data.id)
+          Object.assign(session, data);
+          return session;
+        }
+        if (data.type === 'FisheriesSession') {
+          const session = new FisheriesSession(data.id)
+          Object.assign(session, data);
+          return session;
+        }
+      });
   }
 
   static async save(session: BeachCleanSession | FisheriesSession) {

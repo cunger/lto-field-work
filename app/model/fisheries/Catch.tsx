@@ -1,4 +1,3 @@
-import Item from '../Item';
 import Image from '../Image';
 import Species from './Species';
 import Sex from './Sex';
@@ -19,7 +18,9 @@ class Dimensions {
   }
 }
 
-export default class Catch extends Item {
+export default class Catch {
+  type: string;
+  sessionId: string;
   reason?: String;
   method?: Method;
   other_method?: string;
@@ -40,9 +41,11 @@ export default class Catch extends Item {
   disk_width: Dimensions;
   photos: Image[];
   photosNote: string;
+  synced: boolean;
 
   constructor(sessionId: string, base?: Base, method?: Method, other_method?: string) {
-    super('Catch', sessionId);
+    this.type = 'Catch';
+    this.sessionId = sessionId;
     this.quantity = 1;
     this.common_name = '';
     this.latin_name = '';
@@ -66,5 +69,7 @@ export default class Catch extends Item {
     // Photos
     this.photos = [];
     this.photosNote = '';
+    // Has it been uploaded?
+    this.synced = false;
   }
 };

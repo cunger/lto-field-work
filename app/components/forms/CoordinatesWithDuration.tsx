@@ -10,54 +10,67 @@ import DateTime from '../../model/DateTime';
 function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, setStartDateOnParent, setEndDateOnParent, setLocationOnParent, resetTrigger }) {
   const i18n = GlobalContext.i18n;
   
-  const [startDate, setStartDate] = useState(inputStartDate);
-  const [endDate, setEndDate] = useState(inputEndDate);
-  const [year, setYear] = useState(inputStartDate.year);
-  const [month, setMonth] = useState(inputStartDate.month);
-  const [day, setDay] = useState(inputStartDate.day);
+  const [startDate, setStartDate] = useState<DateTime>(inputStartDate);
+  const [endDate, setEndDate] = useState<DateTime | undefined>(inputEndDate);
 
-  const [startHours, setStartHours] = useState(inputStartDate ? inputStartDate.hours : null);
-  const [startMinutes, setStartMinutes] = useState(inputStartDate ? inputStartDate.minutes : null);
-  const [endHours, setEndHours] = useState(inputEndDate ? inputEndDate.hours : null);
-  const [endMinutes, setEndMinutes] = useState(inputEndDate ? inputEndDate.minutes : null);
+  const [year, setYear] = useState<number | undefined>(inputStartDate.year);
+  const [month, setMonth] = useState<number | undefined>(inputStartDate.month);
+  const [day, setDay] = useState<number | undefined>(inputStartDate.day);
 
-  const [location, setLocation] = useState(inputLocation);
+  const [startHours, setStartHours] = useState<number | undefined>(inputStartDate ? inputStartDate.hours : undefined);
+  const [startMinutes, setStartMinutes] = useState<number | undefined>(inputStartDate ? inputStartDate.minutes : undefined);
+  const [endHours, setEndHours] = useState<number | undefined>(inputEndDate ? inputEndDate.hours : undefined);
+  const [endMinutes, setEndMinutes] = useState<number | undefined>(inputEndDate ? inputEndDate.minutes : undefined);
+
+  const [location, setLocation] = useState<Location | undefined>(inputLocation);
 
   const saveYear = (year: number) => {
     setYear(year);
+    // Update start date
     startDate.year = year;
-    endDate.year = year;
     setStartDate(startDate);
     setStartDateOnParent(startDate);
-    setEndDate(endDate);
-    setEndDateOnParent(endDate);
+    // Update end date
+    if (endDate) {
+      endDate.year = year;
+      setEndDate(endDate);
+      setEndDateOnParent(endDate);
+    }
   };
 
   const saveMonth = (month: number) => {
     setMonth(month);
+    // Update start date
     startDate.month = month;
-    endDate.month = month;
     setStartDate(startDate);
     setStartDateOnParent(startDate);
-    setEndDate(endDate);
-    setEndDateOnParent(endDate);
+    // Update end date
+    if (endDate) {
+      endDate.month = month;
+      setEndDate(endDate);
+      setEndDateOnParent(endDate);
+    }
   };
 
   const saveDay = (day: number) => {
     setDay(day);
+    // Update start date
     startDate.day = day;
-    endDate.day = day;
     setStartDate(startDate);
     setStartDateOnParent(startDate);
-    setEndDate(endDate);
-    setEndDateOnParent(endDate);
+    // Update start date
+    if (endDate) {
+      endDate.day = day;
+      setEndDate(endDate);
+      setEndDateOnParent(endDate);
+    }
   };
 
   const saveStartHours = (hours: number) => {
     setStartHours(hours);
     let newStartDate = startDate;
     if (newStartDate === null) {
-      newStartDate = new DateTime();
+      newStartDate = DateTime();
       newStartDate.minutes = 0;
     }
     newStartDate.hours = hours;
@@ -69,7 +82,7 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
     setStartMinutes(minutes);
     let newStartDate = startDate;
     if (newStartDate === null) {
-      newStartDate = new DateTime();
+      newStartDate = DateTime();
     }
     newStartDate.minutes = minutes;
     setStartDate(newStartDate);
@@ -79,8 +92,8 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
   const saveEndHours = (hours: number) => {
     setEndHours(hours);
     let newEndDate = endDate;
-    if (newEndDate === null) {
-      newEndDate = new DateTime();
+    if (newEndDate === undefined) {
+      newEndDate = DateTime();
       newEndDate.minutes = 0;
     }
     newEndDate.hours = hours;
@@ -91,8 +104,8 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
   const saveEndMinutes = (minutes: number) => {
     setEndMinutes(minutes);
     let newEndDate = endDate;
-    if (newEndDate === null) {
-      newEndDate = new DateTime();
+    if (newEndDate === undefined) {
+      newEndDate = DateTime();
     }
     newEndDate.minutes = minutes;
     setEndDate(newEndDate);
@@ -132,9 +145,11 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
     return items;
   }
 
-  const dayRange = (month: number) => {
+  const dayRange = (month?: number) => {
     let maxDay;
-    if (month === 2) {
+    if (!month) {
+      maxDay = 31;
+    } else if (month === 2) {
       maxDay = 29;
     } else {
       maxDay = [1, 3, 5, 7, 8, 10, 12].includes(month) ? 31 : 30;
@@ -150,16 +165,17 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
 
   useEffect(() => {
     if (resetTrigger > 0) {
-      const now = new DateTime();
+      const now = DateTime();
       setStartDate(now)
       setStartDateOnParent(now);
       setStartHours(now.hours);
       setStartMinutes(now.minutes);
-      setEndDate(null);
-      setEndDateOnParent(null);
-      setEndHours(null);
-      setEndMinutes(null);
-      saveLocation(null);
+      setEndDate(undefined);
+      setEndDateOnParent(undefined);
+      setEndHours(undefined);
+      setEndMinutes(undefined);
+      setLocation(undefined);
+      setLocationOnParent(undefined);
     }
   }, [resetTrigger]);
 

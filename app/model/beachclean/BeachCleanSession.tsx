@@ -3,28 +3,26 @@ import { I18n } from 'i18n-js/typings';
 import Location from '../Location';
 import Signature from '../Signature';
 import Trash from './Trash';
+import DateTime from '../DateTime';
 
 export default class BeachCleanSession {
   id: string;
-  startDate: number;
-  endDate: number;
-  location: Location | null;
+  type: string;
   items: Trash[];
-  totalWeightInKg: number | undefined;
-  numberOfPeople: number | undefined;
+  startDate?: number;
+  endDate?: number;
+  location?: Location;
+  totalWeightInKg?: number;
+  numberOfPeople?: number;
   additionalNotes: string;
   synced: boolean;
   signature?: Signature;
 
-  constructor(id: string, startDate: number, endDate: number, location: Location | null, trashItems?: Trash[], additionalNotes?: string, totalWeightInKg?: number, numberOfPeople?: number) {
+  constructor(id: string) {
     this.id = id;
-    this.startDate = startDate;
-    this.endDate = endDate;
-    this.location = location;
-    this.items = trashItems ?? [];
-    this.totalWeightInKg = totalWeightInKg;
-    this.numberOfPeople = numberOfPeople;
-    this.additionalNotes = additionalNotes ?? '';
+    this.type = 'BeachCleanSession';
+    this.items = [];
+    this.additionalNotes = '';
     this.synced = false;
   }
 
@@ -44,7 +42,7 @@ export default class BeachCleanSession {
     let location = this.location;
     let datetime = null;
     if (this.startDate) {
-      datetime = new DateTime(new Date(this.startDate));
+      datetime = DateTime(new Date(this.startDate));
     }
 
     if (datetime && location) {

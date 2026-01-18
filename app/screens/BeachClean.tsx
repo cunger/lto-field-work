@@ -16,23 +16,29 @@ import GlobalContext from '../context/GlobalContext';
 import BeachCleanSession from '../model/beachclean/BeachCleanSession';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import uuid from 'react-native-uuid';
+import Trash from '../model/beachclean/Trash';
+import Catch from '../model/fisheries/Catch';
+
+type Line = {
+  quantity: number,
+  category: string,
+  key: string,
+};
 
 function BeachClean({ navigation, route }) {
   const i18n = GlobalContext.i18n;
 
-  const now = new DateTime();
-  const [session, setSession] = useState<BeachCleanSession | null>(null);
-  const [sessionId, setSessionId] = useState(uuid.v4());
-  const [startDate, setStartDate] = useState(now);
-  const [endDate, setEndDate] = useState(null);
-  const [location, setLocation] = useState(null);
-  const [items, setItems] = useState({});
-  const [totalWeightInKg, setTotalWeightInKg] = useState(null);
-  const [numberOfPeople, setNumberOfPeople] = useState(null);
+  const now = DateTime();
+  const [session, setSession] = useState<BeachCleanSession>(new BeachCleanSession(uuid.v4()));
+  const [startDate, setStartDate] = useState<DateTime>(now);
+  const [endDate, setEndDate] = useState<DateTime | undefined>(undefined);
+  const [location, setLocation] = useState<Location | undefined>(undefined);
+  const [totalWeightInKg, setTotalWeightInKg] = useState(undefined);
+  const [numberOfPeople, setNumberOfPeople] = useState(undefined);
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [signingVisible, setSigningVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
-  const [lines, setLines] = useState([]);
+  const [lines, setLines] = useState<Line[]>([]);
   const [coordinatesResetTrigger, setCoordinatesResetTrigger] = useState(0);
 
   useFocusEffect(
@@ -40,102 +46,100 @@ function BeachClean({ navigation, route }) {
       if (route?.params?.sessionId) {
         load(route.params.sessionId);
       } else {
-        setLines(buildAllLinesFrom(items));
+        setLines(buildAllLinesFrom([]));
       }
       return () => {};
     }, [route])
   );
 
   const load = (sessionId: string) => {
+    reset();
+
     Datastore.session(sessionId).then(session => {
       if (!session) return;
 
-      const location = session.location
-      const startDate = session.startDate ? new DateTime(new Date(session.startDate)) : new DateTime();
-      const endDate = session.endDate ? new DateTime(new Date(session.endDate)) : null;
-      const newItems = {};
-      for (const item of session.items) {
-        newItems[item.category] = item.quantity;
-      }
+      setSession(session as BeachCleanSession);
 
-      reset();
-      setSessionId(session.id);
+      const startDate = session.startDate ? DateTime(new Date(session.startDate)) : DateTime();
+      const endDate = session.endDate ? DateTime(new Date(session.endDate)) : undefined;
+
       setStartDate(startDate);
       setEndDate(endDate);
-      setLocation(location);
+      setLocation(session.location);
       setTotalWeightInKg(session.totalWeightInKg);
       setNumberOfPeople(session.numberOfPeople);
       setAdditionalNotes(session.additionalNotes);
-      setItems(newItems);
-      setLines(buildAllLinesFrom(newItems));
-      updateSession();
+      setLines(buildAllLinesFrom(session.items));
     });
   } 
 
-  const buildAllLinesFrom = (items) => {
-    const allLines = [];
-    Object.keys(Category).forEach(category => {
-      const quantity = items[category] || 0;
+  const buildAllLinesFrom = (items: Trash[] | Catch[]): Line[] => {
+    const allLines: Line[] = [];
+    for (const category of Object.keys(Category)) {
+      let quantity = 0;
+      for (const item of items) {
+        if (item instanceof Trash && item.category == category) {
+          quantity = item.quantity;
+          break;
+        }
+      }
       allLines.push({ 
         category,
         quantity,
         key: `${quantity}-${category}`
       });
-    });
+    }
     return allLines;
   };
 
-  const updateItem = (quantity: number, category: Category) => {
-    if (quantity == 0) {
-      delete items[category];
-    } else {
-      items[category] = quantity;
+  const buildItemsFrom = (lines: Line[], session: BeachCleanSession): Trash[] => {
+    const items: Trash[] = [];
+    for (const line of lines) {
+      if (line.quantity > 0) {
+        items.push(new Trash(session.id, line.category as Category, line.quantity));
+      }
     }
-    setItems({ ...items });
-    updateSession();
+    return items;
+  };
+
+  const updateItem = (quantity: number, category: string) => {
+    for (const line of lines) {
+      if (line.category == category) {
+        line.quantity = quantity;
+        break;
+      }
+    }
   };
 
   const reset = () => {
     setCoordinatesResetTrigger(coordinatesResetTrigger + 1);
-    setTotalWeightInKg(null);
-    setNumberOfPeople(null);
+    setTotalWeightInKg(undefined);
+    setNumberOfPeople(undefined);
     setAdditionalNotes('');
-    setSession(null);
-    setItems({});
-    setLines(buildAllLinesFrom({}));
+    setSession(new BeachCleanSession(uuid.v4()));
+    setLines(buildAllLinesFrom([]));
   };
 
   const openSigning = () => {
-    // If end date was not set manually, set it to now.
-    if (endDate == null) {
-      endDate = new DateTime();
-    }
     // Open modal to sign the session.
     setSigningVisible(true);
   };
 
   const closeSigning = () => {
-    try {
-      reset();
-    } catch (error) {
-      console.log(error);
-    }
+    reset();
     setSigningVisible(false);
-    // You probably finished the beach clean, so go to upload screen.
+    // You probably finished the beach clean, so go to Upload screen.
     navigation.navigate('Upload');
   };
 
   const updateSession = () => {
-    setSession(new BeachCleanSession(
-      sessionId,
-      startDate.toEpoch(),
-      endDate?.toEpoch(),
-      location,
-      items,
-      additionalNotes,
-      totalWeightInKg,
-      numberOfPeople
-    ));
+    session.startDate = startDate.toEpoch();
+    session.endDate = (endDate || DateTime()).toEpoch();
+    session.location = location;
+    session.additionalNotes = additionalNotes;
+    session.totalWeightInKg = totalWeightInKg;
+    session.numberOfPeople = numberOfPeople;
+    session.items = buildItemsFrom(lines, session);
   };
 
   const discard = () => {
@@ -171,7 +175,7 @@ function BeachClean({ navigation, route }) {
                 min={0}
                 step={1}
                 value={line.quantity}
-                onChange={(value) => { updateItem(value, line.category); }}
+                onChange={(value: number) => { updateItem(value, line.category); }}
                 prepend={(<Text className="w-1/2"> {i18n.t(Category[line.category])} </Text>)}
                 height={30}
                 rounded={false}
@@ -210,7 +214,10 @@ function BeachClean({ navigation, route }) {
         </View>
 
         <SubmitButtons 
-          saveAction={openSigning} discardAction={() => setConfirmVisible(true)} resetAction={() => reset()} />
+          saveAction={() => { updateSession(); openSigning(); }}
+          discardAction={() => setConfirmVisible(true)}
+          resetAction={() => reset()}
+        />
         <Signing visible={signingVisible} setVisible={setSigningVisible} session={session} closeAction={closeSigning} />
         <ConfirmPrompt visible={confirmVisible}
           actionPhrase={i18n.t('CONFIRM_DISCARD')}
