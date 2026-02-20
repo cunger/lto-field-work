@@ -27,7 +27,7 @@ function Dashboard() {
     
     const location = await Datastore.lastActiveLocation();
     if (location) {
-      setLastActiveLocation(i18n.t(location));
+      setLastActiveLocation(location);
     }
 
     Datastore.statistics().then(statistics => setStatistics(statistics));

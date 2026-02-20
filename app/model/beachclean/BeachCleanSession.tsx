@@ -1,6 +1,5 @@
 import { printDateShort } from '../../components/utils/PrettyPrinter';
 import { I18n } from 'i18n-js/typings';
-import Location from '../Location';
 import Signature from '../Signature';
 import Trash from './Trash';
 import DateTime from '../DateTime';
@@ -11,9 +10,9 @@ export default class BeachCleanSession {
   items: Trash[];
   startDate?: number;
   endDate?: number;
-  location?: Location;
-  totalWeightInKg?: number;
   numberOfPeople?: number;
+  location?: string;
+  totalWeightInKg?: string;
   additionalNotes: string;
   synced: boolean;
   signature?: Signature;
@@ -46,11 +45,11 @@ export default class BeachCleanSession {
     }
 
     if (datetime && location) {
-      return `${printDateShort(datetime, i18n)} ${i18n.t(location)}`;
+      return `${printDateShort(datetime, i18n)} ${location}`;
     } else if (datetime) {
       return `${printDateShort(datetime, i18n)}`;
     } else if (location) {
-      return `${i18n.t(location)}`;
+      return location;
     }
 
     return '';

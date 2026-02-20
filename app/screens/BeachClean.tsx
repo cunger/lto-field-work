@@ -32,9 +32,9 @@ function BeachClean({ navigation, route }) {
   const [session, setSession] = useState<BeachCleanSession>(new BeachCleanSession(uuid.v4()));
   const [startDate, setStartDate] = useState<DateTime>(now);
   const [endDate, setEndDate] = useState<DateTime | undefined>(undefined);
-  const [location, setLocation] = useState<Location | undefined>(undefined);
-  const [totalWeightInKg, setTotalWeightInKg] = useState(undefined);
-  const [numberOfPeople, setNumberOfPeople] = useState(undefined);
+  const [location, setLocation] = useState<string | undefined>(undefined);
+  const [numberOfPeople, setNumberOfPeople] = useState<number | undefined>(undefined);
+  const [totalWeightInKg, setTotalWeightInKg] = useState('');
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [signingVisible, setSigningVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
@@ -57,6 +57,7 @@ function BeachClean({ navigation, route }) {
 
     Datastore.session(sessionId).then(session => {
       if (!session) return;
+      if (session.type !== 'BeachCleanSession') return;
 
       setSession(session as BeachCleanSession);
 
@@ -78,7 +79,7 @@ function BeachClean({ navigation, route }) {
     for (const category of Object.keys(Category)) {
       let quantity = 0;
       for (const item of items) {
-        if (item instanceof Trash && item.category == category) {
+        if (item.type === 'Trash' && item.category == category) {
           quantity = item.quantity;
           break;
         }
@@ -113,8 +114,8 @@ function BeachClean({ navigation, route }) {
 
   const reset = () => {
     setCoordinatesResetTrigger(coordinatesResetTrigger + 1);
-    setTotalWeightInKg(undefined);
     setNumberOfPeople(undefined);
+    setTotalWeightInKg('');
     setAdditionalNotes('');
     setSession(new BeachCleanSession(uuid.v4()));
     setLines(buildAllLinesFrom([]));

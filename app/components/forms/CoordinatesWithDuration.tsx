@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { InputLabel, InputGroup } from './Input';
 import SelectField from './SelectField';
-import Location from '../../model/Location';
 import GlobalContext from '../../context/GlobalContext';
 import DateTime from '../../model/DateTime';
 
@@ -22,7 +21,9 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
   const [endHours, setEndHours] = useState<number | undefined>(inputEndDate ? inputEndDate.hours : undefined);
   const [endMinutes, setEndMinutes] = useState<number | undefined>(inputEndDate ? inputEndDate.minutes : undefined);
 
-  const [location, setLocation] = useState<Location | undefined>(inputLocation);
+  const [location, setLocation] = useState<string | undefined>(inputLocation);
+
+  const prevResetTrigger = useRef(resetTrigger);
 
   const saveYear = (year: number) => {
     setYear(year);
@@ -112,7 +113,7 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
     setEndDateOnParent(newEndDate);
   };
 
-  const saveLocation = (location: Location) => {
+  const saveLocation = (location: string) => {
     setLocation(location);
     setLocationOnParent(location);
   };
@@ -164,7 +165,8 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
   }
 
   useEffect(() => {
-    if (resetTrigger > 0) {
+    if (resetTrigger !== prevResetTrigger.current) {
+      prevResetTrigger.current = resetTrigger;
       const now = DateTime();
       setStartDate(now)
       setStartDateOnParent(now);
@@ -246,8 +248,12 @@ function CoordinatesWithDuration({ inputStartDate, inputEndDate, inputLocation, 
         <SelectField
           label={i18n.t('COORDINATES_WHICH_BAY')}
           value={location}
-          type={Location}
-          updateAction={(value: Location) => saveLocation(value)}
+          items={[
+            { key: 'Guinjata', label: 'Guinjata', value: 'Guinjata'},
+            { key: 'Paindane', label: 'Paindane', value: 'Paindane'},
+            { key: 'Coconut', label: 'Coconut', value: 'Coconut'},
+          ]}
+          updateAction={(value: string) => saveLocation(value)}
           style={{ flex: 1 }}
         />
       </View>

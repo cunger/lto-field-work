@@ -164,7 +164,6 @@ async function uploadImage(image: Image, i18n: I18n) {
 function withPrettyPrintedSessionValues(session: BeachCleanSession | FisheriesSession, i18n: I18n): any{
   const newsession = { ...session };
 
-  if (session.location) newsession.location = i18n.t(session.location, { locale: 'en' });
   if (session.startDate) newsession.startDate = new Date(session.startDate);
   if (session.endDate) newsession.endDate = new Date(session.endDate);
   

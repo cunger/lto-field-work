@@ -130,14 +130,16 @@ function Upload({ navigation }) {
         }} />
         {
           unsignedUnsyncedSessions.length === 0 &&
-          <Text className="m-2">
-            {i18n.t('UPLOAD_NO_UNSIGNED_DATA')}
-          </Text>
+          <View className="mx-4 my-2">
+            <Text>
+              {i18n.t('UPLOAD_NO_UNSIGNED_DATA')}
+            </Text>
+          </View>
         }
         {
           unsignedUnsyncedSessions.length > 0 &&
-          <View>
-            <Text className="mx-4 my-2">{i18n.t('UPLOAD_TODO_UNSIGNED')}</Text>
+          <View className="mx-4 my-2">
+            <Text>{i18n.t('UPLOAD_TODO_UNSIGNED')}</Text>
 
             {unsignedUnsyncedSessions.map((session, index) => (
               <ListItem key={index}>

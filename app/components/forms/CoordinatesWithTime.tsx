@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { InputLabel, InputGroup } from './Input';
 import SelectField from './SelectField';
-import Location from '../../model/Location';
 import GlobalContext from '../../context/GlobalContext';
 
 function CoordinatesWithTime({ inputDate, inputLocation, setDateOnParent, setLocationOnParent }) {
@@ -52,7 +51,7 @@ function CoordinatesWithTime({ inputDate, inputLocation, setDateOnParent, setLoc
     setDateOnParent(date);
   };
 
-  const saveLocation = (location: Location) => {
+  const saveLocation = (location: string) => {
     setLocation(location);
     setLocationOnParent(location);
   };
@@ -146,8 +145,12 @@ function CoordinatesWithTime({ inputDate, inputLocation, setDateOnParent, setLoc
         <SelectField
           label={i18n.t('COORDINATES_WHICH_BAY')}
           value={location}
-          type={Location}
-          updateAction={(value: Location) => saveLocation(value)}
+          items={[
+            { key: 'Guinjata', label: 'Guinjata', value: 'Guinjata'},
+            { key: 'Paindane', label: 'Paindane', value: 'Paindane'},
+            { key: 'Coconut', label: 'Coconut', value: 'Coconut'},
+          ]}
+          updateAction={(value: string) => saveLocation(value)}
           style={{ flex: 1 }}
         />
       </View>

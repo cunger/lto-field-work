@@ -1,6 +1,5 @@
 import { printDateShort } from '../../components/utils/PrettyPrinter';
 import { I18n } from 'i18n-js/typings';
-import Location from '../Location';
 import Catch from './Catch';
 import Signature from '../Signature';
 import DateTime from '../DateTime';
@@ -11,8 +10,8 @@ export default class FisheriesSession {
   items: Catch[];
   startDate?: number;
   endDate?: number;
-  location?: Location;
-  reason?: String;
+  location?: string;
+  reason?: string;
   additionalNotes: string;
   synced: boolean;
   signature?: Signature;
@@ -45,11 +44,11 @@ export default class FisheriesSession {
     }
 
     if (datetime && location) {
-      return `${printDateShort(datetime, i18n)} ${i18n.t(location)}`;
+      return `${printDateShort(datetime, i18n)} ${location}`;
     } else if (datetime) {
       return `${printDateShort(datetime, i18n)}`;
     } else if (location) {
-      return `${i18n.t(location)}`;
+      return location;
     }
 
     return '';

@@ -115,11 +115,26 @@ export default class Datastore {
     return statisticsString ? JSON.parse(statisticsString) : {};
   }
 
+  // ---- Utility functions ----
+
+  static asSession(data: any): BeachCleanSession | FisheriesSession | undefined {
+    if (data.type === 'BeachCleanSession') {
+      const session = new BeachCleanSession(data.id)
+      Object.assign(session, data);
+      return session;
+    }
+    if (data.type === 'FisheriesSession') {
+      const session = new FisheriesSession(data.id)
+      Object.assign(session, data);
+      return session;
+    }
+  }
+
   // ---- Colleced data and photos ----
 
-  static async session(id: string): Promise<BeachCleanSession | FisheriesSession | null> {
+  static async session(id: string): Promise<BeachCleanSession | FisheriesSession | undefined> {
     const value = await AsyncStorage.getItem(id);
-    return value ? JSON.parse(value) : null;
+    return value ? JSON.parse(value) : undefined;
   }
 
   static async sessions(): Promise<(BeachCleanSession | FisheriesSession)[]> {
@@ -128,18 +143,7 @@ export default class Datastore {
     return values
       .map((value: any) => JSON.parse(value[1]))
       .filter((data: any) => data.type === 'BeachCleanSession' || data.type === 'FisheriesSession')
-      .map((data: any) => {
-        if (data.type === 'BeachCleanSession') {
-          const session = new BeachCleanSession(data.id)
-          Object.assign(session, data);
-          return session;
-        }
-        if (data.type === 'FisheriesSession') {
-          const session = new FisheriesSession(data.id)
-          Object.assign(session, data);
-          return session;
-        }
-      });
+      .map((data: any) => this.asSession(data));
   }
 
   static async save(session: BeachCleanSession | FisheriesSession) {
@@ -168,7 +172,8 @@ export default class Datastore {
         const value = await AsyncStorage.getItem(key);
         if (!value) continue;
 
-        const session = JSON.parse(value);
+        const session = this.asSession(JSON.parse(value));
+        if (!session) continue;
 
         // Signed sessions are uploaded.
         // Unsigned sessions are ignored. 
@@ -195,21 +200,7 @@ export default class Datastore {
 
   static async removeSession(sessionId: string) {
     try {
-      const storedSession : BeachCleanSession | FisheriesSession = await Datastore.session(sessionId); 
-
       await AsyncStorage.removeItem(sessionId);
-      for (const item of storedSession.items) {
-        try {
-          await AsyncStorage.removeItem(item.id);
-        } catch(error) {
-          showMessage({
-            message: 'There was an error when deleting data.',
-            description: `${error}`,
-            type: 'warning',
-            icon: 'danger'
-          });
-        }
-      }
     } catch(error) {
       showMessage({
         message: 'There was an error when deleting data.',
