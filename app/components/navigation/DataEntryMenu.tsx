@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { createStackNavigator } from '@react-navigation/stack';
 import GlobalContext from '../../context/GlobalContext';
 import BeachClean from '../../screens/BeachClean';
+import FisheriesCatch from '../../screens/FisheriesCatch';
 import Fisheries from '../../screens/Fisheries';
 
 const Stack = createStackNavigator(); 
@@ -27,9 +28,14 @@ function DataEntryMenu() {
         options={{ title: `🗑️ ${i18n.t('MENU_BEACHCLEAN')}` }} 
       />
       <Stack.Screen 
+        name='FisheriesCatch' 
+        component={FisheriesCatch} 
+        options={{ title: `🐠 ${i18n.t('MENU_FISHERIES_CATCH')}` }} 
+      />
+      <Stack.Screen 
         name='Fisheries' 
         component={Fisheries} 
-        options={{ title: `🎣 ${i18n.t('MENU_FISHERIES')}` }} 
+        options={{ title: `⏱️ ${i18n.t('MENU_FISHERIES_HOURS')}` }} 
       />
     </Stack.Navigator>
   );
@@ -49,16 +55,22 @@ function DataEntry({ navigation }) {
       </TouchableOpacity>
 
       <TouchableOpacity
+        key="FisheriesCatch"
+        className="px-4 py-2 rounded-md bg-white"
+        onPress={() => navigation.navigate('FisheriesCatch')}
+      >
+        <Text>🐠 {i18n.t('MENU_FISHERIES_CATCH')}</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
         key="Fisheries"
         className="px-4 py-2 rounded-md bg-white"
         onPress={() => navigation.navigate('Fisheries')}
       >
-        <Text>🐠 {i18n.t('MENU_FISHERIES')}</Text>
+        <Text>⏱️ {i18n.t('MENU_FISHERIES_HOURS')}</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
-
-  // ⏱️ {i18n.t('MENU_FISHERY_HOURS')}
 }
 
 export default DataEntryMenu;

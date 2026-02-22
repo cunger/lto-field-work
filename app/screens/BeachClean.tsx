@@ -173,6 +173,7 @@ function BeachClean({ navigation, route }) {
           {lines.map(line => {
             return (
               <InputSpinner
+                type="int"
                 min={0}
                 step={1}
                 value={line.quantity}
@@ -180,6 +181,7 @@ function BeachClean({ navigation, route }) {
                 prepend={(<Text className="w-1/2"> {i18n.t(Category[line.category])} </Text>)}
                 height={30}
                 rounded={false}
+                selectTextOnFocus={true}
                 editable={true}
                 key={line.key}
                 className="mb-2 bg-white"

@@ -6,7 +6,8 @@ MENU_UPLOAD ; Upload ; Carregar
 MENU_SETTINGS ; Settings ; Definições
 MENU_SELECT ; Select ; Seleccionar
 MENU_BEACHCLEAN ; Beach clean; Limpeza da praia
-MENU_FISHERIES ; Fisheries ; Pescarias
+MENU_FISHERIES_CATCH ; Fisheries (catch) ; Pescarias (captura)
+MENU_FISHERIES_HOURS ; Fisheries (hours) ; Pescarias (tempo)
 MENU_WHALE ; Humpback whale ; Baleias jubarte
 MENU_TURTLE ; Turtle ; Tartaruga
 

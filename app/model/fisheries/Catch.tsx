@@ -19,9 +19,12 @@ class Dimensions {
 }
 
 export default class Catch {
+  id: string;
   type: string;
-  sessionId: string;
-  reason?: String;
+  sessionId?: string;
+  date?: number;
+  location?: string;
+  reason?: string;
   method?: Method;
   other_method?: string;
   base?: Base;
@@ -43,12 +46,13 @@ export default class Catch {
   photosNote: string;
   synced: boolean;
 
-  constructor(sessionId: string, base?: Base, method?: Method, other_method?: string) {
+  constructor(id: string, base?: Base, method?: Method, other_method?: string) {
+    this.id = id;
     this.type = 'Catch';
-    this.sessionId = sessionId;
     this.quantity = 1;
     this.common_name = '';
     this.latin_name = '';
+    this.reason = '';
     // We don't want to reset these fields, as they usually don't change.
     this.base = base;
     this.method = method;

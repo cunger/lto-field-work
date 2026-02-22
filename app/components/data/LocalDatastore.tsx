@@ -7,6 +7,7 @@ import translations from './translations';
 import DateTime from '../../model/DateTime';
 import FisheriesSession from '../../model/fisheries/FisheriesSession';
 import BeachCleanSession from '../../model/beachclean/BeachCleanSession';
+import Catch from '../../model/fisheries/Catch';
 
 const languages = ['en', 'pt'];
 const localLanguage = getLocales()[0].languageCode;
@@ -92,6 +93,18 @@ export default class Datastore {
     await AsyncStorage.setItem('@statistics', JSON.stringify(statistics));
   }
 
+  static async saveCatchInStatistics(item: Catch) {
+    await AsyncStorage.setItem('@lastactivedate', `${item.date}`);
+    await AsyncStorage.setItem('@lastactivelocation', `${item.location}`);
+
+    const statisticsString = await AsyncStorage.getItem('@statistics');
+    const statistics = statisticsString ? JSON.parse(statisticsString) : {};
+    
+    statistics.catches = (statistics.catches || 0) + 1;
+    
+    await AsyncStorage.setItem('@statistics', JSON.stringify(statistics));
+  }
+
   static async lastActiveDate() {
     const epochString = await AsyncStorage.getItem('@lastactivedate');
     if (epochString === 'undefined') {
@@ -137,6 +150,11 @@ export default class Datastore {
     return value ? JSON.parse(value) : undefined;
   }
 
+  static async catch(id: string): Promise<Catch | undefined> {
+    const value = await AsyncStorage.getItem(id);
+    return value ? JSON.parse(value) : undefined;
+  }
+
   static async sessions(): Promise<(BeachCleanSession | FisheriesSession)[]> {
     const keys = await AsyncStorage.getAllKeys();
     const values = await AsyncStorage.multiGet(keys.filter((key: string) => !key.startsWith('@')));
@@ -150,6 +168,20 @@ export default class Datastore {
     try {
       await AsyncStorage.setItem(session.id, JSON.stringify(session));
       await this.saveInStatistics(session);
+    } catch (error) {
+      showMessage({
+        message: i18n.t('ERROR_FAILED_TO_SAVE_DATA'),
+        description: `${error}`,
+        type: 'warning',
+        icon: 'danger'
+      });
+    }
+  }
+
+  static async saveCatch(item: Catch) {
+    try {
+      await AsyncStorage.setItem(item.id, JSON.stringify(item));
+      await this.saveCatchInStatistics(item);
     } catch (error) {
       showMessage({
         message: i18n.t('ERROR_FAILED_TO_SAVE_DATA'),
@@ -198,9 +230,9 @@ export default class Datastore {
     }
   }
 
-  static async removeSession(sessionId: string) {
+  static async remove(itemId: string) {
     try {
-      await AsyncStorage.removeItem(sessionId);
+      await AsyncStorage.removeItem(itemId);
     } catch(error) {
       showMessage({
         message: 'There was an error when deleting data.',
@@ -214,7 +246,7 @@ export default class Datastore {
   static async removeSessions(sessions: (BeachCleanSession | FisheriesSession)[]) {
     for (const session of sessions) {
       try {
-        await this.removeSession(session.id);
+        await this.remove(session.id);
       } catch(error) {
         showMessage({
           message: 'There was an error when deleting data.',

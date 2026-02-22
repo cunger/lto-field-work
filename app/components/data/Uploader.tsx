@@ -46,11 +46,9 @@ export default async function upload(sessions: (BeachCleanSession | FisheriesSes
 
   // First, upload the photos, so that the uploaded data contains the final image links.
   for (const session of sessions) {
-    const items = session.items;
-
-    // Upload images (if there are any).
-    for (let item of items) {
+    for (let item of session.items) {
       if (item.type === 'Catch') {
+        // Upload images (if there are any).
         for (let photo of ((item as Catch).photos || [])) {
           if (!photo.location) continue;
 
@@ -83,15 +81,9 @@ export default async function upload(sessions: (BeachCleanSession | FisheriesSes
 
       const responseData = await response.json(); // { uploaded: [], errors: [] }
       const uploaded = responseData?.uploaded ?? [];
-      
-      if (uploaded.contains(session.id)) {
+      if (uploaded.includes(session.id)) {
         session.synced = true;
-      }
-
-      for (let item of session.items) {
-        if (uploaded.contains(item.id)) {
-          item.synced = true;
-        }
+        session.items.forEach((item) => item.synced = true);
       }
 
       errors = [...errors, ...(responseData?.errors ?? [])];

@@ -68,19 +68,8 @@ function Dashboard() {
             </Text>
 
             <Heading title={ i18n.t('DASHBOARD_H_SUMMARY') } actionTitle='' actionOnPress={() => {}} />
-            <Text className="m-2">🐠 {i18n.t('DASHBOARD_CATCHES')}:</Text>
-            {Object.entries(statistics.Catch || {})
-              .filter((entry) => entry[1] > 0)
-              .map((entry, index) => (
-                <ListItem key={index}><Text>{` ️ ${print(entry[1], Species[entry[0]] || entry[0], i18n)}`}</Text></ListItem>
-              ))
-            }
-            <Text className="m-2">🗑️ {i18n.t('DASHBOARD_TRASH')}:</Text>
-            {Object.entries(statistics.Trash || {})
-              .map((entry, index) => (
-                <ListItem key={index}><Text>{` ️ ${print(entry[1], Category[entry[0]] || entry[0], i18n)}`}</Text></ListItem>
-              ))
-            }
+            <Text className="m-2">🐠 {i18n.t('DASHBOARD_CATCHES')}: {statistics.catches ?? 0}</Text>
+            <Text className="m-2">🗑️ {i18n.t('DASHBOARD_TRASH')}: {statistics.trashitems ?? 0}</Text>
           </View>
         }
         { 

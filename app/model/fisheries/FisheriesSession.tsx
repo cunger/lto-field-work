@@ -1,31 +1,25 @@
 import { printDateShort } from '../../components/utils/PrettyPrinter';
 import { I18n } from 'i18n-js/typings';
-import Catch from './Catch';
 import Signature from '../Signature';
 import DateTime from '../DateTime';
 
 export default class FisheriesSession {
   id: string;
   type: string;
-  items: Catch[];
   startDate?: number;
   endDate?: number;
   location?: string;
   reason?: string;
   additionalNotes: string;
+  numberOfPeople?: number;
   synced: boolean;
   signature?: Signature;
  
   constructor(id: string) {
     this.id = id;
     this.type = 'FisheriesSession';
-    this.items = [];
     this.additionalNotes = '';
     this.synced = false;
-  }
-
-  public add(item: Catch) {
-    this.items.push(item);
   }
 
   public signed(): boolean {
@@ -33,7 +27,7 @@ export default class FisheriesSession {
   }
 
   public logo(): string {
-    return '🐠';
+    return '⏱️';
   }
 
   public printCoordinates(i18n: I18n): string {
@@ -55,6 +49,15 @@ export default class FisheriesSession {
   }
 
   public printDetails(i18n: I18n): string {
-    return `${this.items.length} ${i18n.t('CATCHES')}`;
+    let hours;
+    let minutes;
+    if (this.startDate && this.endDate) {
+      const diffMinutes = (this.endDate - this.startDate) / 60000;
+      hours = Math.floor(diffMinutes / 60);
+      minutes = diffMinutes - hours * 60;
+      return `${hours} h ${minutes} min`;
+    } else {
+      return '';
+    }
   }
 };

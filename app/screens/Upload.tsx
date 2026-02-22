@@ -31,7 +31,6 @@ function Upload({ navigation }) {
     try {
       const byDate = (s1: BeachCleanSession | FisheriesSession, s2: BeachCleanSession | FisheriesSession) => (s2.startDate || 0) - (s1.startDate || 0);
       const sessions = await Datastore.sessions();
-      console.log(sessions);
 
       setSignedUnsyncedSessions(sessions
         .filter(session => session.signed() && !session.synced)
