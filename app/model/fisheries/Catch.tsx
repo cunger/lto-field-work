@@ -1,8 +1,12 @@
+import { I18n } from 'i18n-js/typings';
 import Image from '../Image';
 import Species from './Species';
 import Sex from './Sex';
 import Method from './Method';
 import Base from './Base';
+import Signature from '../Signature';
+import { printDateShort } from '../../components/utils/PrettyPrinter';
+import DateTime from '../DateTime';
 
 class Dimensions {
   total: string;
@@ -45,6 +49,7 @@ export default class Catch {
   photos: Image[];
   photosNote: string;
   synced: boolean;
+  signature?: Signature;
 
   constructor(id: string, base?: Base, method?: Method, other_method?: string) {
     this.id = id;
@@ -75,5 +80,35 @@ export default class Catch {
     this.photosNote = '';
     // Has it been uploaded?
     this.synced = false;
+  }
+
+  public signed(): boolean {
+    return this.signature !== undefined && this.signature.token !== undefined;
+  }
+
+  public logo(): string {
+    return '🐠';
+  }
+
+  public printCoordinates(i18n: I18n): string {
+    let location = this.location;
+    let datetime = null;
+    if (this.date) {
+      datetime = DateTime(new Date(this.date));
+    }
+
+    if (datetime && location) {
+      return `${printDateShort(datetime, i18n)} ${location}`;
+    } else if (datetime) {
+      return `${printDateShort(datetime, i18n)}`;
+    } else if (location) {
+      return location;
+    }
+
+    return '';
+  }
+
+  public printDetails(i18n: I18n): string {
+    return '';
   }
 };

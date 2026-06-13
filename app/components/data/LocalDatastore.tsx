@@ -143,6 +143,14 @@ export default class Datastore {
     }
   }
 
+  static asCatch(data: any): Catch | undefined {
+    if (data.type === 'Catch') {
+      const item = new Catch(data.id)
+      Object.assign(item, data);
+      return item;
+    }
+  }
+
   // ---- Colleced data and photos ----
 
   static async session(id: string): Promise<BeachCleanSession | FisheriesSession | undefined> {
@@ -162,6 +170,15 @@ export default class Datastore {
       .map((value: any) => JSON.parse(value[1]))
       .filter((data: any) => data.type === 'BeachCleanSession' || data.type === 'FisheriesSession')
       .map((data: any) => this.asSession(data));
+  }
+
+  static async catches(): Promise<(Catch)[]> {
+    const keys = await AsyncStorage.getAllKeys();
+    const values = await AsyncStorage.multiGet(keys.filter((key: string) => !key.startsWith('@')));
+    return values
+      .map((value: any) => JSON.parse(value[1]))
+      .filter((data: any) => data.type === 'Catch')
+      .map((data: any) => this.asCatch(data));
   }
 
   static async save(session: BeachCleanSession | FisheriesSession) {

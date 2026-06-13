@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView } from 'react-native';
-import InputSpinner from 'react-native-input-spinner';
-import Category from '../model/beachclean/Category';
+import { View, ScrollView } from 'react-native';
 import DateTime from '../model/DateTime';
 import CoordinatesWithDuration from '../components/forms/CoordinatesWithDuration';
 import TextField from '../components/forms/TextField';
@@ -13,11 +11,8 @@ import { showMessage } from 'react-native-flash-message';
 import { useFocusEffect } from '@react-navigation/core';
 import Datastore from '../components/data/LocalDatastore';
 import GlobalContext from '../context/GlobalContext';
-import BeachCleanSession from '../model/beachclean/BeachCleanSession';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import uuid from 'react-native-uuid';
-import Trash from '../model/beachclean/Trash';
-import Catch from '../model/fisheries/Catch';
 import FisheriesSession from '../model/fisheries/FisheriesSession';
 
 type Line = {

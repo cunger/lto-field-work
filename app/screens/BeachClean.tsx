@@ -221,7 +221,7 @@ function BeachClean({ navigation, route }) {
           discardAction={() => setConfirmVisible(true)}
           resetAction={() => reset()}
         />
-        <Signing visible={signingVisible} setVisible={setSigningVisible} session={session} closeAction={closeSigning} />
+        <Signing visible={signingVisible} setVisible={setSigningVisible} data={session} closeAction={closeSigning} />
         <ConfirmPrompt visible={confirmVisible}
           actionPhrase={i18n.t('CONFIRM_DISCARD')}
           actionButtonText={i18n.t('BUTTON_DISCARD')}

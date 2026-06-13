@@ -7,7 +7,7 @@ import Datastore from '../data/LocalDatastore';
 import GlobalContext from '../../context/GlobalContext';
 import { showMessage } from 'react-native-flash-message';
 
-function Signing({ visible, setVisible, session, closeAction }) {
+function Signing({ visible, setVisible, data, closeAction }) {
   const i18n = GlobalContext.i18n;
 
   const save = async (withSignature) => {
@@ -16,10 +16,10 @@ function Signing({ visible, setVisible, session, closeAction }) {
       const userEmail = await Datastore.getUserEmail();
       const userToken = await Datastore.getUserToken();
 
-      session.signature = Signature(userName, userEmail, userToken);
+      data.signature = Signature(userName, userEmail, userToken);
     }
 
-    await Datastore.save(session);
+    await Datastore.save(data);
 
     showMessage({
       message: i18n.t('MESSAGE_SAVED'),
